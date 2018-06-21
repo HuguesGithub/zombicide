@@ -1,0 +1,182 @@
+html { height: inherit; min-height: inherit; }
+#shell > footer, #shell > header { display: none; }
+
+.menu-container { height: 100%; margin: 0; }
+#wallMission { position: relative; }
+#actionsMission { border-bottom: 2px solid #f6a800; }
+#survivorsMission { border-right: 2px solid #f6a800; width: 200px; }
+#survivorsMission article { border-bottom: 2px solid #f6a800; }
+#layouts { background-color: rgba(0,0,0,0.75); left: 200px; position: absolute; top: 48px; width: calc(100% - 400px); z-index: 10; }
+#layouts.showContent { z-index: 40; }
+#canvasMission { background-color: #222222; left: 200px; position: absolute; top: 48px; width: calc(100% - 200px); z-index: 20; }
+#mapInterface { height: 100%; position: relative; z-index: 15; }
+#mapInterfaceBackground, #mapInterfaceDrawing { position: absolute; border: 0 none; }
+#mapZoneInterface { position: absolute; border: 0 none; }
+#tokenInterface,
+#equipmentInterface,
+#invasionInterface,
+#rollInterface { height: 100%; width: 200px; border-left: 2px solid #f6a800; display: none; position: absolute; right: 0; z-index: 15; }
+#tokenInterface.active,
+#equipmentInterface.active,
+#invasionInterface.active,
+#rollInterface.active { display: block; }
+#tokenInterface .trash { height: 50px; border: 0 none; border-bottom: 2px solid #f6a800; }
+#tokenInterface .trash i { margin-top: 13px; }
+
+#layouts > article { display: none; }
+.layoutLeftMission,
+.layoutRightMission { background: #000; display: block !important; height: 100%; position: absolute; width: 50%; z-index: 45; }
+.layoutLeftMission { top: 0; left: 0; background: #fff; }
+.layoutRightMission { top: 0; right: 0; background: #fff; }
+.closeLayout { position: absolute; top: 2px; right: 2px; cursor: pointer; color: #000; padding: 2px; }
+
+.likeSubmitButton { cursor: pointer; margin: 7px 0 7px 5px; min-width: auto; }
+.likeSubmitButton:hover { color: #f6a800; }
+
+#survivorsMission article > img { float:left; }
+.life { background: url('./img/icons/pv.png') bottom center no-repeat; float: left; height: 100%; width: 16px; }
+article.survivant .life li { background-color: #f30b06; border: 1px solid #222222; display: block; height: calc((100% - 20px) / 2); }
+article.zombivant .life li { background-color: #f30b06; border: 1px solid #222222; display: block; height: calc((100% - 20px) / 5); }
+article .life li:hover { background-color: #000000; cursor: pointer; }
+article .life li.lost { background-color: #000000; }
+article .life li.lost:hover { background-color: #f30b06; cursor: pointer; }
+.xp { background: url('./img/icons/xp.png') bottom center no-repeat; float: left; height: 100%; width: 16px; }
+
+article .xp li { background-color: #000000; border: 1px solid #222222; }
+article .xp.bgBlue li { height: calc((100% - 20px) / 7); }
+article .xp.bgBlue li:hover { background-color: #00aef0; cursor: pointer; }
+article .xp.bgBlue li.gotit { background-color: #00aef0; }
+
+article .xp.bgYellow li { height: calc((100% - 20px) / 14); }
+article .xp.bgYellow li:hover { background-color: #ffff3e; cursor: pointer; }
+article .xp.bgBlue li.bgYellow:hover,
+article .xp.bgYellow li.gotit { background-color: #ffff3e; }
+
+article .xp.bgOrange li { height: calc((100% - 20px) / 25); }
+article .xp.bgOrange li:hover { background-color: #f27c07; cursor: pointer; }
+article .xp.bgYellow li.bgOrange:hover,
+article .xp.bgOrange li.gotit { background-color: #f27c07; }
+
+article .xp.bgYellow li.bgBlue { background-color: #00aef0; }
+
+.bgRed { background-color: #f30b06; text-align: center; }
+
+article .showWhole { background-color: #000; border: 0 none; height: 100%; margin-left: 1px; padding: 0; width: 22px; }
+
+article ul.skills { float: left; margin-right: 5px; padding: 5px; width: 300px; }
+article ul.skills li { border: 1px solid #000; box-shadow: 0 0; margin: 0 2px 2px; }
+article ul.equipments { float: left; padding: 5px; width: 300px; }
+ul.equipments li,
+ul.invasions li { background-color: #ffffff; border: 1px solid #000; border-radius: 5px;; color: #222222; float: left; font-size: 12px; line-height: 12px; list-style-type: none; margin: 0 2px 2px; padding: 5px; text-shadow: none; transition: background 300ms linear 0s; width: 95%; z-index: 5; }
+article ul.equipments li { background:url('img/icons/grab_hand.png') 4px center no-repeat; padding-left: 20px; }
+article ul.equipments li:nth-child(n+3) { background:url('img/icons/toolbox.png') 4px center no-repeat; padding-left: 20px; }
+ul.equipments li i,
+ul.invasions li i { cursor: pointer; margin-right: 2px; }
+
+#mapInterface > .token { position: absolute; }
+.objective_blue { background:url('img/tokens/objective_blue.png') no-repeat;  }
+.objective_green { background:url('img/tokens/objective_green.png') no-repeat; }
+.objective_red { background:url('img/tokens/objective_red.png') no-repeat; }
+.objective { background-size: 100%; height: 56px; width: 56px; }
+.sm .objective { height: 28px; width: 28px; }
+.xs .objective { height: 14px; width: 14px; }
+
+/* porte verte :  border: 1px solid #34fd05; */
+.door_red_opened-e { background:url('img/tokens/door_red_opened-e.png') no-repeat; border: 1px solid #f30b06; }
+.door_red_closed-e { background:url('img/tokens/door_red_closed-e.png') no-repeat; border: 1px solid #f30b06; }
+.door_red_opened-o { background:url('img/tokens/door_red_opened-o.png') no-repeat; border: 1px solid #f30b06; }
+.door_red_closed-o { background:url('img/tokens/door_red_closed-o.png') no-repeat; border: 1px solid #f30b06; }
+.door_red_opened-n { background:url('img/tokens/door_red_opened-n.png') no-repeat; border: 1px solid #f30b06; }
+.door_red_closed-n { background:url('img/tokens/door_red_closed-n.png') no-repeat; border: 1px solid #f30b06; }
+.door_red_opened-s { background:url('img/tokens/door_red_opened-s.png') no-repeat; border: 1px solid #f30b06; }
+.door_red_closed-s { background:url('img/tokens/door_red_closed-s.png') no-repeat; border: 1px solid #f30b06; }
+.door_blue_opened-e { background:url('img/tokens/door_blue_opened-e.png') no-repeat; border: 1px solid #00aef0; }
+.door_blue_closed-e { background:url('img/tokens/door_blue_closed-e.png') no-repeat; border: 1px solid #00aef0; }
+.door_blue_opened-o { background:url('img/tokens/door_blue_opened-o.png') no-repeat; border: 1px solid #00aef0; }
+.door_blue_closed-o { background:url('img/tokens/door_blue_closed-o.png') no-repeat; border: 1px solid #00aef0; }
+.door_blue_opened-n { background:url('img/tokens/door_blue_opened-n.png') no-repeat; border: 1px solid #00aef0; }
+.door_blue_closed-n { background:url('img/tokens/door_blue_closed-n.png') no-repeat; border: 1px solid #00aef0; }
+.door_blue_opened-s { background:url('img/tokens/door_blue_opened-s.png') no-repeat; border: 1px solid #00aef0; }
+.door_blue_closed-s { background:url('img/tokens/door_blue_closed-s.png') no-repeat; border: 1px solid #00aef0; }
+.door-e, .door-o { background-size: 100%; height: 55px; width: 50px; }
+.sm .door-e, .sm .door-o { height: 28px; width: 25px; }
+.xs .door-e, .xs .door-o { height: 14px; width: 12px; }
+.door-n, .door-s { background-size: 100%; height: 50px; width: 55px; }
+.sm .door-n, .sm .door-s { height: 25px; width: 28px; }
+.xs .door-n, .xs .door-s { height: 12px; width: 14px; }
+
+.car_pimp-e { background:url('img/tokens/pimp-e.png') no-repeat; }
+.car_pimp-o { background:url('img/tokens/pimp-o.png') no-repeat; }
+.car_pimp-n { background:url('img/tokens/pimp-n.png') no-repeat; }
+.car_pimp-s { background:url('img/tokens/pimp-s.png') no-repeat; }
+.voiture-e, .voiture-o { background-size: 100%; height: 100px; width: 200px; }
+.sm .voiture-e, .sm .voiture-o { height: 50px; width: 100px; }
+.xs .voiture-e, .xs .voiture-o { height: 25px; width: 50px; }
+.voiture-n, .voiture-s { background-size: 100%; height: 200px; width: 100px; }
+.sm .voiture-n, .sm .voiture-s { height: 100px; width: 50px; }
+.xs .voiture-n, .xs .voiture-s { height: 50px; width: 25px; }
+
+.spawn_red_active-e { background:url('img/tokens/spawn_red_active-e.png') no-repeat; }
+.spawn_red_active-o { background:url('img/tokens/spawn_red_active-o.png') no-repeat; }
+.spawn_red_active-n { background:url('img/tokens/spawn_red_active-n.png') no-repeat; }
+.spawn_red_active-s { background:url('img/tokens/spawn_red_active-s.png') no-repeat; }
+.spawn-e, .spawn-o { background-size: 100%; height: 102px; width: 52px; }
+.sm .spawn-e, .sm .spawn-o { height: 51px; width: 26px; }
+.xs .spawn-e, .xs .spawn-o { height: 25px; width: 13px; }
+.spawn-n, .spawn-s { background-size: 100%; height: 52px; width: 102px; }
+.sm .spawn-n, .sm .spawn-s { height: 26px; width: 51px; }
+.xs .spawn-n, .xs .spawn-s { height: 13px; width: 25px; }
+
+.exit-e, .exit_active-e { background:url('img/tokens/exit-e.png') no-repeat; }
+.exit-o, .exit_active-o { background:url('img/tokens/exit-o.png') no-repeat; }
+.exit-n, .exit_active-n { background:url('img/tokens/exit-n.png') no-repeat; }
+.exit-s, .exit_active-s { background:url('img/tokens/exit-s.png') no-repeat; }
+.exit-e, .exit-o { background-size: 100%; height: 100px; width: 50px; }
+.sm .exit-e, .sm .exit-o { height: 50px; width: 25px; }
+.xs .exit-e, .xs .exit-o { height: 25px; width: 12px; }
+.exit-n, .exit-s { background-size: 100%; height: 50px; width: 100px; }
+.sm .exit-n, .sm .exit-s { height: 25px; width: 50px; }
+.xs .exit-n, .xs .exit-s { height: 12px; width: 25px; }
+
+.zombie_standard_walker { background:url('img/tokens/zombie_standard_walker.png') no-repeat; }
+.zombie_standard_fatty { background:url('img/tokens/zombie_standard_fatty.png') no-repeat; }
+.token.survivor,
+.token.survivor img { height: 50px; width: 50px; }
+
+.zombie { background-size: 100%; height: 50px; width: 50px; }
+.sm .zombie,
+.sm .token.survivor,
+.sm .token.survivor img{ height: 25px; width: 25px; }
+.xs .zombie,
+.xs .token.survivor,
+.xs .token.survivor img { height: 12px; width: 12px; }
+
+.start { background:url('img/tokens/start.png') no-repeat; background-size: 100%; height: 80px; width: 80px; }
+.sm .start { height: 40px; width: 40px; }
+.xs .start { height: 20px; width: 20px; }
+
+#mapInterface.displayFog > * { opacity: 0.5; }
+#mapInterface.displayFog > .shine { opacity: 1; }
+
+#equipmentInterface > div,
+#invasionInterface > div{ border-bottom: 1px solid #f6a800; }
+#equipmentInterface ul.equipments,
+#invasionInterface ul.invasions { max-height: 140px; overflow-y: auto; }
+#equipmentInterface li > span,
+#invasionInterface li > span { background-color: #f6a800; border-bottom: 1px solid #222222; color: #222222; display: block; text-align: center; }
+
+#showInvasion { background: url('./img/bg/spawnCardBack.png') no-repeat; border: 1px solid #f6a800; border-radius: 5px; height: 277px; margin: 5px auto; position: relative; width: 180px; }
+#showInvasion .btn-group { margin: 0 10px; }
+#showInvasion.displayStandard { background: url('./img/bg/spawnCardFront.png') no-repeat; }
+
+#showInvasion div.blue,
+#showInvasion div.yellow,
+#showInvasion div.orange,
+#showInvasion div.red { color: #000000; height: 49px; left: 13px; position: absolute; top: 215px; width: 87px; }
+#showInvasion div.yellow { top: 161px; }
+#showInvasion div.orange { top: 108px; }
+#showInvasion div.red { top: 54px; }
+
+.my-col-xs-8 { float: left; padding: 1%; width: 64.66%; }
+.my-col-xs-6 { float: left; padding: 1%; width: 48%; }
+.my-col-xs-4 { float: left; padding: 1%; width: 31.33%; }

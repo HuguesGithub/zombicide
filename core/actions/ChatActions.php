@@ -12,7 +12,7 @@ class ChatActions extends LocalActions {
     public function __construct($post) {
         $this->User = wp_get_current_user();
         $Data = $this->User->data;
-                $this->userId = $Data->ID;
+        $this->userId = $Data->ID;
         $this->displayName = $Data->display_name;
         
         $arrParams = array('liveId'=>'0', 'text'=>'', 'timestamp'=>'');
@@ -20,7 +20,7 @@ class ChatActions extends LocalActions {
             $this->{$key} = isset($post[$key]) ? $post[$key] : $param;
         }
         $services = array('Chat', 'Live');
-          parent::__construct($services);
+        parent::__construct($services);
     }
     
     /**
@@ -39,19 +39,22 @@ class ChatActions extends LocalActions {
         $text = trim($this->text);
         if ( $text!='' ) {
             $arrCmds = explode(' ', $text);
-                  switch ( $arrCmds[0] ) {
-                        case '/join' : return $this->joinNewLive($arrCmds[1]); break;
-                case '/exit' : return $this->exitLive(); break;
-                case '/help' : return $this->helpLive(); break;
-                case '/invite' : return $this->inviteUser($arrCmds[1]); break;
-                case '/clean' : return $this->cleanChat(); break;
-                        default :
-                              $arr = array('liveId'=>$this->liveId, 'senderId'=>$this->userId, 'texte'=>stripslashes($text), 'timestamp'=>date('Y-m-d H:i:s'));
-                              $this->postChat($arr);
-                        break;
-                  }
+            switch ( $arrCmds[0] ) {
+                case '/join'   : $returned = $this->joinNewLive($arrCmds[1]); break;
+                case '/exit'   : $returned = $this->exitLive(); break;
+                case '/help'   : $returned = $this->helpLive(); break;
+                case '/invite' : $returned = $this->inviteUser($arrCmds[1]); break;
+                case '/clean'  : $returned = $this->cleanChat(); break;
+                default :
+                    $arr = array('liveId'=>$this->liveId, 'senderId'=>$this->userId, 'texte'=>stripslashes($text), 'timestamp'=>date('Y-m-d H:i:s'));
+                    $this->postChat($arr);
+                    $returned = $this->getChatContent(); 
+                break;
+            }
+        } else {
+        	$returned = $this->getChatContent();
         }
-        return $this->getChatContent();
+        return $returned;
     }
     private function cleanChat() {
         $arr = array('sendToId'=>$this->userId, 'texte'=>'Vous avez vidé l\'interface.', 'timestamp'=>date('Y-m-d H:i:s'));

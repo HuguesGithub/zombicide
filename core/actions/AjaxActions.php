@@ -7,12 +7,7 @@ if ( !defined( 'ABSPATH') ) {
  * @since 1.0.00
  * @author Hugues
  */
-class AjaxActions {
-	const DECKKEY = 'deckKey';
-	const LEVEL = 'level';
-	const OBJECTIVE = 'objective';
-	
-	
+class AjaxActions extends LocalActions {
     /**
      * Constructeur
      */

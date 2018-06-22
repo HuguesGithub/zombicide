@@ -7,10 +7,7 @@ if ( !defined( 'ABSPATH') ) {
  * @since 1.0.00
  * @author Hugues
  */
-class MissionRuleActions {
-	const SETTING = 'setting';
-	const MISSIONID = 'missionId';
-	
+class MissionRuleActions extends LocalActions {	
     /**
      * Constructeur
      */

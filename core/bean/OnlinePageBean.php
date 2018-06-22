@@ -59,10 +59,10 @@ class OnlinePageBean extends PagePageBean {
      * @return string
      */
     public function getContentLoggedAndLive() {
-        $deckKey = $_SESSION['deckKey'];
-        $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, array('deckKey'=>$deckKey));
+        $deckKey = $_SESSION[CST_DECKKEY];
+        $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, array(CST_DECKKEY=>$deckKey));
         if ( empty($Lives) ) {
-            unset($_SESSION['deckKey']);
+            unset($_SESSION[CST_DECKKEY]);
             return $this->getContentLoggedNotLive();
         }
         $time = time();
@@ -86,7 +86,7 @@ class OnlinePageBean extends PagePageBean {
      * @see PagePageBean::getContentPage()
      */
     public function getContentPage() {
-        if ( isset($_SESSION['deckKey']) ) {
+        if ( isset($_SESSION[CST_DECKKEY]) ) {
             return $this->getContentLoggedAndLive();
         } elseif ( is_user_logged_in() ) {
             return $this->getContentLoggedNotLive();

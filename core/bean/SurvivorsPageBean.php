@@ -83,9 +83,9 @@ class SurvivorsPageBean extends PagePageBean {
 			$strPagination .= 'ajaxAction" href="#" data-paged="'.$i.'" data-ajaxaction="paged">'.$i.'</a></li>';
 		}
 		$args = array(
-			($nbPerPage==10 ? 'selected':''),
-			($nbPerPage==25 ? 'selected':''),
-			($nbPerPage==50 ? 'selected':''),
+			($nbPerPage==10 ? CST_SELECTED:''),
+			($nbPerPage==25 ? CST_SELECTED:''),
+			($nbPerPage==50 ? CST_SELECTED:''),
 			// Tri sur le Nom - 4
 			($sort_col=='name' ? '_'.$sort_order:''),
 			// Les lignes du tableau - 5

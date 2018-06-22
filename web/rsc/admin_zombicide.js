@@ -180,7 +180,6 @@ function addActionToMapEditorButtons() {
 	    );
 	});
   $hj('.objectivesAndRules select').unbind().change(function() {
-    var node = $hj(this);
     var type = '';
     var textarea = '';
     switch ( $hj(this).attr('id') ) {

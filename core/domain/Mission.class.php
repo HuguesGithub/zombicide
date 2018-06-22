@@ -162,7 +162,7 @@ class Mission extends LocalDomain {
 	 * @return string
 	 */  
 	public function getStrRules() {
-		$MissionRules = $this->getMissionRules('title');
+		$MissionRules = $this->getMissionRules(CST_TITLE);
 		$strList = '';
 		if ( !empty($MissionRules) ) {
 			foreach ( $MissionRules as $MissionRule ) {
@@ -177,7 +177,7 @@ class Mission extends LocalDomain {
 	 * @return string
 	 */
 	public function getStrObjectives() {
-		$MissionObjectives = $this->getMissionObjectives('title');
+		$MissionObjectives = $this->getMissionObjectives(CST_TITLE);
 		$strList = '';
 		if ( !empty($MissionObjectives) ) {
 			foreach ( $MissionObjectives as $MissionObjective ) {
@@ -309,8 +309,7 @@ class Mission extends LocalDomain {
 	 */
 	public function updateWithPost($post) {
 		$doUpdate = FALSE;
-		// TODO : Ajouter origineId quand la liste déroulante aura été mise en place.
-		$arr = array('title', 'code', 'levelId', 'durationId', 'playerId', 'origineId');
+		$arr = array(CST_TITLE, 'code', 'levelId', 'durationId', 'playerId', 'origineId');
 		while ( !empty($arr) ) {
 			$key = array_shift($arr);
 			$value = stripslashes($post[$key]);
@@ -327,7 +326,7 @@ class Mission extends LocalDomain {
 	 */
 	public function initWithPost($post) {
 		$doInsert = TRUE;
-		$arr = array('title', 'code', 'levelId', 'durationId', 'playerId', 'origineId');
+		$arr = array(CST_TITLE, 'code', 'levelId', 'durationId', 'playerId', 'origineId');
 		while ( !empty($arr) ) {
 			$key = array_shift($arr);
 			if ( $post[$key] == '' ) { $doInsert = FALSE; }

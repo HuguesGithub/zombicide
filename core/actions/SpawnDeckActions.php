@@ -7,12 +7,7 @@ if ( !defined( 'ABSPATH') ) {
  * @since 1.0.00
  * @author Hugues
  */
-class SpawnDeckActions {
-	const KEYACCESS = 'keyAccess';
-	const LIVEDECKID = 'liveDeckId';
-	const FORMATDATE = 'Y-m-d H:i:s';
-	const STATUS = 'status';
-	
+class SpawnDeckActions extends LocalActions {	
     /**
      * Constructeur
      */

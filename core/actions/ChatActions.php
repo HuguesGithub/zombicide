@@ -8,13 +8,6 @@ if ( !defined( 'ABSPATH') ) {
  * @author Hugues
  */
 class ChatActions extends LocalActions {
-	const TIMESTAMP = 'timestamp';
-	const LIVEID = 'liveId';
-	const TEXTE = 'texte';
-	const FORMATDATE = 'Y-m-d H:i:s';
-	const SENDTOID = 'sendToId';
-	const DECKKEY = 'deckKey';
-	
     /**
      * Constructeur
      */
@@ -23,15 +16,13 @@ class ChatActions extends LocalActions {
         $Data = $this->User->data;
         $this->userId = $Data->ID;
         $this->displayName = $Data->display_name;
-        
         $arrParams = array(LIVEID=>'0', 'text'=>'', TIMESTAMP=>'');
         foreach ( $arrParams as $key => $param ) {
             $this->{$key} = isset($post[$key]) ? $post[$key] : $param;
         }
         $services = array('Chat', 'Live');
         parent::__construct($services);
-    }
-    
+    }    
     /**
      * 
      * @param unknown $post
@@ -71,26 +62,26 @@ class ChatActions extends LocalActions {
         return $this->getChatContent();
     }
     private function inviteUser($displayName='') {
-      $WpUser = WpUser::getWpUserBy('user_login', $displayName);
-      if ( $WpUser->getID()=='' ) {
-        $arr = array(SENDTOID=>$this->userId, TEXTE=>'Cet utilisateur <b>'.$displayName.'</b> n\'existe pas.', TIMESTAMP=>date(FORMATDATE));
+        $WpUser = WpUser::getWpUserBy('user_login', $displayName);
+        if ( $WpUser->getID()=='' ) {
+            $arr = array(SENDTOID=>$this->userId, TEXTE=>'Cet utilisateur <b>'.$displayName.'</b> n\'existe pas.', TIMESTAMP=>date(FORMATDATE));
+            $this->postChat($arr);
+            return $this->getChatContent();
+        }
+        $Live = $this->LiveServices->select(__FILE__, __LINE__, $this->liveId);
+        $arr = array(SENDTOID=>$WpUser->getID(), 'senderId'=>$this->userId, TEXTE=>'Rejoins moi sur l\'espace <span class="keyDeck" data-keydeck="'.$Live->getDeckKey().'">'.$Live->getDeckKey().'</span>', TIMESTAMP=>date(FORMATDATE));
+        $this->postChat($arr);
+        $arr = array(SENDTOID=>$this->userId, TEXTE=>'Invitation envoyée à <span class="author" data-displayName="'.$displayName.'">'.$displayName.'</span>', TIMESTAMP=>date(FORMATDATE));
         $this->postChat($arr);
         return $this->getChatContent();
-      }
-      $Live = $this->LiveServices->select(__FILE__, __LINE__, $this->liveId);
-      $arr = array(SENDTOID=>$WpUser->getID(), 'senderId'=>$this->userId, TEXTE=>'Rejoins moi sur l\'espace <span class="keyDeck" data-keydeck="'.$Live->getDeckKey().'">'.$Live->getDeckKey().'</span>', TIMESTAMP=>date(FORMATDATE));
-      $this->postChat($arr);
-      $arr = array(SENDTOID=>$this->userId, TEXTE=>'Invitation envoyée à <span class="author" data-displayName="'.$displayName.'">'.$displayName.'</span>', TIMESTAMP=>date(FORMATDATE));
-      $this->postChat($arr);
-      return $this->getChatContent();
     }
     private function helpLive() {
-      $text = '';
-      $text .= '<b>/clean</b> Vide l\'interface de discussion.';
-      $text .= '<br><b>/exit</b> Rejoindre l\'espace général.';
-      $text .= '<br><b>/help</b> Affiche cette aide.';
-      $text .= '<br><b>/invite xxxxx</b> Envoie une invitation à rejoindre l\'espace courant.';
-      $text .= '<br><b>/join xxxxx</b> Rejoindre un espace dédié.';
+        $text = '';
+        $text .= '<b>/clean</b> Vide l\'interface de discussion.';
+        $text .= '<br><b>/exit</b> Rejoindre l\'espace général.';
+        $text .= '<br><b>/help</b> Affiche cette aide.';
+        $text .= '<br><b>/invite xxxxx</b> Envoie une invitation à rejoindre l\'espace courant.';
+        $text .= '<br><b>/join xxxxx</b> Rejoindre un espace dédié.';
         $arr = array(SENDTOID=>$this->userId, TEXTE=>$text, TIMESTAMP=>date(FORMATDATE));
         $this->postChat($arr);
         return $this->getChatContent();
@@ -115,7 +106,6 @@ class ChatActions extends LocalActions {
         $_SESSION[DECKKEY] = $deckKey;
         return '{'.$this->getChatContent(FALSE).', "header-ul-chat-saisie":'.json_encode('<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$this->liveId.'">'.$deckKey.'</a></li>').'}';
     }
-
     private function postChat($arr) {
         $Chat = new Chat($arr);
         $this->ChatServices->insert(__FILE__, __LINE__, $Chat);
@@ -126,8 +116,8 @@ class ChatActions extends LocalActions {
      * @return string
      */
     public static function staticChatContent($post) {
-            $ChatActions = new ChatActions($post);
-            return $ChatActions->getChatContent();
+        $ChatActions = new ChatActions($post);
+        return $ChatActions->getChatContent();
     }
     /**
      * @param boolean $directReturn
@@ -139,31 +129,10 @@ class ChatActions extends LocalActions {
         $strChats = '';
         if ( !empty($Chats) ) {
             foreach ( $Chats as $Chat ) {
-                $timestamp = $Chat->getTimestamp();
-                $strChats .= '<li class="msg-';
-                  if ( $Chat->getSenderId()==$this->userId ) { $strChats .= 'right'; }
-                elseif ( $Chat->getSenderId()==0 ) { $strChats .= 'technique'; }
-                else { $strChats .= 'left'; }
-                $strChats .= '" data-timestamp="'.$timestamp.'"><div>';
-                if ( $Chat->getSenderId()!=$this->userId ) {
-                    $strChats .= '<span class="author" data-displayname="'.$Chat->getSenderDisplayName().'">'.$Chat->getSenderDisplayName().'</span> ';
-                }
-                $arr1 = explode(' ', $timestamp);
-                list($Y, $m, $d) = explode('-', $arr1[0]);
-                list($H, $i, $s) = explode(':', $arr1[1]);
-                list($cY, $cm, $cd) = explode('-', date('Y-m-d'));
-                if ( $Y!=$cY ) { $strTimestamp = $d.'/'.$m.'/'.$Y.' '; }
-                elseif ( $m!=$cm || $d!=$cd ) { $strTimestamp = $d.'/'.$m.' '; }
-                $strTimestamp .= $H.':'.$i;
-                $strChats .= '<span class="timestamp">'.$strTimestamp.'</span></div>'.$Chat->getTexte().'</li>';
+            	$strChats .= $Chat->getChatLine($this->userId);
             }
         }
-        if ( $directReturn ) {
-            return '{"online-chat-content":'.json_encode($strChats).'}';
-        } else {
-            return '"online-chat-content":'.json_encode($strChats);
-        }
-    }
-    
+        return ( $directReturn ? '{"online-chat-content":'.json_encode($strChats).'}' : '"online-chat-content":'.json_encode($strChats) );
+    }    
 }
 ?>

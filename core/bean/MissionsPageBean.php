@@ -107,9 +107,9 @@ class MissionsPageBean extends PagePageBean {
     	}
     	$selectClasses = 'custom-select custom-select-sm filters';
 		$args = array(
-			($nbPerPage==10 ? 'selected':''),
-			($nbPerPage==25 ? 'selected':''),
-			($nbPerPage==50 ? 'selected':''),
+			($nbPerPage==10 ? CST_SELECTED:''),
+			($nbPerPage==25 ? CST_SELECTED:''),
+			($nbPerPage==50 ? CST_SELECTED:''),
 			// Tri sur le Code - 4
 			($sort_col=='code' ? '_'.$sort_order:''),
 			// Tri sue le Titre - 5

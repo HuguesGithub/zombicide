@@ -192,7 +192,7 @@ class LocalDomain extends GlobalDomain {
      * @param string $type
      * @return array EquipmentExpansion
      */
-    public function getEquipmentExpansions($type='equipmentCardId') {
+    public function getEquipmentExpansions($type=CST_EQUIPMENTCARDID) {
         if ( $this->EquipmentExpansions == null &&  $this->id!='' ) {
             $this->EquipmentExpansions = $this->EquipmentExpansionServices->getEquipmentExpansionsWithFilters(__FILE__, __LINE__, array($type=>$this->id));
         }
@@ -203,7 +203,7 @@ class LocalDomain extends GlobalDomain {
      */
     public function getEquipmentKeywords() {
         if ( $this->EquipmentKeywords == null &&  $this->id!='' ) {
-            $this->EquipmentKeywords = $this->EquipmentKeywordServices->getEquipmentKeywordsWithFilters(__FILE__, __LINE__, array('equipmentCardId'=>$this->id));
+            $this->EquipmentKeywords = $this->EquipmentKeywordServices->getEquipmentKeywordsWithFilters(__FILE__, __LINE__, array(CST_EQUIPMENTCARDID=>$this->id));
         }
         return $this->EquipmentKeywords;
     }
@@ -212,7 +212,7 @@ class LocalDomain extends GlobalDomain {
      */
     public function getEquipmentWeaponProfiles() {
         if ( $this->EquipmentWeaponProfiles == null &&  $this->id!='' ) {
-            $this->EquipmentWeaponProfiles = $this->EquipmentWeaponProfileServices->getEquipmentWeaponProfilesWithFilters(__FILE__, __LINE__, array('equipmentCardId'=>$this->id));
+            $this->EquipmentWeaponProfiles = $this->EquipmentWeaponProfileServices->getEquipmentWeaponProfilesWithFilters(__FILE__, __LINE__, array(CST_EQUIPMENTCARDID=>$this->id));
         }
         return $this->EquipmentWeaponProfiles;
     }
@@ -221,7 +221,7 @@ class LocalDomain extends GlobalDomain {
      */
     public function getMissionExpansions() {
         if ( $this->MissionExpansions == null &&  $this->id!='' ) {
-            $this->MissionExpansions = $this->MissionExpansionServices->getMissionExpansionsWithFilters(__FILE__, __LINE__, array('missionId'=>$this->id));
+            $this->MissionExpansions = $this->MissionExpansionServices->getMissionExpansionsWithFilters(__FILE__, __LINE__, array(CST_MISSIONID=>$this->id));
         }
         return $this->MissionExpansions;
     }
@@ -230,7 +230,7 @@ class LocalDomain extends GlobalDomain {
      */
     public function getMissionObjectives($orderBy='id') {
         if ( $this->MissionObjectives == null &&  $this->id!='' ) {
-            $this->MissionObjectives = $this->MissionObjectiveServices->getMissionObjectivesWithFilters(__FILE__, __LINE__, array('missionId'=>$this->id), $orderBy);
+            $this->MissionObjectives = $this->MissionObjectiveServices->getMissionObjectivesWithFilters(__FILE__, __LINE__, array(CST_MISSIONID=>$this->id), $orderBy);
         }
         return $this->MissionObjectives;
     }
@@ -239,7 +239,7 @@ class LocalDomain extends GlobalDomain {
      */
     public function getMissionRules($orderBy='id') {
         if ( $this->MissionRules == null &&  $this->id!='' ) {
-            $this->MissionRules = $this->MissionRuleServices->getMissionRulesWithFilters(__FILE__, __LINE__, array('missionId'=>$this->id), $orderBy);
+            $this->MissionRules = $this->MissionRuleServices->getMissionRulesWithFilters(__FILE__, __LINE__, array(CST_MISSIONID=>$this->id), $orderBy);
         }
         return $this->MissionRules;
     }
@@ -250,7 +250,7 @@ class LocalDomain extends GlobalDomain {
      */
     public function getMissionTiles($arrFields='id', $arrOrder='asc') {
         if ( $this->MissionTiles == null &&  $this->id!='' ) {
-            $this->MissionTiles = $this->MissionTileServices->getMissionTilesWithFilters(__FILE__, __LINE__, array('missionId'=>$this->id), $arrFields, $arrOrder);
+            $this->MissionTiles = $this->MissionTileServices->getMissionTilesWithFilters(__FILE__, __LINE__, array(CST_MISSIONID=>$this->id), $arrFields, $arrOrder);
         }
         return $this->MissionTiles;
     }
@@ -261,7 +261,7 @@ class LocalDomain extends GlobalDomain {
      */
     public function getMissionTokens($arrFields='id', $arrOrder='asc') {
         if ( $this->MissionTokens == null &&  $this->id!='' ) {
-            $this->MissionTokens = $this->MissionTokenServices->getMissionTokensWithFilters(__FILE__, __LINE__, array('missionId'=>$this->id), $arrFields, $arrOrder);
+            $this->MissionTokens = $this->MissionTokenServices->getMissionTokensWithFilters(__FILE__, __LINE__, array(CST_MISSIONID=>$this->id), $arrFields, $arrOrder);
         }
         return $this->MissionTokens;
     }
@@ -270,7 +270,7 @@ class LocalDomain extends GlobalDomain {
      */
     public function getMissionZones() {
         if ( $this->MissionZones == null &&  $this->id!='' ) {
-            $this->MissionZones = $this->MissionZoneServices->getMissionZonesWithFilters(__FILE__, __LINE__, array('missionId'=>$this->id));
+            $this->MissionZones = $this->MissionZoneServices->getMissionZonesWithFilters(__FILE__, __LINE__, array(CST_MISSIONID=>$this->id));
         }
         return $this->MissionZones;
     }

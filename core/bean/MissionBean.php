@@ -80,15 +80,15 @@ class MissionBean extends MainPageBean {
      */
     public static function staticBuildBlockTiles($post) {
         $action = $post['dealAction'];
-        $rkCol = ($action=='rmvCol' ? $post['rkCol'] : 0);
-        $rkRow = ($action=='rmvRow' ? $post['rkRow'] : 0);
+        $rkCol = ($action==CST_RMVCOL ? $post['rkCol'] : 0);
+        $rkRow = ($action==CST_RMVROW ? $post['rkRow'] : 0);
         $missionId = $post['missionId'];
         $MissionServices = new MissionServices();
         $MissionTileServices = new MissionTileServices();
         $Mission = $MissionServices->select(__FILE__, __LINE__, $missionId);
         $Bean = new MissionBean($Mission);
         switch ( $action ) {
-            case 'rmvRow' :
+            case CST_RMVROW :
                 $MissionTiles = $Mission->getMissionTiles();
                 if ( !empty($MissionTiles) ) {
                     foreach ( $MissionTiles as $MissionTile ) {
@@ -102,7 +102,7 @@ class MissionBean extends MainPageBean {
                 }
                 $Mission->setHeight($Mission->getHeight()-1);
             break;
-            case 'rmvCol'    :
+            case CST_RMVCOL    :
                 $MissionTiles = $Mission->getMissionTiles();
                 if ( !empty($MissionTiles) ) {
                     foreach ( $MissionTiles as $MissionTile ) {
@@ -144,10 +144,10 @@ class MissionBean extends MainPageBean {
         $lastRow  =  $colBreaker.'<div class="col tile prependBefore firstRow" data-rkcol="0">'.sprintf($addButton, 'addRow').$closeDivTile;
         $innerRows = array();
         for ( $i=0; $i<$height; $i++ ) {
-            $innerRows[$i] = $colBreaker.vsprintf($openDivTile, array(0, '')).vsprintf($rmvButton, array('rmvRow', 'row', $i+1)).$closeDivTile;
+            $innerRows[$i] = $colBreaker.vsprintf($openDivTile, array(0, '')).vsprintf($rmvButton, array(CST_RMVROW, 'row', $i+1)).$closeDivTile;
         }
         for ( $i=1; $i<=$width; $i++ ) {
-            $firstRow  .= vsprintf($openDivTile, array($i, ' firstRow')).vsprintf($rmvButton, array('rmvCol', 'col', $i)).$closeDivTile;
+            $firstRow  .= vsprintf($openDivTile, array($i, ' firstRow')).vsprintf($rmvButton, array(CST_RMVCOL, 'col', $i)).$closeDivTile;
             $lastRow  .= vsprintf($openDivTile, array($i, ' firstRow')).$disabledButton.$closeDivTile;
         }
         $classe = 'custom-select custom-select-sm filters';

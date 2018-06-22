@@ -220,13 +220,13 @@ class AdminMissionPageBean extends AdminPageBean {
         $queryArg = array(CST_ONGLET=>CST_MISSION, CST_ORDERBY=>$orderby, CST_ORDER=>$order);
         // Subs
         $queryArg[CST_POSTSTATUS] = 'all';
-        $subs  = '<li class="all"><a href="'.$this->getQueryArg($queryArg).'" class="'.($post_status=='all'?'current':'').'">Toutes <span class="count">('.count($Missions).')</span></a> |</li>';
+        $subs  = '<li class="all"><a href="'.$this->getQueryArg($queryArg).'" class="'.($post_status=='all'?CST_CURRENT:'').'">Toutes <span class="count">('.count($Missions).')</span></a> |</li>';
         $queryArg[CST_POSTSTATUS] = CST_PENDING;
-        $subs .= '<li class="pending"><a href="'.$this->getQueryArg($queryArg).'" class="'.($post_status==CST_PENDING?'current':'').'">Non publiées <span class="count">('.count($NotPublishedMissions).')</span></a> |</li>';
+        $subs .= '<li class="pending"><a href="'.$this->getQueryArg($queryArg).'" class="'.($post_status==CST_PENDING?CST_CURRENT:'').'">Non publiées <span class="count">('.count($NotPublishedMissions).')</span></a> |</li>';
         $queryArg[CST_POSTSTATUS] = CST_PUBLISH;
-        $subs .= '<li class="publish"><a href="'.$this->getQueryArg($queryArg).'" class="'.($post_status==CST_PUBLISH?'current':'').'">Publiées <span class="count">('.count($WpPostsPublished).')</span></a> |</li>';
+        $subs .= '<li class="publish"><a href="'.$this->getQueryArg($queryArg).'" class="'.($post_status==CST_PUBLISH?CST_CURRENT:'').'">Publiées <span class="count">('.count($WpPostsPublished).')</span></a> |</li>';
         $queryArg[CST_POSTSTATUS] = CST_FUTURE;
-        $subs .= '<li class="future"><a href="'.$this->getQueryArg($queryArg).'" class="'.($post_status==CST_FUTURE?'current':'').'">Planifiées <span class="count">('.count($WpPostsFuture).')</span></a> </li>';
+        $subs .= '<li class="future"><a href="'.$this->getQueryArg($queryArg).'" class="'.($post_status==CST_FUTURE?CST_CURRENT:'').'">Planifiées <span class="count">('.count($WpPostsFuture).')</span></a> </li>';
         // Pagination
         if ( $filter_by_levelId!='' ) { $queryArg['filter-by-levelId'] = $filter_by_levelId; }
         if ( $filter_by_playerId!='' ) { $queryArg['filter-by-playerId'] = $filter_by_playerId; }

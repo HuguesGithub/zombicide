@@ -418,7 +418,7 @@ $hj(document).ready(function(){
       data,
       function(response) {
         try {
-          obj = JSON.parse(response);
+          var obj = JSON.parse(response);
           console.log(response);
         } catch (e) {
           console.log("error: "+e);
@@ -1153,7 +1153,7 @@ function joinGame() {
 		data,
 		function(response) {
 			try {
-				obj = JSON.parse(response);
+				var obj = JSON.parse(response);
 			} catch (e) {
 				console.log("error: "+e);
 				console.log(response);

@@ -7,7 +7,7 @@ if ( !defined( 'ABSPATH') ) {
  * @since 1.0.00
  * @author Hugues
  */
-class LocalActions extends GlobalActions {
+class LocalActions extends GlobalActions implements iConstants {
 
     /**
      * @param array $services

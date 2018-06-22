@@ -83,7 +83,7 @@ class ToolsPageBean extends PagePageBean {
 	 * @return string
 	 */
 	public function getSurvivorsContent() {
-		$Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), array('displayRank'), array('ASC'));
+		$Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), array(CST_DISPLAYRANK), array('ASC'));
 		if ( !empty($Expansions) ) {
 			$str .= '<div class="btn-group-vertical team-selection" role="group">';
 			$str .= '<div class="btn-toolbar" role="toolbar">';
@@ -124,7 +124,7 @@ class ToolsPageBean extends PagePageBean {
 	 * @return string
 	 */
 	public function getInvasionsContent() {
-		$Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), array('displayRank'), array('ASC'));
+		$Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), array(CST_DISPLAYRANK), array('ASC'));
 		$strFilters = '';
 		$strSpawns = '';
 		if ( !empty($Expansions) ) {
@@ -158,7 +158,7 @@ class ToolsPageBean extends PagePageBean {
 	 */
 	public function getEquipmentsContent() {
     if ( MainPageBean::isAdmin() ) {
-		$Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), array('displayRank'), array('ASC'));
+		$Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), array(CST_DISPLAYRANK), array('ASC'));
     $strFilters = '';
     $strEquipments = '';
 		if ( !empty($Expansions) ) {

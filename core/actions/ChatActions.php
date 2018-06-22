@@ -102,11 +102,7 @@ class ChatActions extends LocalActions {
         $this->liveId = 0;
         $arr = array(LIVEID=>$this->liveId, SENDTOID=>$this->userId, TEXTE=>'Vous êtes de retour sur le canal par défaut', TIMESTAMP=>date(FORMATDATE));
         $this->postChat($arr);
-        $json = '{';
-        $json .= $this->getChatContent(FALSE).', ';
-        $json .= '"header-ul-chat-saisie":'.json_encode('<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>');
-        $json .= '}';
-        return $json;
+        return '{'.$this->getChatContent(FALSE).', "header-ul-chat-saisie":'.json_encode('<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>').'}';
     }
     private function joinNewLive($deckKey='') {
         $LiveServices = FactoryServices::getLiveServices();
@@ -117,11 +113,7 @@ class ChatActions extends LocalActions {
         $arr = array(LIVEID=>$this->liveId, TEXTE=>$this->displayName.' a rejoint l\'espace de conversation.', TIMESTAMP=>date(FORMATDATE));
         $this->postChat($arr);
         $_SESSION[DECKKEY] = $deckKey;
-        $json = '{';
-        $json .= $this->getChatContent(FALSE).', ';
-        $json .= '"header-ul-chat-saisie":'.json_encode('<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$this->liveId.'">'.$deckKey.'</a></li>');
-        $json .= '}';
-        return $json;
+        return '{'.$this->getChatContent(FALSE).', "header-ul-chat-saisie":'.json_encode('<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$this->liveId.'">'.$deckKey.'</a></li>').'}';
     }
 
     private function postChat($arr) {

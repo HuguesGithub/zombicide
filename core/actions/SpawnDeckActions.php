@@ -56,10 +56,7 @@ class SpawnDeckActions {
             $LiveDeck->setDateUpdate(date(FORMATDATE, time()));
             $LiveDeckServices->update(__FILE__, __LINE__, $LiveDeck);
         }
-        $json  = '{"nbCardInDeck":'.json_encode(count($SpawnLiveDecks));
-        $json .= ',"nbCardInDiscard":'.json_encode('0');
-        $json .= '}';
-        return $json;
+        return '{"nbCardInDeck":'.json_encode(count($SpawnLiveDecks)).',"nbCardInDiscard":'.json_encode('0').'}';
     }
     /**
      * @param array $post
@@ -69,12 +66,7 @@ class SpawnDeckActions {
         $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[KEYACCESS]);
         $SpawnLiveDeckServices = new SpawnLiveDeckServices();
         $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array(LIVEDECKID=>$LiveDeck->getId(), STATUS=>'D'));
-        $json  = '{';
-        if ( !empty($SpawnLiveDecks) ) {
-            $json .= '"page-selection-result":'.json_encode(SpawnDeckPageBean::getStaticSpawnCardActives($SpawnLiveDecks));
-        }
-        $json .= '}';
-        return $json;     
+        return '{'.( !empty($SpawnLiveDecks) ? '"page-selection-result":'.json_encode(SpawnDeckPageBean::getStaticSpawnCardActives($SpawnLiveDecks)) : '').'}';
     }
     /**
      * @param array $post
@@ -93,12 +85,7 @@ class SpawnDeckActions {
             $LiveDeckServices->update(__FILE__, __LINE__, $LiveDeck);
         }
         $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array(LIVEDECKID=>$LiveDeck->getId(), STATUS=>'D'));
-        $json  = '{"nbCardInDiscard":'.json_encode(count($SpawnLiveDecks));
-        if ( !empty($SpawnLiveDecks) ) {
-            $json .= ',"page-selection-result":'.json_encode('');
-        }
-        $json .= '}';
-        return $json;                               
+        return '{"nbCardInDiscard":'.json_encode(count($SpawnLiveDecks)).(!empty($SpawnLiveDecks) ? ',"page-selection-result":'.json_encode('') : '').'}';
     }
     /**
      * @param array $post
@@ -115,13 +102,8 @@ class SpawnDeckActions {
             $LiveDeck->setDateUpdate(date(FORMATDATE, time()));
             $LiveDeckServices->update(__FILE__, __LINE__, $LiveDeck);
         }
-        $json  = '{"nbCardInDeck":'.json_encode(count($SpawnLiveDecks));
         $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array(LIVEDECKID=>$LiveDeck->getId(), STATUS=>'A'), 'rank', 'ASC');
-        if ( !empty($SpawnLiveDecks) ) {
-            $json .= ',"page-selection-result":'.json_encode(SpawnDeckPageBean::getStaticSpawnCardActives($SpawnLiveDecks));
-        }
-        $json .= '}';
-        return $json;                               
+        return '{"nbCardInDeck":'.json_encode(count($SpawnLiveDecks)).(!empty($SpawnLiveDecks) ? ',"page-selection-result":'.json_encode(SpawnDeckPageBean::getStaticSpawnCardActives($SpawnLiveDecks)) : '').'}';
     }
     
 }

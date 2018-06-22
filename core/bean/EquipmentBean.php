@@ -47,8 +47,7 @@ class EquipmentBean extends MainPageBean {
         $strToolTip .= '</div>';
         $strDiv .= ' hasTooltip">';
         if ( $this->isAdmin() ) { $strDiv .= $strToolTip; }
-        $strDiv .= '<img src="'.$EquipmentCard->getImgUrl($expansionId).'" alt="'.$EquipmentCard->getName().'"></div>';
-        return $strDiv;
+        return $strDiv.'<img src="'.$EquipmentCard->getImgUrl($expansionId).'" alt="'.$EquipmentCard->getName().'"></div>';
     }
 }
 ?>

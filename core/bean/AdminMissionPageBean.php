@@ -24,13 +24,14 @@ class AdminMissionPageBean extends AdminPageBean {
         $MissionServices = FactoryServices::getMissionServices();
         $Mission = $MissionServices->select(__FILE__, __LINE__, $urlParams['id']);
         switch ( $urlParams[CST_POSTACTION] ) {
-            case 'add'     : return $Bean->getAddPage($Mission); break;
-            case 'edit'    : return ($Mission->getId() == '' ? $Bean->getListingPage() : $Bean->getEditPage($Mission)); break;
-            case 'trash'   : echo 'trash'; break;
-            case 'view'    : echo 'view'; break;
-            case 'clone'   : echo 'clone'; break;
-            default        : return $Bean->getListingPage(); break;
+            case 'add'     : $returned = $Bean->getAddPage($Mission); break;
+            case 'edit'    : $returned = ($Mission->getId() == '' ? $Bean->getListingPage() : $Bean->getEditPage($Mission)); break;
+            case 'trash'   : $returned = 'trash'; break;
+            case 'view'    : $returned = 'view'; break;
+            case 'clone'   : $returned = 'clone'; break;
+            default        : $returned = $Bean->getListingPage(); break;
         }
+        return $returned;
     }
     /**
      * @param Mission $Mission
@@ -259,10 +260,16 @@ class AdminMissionPageBean extends AdminPageBean {
         // Sorts
         $queryArg[CST_POSTSTATUS] = 'all';
         $queryArg[CST_ORDERBY] = 'code';
-        $queryArg[CST_ORDER] = ($orderby=='code'?($order=='asc'?'desc':'asc'):'asc');
+        $queryArg[CST_ORDER] = 'asc';
+            if ( $orderby=='code' ) {
+        	$queryArg[CST_ORDER] = ($order=='asc'?'desc':'asc');
+        }
         $urlSortCode = $this->getQueryArg($queryArg);
         $queryArg[CST_ORDERBY] = CST_TITLE;
-        $queryArg[CST_ORDER] = ($orderby==CST_TITLE?($order=='asc'?'desc':'asc'):'asc');
+        $queryArg[CST_ORDER] = 'asc';
+        if ( $orderby==CST_TITLE ) {
+        	$queryArg[CST_ORDER] = ($order=='asc'?'desc':'asc');
+        }
         $urlSortTitle = $this->getQueryArg($queryArg);
         $args = array(
             $strRows,

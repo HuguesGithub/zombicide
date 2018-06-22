@@ -18,10 +18,6 @@ class LocalDomain extends GlobalDomain {
         if ( !empty($services) ) {
             foreach ( $services as $service ) {
                 switch ( $service ) {
-//                    case 'EquipmentLive'            : $this->EquipmentLiveServices = FactoryServices::getEquipmentLiveServices(); break;
-//                    case 'GenKey'                     : $this->GenKeyServices = FactoryServices::getGenKeyServices(); break;
-//                    case 'Invasion'                 : $this->InvasionServices = FactoryServices::getInvasionServices(); break;
-//                    case 'InvasionLive'             : $this->InvasionLiveServices = FactoryServices::getInvasionLiveServices(); break;
                     case 'Duration'            : $this->DurationServices = FactoryServices::getDurationServices(); break;
                     case 'Equipment'                : $this->EquipmentServices = FactoryServices::getEquipmentServices(); break;
                     case 'EquipmentExpansion'         : $this->EquipmentExpansionServices = FactoryServices::getEquipmentExpansionServices(); break;
@@ -53,10 +49,6 @@ class LocalDomain extends GlobalDomain {
                     case 'Token'                    : $this->TokenServices = FactoryServices::getTokenServices(); break;
                     case 'WeaponProfile'            : $this->WeaponProfileServices = FactoryServices::getWeaponProfileServices(); break;
                     case 'WpPost'                    : $this->WpPostServices = FactoryServices::getWpPostServices(); break;
-//                    case 'MissionZone'                : $this->MissionZoneServices = FactoryServices::getMissionZoneServices(); break;
-//                    case 'Origine'                    : $this->OrigineServices = FactoryServices::getOrigineServices(); break;
-//                    case 'SurvivorLive'                : $this->SurvivorLiveServices = FactoryServices::getSurvivorLiveServices(); break;
-//                    case 'Zone'                        : $this->ZoneServices = FactoryServices::getZoneServices(); break;
                     default                            : echo 'Must add ['.$service.'] in Zomb::LocalDomain.<br>'; break;
                 }
             }

@@ -71,64 +71,9 @@ class MissionBean extends MainPageBean {
         $strRow .= '<td>'.$Mission->getStrNbJoueurs().'</td>';
         $strRow .= '<td>'.$Mission->getStrExpansions().'</td>';
         $strRow .= '<td>'.$Mission->getStrOrigine().'</td>';
-    /*
-        $strRow .= '<td>'.$Mission->getStrTiles().'</td>';
-    */
         $strRow .= '</tr>';
         return $strRow;
     }
-    /*  
-     * @param string $form
-     * @return string
-     *
-    public function getAdminEditPanel($form) {
-        $Mission = $this->Mission;
-        $args = array(
-      // Description de la mission - 5
-            $Mission->getDescription(),
-      // La Mission est-elle active ? - 6
-            ($Mission->isActive() ? ' checked="checked"' : ''),
-      // tag pour MisisonActions - 8
-            ($form=='duplicate' ? 'add' : $form),
-      // Select pour la largeur - 12
-            $this->MissionServices->getWidthSelect($Mission->getWidth()),
-      // Select pour la hauteur - 13
-            $this->MissionServices->getHeightSelect($Mission->getHeight()),
-      // Auteur - 15
-            $Mission->getAuthor(),      
-      // La Mission est-elle officielle ? - 16
-            ($Mission->isOfficielle() ? ' checked="checked"' : ''),
-        );
-        $str = file_get_contents(PLUGIN_PATH.$this->tplEdit);
-        return vsprintf($str, $args);
-    }
-    /**
-     * @param array $urlParams
-     * @return string
-     *
-    public function getAdminTableRow($urlParams=array()) {
-        $this->urlParams = $urlParams;
-        $Mission = $this->Mission;
-        $args = array(
-      // Extrai de la description - 7
-            $Mission->getExtractDescription(),
-      // Dimensions - 8
-            $Mission->getStrDimension(),
-      // Image de la Mission - 13
-            $Mission->getImgUrl(),
-      // Lien pour télécharger la mission - 14
-            $Mission->getPdfUrl(),
-      // Liste des Objectifs - 15
-            $Mission->getObjectivesList($MissionRules),
-      // Liste des Mises en place - 16
-            $Mission->getSetupList($MissionRules),
-      // Liste des Règles spéciales - 17
-            $Mission->getRulesList($MissionRules),
-        );
-        $str = file_get_contents(PLUGIN_PATH.$this->tplRow);
-        return vsprintf($str, $args);
-    }
-  */
     /**
      * @param array $post
      * @return string

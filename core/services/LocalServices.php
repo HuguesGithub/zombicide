@@ -34,7 +34,7 @@ class LocalServices extends GlobalServices {
 	 */
 	protected function getSetSelect($file, $line, $arrSetLabels, $name, $value, $labelDefault='', $classe='form-control', $multiple=FALSE) {
 		$strSelect = '';
-		$selName = $name;//.( is_array($value) || $multiple ? '[]' : '' );
+		$selName = $name;
 		if ( $labelDefault!='' ) { $strSelect .= '<label class="screen-reader-text" for="'.$name.'">'.$labelDefault.'</label>'; }
 		$strSelect .= '<select id="'.$name.'" name="'.$selName.'" class="'.$classe.'"'.($multiple?' multiple':'').'>';
 		if ( !$multiple && $labelDefault!='' ) { $strSelect .= '<option value="">'.$labelDefault.'</option>'; }

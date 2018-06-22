@@ -57,16 +57,6 @@ class Mission extends LocalDomain {
 	 * @var int $published
 	 */
 	protected $published;
-	
-	/*
-	protected $description;
-	protected $author;
-	protected $officielle;
-	protected $active;
-	protected $missionLiveActive;
-  protected $startingXCoord;
-  protected $startingYCoord;
-	*/
 
 	/**
 	 * 
@@ -117,15 +107,6 @@ class Mission extends LocalDomain {
 	 * @return boolean
 	 */
 	public function isPublished() { return ($this->published==1); }
-	/*
-	public function getDescription() { return $this->description; }
-	public function getAuthor() { return $this->author; }
-	public function isOfficielle() { return ($this->officielle==1); }
-	public function isActive() { return ($this->active==1); }
-	public function isMissionLiveActive() { return ($this->missionLiveActive==1); }
-  public function getStartingXCoord() { return $this->startingXCoord; }
-  public function getStartingYCoord() { return $this->startingYCoord; }
-*/
 	/**
 	 * @param int $id
 	 */
@@ -166,15 +147,6 @@ class Mission extends LocalDomain {
 	 * @param boolean $published
 	 */
 	public function setPublished($published) { $this->published=$published; }
-	/*
-	public function setDescription($description) { $this->description=$description; }
-	public function setAuthor($author) { $this->author=$author; }
-	public function setOfficielle($officielle) { $this->officielle=$officielle; }
-	public function setActive($active) { $this->active=$active; }
-	public function setMissionLiveActive($missionLiveActive) { $this->missionLiveActive=$missionLiveActive; }
-  public function setStartingXCoord($startingXCoord) { $this->startingXCoord=$startingXCoord; }
-  public function setStartingYCoord($startingYCoord) { $this->startingYCoord=$startingYCoord; }
-  */
 	/**
 	 * @return array
 	 */
@@ -271,14 +243,6 @@ class Mission extends LocalDomain {
 		$strClassFilters  = 'player-'.$this->playerId.' ';
 		$strClassFilters .= 'duration-'.$this->durationId.' ';
 		$strClassFilters .= 'level-'.$this->levelId.' ';
-		/*
-		$MissionExpansions = $this->getMissionExpansions();
-		if ( !empty($MissionExpansions) ) {
-			foreach ( $MissionExpansions as $MissionExpansion ) {
-				$strClassFilters .= $MissionExpansion->getExpansionCode().' ';
-			}
-		}
-		*/
 		$strClassFilters .= ' col-12 col-sm-6 col-md-4';
 		return $strClassFilters;
 	}
@@ -371,120 +335,6 @@ class Mission extends LocalDomain {
 		}
 		return $doInsert;
 	}
-	/*
-	public function getExtractDescription() { return substr($this->description, 0, 150); }
-  
-  public function getObjectivesList() { return $this->getObjRuleList('Objective'); }
-  public function getSetupList() { return $this->getObjRuleList('Setup'); }
-  public function getRulesList() { return $this->getObjRuleList('Rule'); }
-	private function getObjRuleList($type) {
-    $strList = '';
-    $MissionRules = $this->getMissionRules();
-    if ( !empty($MissionRules) ) {
-      foreach ( $MissionRules as $MissionRule ) {
-        if ( $MissionRule->getRuleType()==$type ) {
-          $strList .= ( $strList!='' ? '<br>' : '' );
-	        $strList .= '<span class="objRule">'.$MissionRule->getTitle().' <span class="tooltip"><header>'.$MissionRule->getRuleCode().'</header>';
-          $strList .= '<content>'.$MissionRule->getRuleDescription().'</content></span></span> ';
-        }
-      }
-    }
-    return $strList;
-  }
-  public function getAllRules($strObjectives, $strSetups, $strRules) {
-  	$strAllRules  = '<li data-missionId="'.$this->getId().'"><h4>Objectifs</h4><ul>';
-  	$strAllRules .= ($strObjectives=='' ? '<li>Aucun objectif particulier.</li>' : $strObjectives);
-  	$strAllRules .= '</ul>';
-  	$strAllRules .= '<h4>Mise en place</h4><ul>';
-  	$strAllRules .= ($strSetups=='' ? '<li>Aucune mise en place particulière.</li>' : $strSetups);
-  	$strAllRules .= '</ul>';
-  	$strAllRules .= '<h4>Règles spéciales</h4><ul>';
-  	$strAllRules .= ($strRules=='' ? '<li>Aucune règle spéciale particulière.</li>' : $strRules);
-  	$strAllRules .= '</ul></li>';
-  	return $strAllRules;
-  	}
-  
-  
-  
-	public function getWpPost($type='') { return parent::getWpPost('wp_3_z_mission'); }
-	*/
-	
-	/**
-	 * Retourne l'url de l'image de la Mission
-	 *
-	public function getImgUrl() {
-		$WpPost = $this->WpPost;
-		if ( $WpPost!=null ) {
-			$medias = get_attached_media( 'image', $WpPost->getID() );
-			if ( !empty($medias) ) {
-				$media = array_shift($medias);
-				if ( $media->guid!='' ) {
-					return $media->guid;
-				}
-			}
-		}
-		return '/wp-content/plugins/zomb/web/rsc/img/missions/Mission_'.$this->code.'.jpg';
-	}
 
-	public function getMapUrl($type='') { return '/wp-content/plugins/zomb/web/rsc/img/map/'.$this->code.($type==''?'':'_'.$type).'.jpg'; }
-	public function getStrDimension() { return $this->width.'x'.$this->height; }
-
-  public function getStartingCanvasDiv() { 
-    return '<div id="token_00" class="draggable token start" style="top: '.$this->startingYCoord.'px; left: '.$this->startingXCoord.'px;"></div>';
-	}
-  
-
-	public function needExpansion($expansionId) {
-    $MissionExpansions = $this->getMissionExpansions();
-    if ( !empty($MissionExpansions) ) {
-      foreach ( $MissionExpansions as $MissionExpansion ) {
-        if ( $MissionExpansion->getExpansionId() == $expansionId ) { return TRUE; }
-      }
-    }
-    return FALSE;
-  }
-
-
-
-  
-
-
-	/**
-	 * @param array $row
-	 *
-	public static function convertElementFromPost($row) {
-		$Obj = new Mission();
-		$vars = get_class_vars('Mission');
-		if ( !empty($vars) ) {
-			foreach ( $vars as $key=>$value ) {
-				$Obj->setField($key, str_replace("\\", '', $row[$key]));
-			}
-			if ( $row['officielle']=='on' ) { $Obj->setField('officielle', 1); }
-			if ( $row['active']=='on' ) { $Obj->setField('active', 1); }
-			if ( $row['missionliveactive']=='on' ) { $Obj->setField('missionliveactive', 1); }
-		}
-		return $Obj;
-	}
-  
-	/**
-	 * Construit et Affiche le visuel de Mission.
-	 * Pour le moment, construit en html et à coup de div et li. Envisager une construction sur canvas.
-	 * @since 1.0.00
-	 *
-	public function displayMissionMap() {
-		$width = 250*$this->width;
-		$height = 250*$this->height;
-		$str  = '';
-		$str .= '<ul id="mapTiles" style="width: '.$width.'px; height: '.$height.'px;">';
-		foreach ( $this->Tiles as $LinkTile ) {
-			$LinkTile->displayMissionTile();
-		}
-		foreach ( $this->Zones as $LinkZone ) {
-			$LinkZone->displayMissionZone();
-		}
-		$str .= '</ul>';
-		return $str;
-	}
-	*/
 }
 ?>

@@ -48,7 +48,6 @@ class ToolsPageBean extends PagePageBean {
 				} else {
 					$strClasse = "warning";
 				}
-//        $strDice = '<i class="fas fa-dice-'.$this->getNumber($score).'"></i>';
 				$strBadge = '<span class="badge badge-'.$strClasse.'">'.$score.'</span>';
 				$strJets .= $strBadge.' ';
 			}

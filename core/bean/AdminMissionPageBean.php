@@ -262,7 +262,6 @@ class AdminMissionPageBean extends AdminPageBean {
         $filters .= $this->DurationServices->getDurationsSelect(__FILE__, __LINE__, $filter_by_durationId, $prefix, $classe, FALSE, 'Toutes durées');
         $filters .= $this->PlayerServices->getNbPlayersSelect(__FILE__, __LINE__, $filter_by_playerId, $prefix, $classe, FALSE, 'Tous joueurs');
         $filters .= $this->OrigineServices->getOriginesSelect(__FILE__, __LINE__, $filter_by_origineId, $prefix  , $classe, FALSE, 'Toutes origines');
-        //$filters .= $this->MissionExpansionServices->getExpansionsSelect(__FILE__, __LINE__, '', 'filter-by-', 'custom-select custom-select-sm filters', FALSE, 'Toutes extensions');
         // Sorts
         $queryArg['post_status'] = 'all';
         $queryArg['orderby'] = 'code';

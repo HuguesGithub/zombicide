@@ -39,7 +39,6 @@ class SpawnDeckPageBean extends PagePageBean {
 	public function getSpawnDeckContent() {
     $strSpawns = '';
     $showSelection = '';
-    //unset($_SESSION['wp_11_keyAccess']);
 		$invasionSpanSelection = $this->initVar('invasionSpanSelection');
 		$keyAccess = $this->initVar('keyAccess');
     if ( $keyAccess == '' && isset($_SESSION['wp_11_keyAccess']) && $_SESSION['wp_11_keyAccess']!='' ) { $keyAccess = $_SESSION['wp_11_keyAccess']; }

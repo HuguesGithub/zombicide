@@ -93,9 +93,6 @@ class PostPageBean extends MainPageBean {
     if ( !empty($nextPost) ) {
 	    $navigationMissions .= '<a href="'.$nextPost->guid.'" class="mission-adjacent-link float-right">'.$nextPost->post_title.'</a>';
     }
-    //<div class="navigation"><div class="alignleft">'.previous_post_link('&laquo; &laquo; %', 'Toward The Past: ', 'yes').'</div><div class="alignright">'.next_post_link('% &raquo; &raquo; ', 'Toward The Future: ', 'yes').'</div></div>';
-      //posts_nav_link();
-    //previous_post_link().next_post_link()
 		$args = array(
 			$Mission->getCode(),
 			$Mission->getTitle(),

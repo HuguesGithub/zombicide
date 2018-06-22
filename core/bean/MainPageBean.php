@@ -163,15 +163,6 @@ class MainPageBean {
 	 */
 	public function getQueryArg($addArg, $remArg=array()) {
 		$addArg['page'] = 'zombicide/admin_zombicide.php';
-/*	
-		$this->dealWithQueryArg('filter-dimension', $addArg, $remArg);
-		$this->dealWithQueryArg('filter-difficulty', $addArg, $remArg);
-		$this->dealWithQueryArg('filter-nbPlayers', $addArg, $remArg);
-		$this->dealWithQueryArg('filter-duration', $addArg, $remArg);
-		$this->dealWithQueryArg('filter-origineId', $addArg, $remArg);
-		$this->dealWithQueryArg('filter-expansionId', $addArg, $remArg);
-		$this->dealWithQueryArg('filter-type', $addArg, $remArg);
-*/	
 		$remArg[] = 'form';
 		$remArg[] = 'id';
 		return add_query_arg($addArg, remove_query_arg($remArg, 'http://zombicide.jhugues.fr/wp-admin/admin.php'));
@@ -195,19 +186,5 @@ class MainPageBean {
 		return $default;
 	}
 	
-	
-	/*
-	
-
-
-	/**
-	 * 
-	 * @param array $addArg
-	 * @param array $remArg
-	 *
-  public function dealWithQueryArg($id, &$addArg, &$remArg) {
-    if ( isset($this->urlParams[$id]) && !empty($this->urlParams[$id]) ) { $addArg[$id] = $this->urlParams[$id]; } else { $remArg[] = $id; }
-  }
-  */
 }
 ?>

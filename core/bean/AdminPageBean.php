@@ -18,11 +18,6 @@ class AdminPageBean extends MainPageBean {
         $this->analyzeUri();
         $this->tableName = 'wp_11_zombicide_'.$tag;
         $this->tplAdminerUrl = 'http://zombicide.jhugues.fr/wp-content/plugins/adminer/inc/adminer/loader.php?username=dbo507551204&db=db507551204&table='.$this->tableName;
-    /*
-        $this->tplHeader = 'web/pages/admin/'.$tag.'/header.php';
-        $this->tplRow = 'web/pages/admin/'.$tag.'/row.php';
-        $this->tplEdit = 'web/pages/admin/'.$tag.'/edit.php';
-    */
     }
 
     /**
@@ -74,10 +69,7 @@ class AdminPageBean extends MainPageBean {
         $request = "SELECT option_value FROM wp_11_options WHERE option_name='cron';";
         $row = MySQL::wpdbSelect($request);
         $Obj = array_shift($row);
-    //echo "[[".$Obj->option_value."]]<br>";
         $arrOptions = unserialize($Obj->option_value);
-    //print_r($arrOptions);
-    //echo "<br><br><br>";
         foreach ( $arrOptions as $key=>$value ) {
             if ( isset($value['wp_db_backup_cron']) ) {
                 $nextTs = $key;
@@ -86,10 +78,8 @@ class AdminPageBean extends MainPageBean {
             }
         }
         if ( $doReset ) {
-        //print_r($arrOptions);
             $serialized = serialize($arrOptions);
             $request = "UPDATE wp_11_options SET option_value='$serialized' WHERE option_name='cron';";
-      //echo "<br><br>[[$request]]<br>";
         }
         $args = array(
       // Date de la prochaine sauvegarde - 1

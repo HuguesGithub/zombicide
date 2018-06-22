@@ -27,16 +27,6 @@ class Expansion extends LocalDomain {
 	 * @var int $displayRank
 	 */
 	protected $displayRank;
-	/*
-	protected $imageSuffixe;
-	protected $officielle;
-	protected $active;
-  protected $invasionSpan;
-  protected $nbSurvivants;
-  protected $nbDalles;
-  protected $nbEquipmentCards;
-  protected $nbInvasionCards;
-	*/
 
 	/**
 	 * 
@@ -67,16 +57,6 @@ class Expansion extends LocalDomain {
 	 * @return int
 	 */
 	public function getDisplayRank() { return $this->displayRank; }
-	/*
-	public function getImageSuffixe() { return $this->imageSuffixe; }
-	public function isOfficielle() { return ($this->officielle==1); }
-	public function isActive() { return ($this->active==1); }
-	public function getInvasionspan() { return $this->invasionSpan; }
-  public function getNbSurvivants() { return $this->nbSurvivants; }
-  public function getNbDalles() { return $this->nbDalles; }
-  public function getNbEquipmentCards() { return $this->nbEquipmentCards; }
-  public function getNbInvasionCards() { return $this->nbInvasionCards; }
-	*/
 	/**
 	 * 
 	 * @param int $id
@@ -97,16 +77,6 @@ class Expansion extends LocalDomain {
 	 * @param int $displayRank
 	 */
 	public function setDisplayRank($displayRank) { $this->displayRank=$displayRank; }
-	/*
-	public function setImageSuffixe($imageSuffixe) { $this->imageSuffixe=$imageSuffixe; }
-	public function setOfficielle($officielle) { $this->officielle=$officielle; }
-	public function setActive($active) { $this->active=$active; }
-	public function setInvasionspan($invasionSpan) { $this->invasionSpan=$invasionSpan; }
-  public function setNbSurvivants($nbSurvivants) { $this->nbSurvivants=$nbSurvivants; }
-  public function setNbDalles($nbDalles) { $this->nbDalles=$nbDalles; }
-  public function setNbEquipmentCards($nbEquipmentCards) { $this->nbEquipmentCards=$nbEquipmentCards; }
-  public function setNbInvasionCards($nbInvasionCards) { $this->nbInvasionCards=$nbInvasionCards; }
-	*/
 	/**
 	 * Retourne les attributs de la classe
 	 * @return array

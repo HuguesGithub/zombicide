@@ -34,12 +34,6 @@ class SpawnDeckActions {
         $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[KEYACCESS]);
         $LiveDeckServices->delete(__FILE__, __LINE__, $LiveDeck);
         unset($_SESSION['wp_11_keyAccess']);
-    /*
-        $json  = '{"page-live-spawn":';
-    $json .= json_encode(SpawnDeckPageBean::getStaticSpawnDeckContent());
-        $json .= '}';
-        return $json;     
-    */
     }
     /**
      * @param array $post

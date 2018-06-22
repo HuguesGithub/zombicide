@@ -3,9 +3,6 @@
  * WpPostSurvivorBean
  */
 class WpPostSurvivorBean extends MainPageBean {
-//	private $tplBreveArticle = 'web/pages/public/fragments/article-breve-main.php';
-//  private $tplBrevePost = 'web/pages/public/fragments/article-breve-post.php';
-//  protected $showTags = false;
 
 	/**
 	 * Constructeur

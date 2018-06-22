@@ -139,7 +139,6 @@ class Survivor extends LocalDomain {
 		$nicename = $this->getNiceName($this->name);
 		$baseUrl = '/wp-content/plugins/zombicide/web/rsc/images/portraits/p';
 		$portraitUrl = $baseUrl.$nicename.($type!=''?'-'.$type:'').'.jpg';
-		//if ( !file_exists('http://zombicide.jhugues.fr'.$portraitUrl) ) { $portraitUrl = $baseUrl.'.jpg'; }
 		return $portraitUrl;
 	}
 	/**
@@ -148,11 +147,6 @@ class Survivor extends LocalDomain {
 	 */
 	public function getStrClassFilters($isHome) {
 		$strClassFilters ='';
-		/*
-		$strClassFilters  = 'player-'.$this->playerId.' ';
-		$strClassFilters .= 'duration-'.$this->durationId.' ';
-		$strClassFilters .= 'level-'.$this->levelId.' ';
-		*/
 		$strClassFilters .= ' col-12 col-sm-6 col-md-4';
 		return $strClassFilters;
 	}

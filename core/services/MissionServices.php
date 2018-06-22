@@ -22,22 +22,6 @@ class MissionServices extends LocalServices {
 		array_push($arrParams, (!empty($arrFilters['playerId']) && !is_array($arrFilters['playerId'])) ? $arrFilters['playerId'] : '%');
 		array_push($arrParams, (!empty($arrFilters['origineId']) && !is_array($arrFilters['origineId'])) ? $arrFilters['origineId'] : '%');
 		array_push($arrParams, (isset($arrFilters['published']) && !is_array($arrFilters['published'])) ? $arrFilters['published'] : '%');
-    
-		/*
-		array_push($arrParams, !empty($arrFilters['missionliveactive']) ? $arrFilters['missionliveactive'] : '%');
-		array_push($arrParams, !empty($arrFilters['active']) ? $arrFilters['active'] : '%');
-		if ( !empty($arrFilters['dimension']) ) {
-			$arrDim = explode('x', $arrFilters['dimension']);
-			array_push($arrParams, $arrDim[0]);
-			array_push($arrParams, $arrDim[1]);
-		} else {
-			array_push($arrParams, '%');
-			array_push($arrParams, '%');
-		}
-		array_push($arrParams, !empty($arrFilters['search']) ? '%'.$arrFilters['search'].'%' : '%');
-		array_push($arrParams, !empty($arrFilters['search']) ? '%'.$arrFilters['search'].'%' : '%');
-		array_push($arrParams, !empty($arrFilters['search']) ? '%'.$arrFilters['search'].'%' : '%');
-    */
 		return $arrParams;
 	}
 	/**

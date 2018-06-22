@@ -71,19 +71,6 @@ class LocalDaoImpl extends GlobalDaoImpl {
                     case 'Tile'                   : $Items[] = Tile::convertElement($row); break;
                     case 'Token'                  : $Items[] = Token::convertElement($row); break;
                     case 'WeaponProfile'          : $Items[] = WeaponProfile::convertElement($row); break;
-//                    case 'EquipmentLive'            : $Items[] = EquipmentLive::convertElement($row); break;
-//                    case 'GenKey'                    : $Items[] = GenKey::convertElement($row); break;
-//                    case 'Invasion'                    : $Items[] = Invasion::convertElement($row); break;
-//                    case 'InvasionLive'                : $Items[] = InvasionLive::convertElement($row); break;
-//                    case 'MissionLive'                : $Items[] = MissionLive::convertElement($row); break;
-//                    case 'MissionLiveToken'            : $Items[] = MissionLiveToken::convertElement($row); break;
-//                    case 'MissionToken'                : $Items[] = MissionToken::convertElement($row); break;
-//                    case 'MissionZone'                : $Items[] = MissionZone::convertElement($row); break;
-//                    case 'Origine'                    : $Items[] = Origine::convertElement($row); break;
-//                    case 'SurvivorLive'                : $Items[] = SurvivorLive::convertElement($row); break;
-//                    case 'SurvivorLiveSkill'        : $Items[] = SurvivorLiveSkill::convertElement($row); break;
-//                    case 'ZombicideTable'            : $Items[] = ZombicideTable::convertElement($row); break;
-//                    case 'Zone'                        : $Items[] = Zone::convertElement($row); break;
                     default                                        : echo 'Must add ['.$type.'] in Zomb::LocalDaoImpl.<br>'; break;
                 }
             }

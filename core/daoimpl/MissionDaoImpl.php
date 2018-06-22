@@ -12,7 +12,6 @@ class MissionDaoImpl extends LocalDaoImpl {
 	 * @var string $selectRequest
 	 */
 	protected $selectRequest = "SELECT m.id AS id, title, m.code AS code, levelId, playerId, durationId, origineId, width, height, published ";
-	// description, origineId, author, officielle, active, missionliveactive, startingXCoord, startingYCoord
 	/**
 	 * Table concernée
 	 * @var string $fromRequest
@@ -23,20 +22,16 @@ class MissionDaoImpl extends LocalDaoImpl {
 	 * @var string $whereFilters
 	 */
 	protected $whereFilters = "WHERE levelId LIKE '%s' AND durationId LIKE '%s' AND playerId LIKE '%s' AND origineId LIKE '%s' AND published LIKE '%s' ";
-	//AND missionliveactive LIKE '%s' AND active LIKE '%s' AND width LIKE '%s' AND height LIKE '%s' AND ( code LIKE '%s' OR name LIKE '%s' OR description LIKE '%s') ";
 	/**
 	 * Requête d'insertion en base
 	 * @var string $insert
 	 */
 	protected $insert = "INSERT INTO wp_11_zombicide_mission (title, code, levelId, playerId, durationId, origineId, width, height, published) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
-	//, description, author, officielle, active, missionliveactive, startingXCoord, startingYCoord) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
 	/**
 	 * Requête de mise à jour en base
 	 * @var string $update
 	 */
 	protected $update = "UPDATE wp_11_zombicide_mission SET title='%s', code='%s', levelId='%s', playerId='%s', durationId='%s', origineId='%s', width='%s', height='%s', published='%s' ";
-	//, description='%s', author='%s', officielle='%s', active='%s', missionliveactive='%s', startingYCoord='%s', startingYCoord='%s' ";
-	//protected $distinctDimensions = "SELECT DISTINCT CONCAT(width, 'x', height) AS label ";
 
 	public function __construct() {}
 	/**
@@ -54,13 +49,6 @@ class MissionDaoImpl extends LocalDaoImpl {
 		$Missions = $this->selectEntry($file, $line, $arrParams);
 		return ( empty($Missions) ? new Mission() : array_shift($Missions));
 	}
-/*
-	public function selectDistinctDimensions($file, $line, $arrParams) {
-		$request = $this->distinctDimensions.$this->fromRequest.$this->orderBy;
-		$Missions = $this->selectEntriesAndLogQuery($file, $line, $request, $arrParams);
-		return $Missions;
-	}
-*/
 	/**
 	 * @param string $file
 	 * @param int $line

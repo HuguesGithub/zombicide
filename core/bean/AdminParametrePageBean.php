@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-if ( !defined( 'ABSPATH') ) die( 'Forbidden' );
+if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
 /**
  * AdminParametrePageBean
  * @version 1.0.00
@@ -128,6 +128,7 @@ class AdminParametrePageBean extends AdminPageBean {
                     }
                 }
             break;
+            default : break;
         }
         $tHeader  = '<tr>';
         $tFooter  = '<tr>';

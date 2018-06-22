@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-if ( !defined( 'ABSPATH') ) die( 'Forbidden' );
+if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
 /**
  * AdminMissionPageBean
  * @version 1.0.00

@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) die( 'Forbidden' );
+if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
 define ('_SQL_PARAMS_WHERE_', 'where');
 define ('_SQL_PARAMS_REPLACE_', 'replace');
 define ('_SQL_PARAMS_LIMIT_', '__limit__');

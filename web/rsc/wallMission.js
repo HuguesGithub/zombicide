@@ -320,7 +320,7 @@ function buttonTrashCard() {
     }
     $hj.post(ajaxurl, data, function(response) {
       try {
-        obj = JSON.parse(response);
+        var obj = JSON.parse(response);
         reloadIdElement(obj);
         buttonTrashCard();
         buttonShowInvasion();

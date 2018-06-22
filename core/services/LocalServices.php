@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) die( 'Forbidden' );
+if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
 /**
  * Classe LocalServices
  * @author Hugues.
@@ -16,6 +16,7 @@ class LocalServices extends GlobalServices {
 			foreach ( $services as $service ) {
 				switch ( $service ) {
 					case 'Expansion' 				: $this->ExpansionServices = FactoryServices::getExpansionServices(); break;
+					default : break;
 				}
 			}
 		}

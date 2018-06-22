@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) die( 'Forbidden' );
+if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
 /**
  * Classe Survivor
  * @author Hugues.
@@ -193,6 +193,7 @@ class Survivor extends LocalDomain {
 					case 42 :
 						$strTmp .= '<li><span class="badge badge-red-skill">'.$SurvivorSkill->getSkillName().'</span></li>';
 					break;
+					default : break;
 				}
 			}
 			$str .= '<ul class="">'.$strTmp.'</ul>';

@@ -901,7 +901,7 @@ function addPageSurvivantAjaxActions(clicked) {
 	      paged = clicked.data('paged');
 	    break;
 	    case 'filter' :
-	      filter = clicked.data('filter');
+	      var filter = clicked.data('filter');
 	      var top = clicked.offset().top;
 	      var left = clicked.offset().left;
 	      var widthCol = clicked.width();
@@ -1024,7 +1024,7 @@ function doSpawnDeckActions(data, type) {
     function(response) {
       try {
         obj = JSON.parse(response);
-        for ( anchor in obj ) {
+        for ( var anchor in obj ) {
           if ( type == 'insert' ) {
           	$hj('#'+anchor).html(obj[anchor]);
           } else if ( type == 'replace' ) {

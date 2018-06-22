@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) die( 'Forbidden' );
+if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
 /**
  * Classe ToolsPageBean
  * @author Hugues.
@@ -69,6 +69,7 @@ class ToolsPageBean extends PagePageBean {
       case 4 : return 'four'; break;
       case 5 : return 'five'; break;
       case 6 : return 'six'; break;
+      default : break;
     }
   }
 	/**

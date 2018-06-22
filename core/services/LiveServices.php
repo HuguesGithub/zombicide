@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) die( 'Forbidden' );
+if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
 /**
  * Classe LiveServices
  * @author Hugues.

@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) die( 'Forbidden' );
+if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
 /**
  * Classe MissionBean
  * @author Hugues.
@@ -177,6 +177,7 @@ class MissionBean extends MainPageBean {
             case 'addCol'    :
                 $Mission->setWidth($Mission->getWidth()+1);
             break;
+            default : break;
         }
         $MissionServices->update(__FILE__, __LINE__, $Mission);
          return '{"mapEditor":'.json_encode($Bean->buildBlockTiles($Mission)).'}';
@@ -214,6 +215,7 @@ class MissionBean extends MainPageBean {
                     case 'E' : $classImg = ' east'; break;
                     case 'S' : $classImg = ' south'; break;
                     case 'O' : $classImg = ' west'; break;
+                    default : break;
                 }
                 $innerRows[$i] .= vsprintf($openDivTile, array($j, ''));
                 $innerRows[$i] .= '<img class="thumbTile'.$classImg.'" src="/wp-content/plugins/zombicide/web/rsc/images/tiles/'.$Mission->getTileCode($j, $i+1).'-500px.png" alt="'.$Mission->getTileCode($j, $i+1).'">';

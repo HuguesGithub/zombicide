@@ -44,7 +44,7 @@ class TokenServices extends LocalServices {
      * @return string
      */
     public function getTokensSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultLabel='') {
-        $Tokens = $this->getTokensWithFilters($file, $line, array(), 'id', $order='asc');
+        $Tokens = $this->getTokensWithFilters($file, $line, array(), 'id', 'asc');
         $arrSetLabels = array();
         foreach ( $Tokens as $Token ) {
             $arrSetLabels[$Token->getId()] = $Token->getCode();

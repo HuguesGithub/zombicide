@@ -25,11 +25,11 @@ class MarketPageBean extends PagePageBean {
 	 * @see PagePageBean::getContentPage()
 	 */
 	public function getContentPage() {
+		$strBody = '';
 		$WpPosts = $this->WpPostServices->getArticles(__FILE__, __LINE__, array('orderby'=> 'rand', 'posts_per_page'=>-1, 'post_status'=>'private'));
-		$strContent = '';
 		if ( !empty($WpPosts) ) {
 			foreach ( $WpPosts as $WpPost ) {
-        $Market = Market::convertWpPost($WpPost);
+        		$Market = Market::convertWpPost($WpPost);
 				$MarketBean = new MarketBean($Market);
 				$strBody .= $MarketBean->getVisitCard();
 			}

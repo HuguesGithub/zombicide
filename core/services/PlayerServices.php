@@ -43,7 +43,7 @@ class PlayerServices extends LocalServices {
 	 * @return string
 	 */
 	public function getNbPlayersSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultValue='') {
-		$Players = $this->getPlayersWithFilters($file, $line, array(), 'name', $order='asc');
+		$Players = $this->getPlayersWithFilters($file, $line, array(), 'name', 'asc');
 		$arrSetLabels = array();
 		foreach ( $Players as $Player ) {
 			$arrSetLabels[$Player->getId()] = $Player->getNbJoueurs();

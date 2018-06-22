@@ -95,7 +95,7 @@ class MissionBean extends MainPageBean {
                         if ( $MissionTile->getCoordY()==$rkRow ) {
                             $MissionTileServices->delete(__FILE__, __LINE__, $MissionTile);
                         } elseif ( $MissionTile->getCoordY()>$rkRow ) {
-                            $MissionTile->setCoordY($Missiontile->getCoordY()-1);
+                            $MissionTile->setCoordY($MissionTile->getCoordY()-1);
                             $MissionTileServices->update(__FILE__, __LINE__, $MissionTile);
                         }
                     }
@@ -109,7 +109,7 @@ class MissionBean extends MainPageBean {
                         if ( $MissionTile->getCoordX()==$rkCol ) {
                             $MissionTileServices->delete(__FILE__, __LINE__, $MissionTile);
                         } elseif ( $MissionTile->getCoordX()>$rkCol ) {
-                            $MissionTile->setCoordX($Missiontile->getCoordX()-1);
+                            $MissionTile->setCoordX($MissionTile->getCoordX()-1);
                             $MissionTileServices->update(__FILE__, __LINE__, $MissionTile);
                         }
                     }
@@ -236,7 +236,6 @@ class MissionBean extends MainPageBean {
         $this->MissionObjectives = $this->Mission->getMissionObjectives();
         if ( !empty($this->MissionObjectives) ) {
             foreach ( $this->MissionObjectives as $MissionObjective ) {
-                $Objective = $MissionObjective->getObjective();
                 $displayMissionObjectives[$MissionObjective->getId()] = $MissionObjective;
             }
         }

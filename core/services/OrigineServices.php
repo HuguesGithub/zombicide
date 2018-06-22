@@ -44,7 +44,7 @@ class OrigineServices extends LocalServices {
 	 * @return string
 	 */
 	public function getOriginesSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultLabel='') {
-		$Origines = $this->getOriginesWithFilters($file, $line, array(), 'name', $order='ASC');
+		$Origines = $this->getOriginesWithFilters($file, $line, array(), 'name', 'ASC');
 		$arrSetLabels = array();
 		foreach ( $Origines as $Origine ) {
 			$arrSetLabels[$Origine->getId()] = $Origine->getName();

@@ -87,7 +87,7 @@ class Equipment extends LocalDomain {
     public function isRanged() {
         if ( $this->ranged==null ) {
             if ( $this->EquipmentWeaponProfiles == null ) {
-                $EquipmentWeaponProfiles = $this->getEquipmentWeaponProfiles();
+                $this->EquipmentWeaponProfiles = $this->getEquipmentWeaponProfiles();
             }
             if ( empty($this->EquipmentWeaponProfiles) ) { 
                 $this->ranged = FALSE;
@@ -109,7 +109,7 @@ class Equipment extends LocalDomain {
     public function isMelee() {
         if ( $this->melee==null ) {
             if ( $this->EquipmentWeaponProfiles == null ) {
-                $EquipmentWeaponProfiles = $this->getEquipmentWeaponProfiles();
+                $this->EquipmentWeaponProfiles = $this->getEquipmentWeaponProfiles();
             }
             if ( empty($this->EquipmentWeaponProfiles) ) { 
                 $this->melee = FALSE;
@@ -120,7 +120,7 @@ class Equipment extends LocalDomain {
                     if ( $WeaponProfile->getMaxRange()==0 ) { $isMelee = TRUE; }
                     else { $this->ranged = TRUE; }
                 }
-                $this->melee = $isRanged;
+                $this->melee = $isMelee;
             }
         }
         return $this->melee;

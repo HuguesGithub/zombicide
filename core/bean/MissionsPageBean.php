@@ -43,6 +43,7 @@ class MissionsPageBean extends PagePageBean {
 	 * @see PagePageBean::getContentPage()
 	 */
 	public function getContentPage($sort_col='title', $sort_order='asc', $nbPerPage=10, $curPage=1, $arrFilters=array()) {
+		$strBody = '';
 		$Missions = $this->MissionServices->getMissionsWithFiltersIn(__FILE__, __LINE__, $arrFilters, $sort_col, $sort_order);
 		$nbElements = count($Missions);
 		$nbPages = ceil($nbElements/$nbPerPage);
@@ -53,57 +54,58 @@ class MissionsPageBean extends PagePageBean {
 				$strBody .= $MissionBean->getRowForMissionsPage();
 			}
 		}
+		$strPagination = '';
 		for ( $i=1; $i<=$nbPages; $i++ ) {
 			$strPagination .= '<li class="page-item'.($i==$curPage?' disabled':'').'"><a class="page-link ';
 			$strPagination .= 'ajaxAction" href="#" data-paged="'.$i.'" data-ajaxaction="paged">'.$i.'</a></li>';
 		}
-    $hasFilters = FALSE;
-    $arrLevelIds = '';
-    $Levels = $this->LevelServices->getLevelsWithFilters(__FILE__, __LINE__);
-    if ( isset($arrFilters[CST_LEVELID]) && !empty($arrFilters[CST_LEVELID]) ) {
-      $arrLevelIds = $arrFilters[CST_LEVELID];
-      foreach ( $arrFilters[CST_LEVELID] as $id ) {
-        $name = $this->getNameById($Levels, $id);
-    		$hasFilters = TRUE;
-      }
-    }
-    $arrPlayerIds = '';
-    $Players = $this->PlayerServices->getPlayersWithFilters(__FILE__, __LINE__);
-    if ( isset($arrFilters[CST_PLAYERID]) && !empty($arrFilters[CST_PLAYERID]) ) {
-      $arrPlayerIds = $arrFilters[CST_PLAYERID];
-      foreach ( $arrFilters[CST_PLAYERID] as $id ) {
-        $name = $this->getNameById($Players, $id);
-    		$hasFilters = TRUE;
-      }
-    }
-    $arrDurationIds = '';
-    $Durations = $this->DurationServices->getDurationsWithFilters(__FILE__, __LINE__);
-    if ( isset($arrFilters[CST_DURATIONID]) && !empty($arrFilters[CST_DURATIONID]) ) {
-      $arrDurationIds = $arrFilters[CST_DURATIONID];
-      foreach ( $arrFilters[CST_DURATIONID] as $id ) {
-        $name = $this->getNameById($Durations, $id);
-    		$hasFilters = TRUE;
-      }
-    }
-    $arrOrigineIds = '';
-    $Origines = $this->OrigineServices->getOriginesWithFilters(__FILE__, __LINE__);
-    if ( isset($arrFilters[CST_ORIGINEID]) && !empty($arrFilters[CST_ORIGINEID]) ) {
-      $arrOrigineIds = $arrFilters[CST_ORIGINEID];
-      foreach ( $arrFilters[CST_ORIGINEID] as $id ) {
-        $name = $this->getNameById($Origines, $id);
-    		$hasFilters = TRUE;
-      }
-    }
-    $arrExpansionIds = '';
-    $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array('nbMissions'=>1));
-    if ( isset($arrFilters[CST_EXPANSIONID]) && !empty($arrFilters[CST_EXPANSIONID]) ) {
-      $arrExpansionIds = $arrFilters[CST_EXPANSIONID];
-      foreach ( $arrFilters[CST_EXPANSIONID] as $id ) {
-        $name = $this->getNameById($Expansions, $id);
-    		$hasFilters = TRUE;
-      }
-    }
-    $selectClasses = 'custom-select custom-select-sm filters';
+	    $hasFilters = FALSE;
+    	$arrLevelIds = '';
+	    $Levels = $this->LevelServices->getLevelsWithFilters(__FILE__, __LINE__);
+    	if ( isset($arrFilters[CST_LEVELID]) && !empty($arrFilters[CST_LEVELID]) ) {
+      		$arrLevelIds = $arrFilters[CST_LEVELID];
+      		foreach ( $arrFilters[CST_LEVELID] as $id ) {
+        		$name = $this->getNameById($Levels, $id);
+    			$hasFilters = TRUE;
+      		}
+    	}
+    	$arrPlayerIds = '';
+    	$Players = $this->PlayerServices->getPlayersWithFilters(__FILE__, __LINE__);
+    	if ( isset($arrFilters[CST_PLAYERID]) && !empty($arrFilters[CST_PLAYERID]) ) {
+    		$arrPlayerIds = $arrFilters[CST_PLAYERID];
+      		foreach ( $arrFilters[CST_PLAYERID] as $id ) {
+        		$name = $this->getNameById($Players, $id);
+    			$hasFilters = TRUE;
+      		}
+    	}
+    	$arrDurationIds = '';
+    	$Durations = $this->DurationServices->getDurationsWithFilters(__FILE__, __LINE__);
+    	if ( isset($arrFilters[CST_DURATIONID]) && !empty($arrFilters[CST_DURATIONID]) ) {
+      		$arrDurationIds = $arrFilters[CST_DURATIONID];
+      		foreach ( $arrFilters[CST_DURATIONID] as $id ) {
+        		$name = $this->getNameById($Durations, $id);
+    			$hasFilters = TRUE;
+      		}
+    	}
+    	$arrOrigineIds = '';
+    	$Origines = $this->OrigineServices->getOriginesWithFilters(__FILE__, __LINE__);
+    	if ( isset($arrFilters[CST_ORIGINEID]) && !empty($arrFilters[CST_ORIGINEID]) ) {
+      		$arrOrigineIds = $arrFilters[CST_ORIGINEID];
+      		foreach ( $arrFilters[CST_ORIGINEID] as $id ) {
+        		$name = $this->getNameById($Origines, $id);
+    			$hasFilters = TRUE;
+      		}
+    	}
+    	$arrExpansionIds = '';
+    	$Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array('nbMissions'=>1));
+    	if ( isset($arrFilters[CST_EXPANSIONID]) && !empty($arrFilters[CST_EXPANSIONID]) ) {
+      		$arrExpansionIds = $arrFilters[CST_EXPANSIONID];
+      		foreach ( $arrFilters[CST_EXPANSIONID] as $id ) {
+        		$name = $this->getNameById($Expansions, $id);
+    			$hasFilters = TRUE;
+      		}
+    	}
+    	$selectClasses = 'custom-select custom-select-sm filters';
 		$args = array(
 			($nbPerPage==10 ? 'selected':''),
 			($nbPerPage==25 ? 'selected':''),
@@ -136,8 +138,8 @@ class MissionsPageBean extends PagePageBean {
 			$this->DurationServices->getDurationsSelect(__FILE__, __LINE__, $arrDurationIds, '', $selectClasses, TRUE),
 			// Filtre sur Origine - 17
 			$this->OrigineServices->getOriginesSelect(__FILE__, __LINE__, $arrOrigineIds, '', $selectClasses, TRUE),
-      // Doit-on afficher les filtres ? - 18
-      (!$hasFilters ? 'hidden' : ''),
+      		// Doit-on afficher les filtres ? - 18
+      		(!$hasFilters ? 'hidden' : ''),
 			// Filtre sur Extension - 19
 			($this->isAdmin() ? $this->ExpansionServices->getExpansionsSelectAlreadyRequested(__FILE__, __LINE__, $Expansions, $arrExpansionIds, '', $selectClasses, TRUE) : ''),
       

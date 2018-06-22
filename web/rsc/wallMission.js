@@ -353,7 +353,7 @@ function buttonGrantXp() {
     var data = {'action': 'dealWithAjax', 'ajaxAction': 'grantXp', 'slid': $hj(this).data('slid'), 'varxp': $hj(this).data('varxp')};
     $hj.post(ajaxurl, data, function(response) {
       try {
-        obj = JSON.parse(response);
+        var obj = JSON.parse(response);
         reloadIdElement(obj);
         buttonGrantXp();
         var nb = $hj('#survivorsMission .xp li').length;

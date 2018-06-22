@@ -180,6 +180,7 @@ class AdminMissionPageBean extends AdminPageBean {
             default         : $ToDisplayMissions = $FilteredMissions;
                 break;
         }
+        $strRows = '';
         $nbPerPage = 15;
         if ( $post_status == 'all' || $post_status == CST_PENDING ) {
             $nbElements = count($ToDisplayMissions);
@@ -244,9 +245,9 @@ class AdminMissionPageBean extends AdminPageBean {
         $strPagination  .= '<div class="input-group-append"><span class="input-group-text"><span class="tablenav-paging-text"> sur <span class="total-pages">'.$nbPages.'</span></span></span></div>';
         $strPagination  .= '<div class="input-group-append">';
         $queryArg[CST_CURPAGE] = min($nbPages, $curPage+1);
-        $strPagination  .= '<div class="btn btn-outline-secondary'.($curPage==$nbPage?' disabled':'').'" type="button"><a class="page-link" href="'.$this->getQueryArg($queryArg).'" aria-label="Suivante">&rsaquo;</a></div>';
+        $strPagination  .= '<div class="btn btn-outline-secondary'.($curPage==$nbPages?' disabled':'').'" type="button"><a class="page-link" href="'.$this->getQueryArg($queryArg).'" aria-label="Suivante">&rsaquo;</a></div>';
         $queryArg[CST_CURPAGE] = $nbPages;
-        $strPagination  .= '<div class="btn btn-outline-secondary'.($curPage==$nbPage?' disabled':'').'" type="button"><a class="page-link" href="'.$this->getQueryArg($queryArg).'" aria-label="Dernière">&raquo;</a></div>';
+        $strPagination  .= '<div class="btn btn-outline-secondary'.($curPage==$nbPages?' disabled':'').'" type="button"><a class="page-link" href="'.$this->getQueryArg($queryArg).'" aria-label="Dernière">&raquo;</a></div>';
         $strPagination  .= '</div>';
         $strPagination  .= '</div>';
         $strPagination  .= '</span>';

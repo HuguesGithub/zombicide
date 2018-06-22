@@ -1,11 +1,16 @@
 <?php
-if ( !defined( 'ABSPATH') ) die( 'Forbidden' );
+if ( !defined( 'ABSPATH') ) {
+	die( 'Forbidden' );
+}
 /**
  * MissionRuleActions
  * @since 1.0.00
  * @author Hugues
  */
 class MissionRuleActions {
+	const SETTING = 'setting';
+	const MISSIONID = 'missionId';
+	
     /**
      * Constructeur
      */
@@ -16,7 +21,7 @@ class MissionRuleActions {
      */
     public static function staticInsert($post) {
         if ( $post['selId']=='' ) {
-            $args = array('description'=>stripslashes($post['description']), 'setting'=>($post['type']=='setting'), 'code'=>'CODE_TODO');
+            $args = array('description'=>stripslashes($post['description']), MISSIONID=>($post['type']==MISSIONID), 'code'=>'CODE_TODO');
             $Rule = new Rule($args);
             $RuleServices = new RuleServices();
             $RuleServices->insert(__FILE__, __LINE__, $Rule);
@@ -24,14 +29,14 @@ class MissionRuleActions {
         } else {
             $ruleId = $post['selId'];
         }
-        $args = array('missionId'=>$post['missionId'], 'ruleId'=>$ruleId, 'title'=>stripslashes($post['title']));
+        $args = array(MISSIONID=>$post[MISSIONID], 'ruleId'=>$ruleId, 'title'=>stripslashes($post['title']));
         $MissionRule = new MissionRule($args);
         $MissionRuleServices = new MissionRuleServices();
         $MissionRuleServices->insert(__FILE__, __LINE__, $MissionRule);
         $MissionServices = new MissionServices();
-        $Mission = $MissionServices->select(__FILE__, __LINE__, $post['missionId']);
+        $Mission = $MissionServices->select(__FILE__, __LINE__, $post[MISSIONID]);
         $MissionBean = new MissionBean($Mission);
-        if ( $post['type']=='setting' ) {
+        if ( $post['type']==MISSIONID ) {
             return $MissionBean->getMissionSettingsBlock();
         } else {
             return $MissionBean->getMissionRulesBlock();
@@ -48,7 +53,7 @@ class MissionRuleActions {
         $MissionServices = new MissionServices();
         $Mission = $MissionServices->select(__FILE__, __LINE__, $MissionRule->getMissionId());
         $MissionBean = new MissionBean($Mission);
-        if ( $post['type']=='setting' ) {
+        if ( $post['type']==MISSIONID ) {
             return $MissionBean->getMissionSettingsBlock();
         } else {
             return $MissionBean->getMissionRulesBlock();

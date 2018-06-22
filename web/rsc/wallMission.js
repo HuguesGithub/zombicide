@@ -1,4 +1,4 @@
-$hj = jQuery.noConflict();
+var $hj = jQuery.noConflict();
 $hj( document ).ready(function() {
 	setWorkZoneHeight();
   setButtonAction();
@@ -182,7 +182,7 @@ function fillIdWithContent(anchor, content) {
 }
 
 function reloadIdElement(obj) {
-	for ( prop in obj ) {
+	for ( var prop in obj ) {
 		fillIdWithContent(prop, obj[prop]);
 	}	
 }
@@ -248,7 +248,7 @@ function setButtonAction() {
       {'action': 'dealWithAjax', 'ajaxAction': 'rollDice', 'diceCode': $hj('#rollInterface input').val()},
       function(response) {
 				try {
-					obj = JSON.parse(response);
+					var obj = JSON.parse(response);
 		    	reloadIdElement(obj);
 				} catch (e) {
 	      	console.log("error: "+e);

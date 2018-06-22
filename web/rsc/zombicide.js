@@ -1,4 +1,4 @@
-$hj = jQuery;
+var $hj = jQuery;
 $hj(document).ready(function(){
   /***************
    *** More News
@@ -368,7 +368,7 @@ $hj(document).ready(function(){
         $hj(this).prop('checked', true);
       });
     } else {
-      for ( i=nb; i>0; i-- ) {
+      for ( var i=nb; i>0; i-- ) {
 	      var rk = Math.floor(Math.random() * nbEligible);
   	    $hj('#liveSurvivorsSelection input:visible:not(:checked)').eq(rk).prop('checked', true);
         nbEligible--;
@@ -674,7 +674,7 @@ function getSurvivorsByExpansionCode(exp, type='') {
  * Ajax Utilities
  ********/
 function reloadComponents(obj, type) {
-  for ( anchor in obj ) {
+  for ( var anchor in obj ) {
     if ( $hj('#'+anchor).length==1 ) {
       switch ( anchor ) {
         case 'online-chat-content'	: $hj('#'+anchor).append(obj[anchor]); addChatMsgActions(); break;
@@ -839,7 +839,7 @@ function addPageCompetenceAjaxActions(clicked) {
       paged = clicked.data('paged');
     break;
     case 'filter' :
-      filter = clicked.data('filter');
+      var filter = clicked.data('filter');
       var top = clicked.offset().top;
       var left = clicked.offset().left;
       var widthCol = clicked.width();

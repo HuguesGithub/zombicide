@@ -1,4 +1,4 @@
-$hj = jQuery;
+var $hj = jQuery;
 $hj(document).ready(function(){
 	if ( $hj('.tileRow .tile').length != 0 ) {
     addActionToMapEditorButtons();
@@ -44,7 +44,7 @@ function addActionToParamEditorButtons() {
           function(response) {
             try {
               var obj = JSON.parse(response);
-              for ( p in obj ) {
+              for ( var p in obj ) {
                 $hj('#'+type+'-'+p).val(obj[p]);
               }
               $hj('#list-table tfoot button.btn-success').removeClass('addParam').addClass('editParam');

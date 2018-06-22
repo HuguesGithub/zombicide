@@ -1,4 +1,4 @@
-$hj = jQuery;
+var $hj = jQuery;
 $hj(document).ready(function(){
   /***************
    *** Canvas Background

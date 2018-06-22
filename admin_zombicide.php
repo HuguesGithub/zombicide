@@ -3,7 +3,9 @@
 <link rel="stylesheet" href="<?php echo ZOMB_SITE_URL; ?>wp-content/plugins/mycommon/web/rsc/css/bootstrap-4.min.css" type="text/css" media="all" />
 <link rel="stylesheet" href="<?php echo ZOMB_SITE_URL; ?>wp-content/plugins/zombicide/web/rsc/admin_zombicide.css" type="text/css" media="all" />
 <?php
-if ( !defined( 'ABSPATH') ) die( 'Forbidden' );
+if ( !defined( 'ABSPATH') ) {
+	die( 'Forbidden' );
+}
 global $Zombicide;
 if ( empty($Zombicide) ) { $Zombicide = new Zombicide(); }
 $AdminPageBean = new AdminPageBean();

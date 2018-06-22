@@ -1,5 +1,7 @@
 <?php
-if ( !defined( 'ABSPATH') ) die( 'Forbidden' );
+if ( !defined( 'ABSPATH') ) {
+	die( 'Forbidden' );
+}
 /**
  * LocalActions
  * @since 1.0.00
@@ -16,6 +18,7 @@ class LocalActions extends GlobalActions {
                 switch ( $service ) {
                     case 'Chat'                : $this->ChatServices = FactoryServices::getChatServices(); break;
                     case 'Live'                : $this->LiveServices = FactoryServices::getLiveServices(); break;
+                    defaut                     : break;
                 }
             }
         }

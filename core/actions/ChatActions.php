@@ -1,11 +1,20 @@
 <?php
-if ( !defined( 'ABSPATH') ) die( 'Forbidden' );
+if ( !defined( 'ABSPATH') ) {
+	die( 'Forbidden' );
+}
 /**
  * ChatActions
  * @since 1.0.00
  * @author Hugues
  */
 class ChatActions extends LocalActions {
+	const TIMESTAMP = 'timestamp';
+	const LIVEID = 'liveId';
+	const TEXTE = 'texte';
+	const FORMATDATE = 'Y-m-d H:i:s';
+	const SENDTOID = 'sendToId';
+	const DECKKEY = 'deckKey';
+	
     /**
      * Constructeur
      */
@@ -15,7 +24,7 @@ class ChatActions extends LocalActions {
         $this->userId = $Data->ID;
         $this->displayName = $Data->display_name;
         
-        $arrParams = array('liveId'=>'0', 'text'=>'', 'timestamp'=>'');
+        $arrParams = array(LIVEID=>'0', 'text'=>'', TIMESTAMP=>'');
         foreach ( $arrParams as $key => $param ) {
             $this->{$key} = isset($post[$key]) ? $post[$key] : $param;
         }
@@ -46,7 +55,7 @@ class ChatActions extends LocalActions {
                 case '/invite' : $returned = $this->inviteUser($arrCmds[1]); break;
                 case '/clean'  : $returned = $this->cleanChat(); break;
                 default :
-                    $arr = array('liveId'=>$this->liveId, 'senderId'=>$this->userId, 'texte'=>stripslashes($text), 'timestamp'=>date('Y-m-d H:i:s'));
+                    $arr = array(LIVEID=>$this->liveId, 'senderId'=>$this->userId, TEXTE=>stripslashes($text), TIMESTAMP=>date(FORMATDATE));
                     $this->postChat($arr);
                     $returned = $this->getChatContent(); 
                 break;
@@ -57,21 +66,21 @@ class ChatActions extends LocalActions {
         return $returned;
     }
     private function cleanChat() {
-        $arr = array('sendToId'=>$this->userId, 'texte'=>'Vous avez vidé l\'interface.', 'timestamp'=>date('Y-m-d H:i:s'));
+        $arr = array(SENDTOID=>$this->userId, TEXTE=>'Vous avez vidé l\'interface.', TIMESTAMP=>date(FORMATDATE));
         $this->postChat($arr);
         return $this->getChatContent();
     }
     private function inviteUser($displayName='') {
       $WpUser = WpUser::getWpUserBy('user_login', $displayName);
       if ( $WpUser->getID()=='' ) {
-        $arr = array('sendToId'=>$this->userId, 'texte'=>'Cet utilisateur <b>'.$displayName.'</b> n\'existe pas.', 'timestamp'=>date('Y-m-d H:i:s'));
+        $arr = array(SENDTOID=>$this->userId, TEXTE=>'Cet utilisateur <b>'.$displayName.'</b> n\'existe pas.', TIMESTAMP=>date(FORMATDATE));
         $this->postChat($arr);
         return $this->getChatContent();
       }
       $Live = $this->LiveServices->select(__FILE__, __LINE__, $this->liveId);
-      $arr = array('sendToId'=>$WpUser->getID(), 'senderId'=>$this->userId, 'texte'=>'Rejoins moi sur l\'espace <span class="keyDeck" data-keydeck="'.$Live->getDeckKey().'">'.$Live->getDeckKey().'</span>', 'timestamp'=>date('Y-m-d H:i:s'));
+      $arr = array(SENDTOID=>$WpUser->getID(), 'senderId'=>$this->userId, TEXTE=>'Rejoins moi sur l\'espace <span class="keyDeck" data-keydeck="'.$Live->getDeckKey().'">'.$Live->getDeckKey().'</span>', TIMESTAMP=>date(FORMATDATE));
       $this->postChat($arr);
-      $arr = array('sendToId'=>$this->userId, 'texte'=>'Invitation envoyée à <span class="author" data-displayName="'.$displayName.'">'.$displayName.'</span>', 'timestamp'=>date('Y-m-d H:i:s'));
+      $arr = array(SENDTOID=>$this->userId, TEXTE=>'Invitation envoyée à <span class="author" data-displayName="'.$displayName.'">'.$displayName.'</span>', TIMESTAMP=>date(FORMATDATE));
       $this->postChat($arr);
       return $this->getChatContent();
     }
@@ -82,16 +91,16 @@ class ChatActions extends LocalActions {
       $text .= '<br><b>/help</b> Affiche cette aide.';
       $text .= '<br><b>/invite xxxxx</b> Envoie une invitation à rejoindre l\'espace courant.';
       $text .= '<br><b>/join xxxxx</b> Rejoindre un espace dédié.';
-        $arr = array('sendToId'=>$this->userId, 'texte'=>$text, 'timestamp'=>date('Y-m-d H:i:s'));
+        $arr = array(SENDTOID=>$this->userId, TEXTE=>$text, TIMESTAMP=>date(FORMATDATE));
         $this->postChat($arr);
         return $this->getChatContent();
     }
     private function exitLive() {
-        $arr = array('liveId'=>$this->liveId, 'texte'=>$this->displayName.' a quitté l\'espace de conversation.', 'timestamp'=>date('Y-m-d H:i:s'));
+        $arr = array(LIVEID=>$this->liveId, TEXTE=>$this->displayName.' a quitté l\'espace de conversation.', TIMESTAMP=>date(FORMATDATE));
         $this->postChat($arr);
-        unset($_SESSION['deckKey']);
+        unset($_SESSION[DECKKEY]);
         $this->liveId = 0;
-        $arr = array('liveId'=>$this->liveId, 'sendToId'=>$this->userId, 'texte'=>'Vous êtes de retour sur le canal par défaut', 'timestamp'=>date('Y-m-d H:i:s'));
+        $arr = array(LIVEID=>$this->liveId, SENDTOID=>$this->userId, TEXTE=>'Vous êtes de retour sur le canal par défaut', TIMESTAMP=>date(FORMATDATE));
         $this->postChat($arr);
         $json = '{';
         $json .= $this->getChatContent(FALSE).', ';
@@ -101,13 +110,13 @@ class ChatActions extends LocalActions {
     }
     private function joinNewLive($deckKey='') {
         $LiveServices = FactoryServices::getLiveServices();
-        $Lives = $LiveServices->getLivesWithFilters(__FILE__, __LINE__, array('deckKey'=>$deckKey));
+        $Lives = $LiveServices->getLivesWithFilters(__FILE__, __LINE__, array(DECKKEY=>$deckKey));
         if ( empty($Lives) ) { return $this->getChatContent(); }
         $Live = array_shift($Lives);
         $this->liveId = $Live->getId();
-        $arr = array('liveId'=>$this->liveId, 'texte'=>$this->displayName.' a rejoint l\'espace de conversation.', 'timestamp'=>date('Y-m-d H:i:s'));
+        $arr = array(LIVEID=>$this->liveId, TEXTE=>$this->displayName.' a rejoint l\'espace de conversation.', TIMESTAMP=>date(FORMATDATE));
         $this->postChat($arr);
-        $_SESSION['deckKey'] = $deckKey;
+        $_SESSION[DECKKEY] = $deckKey;
         $json = '{';
         $json .= $this->getChatContent(FALSE).', ';
         $json .= '"header-ul-chat-saisie":'.json_encode('<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$this->liveId.'">'.$deckKey.'</a></li>');
@@ -133,7 +142,7 @@ class ChatActions extends LocalActions {
      * @return string
      */
     public function getChatContent($directReturn=TRUE) {
-        $arr = array('liveId'=>$this->liveId, 'sendToId'=>$this->userId, 'timestamp'=>$this->timestamp);
+        $arr = array(LIVEID=>$this->liveId, SENDTOID=>$this->userId, TIMESTAMP=>$this->timestamp);
         $Chats = $this->ChatServices->getChatsWithFilters(__FILE__, __LINE__, $arr);
         $strChats = '';
         if ( !empty($Chats) ) {

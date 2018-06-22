@@ -1,11 +1,15 @@
 <?php
-if ( !defined( 'ABSPATH') ) die( 'Forbidden' );
+if ( !defined( 'ABSPATH') ) {
+	die( 'Forbidden' );
+}
 /**
  * MissionObjectiveActions
  * @since 1.0.00
  * @author Hugues
  */
 class MissionObjectiveActions {
+	const MISSIONID = 'missionId';
+	
     /**
      * Constructeur
      */
@@ -24,12 +28,12 @@ class MissionObjectiveActions {
         } else {
             $objectiveId = $post['selId'];
         }
-        $args = array('missionId'=>$post['missionId'], 'objectiveId'=>$objectiveId, 'title'=>stripslashes($post['title']));
+        $args = array(MISSIONID=>$post[MISSIONID], 'objectiveId'=>$objectiveId, 'title'=>stripslashes($post['title']));
         $MissionObjective = new MissionObjective($args);
         $MissionObjectiveServices = new MissionObjectiveServices();
         $MissionObjectiveServices->insert(__FILE__, __LINE__, $MissionObjective);
         $MissionServices = new MissionServices();
-        $Mission = $MissionServices->select(__FILE__, __LINE__, $post['missionId']);
+        $Mission = $MissionServices->select(__FILE__, __LINE__, $post[MISSIONID]);
         $MissionBean = new MissionBean($Mission);
         return $MissionBean->getMissionObjectivesBlock();
     }

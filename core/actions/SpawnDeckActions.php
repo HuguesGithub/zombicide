@@ -1,11 +1,18 @@
 <?php
-if ( !defined( 'ABSPATH') ) die( 'Forbidden' );
+if ( !defined( 'ABSPATH') ) {
+	die( 'Forbidden' );
+}
 /**
  * SpawnDeckActions
  * @since 1.0.00
  * @author Hugues
  */
 class SpawnDeckActions {
+	const KEYACCESS = 'keyAccess';
+	const LIVEDECKID = 'liveDeckId';
+	const FORMATDATE = 'Y-m-d H:i:s';
+	const STATUS = 'status';
+	
     /**
      * Constructeur
      */
@@ -24,7 +31,7 @@ class SpawnDeckActions {
      */
     public static function staticDeleteSpawnDeck($post) {
         $LiveDeckServices = new LiveDeckServices();
-        $LiveDeck = self::getLiveDeck($LiveDeckServices, $post['keyAccess']);
+        $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[KEYACCESS]);
         $LiveDeckServices->delete(__FILE__, __LINE__, $LiveDeck);
         unset($_SESSION['wp_11_keyAccess']);
     /*
@@ -39,9 +46,9 @@ class SpawnDeckActions {
      */
     public static function staticShuffleSpawnDiscard($post) {
         $LiveDeckServices = new LiveDeckServices();
-        $LiveDeck = self::getLiveDeck($LiveDeckServices, $post['keyAccess']);
+        $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[KEYACCESS]);
         $SpawnLiveDeckServices = new SpawnLiveDeckServices();
-        $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array('liveDeckId'=>$LiveDeck->getId()));
+        $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array(LIVEDECKID=>$LiveDeck->getId()));
         if ( !empty($SpawnLiveDecks) ) {
             shuffle($SpawnLiveDecks);
             $cpt = 1;
@@ -52,7 +59,7 @@ class SpawnDeckActions {
                 $SpawnLiveDeckServices->update(__FILE__, __LINE__, $SpawnLiveDeck);
                 $cpt++;
             }
-            $LiveDeck->setDateUpdate(date('Y-m-d H:i:s', time()));
+            $LiveDeck->setDateUpdate(date(FORMATDATE, time()));
             $LiveDeckServices->update(__FILE__, __LINE__, $LiveDeck);
         }
         $json  = '{"nbCardInDeck":'.json_encode(count($SpawnLiveDecks));
@@ -65,9 +72,9 @@ class SpawnDeckActions {
      */
     public static function staticShowSpawnDiscard($post) {
         $LiveDeckServices = new LiveDeckServices();
-        $LiveDeck = self::getLiveDeck($LiveDeckServices, $post['keyAccess']);
+        $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[KEYACCESS]);
         $SpawnLiveDeckServices = new SpawnLiveDeckServices();
-        $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array('liveDeckId'=>$LiveDeck->getId(), 'status'=>'D'));
+        $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array(LIVEDECKID=>$LiveDeck->getId(), STATUS=>'D'));
         $json  = '{';
         if ( !empty($SpawnLiveDecks) ) {
             $json .= '"page-selection-result":'.json_encode(SpawnDeckPageBean::getStaticSpawnCardActives($SpawnLiveDecks));
@@ -80,18 +87,18 @@ class SpawnDeckActions {
      */
     public static function staticDiscardSpawnCard($post) {
         $LiveDeckServices = new LiveDeckServices();
-        $LiveDeck = self::getLiveDeck($LiveDeckServices, $post['keyAccess']);
+        $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[KEYACCESS]);
         $SpawnLiveDeckServices = new SpawnLiveDeckServices();
-        $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array('liveDeckId'=>$LiveDeck->getId(), 'status'=>'A'));
+        $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array(LIVEDECKID=>$LiveDeck->getId(), STATUS=>'A'));
         if ( !empty($SpawnLiveDecks) ) {
             foreach ( $SpawnLiveDecks as $SpawnLiveDeck ) {
                 $SpawnLiveDeck->setStatus('D');
                 $SpawnLiveDeckServices->update(__FILE__, __LINE__, $SpawnLiveDeck);
             }
-            $LiveDeck->setDateUpdate(date('Y-m-d H:i:s', time()));
+            $LiveDeck->setDateUpdate(date(FORMATDATE, time()));
             $LiveDeckServices->update(__FILE__, __LINE__, $LiveDeck);
         }
-        $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array('liveDeckId'=>$LiveDeck->getId(), 'status'=>'D'));
+        $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array(LIVEDECKID=>$LiveDeck->getId(), STATUS=>'D'));
         $json  = '{"nbCardInDiscard":'.json_encode(count($SpawnLiveDecks));
         if ( !empty($SpawnLiveDecks) ) {
             $json .= ',"page-selection-result":'.json_encode('');
@@ -104,18 +111,18 @@ class SpawnDeckActions {
      */
     public static function staticDrawSpawnCard($post) {
         $LiveDeckServices = new LiveDeckServices();
-        $LiveDeck = self::getLiveDeck($LiveDeckServices, $post['keyAccess']);
+        $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[KEYACCESS]);
         $SpawnLiveDeckServices = new SpawnLiveDeckServices();
-        $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array('liveDeckId'=>$LiveDeck->getId(), 'status'=>'P'), 'rank', 'DESC');
+        $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array(LIVEDECKID=>$LiveDeck->getId(), STATUS=>'P'), 'rank', 'DESC');
         if ( !empty($SpawnLiveDecks) ) {
             $SpawnLiveDeck = array_shift($SpawnLiveDecks);
             $SpawnLiveDeck->setStatus('A');
             $SpawnLiveDeckServices->update(__FILE__, __LINE__, $SpawnLiveDeck);
-            $LiveDeck->setDateUpdate(date('Y-m-d H:i:s', time()));
+            $LiveDeck->setDateUpdate(date(FORMATDATE, time()));
             $LiveDeckServices->update(__FILE__, __LINE__, $LiveDeck);
         }
         $json  = '{"nbCardInDeck":'.json_encode(count($SpawnLiveDecks));
-        $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array('liveDeckId'=>$LiveDeck->getId(), 'status'=>'A'), 'rank', 'ASC');
+        $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array(LIVEDECKID=>$LiveDeck->getId(), STATUS=>'A'), 'rank', 'ASC');
         if ( !empty($SpawnLiveDecks) ) {
             $json .= ',"page-selection-result":'.json_encode(SpawnDeckPageBean::getStaticSpawnCardActives($SpawnLiveDecks));
         }

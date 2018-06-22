@@ -95,7 +95,7 @@ class ToolsPageBean extends PagePageBean {
 			$str .= '</div>';      
 			foreach ( $Expansions as $Expansion ) {
 				$id = $Expansion->getId();
-				$Survivors = $this->SurvivorServices->getSurvivorsWithFilters(__FILE__, __LINE__, array('expansionId'=>$id), 'name', 'ASC');
+				$Survivors = $this->SurvivorServices->getSurvivorsWithFilters(__FILE__, __LINE__, array(CST_EXPANSIONID=>$id), 'name', 'ASC');
 				if ( empty($Survivors) ) { continue; }
 				$str .= '<div type="button" class="btn btn-dark btn-expansion" data-expansion-id="'.$id.'"><span><i class="far fa-square"></i></span> '.$Expansion->getName().'</div>';
 				foreach ( $Survivors as $Survivor ) {
@@ -130,7 +130,7 @@ class ToolsPageBean extends PagePageBean {
 		if ( !empty($Expansions) ) {
 			foreach ( $Expansions as $Expansion ) {
 				$id = $Expansion->getId();
-				$SpawnCards = $this->SpawnServices->getSpawnsWithFilters(__FILE__, __LINE__, array('expansionId'=>$id), 'spawnNumber', 'ASC');
+				$SpawnCards = $this->SpawnServices->getSpawnsWithFilters(__FILE__, __LINE__, array(CST_EXPANSIONID=>$id), 'spawnNumber', 'ASC');
 				if ( empty($SpawnCards) ) { continue; }
 				$strFilters .= '<option value="set-'.$id.'">'.$Expansion->getName().'</option>';
 				foreach ( $SpawnCards as $SpawnCard ) {
@@ -164,7 +164,7 @@ class ToolsPageBean extends PagePageBean {
 		if ( !empty($Expansions) ) {
 			foreach ( $Expansions as $Expansion ) {
         $id = $Expansion->getId();
-				$EquipmentExpansions = $this->EquipmentExpansionServices->getEquipmentExpansionsWithFilters(__FILE__, __LINE__, array('expansionId'=>$id));
+				$EquipmentExpansions = $this->EquipmentExpansionServices->getEquipmentExpansionsWithFilters(__FILE__, __LINE__, array(CST_EXPANSIONID=>$id));
 				if ( empty($EquipmentExpansions) ) { continue; }
 				$strFilters .= '<option value="set-'.$id.'">'.$Expansion->getName().'</option>';
 				foreach ( $EquipmentExpansions as $EquipmentExpansion ) {

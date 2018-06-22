@@ -60,45 +60,45 @@ class MissionsPageBean extends PagePageBean {
     $hasFilters = FALSE;
     $arrLevelIds = '';
     $Levels = $this->LevelServices->getLevelsWithFilters(__FILE__, __LINE__);
-    if ( isset($arrFilters['levelId']) && !empty($arrFilters['levelId']) ) {
-      $arrLevelIds = $arrFilters['levelId'];
-      foreach ( $arrFilters['levelId'] as $id ) {
+    if ( isset($arrFilters[CST_LEVELID]) && !empty($arrFilters[CST_LEVELID]) ) {
+      $arrLevelIds = $arrFilters[CST_LEVELID];
+      foreach ( $arrFilters[CST_LEVELID] as $id ) {
         $name = $this->getNameById($Levels, $id);
     		$hasFilters = TRUE;
       }
     }
     $arrPlayerIds = '';
     $Players = $this->PlayerServices->getPlayersWithFilters(__FILE__, __LINE__);
-    if ( isset($arrFilters['playerId']) && !empty($arrFilters['playerId']) ) {
-      $arrPlayerIds = $arrFilters['playerId'];
-      foreach ( $arrFilters['playerId'] as $id ) {
+    if ( isset($arrFilters[CST_PLAYERID]) && !empty($arrFilters[CST_PLAYERID]) ) {
+      $arrPlayerIds = $arrFilters[CST_PLAYERID];
+      foreach ( $arrFilters[CST_PLAYERID] as $id ) {
         $name = $this->getNameById($Players, $id);
     		$hasFilters = TRUE;
       }
     }
     $arrDurationIds = '';
     $Durations = $this->DurationServices->getDurationsWithFilters(__FILE__, __LINE__);
-    if ( isset($arrFilters['durationId']) && !empty($arrFilters['durationId']) ) {
-      $arrDurationIds = $arrFilters['durationId'];
-      foreach ( $arrFilters['durationId'] as $id ) {
+    if ( isset($arrFilters[CST_DURATIONID]) && !empty($arrFilters[CST_DURATIONID]) ) {
+      $arrDurationIds = $arrFilters[CST_DURATIONID];
+      foreach ( $arrFilters[CST_DURATIONID] as $id ) {
         $name = $this->getNameById($Durations, $id);
     		$hasFilters = TRUE;
       }
     }
     $arrOrigineIds = '';
     $Origines = $this->OrigineServices->getOriginesWithFilters(__FILE__, __LINE__);
-    if ( isset($arrFilters['origineId']) && !empty($arrFilters['origineId']) ) {
-      $arrOrigineIds = $arrFilters['origineId'];
-      foreach ( $arrFilters['origineId'] as $id ) {
+    if ( isset($arrFilters[CST_ORIGINEID]) && !empty($arrFilters[CST_ORIGINEID]) ) {
+      $arrOrigineIds = $arrFilters[CST_ORIGINEID];
+      foreach ( $arrFilters[CST_ORIGINEID] as $id ) {
         $name = $this->getNameById($Origines, $id);
     		$hasFilters = TRUE;
       }
     }
     $arrExpansionIds = '';
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array('nbMissions'=>1));
-    if ( isset($arrFilters['expansionId']) && !empty($arrFilters['expansionId']) ) {
-      $arrExpansionIds = $arrFilters['expansionId'];
-      foreach ( $arrFilters['expansionId'] as $id ) {
+    if ( isset($arrFilters[CST_EXPANSIONID]) && !empty($arrFilters[CST_EXPANSIONID]) ) {
+      $arrExpansionIds = $arrFilters[CST_EXPANSIONID];
+      foreach ( $arrFilters[CST_EXPANSIONID] as $id ) {
         $name = $this->getNameById($Expansions, $id);
     		$hasFilters = TRUE;
       }

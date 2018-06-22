@@ -74,6 +74,8 @@ class Equipment extends LocalDomain {
             $urlOriginal = '/wp-content/plugins/zombicide/web/rsc/images/equipments/'.(str_pad($this->id, 3, '0', STR_PAD_LEFT)).$expansionId.'.png';
             return $urlOriginal;
             if ( !is_file('http://zombicide.jhugues.fr'.$urlOriginal) ) {
+            	// Fix de sonarCLoud. A développer.
+            return $urlOriginal;
             }
         }
         return $urlThumb;

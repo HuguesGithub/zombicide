@@ -27,16 +27,16 @@ class MissionBean extends MainPageBean {
      */    
     public function getRowForAdminPage() {
         $Mission = $this->Mission;
-        $args = array('onglet'=>'mission', 'postAction'=>'edit', 'id'=>$Mission->getId());
+        $args = array('onglet'=>'mission', CST_POSTACTION=>'edit', 'id'=>$Mission->getId());
         $strRow  = '<tr>';
         $strRow .= '<td><input id="cb-select-'.$Mission->getId().'" name="post[]" value="'.$Mission->getId().'" type="checkbox"></td>';
         $strRow .= '<td>'.$Mission->getCode().'</td>';
         $strRow .= '<td><strong><a class="row-title" href="'.$this->getQueryArg($args).'">'.$Mission->getTitle().'</strong>';
         $strRow .= '<div class="row-actions">';
         $strRow .= '<span class="edit"><a href="'.$this->getQueryArg($args).'">Modifier</a></span>';
-        $args['postAction'] = 'trash';
+        $args[CST_POSTACTION] = 'trash';
         $strRow .= '<span class="trash"> | <a href="'.$this->getQueryArg($args).'">Corbeille</a></span>';
-        $args['postAction'] = 'clone';
+        $args[CST_POSTACTION] = 'clone';
         $strRow .= '<span class="clone"> | <a href="'.$this->getQueryArg($args).'">Dupliquer</a></span>';
         $urlWpPost = $Mission->getWpPostUrl();
         if ( $urlWpPost!='#' ) { $strRow .= '<span class="view"> | <a href="'.$urlWpPost.'">Aperçu</a></span>'; }

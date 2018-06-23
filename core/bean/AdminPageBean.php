@@ -47,12 +47,13 @@ class AdminPageBean extends MainPageBean {
     public function getContentPage() {
         if ( self::isAdmin() ) {
             switch ( $this->urlParams['onglet'] ) {
-                case 'mission'        : return AdminMissionPageBean::getStaticContentPage($this->urlParams); break;
-                case 'parametre'    : return AdminParametrePageBean::getStaticContentPage($this->urlParams); break;
-                case '' : return $this->getHomeContentPage(); break;
-                default : echo "Need to add <b>".$this->urlParams['onglet']."</b> to AdminPageBean > getContentPage()."; break;
+                case 'mission'      : $returned = AdminMissionPageBean::getStaticContentPage($this->urlParams); break;
+                case 'parametre'    : $returned = AdminParametrePageBean::getStaticContentPage($this->urlParams); break;
+                case ''             : $returned = $this->getHomeContentPage(); break;
+                default             : $returned = "Need to add <b>".$this->urlParams['onglet']."</b> to AdminPageBean > getContentPage()."; break;
             }
         }
+        return $returned;
     }
     /**
      * @return string

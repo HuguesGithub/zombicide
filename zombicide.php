@@ -55,17 +55,14 @@ function zombicide_autoloader( $classname ) {
 	} else {
 		if ( substr($classname, 0, 1)=='i' ) {
 			$classfile = sprintf( '%score/implements/%s.php', PLUGIN_PATH, $classname );
-			include_once($classfile);
 		} else {
 			$classfile = sprintf( '%score/domain/%s.class.php',	PLUGIN_PATH, str_replace( '_', '-', $classname ) );
-			if ( file_exists($classfile) ) {
-				include_once($classfile);
-			} else {
+			if ( !file_exists($classfile) ) {
 				$classfile = sprintf('%s../mycommon/core/domain/%s.class.php', PLUGIN_PATH, str_replace( '_', '-', $classname));
-				if ( file_exists($classfile) ) {
-					include_once($classfile);
-				}
 			}  
+		}
+		if ( file_exists($classfile) ) {
+			include_once($classfile);
 		}
 	}
 }

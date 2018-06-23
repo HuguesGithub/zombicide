@@ -20,7 +20,7 @@ class SpawnDeckPageBean extends PagePageBean {
 		if ( !empty($SpawnLiveDecks) ) {
 			foreach ( $SpawnLiveDecks as $SpawnLiveDeck ) {
 				$SpawnCard = $SpawnLiveDeck->getSpawnCard();
-				$strSpawns .= '<div class="card spawn set-'.$id.'"><img width="320" height="440" src="'.$SpawnCard->getImgUrl().'" alt="#'.$SpawnCard->getSpawnNumber().'"></div>';
+				$strSpawns .= '<div class="card spawn set"><img width="320" height="440" src="'.$SpawnCard->getImgUrl().'" alt="#'.$SpawnCard->getSpawnNumber().'"></div>';
 			}
 		}
 		return $strSpawns;
@@ -122,6 +122,7 @@ class SpawnDeckPageBean extends PagePageBean {
   }
   private function getExpansionsButtons() {
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), array('displayRank'), array('ASC'));
+    $str = '';
     if ( !empty($Expansions) ) {
       $str .= '<div class="btn-group-vertical live-spawn-selection" role="group">';
       foreach ( $Expansions as $Expansion ) {

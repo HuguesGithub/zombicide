@@ -72,12 +72,14 @@ class SurvivorsPageBean extends PagePageBean {
 		$nbElements = count($Survivors);
 		$nbPages = ceil($nbElements/$nbPerPage);
 		$displayedSurvivors = array_slice($Survivors, $nbPerPage*($curPage-1), $nbPerPage);
+		$strBody = '';
 		if ( !empty($displayedSurvivors) ) {
 			foreach ( $displayedSurvivors as $Survivor ) {
 				$SurvivorBean = new SurvivorBean($Survivor);
 				$strBody .= $SurvivorBean->getRowForSurvivorsPage();
 			}
 		}
+		$strPagination = '';
 		for ( $i=1; $i<=$nbPages; $i++ ) {
 			$strPagination .= '<li class="page-item'.($i==$curPage?' disabled':'').'"><a class="page-link ';
 			$strPagination .= 'ajaxAction" href="#" data-paged="'.$i.'" data-ajaxaction="paged">'.$i.'</a></li>';

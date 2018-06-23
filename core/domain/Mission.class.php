@@ -193,6 +193,7 @@ class Mission extends LocalDomain {
 	 */
 	public function getStrTiles() {
 		$MissionTiles = $this->getMissionTiles();
+		$strName = '';
 		if ( !empty($MissionTiles) ) {
 			foreach ( $MissionTiles as $MissionTile ) {
 				if ( $strName!='' ) { $strName .= ', '; }
@@ -206,6 +207,7 @@ class Mission extends LocalDomain {
 	 */
 	public function getStrExpansions() {
 		$MissionExpansions = $this->getMissionExpansions();
+		$strName = '';
 		if ( !empty($MissionExpansions) ) {
 			foreach ( $MissionExpansions as $MissionExpansion ) {
 				if ( $strName!='' ) { $strName .= ', '; }

@@ -47,12 +47,14 @@ class SkillsPageBean extends PagePageBean {
 		$nbElements = count($Skills);
 		$nbPages = ceil($nbElements/$nbPerPage);
 		$displayedSkills = array_slice($Skills, $nbPerPage*($curPage-1), $nbPerPage);
+		$strBody = '';
 		if ( !empty($displayedSkills) ) {
 			foreach ( $displayedSkills as $Skill ) {
 				$SkillBean = new SkillBean($Skill);
 				$strBody .= $SkillBean->getRowForSkillsPage();
 			}
 		}
+		$strPagination = '';
 		for ( $i=1; $i<=$nbPages; $i++ ) {
 			$strPagination .= '<li class="page-item'.($i==$curPage?' disabled':'').'"><a class="page-link ';
 			$strPagination .= 'ajaxAction" href="#" data-paged="'.$i.'" data-ajaxaction="paged">'.$i.'</a></li>';

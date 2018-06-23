@@ -19,7 +19,7 @@ class SurvivorBean extends MainPageBean {
 	 * @return string
 	 */	
 	public function getRowForAdminPage() {
-    return $strRow;
+    return '';
   }
 	/**
 	 * @return string

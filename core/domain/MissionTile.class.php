@@ -115,7 +115,7 @@ class MissionTile extends LocalDomain {
 	 * @return string
 	 */
 	public function getRowForTileTbody() {
-		$strTileTable .= '<tr>';
+		$strTileTable  = '<tr>';
 		$strTileTable .= '<th>'.$this->getXCoord().'</th>';
 		$strTileTable .= '<th>'.$this->getYCoord().'</th>';
 		$strTileTable .= '<th>'.$this->getTileCode().'</th>';

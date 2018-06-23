@@ -995,7 +995,7 @@ function addSelectionSurvivantActions() {
     var selection = '';
     $hj('#page-selection-survivants .btn-survivor').each(function(){
       if ( $hj(this).find('svg').hasClass('fa-check-square') ) {
-        selection += (selection=''?'':',')+$hj(this).data('survivor-id');
+        selection += (selection==''?'':',')+$hj(this).data('survivor-id');
       }
     });
     var nbSurvSel = $hj('#nbSurvSel button.active').data('nb');

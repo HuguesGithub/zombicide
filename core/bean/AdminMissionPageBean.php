@@ -161,6 +161,39 @@ class AdminMissionPageBean extends AdminPageBean {
     	}
     	return $strSubs;
     }
+    private function getPagination($queryArg, $post_status, $curPage, $nbPages, $nbElements) {
+    	$queryArg[CST_POSTSTATUS] = $post_status;
+    	$queryArg[CST_CURPAGE] = 1;
+    	$hrefFirst = $this->getQueryArg($queryArg);
+    	$queryArg[CST_CURPAGE] = max(1, $curPage-1);
+    	$hrefPrev = $this->getQueryArg($queryArg);
+    	$queryArg[CST_CURPAGE] = min($nbPages, $curPage+1);
+    	$hrefNext = $this->getQueryArg($queryArg);
+    	$queryArg[CST_CURPAGE] = $nbPages;
+    	$hrefLast = $this->getQueryArg($queryArg);
+    	$args = array(
+    		// Nombre d'éléments
+   			$nbElements,
+    		// Disable First/Prev Page
+    		$curPage==1 ? ' disabled' : '',
+    		// URL First Page
+    		$hrefFirst,
+    		// URL Prev Page
+    		$hrefPrev,
+    		// Page courante
+    		$curPage,
+    		// Nombre de pages
+    		$nbPages,
+    		// Disable Next/Last Page
+    		$curPage==$nbPages ? ' disabled' : '',
+    		// URL Next Page
+    		$hrefNext,
+    		// URL Last Page
+    		$hrefLast,
+    	);
+    	$str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-pagination.php');
+    	return vsprintf($str, $args);
+    }
     /**
      * @return string
      */
@@ -235,28 +268,10 @@ class AdminMissionPageBean extends AdminPageBean {
         $subs = $this->getSubs($queryArg, $post_status, $numbers);
         // Pagination
         if ( $filter_by_levelId!='' ) { $queryArg['filter-by-levelId'] = $filter_by_levelId; }
-        if ( $filter_by_playerId!='' ) { $queryArg['filter-by-playerId'] = $filter_by_playerId; }
-        if ( $filter_by_durationId!='' ) { $queryArg['filter-by-durationId'] = $filter_by_durationId; }
-        if ( $filter_by_origineId!='' ) { $queryArg['filter-by-origineId'] = $filter_by_origineId; }
-        $queryArg[CST_POSTSTATUS] = $post_status;
-        $strPagination   = '<div class="input-group input-group-sm mb-3">';
-        $strPagination  .= '<div class="input-group-prepend"><span class="input-group-text"><span class="displaying-num">'.$nbElements.' éléments</span></span></div>';
-        $strPagination  .= '<div class="input-group-prepend">';
-        $queryArg[CST_CURPAGE] = 1;
-        $strPagination  .= '<div class="btn btn-outline-secondary'.($curPage==1?' disabled':'').'" type="button"><a class="page-link" href="'.$this->getQueryArg($queryArg).'" aria-label="Première">&laquo;</a></div>';
-        $queryArg[CST_CURPAGE] = max(1, $curPage-1);
-        $strPagination  .= '<div class="btn btn-outline-secondary'.($curPage==1?' disabled':'').'" type="button"><a class="page-link" href="'.$this->getQueryArg($queryArg).'" aria-label="Précédente">&lsaquo;</a></div>';
-        $strPagination  .= '</div>';
-        $strPagination  .= '<input class="current-page" name="cur_page" value="'.$curPage.'" size="1" type="text" style="margin: 0;">';
-        $strPagination  .= '<div class="input-group-append"><span class="input-group-text"><span class="tablenav-paging-text"> sur <span class="total-pages">'.$nbPages.'</span></span></span></div>';
-        $strPagination  .= '<div class="input-group-append">';
-        $queryArg[CST_CURPAGE] = min($nbPages, $curPage+1);
-        $strPagination  .= '<div class="btn btn-outline-secondary'.($curPage==$nbPages?' disabled':'').'" type="button"><a class="page-link" href="'.$this->getQueryArg($queryArg).'" aria-label="Suivante">&rsaquo;</a></div>';
-        $queryArg[CST_CURPAGE] = $nbPages;
-        $strPagination  .= '<div class="btn btn-outline-secondary'.($curPage==$nbPages?' disabled':'').'" type="button"><a class="page-link" href="'.$this->getQueryArg($queryArg).'" aria-label="Dernière">&raquo;</a></div>';
-        $strPagination  .= '</div>';
-        $strPagination  .= '</div>';
-        $strPagination  .= '</span>';
+    	if ( $filter_by_playerId!='' ) { $queryArg['filter-by-playerId'] = $filter_by_playerId; }
+    	if ( $filter_by_durationId!='' ) { $queryArg['filter-by-durationId'] = $filter_by_durationId; }
+    	if ( $filter_by_origineId!='' ) { $queryArg['filter-by-origineId'] = $filter_by_origineId; }
+        $strPagination = $this->getPagination($queryArg, $post_status, $curPage, $nbPages, $nbElements);
         // Filtre de la Difficulté
         $prefix = 'filter-by-';
         $classe = 'custom-select custom-select-sm filters';

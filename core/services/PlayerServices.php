@@ -15,10 +15,6 @@ class PlayerServices extends LocalServices {
 	
 	public function __construct() { $this->Dao = new PlayerDaoImpl(); }
 
-	private function buildFilters($arrFilters) {
-		$arrParams = array();
-		return $arrParams;
-	}
 	/**
 	 * @param string $file
 	 * @param string $line
@@ -29,7 +25,6 @@ class PlayerServices extends LocalServices {
 	 */
 	public function getPlayersWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc') {
 		$arrParams = $this->buildOrderAndLimit($orderby, $order);
-		$arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
 		return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
 	}
 	/**

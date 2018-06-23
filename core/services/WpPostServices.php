@@ -7,7 +7,6 @@ if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
  * @since 1.0.00
  */
 class WpPostServices extends GlobalServices {
-	private $Dao;
 	
 	public function __construct() {}
 

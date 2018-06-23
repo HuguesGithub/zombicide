@@ -12,7 +12,6 @@ class TileServices extends LocalServices {
 	 * @var TileDaoImpl $Dao
 	 */
 	protected $Dao;
-  private $AllTiles = array();
 	
 	public function __construct() { $this->Dao = new TileDaoImpl(); }
 

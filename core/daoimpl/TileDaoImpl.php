@@ -48,8 +48,6 @@ class TileDaoImpl extends LocalDaoImpl {
 	 */
 	protected $delete = "DELETE ";
   
-	private $whereIdExpansion = "WHERE expansionId='%s' ";
-	
 	public function __construct() {}
 	/**
 	 * @param array $rows

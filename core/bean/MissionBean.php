@@ -27,50 +27,62 @@ class MissionBean extends MainPageBean {
      */    
     public function getRowForAdminPage() {
         $Mission = $this->Mission;
-        $args = array('onglet'=>'mission', CST_POSTACTION=>'edit', 'id'=>$Mission->getId());
-        $strRow  = '<tr>';
-        $strRow .= '<td><input id="cb-select-'.$Mission->getId().'" name="post[]" value="'.$Mission->getId().'" type="checkbox"></td>';
-        $strRow .= '<td>'.$Mission->getCode().'</td>';
-        $strRow .= '<td><strong><a class="row-title" href="'.$this->getQueryArg($args).'">'.$Mission->getTitle().'</strong>';
-        $strRow .= '<div class="row-actions">';
-        $strRow .= '<span class="edit"><a href="'.$this->getQueryArg($args).'">Modifier</a></span>';
-        $args[CST_POSTACTION] = 'trash';
-        $strRow .= '<span class="trash"> | <a href="'.$this->getQueryArg($args).'">Corbeille</a></span>';
-        $args[CST_POSTACTION] = 'clone';
-        $strRow .= '<span class="clone"> | <a href="'.$this->getQueryArg($args).'">Dupliquer</a></span>';
+        $queryArgs = array('onglet'=>'mission', CST_POSTACTION=>'edit', 'id'=>$Mission->getId());
+        $hrefEdit = $this->getQueryArg($queryArgs);
+        $queryArgs[CST_POSTACTION] = 'trash';
+        $hrefTrash = $this->getQueryArg($queryArgs);
+        $queryArgs[CST_POSTACTION] = 'clone';
+        $hrefClone = $this->getQueryArg($queryArgs);
         $urlWpPost = $Mission->getWpPostUrl();
         if ( $urlWpPost!='#' ) { $strRow .= '<span class="view"> | <a href="'.$urlWpPost.'">Aperçu</a></span>'; }
-        $strRow .= '</div>';
-        $strRow .= '</td>';
-        $strRow .= '<td>'.$Mission->getStrDifficulty().'</td>';
-        $strRow .= '<td>'.$Mission->getStrDuree().'</td>';
-        $strRow .= '<td>'.$Mission->getStrNbJoueurs().'</td>';
-        $strRow .= '<td>'.$Mission->getStrOrigine().'</td>';
-        $strRow .= '<td>'.$Mission->getStrTiles().'</td>';
-        $strRow .= '<td class="objectivesAndRules">'.$Mission->getStrRules().'</td>';
-        $strRow .= '<td class="objectivesAndRules">'.$Mission->getStrObjectives().'</td>';
-        $strRow .= '<td>'.$Mission->getStrExpansions().'</td>';
-        return $strRow.'</tr>';
+        $args = array(
+        	// Identifiant de la Mission
+        	$Mission->getId(),
+        	// Code de la Mission
+        	$Mission->getCode(),
+        	// Url d'édition
+        	$hrefEdit,
+        	// Titre de la Mission
+        	$Mission->getTitle(),
+        	// Url de suppression
+        	$hrefTrash,
+        	// Url de Duplication
+        	$hrefClone,
+        	// Article publié ?
+        	$urlWpPost!='#' ? '' : ' hidden',
+        	// Url Article
+        	$urlWpPost,
+        		$Mission->getStrDifficulty(),
+        		$Mission->getStrDuree(),
+        		$Mission->getStrNbJoueurs(),
+        		$Mission->getStrOrigine(),
+        		$Mission->getStrTiles(),
+        		$Mission->getStrRules(),
+        		$Mission->getStrObjectives(),
+        		$Mission->getStrExpansions(),
+        );
+		$str = file_get_contents(PLUGIN_PATH.'web/pages/admin/fragments/fragment-row-mission.php');
+		return vsprintf($str, $args);
     }
     /**
      * @return string
      */    
     public function getRowForMissionsPage() {
         $Mission = $this->Mission;
-        $strRow  = '<tr>';
         $urlWpPost = $Mission->getWpPostUrl();
-        if ( $urlWpPost!='#' ) { 
-            $strRow .= '<td><a href="'.$urlWpPost.'">'.$Mission->getCode().'</a></td>';
-        } else {
-            $strRow .= '<td>'.$Mission->getCode().'</td>';
-        }
-        $strRow .= '<td>'.$Mission->getTitle().'</td>';
-        $strRow .= '<td>'.$Mission->getStrDifficulty().'</td>';
-        $strRow .= '<td>'.$Mission->getStrDuree().'</td>';
-        $strRow .= '<td>'.$Mission->getStrNbJoueurs().'</td>';
-        $strRow .= '<td>'.$Mission->getStrExpansions().'</td>';
-        $strRow .= '<td>'.$Mission->getStrOrigine().'</td>';
-        return $strRow.'</tr>';
+        $args = array(
+        	$urlWpPost,
+        	$urlWpPost=='#' ? 'disabled' : '',
+       		$Mission->getCode(),
+       		$Mission->getTitle(),
+       		$Mission->getStrDifficulty(),
+       		$Mission->getStrDuree(),
+       		$Mission->getStrNbJoueurs(),
+       		$Mission->getStrExpansions(),
+       		$Mission->getStrOrigine(),
+        );
+		$str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-row-mission.php');
+		return vsprintf($str, $args);
     }
     /**
      * @param array $post

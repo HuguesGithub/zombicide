@@ -133,7 +133,7 @@ class MainPageBean implements iConstants {
 	 */
 	public static function getPageBean() {
 		if ( is_front_page() ) {
-			return new HomePageBean();
+			$returned = new HomePageBean();
 		} else {
 			$post = get_post();
 			if ( empty($post) ) {
@@ -148,13 +148,14 @@ class MainPageBean implements iConstants {
 				$post = array_shift($my_posts);
 			}
 			if ( $post->post_type == 'page' ) {
-				return new PagePageBean($post);
+				$returned = new PagePageBean($post);
 			} elseif ( $post->post_type == 'post' ) {
-				return new PostPageBean($post);
+				$returned = new PostPageBean($post);
 			} else {
-				return new Error404PageBean();
+				$returned = new Error404PageBean();
 			}
 		}
+		return $returned;
 	}
 	/**
 	 * @param array $addArg

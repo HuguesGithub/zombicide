@@ -150,7 +150,6 @@ class AdminMissionPageBean extends AdminPageBean {
         return vsprintf($str, $args);
     }
     private function getSubs($queryArg, $post_status, $numbers) {
-    	$subLink = '<li class="%1$s"><a href="%2$s" class="%3$s">%4$s <span class="count">(%5$s)</span></a> %6$s</li>';
     	$links = array('all'=>'Toutes', CST_PENDING=>'Non publiées', CST_PUBLISH=>'Publiées', CST_FUTURE=>'Planifiées');
     	$strSubs = '';
     	foreach ( $links as $key=>$value ) {

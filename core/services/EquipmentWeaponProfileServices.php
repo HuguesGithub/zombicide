@@ -34,7 +34,7 @@ class EquipmentWeaponProfileServices extends LocalServices {
 	 */
 	public function getEquipmentWeaponProfilesWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc') {
 		$arrParams = $this->buildOrderAndLimit($orderby, $order);
-		$arrParams[_SQL_PARAMS_WHERE_] = $this->buildFilters($arrFilters);
+		$arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
 		return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
 	}
 	

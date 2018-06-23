@@ -17,11 +17,11 @@ class MissionServices extends LocalServices {
 
 	private function buildFilters($arrFilters) {
 		$arrParams = array();
-		array_push($arrParams, (!empty($arrFilters['levelId']) && !is_array($arrFilters['levelId'])) ? $arrFilters['levelId'] : '%');
-		array_push($arrParams, ($arrFilters['durationId']!='' && !is_array($arrFilters['durationId'])) ? $arrFilters['durationId'] : '%');
-		array_push($arrParams, (!empty($arrFilters['playerId']) && !is_array($arrFilters['playerId'])) ? $arrFilters['playerId'] : '%');
-		array_push($arrParams, (!empty($arrFilters['origineId']) && !is_array($arrFilters['origineId'])) ? $arrFilters['origineId'] : '%');
-		array_push($arrParams, (isset($arrFilters['published']) && !is_array($arrFilters['published'])) ? $arrFilters['published'] : '%');
+		array_push($arrParams, (!empty($arrFilters[CST_LEVELID]) && !is_array($arrFilters[CST_LEVELID])) ? $arrFilters[CST_LEVELID] : '%');
+		array_push($arrParams, ($arrFilters[CST_DURATIONID]!='' && !is_array($arrFilters[CST_DURATIONID])) ? $arrFilters[CST_DURATIONID] : '%');
+		array_push($arrParams, (!empty($arrFilters[CST_PLAYERID]) && !is_array($arrFilters[CST_PLAYERID])) ? $arrFilters[CST_PLAYERID] : '%');
+		array_push($arrParams, (!empty($arrFilters[CST_ORIGINEID]) && !is_array($arrFilters[CST_ORIGINEID])) ? $arrFilters[CST_ORIGINEID] : '%');
+		array_push($arrParams, (isset($arrFilters[CST_PUBLISHED]) && !is_array($arrFilters[CST_PUBLISHED])) ? $arrFilters[CST_PUBLISHED] : '%');
 		return $arrParams;
 	}
 	/**
@@ -34,7 +34,7 @@ class MissionServices extends LocalServices {
 	 */
 	public function getMissionsWithFilters($file, $line, $arrFilters=array(), $orderby='title', $order='asc') {
 		$arrParams = $this->buildOrderAndLimit($orderby, $order);
-		$arrParams[_SQL_PARAMS_WHERE_] = $this->buildFilters($arrFilters);
+		$arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
 		return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
 	}
 	/**
@@ -47,7 +47,7 @@ class MissionServices extends LocalServices {
 	 */
 	public function getMissionsWithFiltersIn($file, $line, $arrFilters=array(), $orderby='title', $order='asc') {
 		$arrParams = $this->buildOrderAndLimit($orderby, $order);
-		$arrParams[_SQL_PARAMS_WHERE_] = $this->buildFilters($arrFilters);
+		$arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
 		return $this->Dao->selectEntriesWithFiltersIn($file, $line, $arrParams, $arrFilters);
 	}
 	/**

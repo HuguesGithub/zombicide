@@ -6,7 +6,7 @@ if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
  * @version 1.0.00
  * @since 1.0.00
  */
-class LocalServices extends GlobalServices {
+class LocalServices extends GlobalServices implements iConstants {
 
 	/**
 	 * @param array $services

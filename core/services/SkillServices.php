@@ -19,7 +19,7 @@ class SkillServices extends LocalServices {
 		$arrParams = array();
 		array_push($arrParams, (!empty($arrFilters['code']) && !is_array($arrFilters['code'])) ? $arrFilters['code'] : '%');
 		array_push($arrParams, (!empty($arrFilters['name']) && !is_array($arrFilters['name'])) ? '%'.$arrFilters['name'].'%' : '%');
-		array_push($arrParams, (!empty($arrFilters['description']) && !is_array($arrFilters['description'])) ? '%'.$arrFilters['description'].'%' : '%');
+		array_push($arrParams, (!empty($arrFilters[CST_DESCRIPTION]) && !is_array($arrFilters[CST_DESCRIPTION])) ? '%'.$arrFilters[CST_DESCRIPTION].'%' : '%');
 		return $arrParams;
 	}
 	/**
@@ -32,7 +32,7 @@ class SkillServices extends LocalServices {
 	 */
 	public function getSkillsWithFilters($file, $line, $arrFilters=array(), $orderby='name', $order='asc') {
 		$arrParams = $this->buildOrderAndLimit($orderby, $order);
-		$arrParams[_SQL_PARAMS_WHERE_] = $this->buildFilters($arrFilters);
+		$arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
 		return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
 	}
 

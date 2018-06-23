@@ -1,9 +1,7 @@
 <?php
 if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
-define ('_SQL_PARAMS_WHERE_', 'where');
-define ('_SQL_PARAMS_REPLACE_', 'replace');
-define ('_SQL_PARAMS_LIMIT_', '__limit__');
-define ('_SQL_PARAMS_ORDERBY_', '__orderby__');
+define ('SQL_PARAMS_WHERE', 'where');
+define ('SQL_PARAMS_ORDERBY', '__orderby__');
 /**
  * Classe LocalDaoImpl
  * @author Hugues.
@@ -25,7 +23,7 @@ class LocalDaoImpl extends GlobalDaoImpl {
      * Règle de tri
      * @var string $orderBy
      */
-    protected $orderBy = _SQL_PARAMS_ORDERBY_;
+    protected $orderBy = SQL_PARAMS_ORDERBY;
     /**
      * Requête de suppression en base
      * @var string $delete

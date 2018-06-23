@@ -149,6 +149,18 @@ class AdminMissionPageBean extends AdminPageBean {
         $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/missions-edit-board.php');
         return vsprintf($str, $args);
     }
+    private function getSubs($queryArg, $post_status, $numbers) {
+    	$subLink = '<li class="%1$s"><a href="%2$s" class="%3$s">%4$s <span class="count">(%5$s)</span></a> %6$s</li>';
+    	$links = array('all'=>'Toutes', CST_PENDING=>'Non publiées', CST_PUBLISH=>'Publiées', CST_FUTURE=>'Planifiées');
+    	$strSubs = '';
+    	foreach ( $links as $key=>$value ) {
+    		$queryArg[CST_POSTSTATUS] = $key;
+    		$strSubs .= '<li class="'.$key.'"><a href="'.$this->getQueryArg($queryArg).'" ';
+    		$strSubs .= 'class="'.($post_status==$key?CST_CURRENT:'').'">'.$value.' ';
+    		$strSubs .= '<span class="count">('.$numbers[$key].')</span></a>'.($key!='all'?' |':'').'</li>';
+    	}
+    	return $strSubs;
+    }
     /**
      * @return string
      */
@@ -219,14 +231,8 @@ class AdminMissionPageBean extends AdminPageBean {
         }
         $queryArg = array(CST_ONGLET=>CST_MISSION, CST_ORDERBY=>$orderby, CST_ORDER=>$order);
         // Subs
-        $queryArg[CST_POSTSTATUS] = 'all';
-        $subs  = '<li class="all"><a href="'.$this->getQueryArg($queryArg).'" class="'.($post_status=='all'?CST_CURRENT:'').'">Toutes <span class="count">('.count($Missions).')</span></a> |</li>';
-        $queryArg[CST_POSTSTATUS] = CST_PENDING;
-        $subs .= '<li class="pending"><a href="'.$this->getQueryArg($queryArg).'" class="'.($post_status==CST_PENDING?CST_CURRENT:'').'">Non publiées <span class="count">('.count($NotPublishedMissions).')</span></a> |</li>';
-        $queryArg[CST_POSTSTATUS] = CST_PUBLISH;
-        $subs .= '<li class="publish"><a href="'.$this->getQueryArg($queryArg).'" class="'.($post_status==CST_PUBLISH?CST_CURRENT:'').'">Publiées <span class="count">('.count($WpPostsPublished).')</span></a> |</li>';
-        $queryArg[CST_POSTSTATUS] = CST_FUTURE;
-        $subs .= '<li class="future"><a href="'.$this->getQueryArg($queryArg).'" class="'.($post_status==CST_FUTURE?CST_CURRENT:'').'">Planifiées <span class="count">('.count($WpPostsFuture).')</span></a> </li>';
+        $numbers = array('all'=>count($Missions), CST_PENDING=>count($NotPublishedMissions), CST_PUBLISH=>count($WpPostsPublished), CST_CURRENT=>count($WpPostsFuture));
+        $subs = $this->getSubs($queryArg, $post_status, $numbers);
         // Pagination
         if ( $filter_by_levelId!='' ) { $queryArg['filter-by-levelId'] = $filter_by_levelId; }
         if ( $filter_by_playerId!='' ) { $queryArg['filter-by-playerId'] = $filter_by_playerId; }

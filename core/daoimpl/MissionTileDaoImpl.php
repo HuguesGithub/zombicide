@@ -31,7 +31,7 @@ class MissionTileDaoImpl extends LocalDaoImpl {
 	 * Règle de tri
 	 * @var string $orderBy
 	 */
-	protected $orderBy = _SQL_PARAMS_ORDERBY_;
+	protected $orderBy = SQL_PARAMS_ORDERBY;
 	/**
 	 * Requête d'insertion en base
 	 * @var string $insert

@@ -17,7 +17,7 @@ class DurationServices extends LocalServices {
 
 	private function buildFilters($arrFilters) {
 		$arrParams = array();
-		$arrParams[] = ( isset($arrFilters['minDuration']) ? $arrFilters['minDuration'] : '%' );
+		$arrParams[] = ( isset($arrFilters[CST_MINDURATION]) ? $arrFilters[CST_MINDURATION] : '%' );
 		$arrParams[] = ( isset($arrFilters['maxDuration']) ? $arrFilters['maxDuration'] : '%' );
 		return $arrParams;
 	}
@@ -31,7 +31,7 @@ class DurationServices extends LocalServices {
 	 */
 	public function getDurationsWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc') {
 		$arrParams = $this->buildOrderAndLimit($orderby, $order);
-		$arrParams[_SQL_PARAMS_WHERE_] = $this->buildFilters($arrFilters);
+		$arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
 		return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
 	}
 	/**
@@ -45,12 +45,12 @@ class DurationServices extends LocalServices {
 	 * @return string
 	 */
 	public function getDurationsSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultValue='') {
-		$Durations = $this->getDurationsWithFilters($file, $line, array(), 'minDuration', 'asc');
+		$Durations = $this->getDurationsWithFilters($file, $line, array(), CST_MINDURATION, 'asc');
 		$arrSetLabels = array();
 		foreach ( $Durations as $Duration ) {
 			$arrSetLabels[$Duration->getId()] = $Duration->getStrDuree();
 		}
-		return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'durationId', $value, $defaultValue, $classe, $multiple);
+		return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.CST_DURATIONID, $value, $defaultValue, $classe, $multiple);
 	}
 	
 }

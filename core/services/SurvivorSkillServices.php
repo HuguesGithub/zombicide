@@ -19,8 +19,8 @@ class SurvivorSkillServices extends GlobalServices {
 		$arrParams = array();
 		$arrParams[] = ( isset($arrFilters['survivorId']) ? $arrFilters['survivorId'] : '%');
 		$arrParams[] = ( isset($arrFilters['skillId']) ? $arrFilters['skillId'] : '%');
-		$arrParams[] = ( isset($arrFilters['survivorTypeId']) ? $arrFilters['survivorTypeId'] : '%');
-		$arrParams[] = ( isset($arrFilters['tagLevelId']) ? $arrFilters['tagLevelId'] : '%');
+		$arrParams[] = ( isset($arrFilters[CST_SURVIVORTYPEID]) ? $arrFilters[CST_SURVIVORTYPEID] : '%');
+		$arrParams[] = ( isset($arrFilters[CST_TAGLEVELID]) ? $arrFilters[CST_TAGLEVELID] : '%');
 		return $arrParams;
 	}
 	/**
@@ -31,9 +31,9 @@ class SurvivorSkillServices extends GlobalServices {
 	 * @param string $order
 	 * @return array
 	 */
-	public function getSurvivorSkillsWithFilters($file, $line, $arrFilters=array(), $orderby=array('survivorTypeId', 'tagLevelId'), $order=array('ASC', 'ASC')) {
+	public function getSurvivorSkillsWithFilters($file, $line, $arrFilters=array(), $orderby=array(CST_SURVIVORTYPEID, CST_TAGLEVELID), $order=array('ASC', 'ASC')) {
 		$arrParams = $this->buildOrderAndLimit($orderby, $order);
-		$arrParams[_SQL_PARAMS_WHERE_] = $this->buildFilters($arrFilters);
+		$arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
 		return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
 	}
 	

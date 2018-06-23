@@ -20,7 +20,7 @@ class ChatServices extends LocalServices {
 		$arrParams[] = ( isset($arrFilters['liveId']) ? $arrFilters['liveId'] : '-1');
 		$arrParams[] = ( isset($arrFilters['sendToId']) ? $arrFilters['sendToId'] : '-1');
 		$arrParams[] = ( isset($arrFilters['senderId']) ? $arrFilters['senderId'] : '-1');
-		$arrParams[] = ( isset($arrFilters['timestamp']) ? $arrFilters['timestamp'] : '2018-06');
+		$arrParams[] = ( isset($arrFilters[CST_TIMESTAMP]) ? $arrFilters[CST_TIMESTAMP] : '2018-06');
 		return $arrParams;
 	}
 	/**
@@ -31,9 +31,9 @@ class ChatServices extends LocalServices {
 	 * @param string $order
 	 * @return array
 	 */
-	public function getChatsWithFilters($file, $line, $arrFilters=array(), $orderby='timestamp', $order='desc') {
+	public function getChatsWithFilters($file, $line, $arrFilters=array(), $orderby=CST_TIMESTAMP, $order='desc') {
 		$arrParams = $this->buildOrderAndLimit($orderby, $order);
-		$arrParams[_SQL_PARAMS_WHERE_] = $this->buildFilters($arrFilters);
+		$arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
 		return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
 	}
 }

@@ -17,8 +17,8 @@ class SpawnServices extends LocalServices {
 
 	private function buildFilters($arrFilters) {
 		$arrParams = array();
-		array_push($arrParams, (!empty($arrFilters['expansionId']) && !is_array($arrFilters['expansionId'])) ? $arrFilters['expansionId'] : '%');
-		array_push($arrParams, (!empty($arrFilters['spawnNumber']) && !is_array($arrFilters['spawnNumber'])) ? $arrFilters['spawnNumber'] : '%');
+		array_push($arrParams, (!empty($arrFilters[CST_EXPANSIONID]) && !is_array($arrFilters[CST_EXPANSIONID])) ? $arrFilters[CST_EXPANSIONID] : '%');
+		array_push($arrParams, (!empty($arrFilters[CST_SPAWNNUMBER]) && !is_array($arrFilters[CST_SPAWNNUMBER])) ? $arrFilters[CST_SPAWNNUMBER] : '%');
 		return $arrParams;
 	}
 	/**
@@ -29,9 +29,9 @@ class SpawnServices extends LocalServices {
 	 * @param string $order
 	 * @return array
 	 */
-	public function getSpawnsWithFilters($file, $line, $arrFilters=array(), $orderby='spawnNumber', $order='asc') {
+	public function getSpawnsWithFilters($file, $line, $arrFilters=array(), $orderby=CST_SPAWNNUMBER, $order='asc') {
 		$arrParams = $this->buildOrderAndLimit($orderby, $order);
-		$arrParams[_SQL_PARAMS_WHERE_] = $this->buildFilters($arrFilters);
+		$arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
 		return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
 	}
 

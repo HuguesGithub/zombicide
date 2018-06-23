@@ -20,8 +20,8 @@ class MissionExpansionServices extends LocalServices {
 
 	private function buildFilters($arrFilters) {
 		$arrParams = array();
-		$arrParams[] = ( isset($arrFilters['missionId']) ? $arrFilters['missionId'] : '%' );
-		$arrParams[] = ( isset($arrFilters['expansionId']) ? $arrFilters['expansionId'] : '%' );
+		$arrParams[] = ( isset($arrFilters[CST_MISSIONID]) ? $arrFilters[CST_MISSIONID] : '%' );
+		$arrParams[] = ( isset($arrFilters[CST_EXPANSIONID]) ? $arrFilters[CST_EXPANSIONID] : '%' );
 		return $arrParams;
 	}
 	/**
@@ -34,7 +34,7 @@ class MissionExpansionServices extends LocalServices {
 	 */
 	public function getMissionExpansionsWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc') {
 		$arrParams = $this->buildOrderAndLimit($orderby, $order);
-		$arrParams[_SQL_PARAMS_WHERE_] = $this->buildFilters($arrFilters);
+		$arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
 		return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
 	}
 	/**
@@ -47,7 +47,7 @@ class MissionExpansionServices extends LocalServices {
 	 * @param string $defaultValue
 	 * @return string
 	 */
-	public function getMissionExpansionsSelect($file, $line, $Mission, $prefix='', $classe='form-control', $multiple=FALSE, $defaultValue='') {
+	public function getMissionExpansionsSelect($file, $line, $Mission, $prefix='', $classe=CST_FORMCONTROL, $multiple=FALSE, $defaultValue='') {
 		$Expansions = $this->ExpansionServices->getExpansionsWithFilters($file, $line);
 		$arrSetLabels = array();
 		foreach ( $Expansions as $Expansion ) {
@@ -60,7 +60,7 @@ class MissionExpansionServices extends LocalServices {
 				array_push($arrSelValues, $MissionExpansion->getExpansionId());
 			}
 		}
-		return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'expansionId', $arrSelValues, $defaultValue, $classe, $multiple);
+		return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.CST_EXPANSIONID, $arrSelValues, $defaultValue, $classe, $multiple);
 	}
 	
 }

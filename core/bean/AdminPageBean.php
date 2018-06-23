@@ -7,6 +7,7 @@ if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
  * @since 1.0.00
  */
 class AdminPageBean extends MainPageBean {
+	const WP_DB_BACKUP_CRON = 'wp_db_backup_cron';
     
     /**
      * 
@@ -72,9 +73,9 @@ class AdminPageBean extends MainPageBean {
         $Obj = array_shift($row);
         $arrOptions = unserialize($Obj->option_value);
         foreach ( $arrOptions as $key=>$value ) {
-            if ( isset($value['wp_db_backup_cron']) ) {
+            if ( isset($value[WP_DB_BACKUP_CRON]) ) {
                 $nextTs = $key;
-                $arrOptions[$resetTs]['wp_db_backup_cron'] = $value['wp_db_backup_cron'];
+                $arrOptions[$resetTs][WP_DB_BACKUP_CRON] = $value[WP_DB_BACKUP_CRON];
                 unset($arrOptions[$key]);
             }
         }

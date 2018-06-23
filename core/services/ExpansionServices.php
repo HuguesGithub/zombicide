@@ -18,7 +18,7 @@ class ExpansionServices extends LocalServices {
     private function buildFilters($arrFilters) {
         $arrParams = array();
         array_push($arrParams, (isset($arrFilters['code']) && !is_array($arrFilters['code'])) ? $arrFilters['code'] : '%');
-        array_push($arrParams, (isset($arrFilters['nbMissions']) && !is_array($arrFilters['nbMissions'])) ? $arrFilters['nbMissions'] : '0');
+        array_push($arrParams, (isset($arrFilters[CST_NBMISSIONS]) && !is_array($arrFilters[CST_NBMISSIONS])) ? $arrFilters[CST_NBMISSIONS] : '0');
         return $arrParams;
     }
     /**
@@ -31,7 +31,7 @@ class ExpansionServices extends LocalServices {
      */
     public function getExpansionsWithFilters($file, $line, $arrFilters=array(), $orderby='name', $order='asc') {
         $arrParams = $this->buildOrderAndLimit($orderby, $order);
-        $arrParams[_SQL_PARAMS_WHERE_] = $this->buildFilters($arrFilters);
+        $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
         return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
     }
     /**
@@ -45,7 +45,7 @@ class ExpansionServices extends LocalServices {
      * @param string $defaultLabel
      * @return string
      */
-    public function getExpansionsSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultLabel='') {
+    public function getExpansionsSelect($file, $line, $value='', $prefix='', $classe=CST_FORMCONTROL, $multiple=FALSE, $defaultLabel='') {
         $Expansions = $this->getExpansionsWithFilters($file, $line);
     return $this->getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value, $prefix, $classe, $multiple, $defaultLabel);
     }
@@ -61,12 +61,12 @@ class ExpansionServices extends LocalServices {
      * @param string $defaultLabel
      * @return string
      */
-    public function getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultLabel='') {
+    public function getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value='', $prefix='', $classe=CST_FORMCONTROL, $multiple=FALSE, $defaultLabel='') {
         $arrSetLabels = array();
         foreach ( $Expansions as $Expansion ) {
             $arrSetLabels[$Expansion->getId()] = $Expansion->getName();
         }
-        return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'expansionId', $value, $defaultLabel, $classe, $multiple);
+        return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.CST_EXPANSIONID, $value, $defaultLabel, $classe, $multiple);
     }
   
   

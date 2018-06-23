@@ -17,9 +17,9 @@ class RuleServices extends LocalServices {
 
 	private function buildFilters($arrFilters) {
 		$arrParams = array();
-		$arrParams[] = ( isset($arrFilters['setting']) ? $arrFilters['setting'] : '%');
+		$arrParams[] = ( isset($arrFilters[CST_SETTING]) ? $arrFilters[CST_SETTING] : '%');
 		$arrParams[] = ( isset($arrFilters['code']) ? $arrFilters['code'] : '%');
-		$arrParams[] = ( isset($arrFilters['description']) ? $arrFilters['description'] : '%');
+		$arrParams[] = ( isset($arrFilters[CST_DESCRIPTION]) ? $arrFilters[CST_DESCRIPTION] : '%');
 		return $arrParams;
 	}
 	/**
@@ -32,7 +32,7 @@ class RuleServices extends LocalServices {
 	 */
 	public function getRulesWithFilters($file, $line, $arrFilters=array(), $orderby='code', $order='asc') {
 		$arrParams = $this->buildOrderAndLimit($orderby, $order);
-		$arrParams[_SQL_PARAMS_WHERE_] = $this->buildFilters($arrFilters);
+		$arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
 		return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
 	}
 	/**
@@ -45,7 +45,7 @@ class RuleServices extends LocalServices {
 	 * @param string $defaultLabel
 	 * @return string
 	 */
-	public function getRuleSelect($file, $line, $value='', $prefix='id', $classe='form-control', $multiple=FALSE, $defaultLabel='') {
+	public function getRuleSelect($file, $line, $value='', $prefix='id', $classe=CST_FORMCONTROL, $multiple=FALSE, $defaultLabel='') {
 		$Rules = $this->getRulesWithFilters($file, $line);
 		$arrSetLabels = array();
 		foreach ( $Rules as $Rule ) {
@@ -63,8 +63,8 @@ class RuleServices extends LocalServices {
 	 * @param string $defaultLabel
 	 * @return string
 	 */
-	public function getRuleNoSettingSelect($file, $line, $value='', $prefix='id', $classe='form-control', $multiple=FALSE, $defaultLabel='---') {
-		$Rules = $this->getRulesWithFilters($file, $line, array('setting'=>0));
+	public function getRuleNoSettingSelect($file, $line, $value='', $prefix='id', $classe=CST_FORMCONTROL, $multiple=FALSE, $defaultLabel='---') {
+		$Rules = $this->getRulesWithFilters($file, $line, array(CST_SETTING=>0));
 		$arrSetLabels = array();
 		foreach ( $Rules as $Rule ) {
 			$arrSetLabels[$Rule->getId()] = $Rule->getCode();
@@ -81,8 +81,8 @@ class RuleServices extends LocalServices {
 	 * @param string $defaultLabel
 	 * @return string
 	 */
-	public function getRuleSettingSelect($file, $line, $value='', $prefix='id', $classe='form-control', $multiple=FALSE, $defaultLabel='---') {
-		$Rules = $this->getRulesWithFilters($file, $line, array('setting'=>1));
+	public function getRuleSettingSelect($file, $line, $value='', $prefix='id', $classe=CST_FORMCONTROL, $multiple=FALSE, $defaultLabel='---') {
+		$Rules = $this->getRulesWithFilters($file, $line, array(CST_SETTING=>1));
 		$arrSetLabels = array();
 		foreach ( $Rules as $Rule ) {
 			$arrSetLabels[$Rule->getId()] = $Rule->getCode();

@@ -18,10 +18,10 @@ class SurvivorServices extends LocalServices {
 	private function buildFilters($arrFilters) {
 		$arrParams = array();
 		array_push($arrParams, (!empty($arrFilters['name']) && !is_array($arrFilters['name'])) ? '%'.$arrFilters['name'].'%' : '%');
-		array_push($arrParams, (!empty($arrFilters['zombivor']) && !is_array($arrFilters['zombivor'])) ? $arrFilters['zombivor'] : '%');
-		array_push($arrParams, (!empty($arrFilters['ultimate']) && !is_array($arrFilters['ultimate'])) ? '%'.$arrFilters['ultimate'].'%' : '%');
-		array_push($arrParams, (!empty($arrFilters['expansionId']) && !is_array($arrFilters['expansionId'])) ? $arrFilters['expansionId'] : '%');
-		array_push($arrParams, (!empty($arrFilters['background']) && !is_array($arrFilters['background'])) ? $arrFilters['background'] : '%');
+		array_push($arrParams, (!empty($arrFilters[CST_ZOMBIVOR]) && !is_array($arrFilters[CST_ZOMBIVOR])) ? $arrFilters[CST_ZOMBIVOR] : '%');
+		array_push($arrParams, (!empty($arrFilters[CST_ULTIMATE]) && !is_array($arrFilters[CST_ULTIMATE])) ? '%'.$arrFilters[CST_ULTIMATE].'%' : '%');
+		array_push($arrParams, (!empty($arrFilters[CST_EXPANSIONID]) && !is_array($arrFilters[CST_EXPANSIONID])) ? $arrFilters[CST_EXPANSIONID] : '%');
+		array_push($arrParams, (!empty($arrFilters[CST_BACKGROUND]) && !is_array($arrFilters[CST_BACKGROUND])) ? $arrFilters[CST_BACKGROUND] : '%');
 		return $arrParams;
 	}
 	/**
@@ -34,7 +34,7 @@ class SurvivorServices extends LocalServices {
 	 */
 	public function getSurvivorsWithFilters($file, $line, $arrFilters=array(), $orderby='name', $order='asc') {
 		$arrParams = $this->buildOrderAndLimit($orderby, $order);
-		$arrParams[_SQL_PARAMS_WHERE_] = $this->buildFilters($arrFilters);
+		$arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
 		return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
 	}
 

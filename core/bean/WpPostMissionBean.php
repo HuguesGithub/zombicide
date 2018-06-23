@@ -83,8 +83,7 @@ class WpPostMissionBean extends MainPageBean {
 	public function getMission() {
 		$WpPost = $this->WpPost;
 		$idMission = $WpPost->getPostMeta('missionId');
-		$Mission = $this->MissionServices->select(__FILE__, __LINE__, $idMission);
-		return $Mission;
+		return $this->MissionServices->select(__FILE__, __LINE__, $idMission);
 	}
 
 }

@@ -114,8 +114,7 @@ class SpawnDeckPageBean extends PagePageBean {
     $str .= $this->getButtonDiv('btnLeaveSpawnDeck', $keyAccess, 'Quitter cette pioche');
     $str .= $this->getButtonDiv('btnDisabled2', $keyAccess, 'Attention, action irréversible :', 'btn-dark disabled');
     $str .= $this->getButtonDiv('btnDeleteSpawnDeck', $keyAccess, 'Supprimer cette pioche', 'btn-danger');
-    $str .= '</div>';
-    return $str;
+    return $str.'</div>';
   }
   private function getButtonDiv($id, $keyAccess, $label, $classe='btn-dark') {
     return '<div type="button" id="'.$id.'" class="btn '.$classe.'" data-keyaccess="'.$keyAccess.'">'.$label.'</div>';

@@ -245,8 +245,7 @@ class Mission extends LocalDomain {
 		$strClassFilters  = 'player-'.$this->playerId.' ';
 		$strClassFilters .= 'duration-'.$this->durationId.' ';
 		$strClassFilters .= 'level-'.$this->levelId.' ';
-		$strClassFilters .= ' col-12 col-sm-6 col-md-4';
-		return $strClassFilters;
+		return $strClassFilters.' col-12 col-sm-6 col-md-4';
 	}
 	/**
 	 * @param int $x

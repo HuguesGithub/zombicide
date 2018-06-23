@@ -35,8 +35,7 @@ class SurvivorBean extends MainPageBean {
 		$strRow .= '<td>'.$this->getAllSkills().'</td>';
 		$strRow .= '</tr>';
 		$strRow .= '<tr><td colspan="5" style="height:0;line-height:0;padding:0;border:0 none;">&nbsp;</td></tr>';
-		$strRow .= '<tr><td colspan="5">'.$Survivor->getBackground().'</td></tr>';
-		return $strRow;
+		return $strRow.'<tr><td colspan="5">'.$Survivor->getBackground().'</td></tr>';
 	}
 	private function getAllSkills() {
 		$Survivor = $this->Survivor;
@@ -49,8 +48,7 @@ class SurvivorBean extends MainPageBean {
 			$str .= $this->getSkillsBySurvivorType('skills-ultimate skills-survivant', $Survivor->getUlSkills('u'));
 			$str .= $this->getSkillsBySurvivorType('skills-ultimate skills-zombivant', $Survivor->getUlSkills('uz'));
 		}
-		$str .= '</ul>';
-		return $str;
+		return $str.'</ul>';
 	}
 	private function getSkillsBySurvivorType($addClass, $content) { return '<li class="'.$addClass.'">'.$content.'</li>'; }
 	private function getAllPortraits() {

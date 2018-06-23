@@ -59,8 +59,7 @@ class WpPostSurvivorBean extends MainPageBean {
 	public function getSurvivor() {
 		$WpPost = $this->WpPost;
 		$idSurvivor = $WpPost->getPostMeta('survivorId');
-		$Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $idSurvivor);
-		return $Survivor;
+		return $this->SurvivorServices->select(__FILE__, __LINE__, $idSurvivor);
 	}
 
 }

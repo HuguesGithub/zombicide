@@ -127,10 +127,7 @@ class Survivor extends LocalDomain {
 	 * @param string $str
 	 * @return string
 	 */
-	public function getNiceName($str) {
-		$nicename = str_replace(array(' ', '#'), '', strtolower($str));
-		return $nicename;
-	}
+	public function getNiceName($str) { return str_replace(array(' ', '#'), '', strtolower($str)); }
 	/**
 	 * @param string $type
 	 * @return string
@@ -138,18 +135,13 @@ class Survivor extends LocalDomain {
 	public function getPortraitUrl($type='') {
 		$nicename = $this->getNiceName($this->name);
 		$baseUrl = '/wp-content/plugins/zombicide/web/rsc/images/portraits/p';
-		$portraitUrl = $baseUrl.$nicename.($type!=''?'-'.$type:'').'.jpg';
-		return $portraitUrl;
+		return $baseUrl.$nicename.($type!=''?'-'.$type:'').'.jpg';
 	}
 	/**
 	 * @param bool $isHome
 	 * @return string
 	 */
-	public function getStrClassFilters($isHome) {
-		$strClassFilters ='';
-		$strClassFilters .= ' col-12 col-sm-6 col-md-4';
-		return $strClassFilters;
-	}
+	public function getStrClassFilters($isHome) { return ' col-12 col-sm-6 col-md-4'; }
 	/**
 	 * @param string $type
 	 * @return string

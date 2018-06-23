@@ -18,8 +18,7 @@ class Zombicide {
 
 	public function template_loader($template) {
 		wp_enqueue_script('jquery');
-		$template = PLUGIN_PATH.'web/pages/public/public-main-page.php';
-		return $template;
+		return PLUGIN_PATH.'web/pages/public/public-main-page.php';
 	}
 }
 $Zombicide = new Zombicide();

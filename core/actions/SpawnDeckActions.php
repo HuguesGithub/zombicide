@@ -18,8 +18,7 @@ class SpawnDeckActions extends LocalActions {
      */
     public static function getLiveDeck($LiveDeckServices, $deckKey) {
         $LiveDecks = $LiveDeckServices->getLiveDecksWithFilters(__FILE__, __LINE__, array('deckKey'=>$deckKey));
-        $LiveDeck = array_shift($LiveDecks);
-        return $LiveDeck;
+        return array_shift($LiveDecks);
     }
     /**
      * @param array $post

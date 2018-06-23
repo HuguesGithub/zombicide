@@ -133,8 +133,7 @@ class MissionServices extends LocalServices {
 		$widthSelect  = '<select name="width">';
 		$widthSelect .= '<option value="0">0</option>';
 		for ( $i=1; $i<=6; $i++ ) { $widthSelect .= '<option value="'.$i.'"'.($width==$i?' selected="selected"':'').'>'.$i.'</option>'; }
-		$widthSelect .= '</select>';
-		return $widthSelect;
+		return $widthSelect.'</select>';
 	}
 	/**
 	 * @param int $height
@@ -143,8 +142,7 @@ class MissionServices extends LocalServices {
 		$heightSelect  = '<select name="height">';
 		$heightSelect .= '<option value="0">0</option>';
 		for ( $i=1; $i<=6; $i++ ) { $heightSelect .= '<option value="'.$i.'"'.($height==$i?' selected="selected"':'').'>'.$i.'</option>'; }
-		$heightSelect .= '</select>';
-		return $heightSelect;
+		return $heightSelect.'</select>';
 	}
 
 }

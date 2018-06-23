@@ -24,8 +24,7 @@ class HomePageBean extends MainPageBean {
 		$strContent .= '<section class="col-xs-4 col-xs-offset-4">';
 		$strContent .= '<div class="text-center"><div id="more_news" class="special_buttons">Plus de news</div></div>';
 		$strContent .= '</section>';
-		$strContent .= '<div class="clearfix"></div>';
-		return $strContent;
+		return $strContent.'<div class="clearfix"></div>';
 	}
 	/**
 	 * @param number $offset

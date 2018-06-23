@@ -29,8 +29,7 @@ class SkillBean extends MainPageBean {
 		$strRow  = '<tr>';
 		$strRow .= '<td style="white-space: nowrap;">'.$Skill->getName().'</td>';
 		$strRow .= '<td>'.$Skill->getDescription().'</td>';
-		$strRow .= '</tr>';
-		return $strRow;
+		return $strRow.'</tr>';
 	}
   
 }

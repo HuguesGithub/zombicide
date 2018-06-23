@@ -50,8 +50,7 @@ class MissionBean extends MainPageBean {
         $strRow .= '<td class="objectivesAndRules">'.$Mission->getStrRules().'</td>';
         $strRow .= '<td class="objectivesAndRules">'.$Mission->getStrObjectives().'</td>';
         $strRow .= '<td>'.$Mission->getStrExpansions().'</td>';
-        $strRow .= '</tr>';
-        return $strRow;
+        return $strRow.'</tr>';
     }
     /**
      * @return string
@@ -71,8 +70,7 @@ class MissionBean extends MainPageBean {
         $strRow .= '<td>'.$Mission->getStrNbJoueurs().'</td>';
         $strRow .= '<td>'.$Mission->getStrExpansions().'</td>';
         $strRow .= '<td>'.$Mission->getStrOrigine().'</td>';
-        $strRow .= '</tr>';
-        return $strRow;
+        return $strRow.'</tr>';
     }
     /**
      * @param array $post
@@ -192,8 +190,7 @@ class MissionBean extends MainPageBean {
         $str .= '-title" name="'.$type.'-title" class="form-control"><div class="input-group-append"><button class="btn btn-success float-right" data-type="'.$type;
         $str .= '" data-missionid="'.$Mission->getId().'"><i class="fas fa-plus-circle"></i></button></div></div></header><content>';
         $str .= $select;
-        $str .= '<textarea id="'.$type.'-description" name="'.$type.'-description" class="form-control"></textarea></content></span></li>';
-        return $str;
+        return $str.'<textarea id="'.$type.'-description" name="'.$type.'-description" class="form-control"></textarea></content></span></li>';
     }
     /**
      * @return string
@@ -255,8 +252,7 @@ class MissionBean extends MainPageBean {
         $strCanvas .= "var srcImg ='/wp-content/plugins/zombicide/web/rsc/images/missions/".$Mission->getCode().".jpg';\r\n";
         $strCanvas .= "var xStart ='".($Mission->getWidth()*250)."';\r\n";
         $strCanvas .= "var yStart ='".($Mission->getHeight()*250)."';\r\n";
-        $strCanvas .= '</script>';
-        return $strCanvas;
+        return $strCanvas.'</script>';
     }
 }
 ?>

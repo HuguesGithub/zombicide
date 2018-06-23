@@ -80,9 +80,9 @@ class PostPageBean extends MainPageBean {
 		}
 		$media = get_attached_media( 'image' );
 		if ( !empty($media) ) {
-			$WpPost = WpPost::convertElement(array_shift($media));
+			$WpPostMedia = WpPost::convertElement(array_shift($media));
 		} else {
-			$WpPost = new WpPost();
+			$WpPostMedia = new WpPost();
 		}
     $navigationMissions = '';
     $prevPost = get_previous_post();
@@ -102,7 +102,7 @@ class PostPageBean extends MainPageBean {
 			$Mission->getStrTiles(),
 			$contentRules,
 			$strContent,
-			'<img src="'.$WpPost->getGuid().'" alt="'.$Mission->getTitle().'">',
+			'<img src="'.$WpPostMedia->getGuid().'" alt="'.$Mission->getTitle().'">',
       $navigationMissions,
 		);
 		$str = file_get_contents( PLUGIN_PATH.'web/pages/public/fragments/article-mission-page.php' );

@@ -35,7 +35,7 @@ function dealWithStartButton() {
 			} catch (e) {
 				console.log("error: "+e);
 				console.log(response);
-			};
+			}
       $hj('#livewrap-overlay').addClass('active');
       $hj('#livewrap-popup').addClass('active').html(obj.popupContent);
 		}

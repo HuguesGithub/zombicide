@@ -121,7 +121,7 @@ class Chat extends LocalDomain {
     	}
     	$arr1 = explode(' ', $this->timestamp);
     	list($Y, $m, $d) = explode('-', $arr1[0]);
-    	list($H, $i, $s) = explode(':', $arr1[1]);
+    	list($H, $i, ) = explode(':', $arr1[1]);
     	list($cY, $cm, $cd) = explode('-', date('Y-m-d'));
     	if ( $Y!=$cY ) { $strTimestamp = $d.'/'.$m.'/'.$Y.' '; }
     	elseif ( $m!=$cm || $d!=$cd ) { $strTimestamp = $d.'/'.$m.' '; }

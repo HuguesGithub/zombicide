@@ -115,7 +115,7 @@ class Tile extends LocalDomain {
 	 * @return string
 	 */
 	public function getDimensions() {
-		list($width, $height, $type, $attr) = getimagesize('http://zombicide.jhugues.fr'.$this->getImgUrl());
+		list($width, $height, , ) = getimagesize('http://zombicide.jhugues.fr'.$this->getImgUrl());
 		return $width.'px x '.$height.'px';
 	}
 	/**

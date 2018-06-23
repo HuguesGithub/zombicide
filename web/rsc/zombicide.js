@@ -192,7 +192,7 @@ $hj(document).ready(function(){
         } catch (e) {
           console.log("error: "+e);
           console.log(response);
-        };
+        }
         reloadComponents(obj, 'replace');
       }
     );
@@ -240,7 +240,7 @@ $hj(document).ready(function(){
       	} catch (e) {
         	console.log("error: "+e);
         	console.log(response);
-      	};
+      	}
       	reloadComponents(obj, 'replace');
         $hj('#selectionSurvivors i').unbind().click(function() {
           $hj(this).parent().parent().toggleClass('active');
@@ -411,7 +411,6 @@ $hj(document).ready(function(){
   });
   
   $hj('#rollDice').unbind().click(function() {
-    var obj;
     var data = {'action': 'dealWithAjax', 'ajaxAction': 'rollDice', 'rollDice': $hj('#keyAccess').val()};
     $hj.post(
       ajaxurl,
@@ -419,11 +418,11 @@ $hj(document).ready(function(){
       function(response) {
         try {
           var obj = JSON.parse(response);
-          console.log(response);
+          console.log(obj);
         } catch (e) {
           console.log("error: "+e);
           console.log(response);
-        };
+        }
       }
     );
   });
@@ -637,7 +636,7 @@ function getSurvivorsBySkillId(skillId) {
       } catch (e) {
         console.log("error: "+e);
         console.log(response);
-      };
+      }
       reloadComponents(obj, 'replace');
     }
   );
@@ -654,7 +653,7 @@ function getSurvivorsByExpansionCode(exp, type='') {
       } catch (e) {
         console.log("error: "+e);
         console.log(response);
-      };
+      }
       reloadComponents(obj, 'append');
       if ( type=='' ) {
         filterSurvivors();
@@ -749,7 +748,7 @@ function addMoreNews(offset) {
       } catch (e) {
         console.log("error: "+e);
         console.log(response);
-      };
+      }
     }
   );
 }
@@ -811,7 +810,7 @@ function addPageMissionAjaxActions(clicked) {
         } catch (e) {
           console.log("error: "+e);
           console.log(response);
-        };
+        }
       }
     );
   }
@@ -873,7 +872,7 @@ function addPageCompetenceAjaxActions(clicked) {
         } catch (e) {
           console.log("error: "+e);
           console.log(response);
-        };
+        }
       }
     );
   }
@@ -937,7 +936,7 @@ function addPageSurvivantAjaxActions(clicked) {
 	        } catch (e) {
 	          console.log("error: "+e);
 	          console.log(response);
-	        };
+	        }
 	      }
 	    );
 	  }
@@ -1011,7 +1010,7 @@ function addSelectionSurvivantActions() {
         } catch (e) {
           console.log("error: "+e);
           console.log(response);
-        };
+        }
       }
     );
   });
@@ -1035,7 +1034,7 @@ function doSpawnDeckActions(data, type) {
       } catch (e) {
         console.log("error: "+e);
         console.log(response);
-      };
+      }
     }
   );
 }
@@ -1100,7 +1099,7 @@ function refreshChatContent() {
       } catch (e) {
         console.log("error: "+e);
         console.log(response);
-      };
+      }
       reloadComponents(obj, 'append');
       $hj('#online-chat-content').stop().animate({ scrollTop: $hj('#online-chat-content')[0].scrollHeight }, 2000);
     }
@@ -1129,7 +1128,7 @@ function sendMessage() {
       } catch (e) {
         console.log("error: "+e);
         console.log(response);
-      };
+      }
       reloadComponents(obj, 'append');
       $hj('#online-chat-content').stop().animate({ scrollTop: $hj('#online-chat-content')[0].scrollHeight }, 2000);
     }
@@ -1146,7 +1145,6 @@ function addChatMsgActions() {
   }
 }
 function joinGame() {
-	var obj;
     var data = {'action': 'dealWithAjax', 'ajaxAction': 'joinGame', 'keyAccess': $hj('#keyAccess').val()};
 	$hj.post(
 		ajaxurl,
@@ -1154,10 +1152,11 @@ function joinGame() {
 		function(response) {
 			try {
 				var obj = JSON.parse(response);
+				console.log(obj);
 			} catch (e) {
 				console.log("error: "+e);
 				console.log(response);
-			};
+			}
 		}
 	);
 }

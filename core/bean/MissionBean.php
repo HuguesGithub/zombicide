@@ -34,7 +34,6 @@ class MissionBean extends MainPageBean {
         $queryArgs[CST_POSTACTION] = 'clone';
         $hrefClone = $this->getQueryArg($queryArgs);
         $urlWpPost = $Mission->getWpPostUrl();
-        if ( $urlWpPost!='#' ) { $strRow .= '<span class="view"> | <a href="'.$urlWpPost.'">Aperçu</a></span>'; }
         $args = array(
         	// Identifiant de la Mission
         	$Mission->getId(),

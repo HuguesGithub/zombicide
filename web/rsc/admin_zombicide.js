@@ -19,7 +19,7 @@ function ajaxCall(data) {
         console.log("error: "+e);
         console.log(response);
         return false;
-      };
+      }
     }
   );
 }
@@ -51,7 +51,7 @@ function addActionToParamEditorButtons() {
             } catch (e) {
               console.log("error: "+e);
               console.log(response);
-            };
+            }
           }
         );
       }
@@ -78,7 +78,7 @@ function addActionToParamEditorButtons() {
             } catch (e) {
               console.log("error: "+e);
               console.log(response);
-            };
+            }
           }
         );
     } else if ( $hj(this).hasClass('rmvParam') ) {
@@ -105,7 +105,6 @@ function addActionToMapEditorButtons() {
 		var coordX = arrCoords[1];
 		var coordY = arrCoords[2];
 		var missionId = $hj('#id').val();
-		var obj;
 		var data = {'action': 'dealWithAjax', 'ajaxAction': 'updateMissionTile', 'coordX': coordX, 'coordY': coordY, 'missionId': missionId, 'value': value};
 		$hj.post(
 			ajaxurl,
@@ -118,7 +117,7 @@ function addActionToMapEditorButtons() {
 				} catch (e) {
 					console.log("error: "+e);
 					console.log(response);
-				};
+				}
 			}
 		);
 	});
@@ -143,7 +142,7 @@ function addActionToMapEditorButtons() {
 				} catch (e) {
 					console.log("error: "+e);
 					console.log(response);
-				};
+				}
 				return false;
 			}
 		);
@@ -155,7 +154,6 @@ function addActionToMapEditorButtons() {
 		var rkCol = $hj(this).data('col');
 		var rkRow = $hj(this).data('row');
 		var missionId = $hj('#id').val();
-		var obj;
 		var data = {'action': 'dealWithAjax', 'ajaxAction': ajaxAction, 'orientation': dealAction, 'coordX': rkCol, 'coordY': rkRow, 'missionId': missionId};
 		$hj.post(
 			ajaxurl,
@@ -174,7 +172,7 @@ function addActionToMapEditorButtons() {
 				} catch (e) {
 					console.log("error: "+e);
 					console.log(response);
-				};
+				}
 				return false;
 			}
 	    );
@@ -187,7 +185,6 @@ function addActionToMapEditorButtons() {
       case 'idsettingId' : type = 'rule'; textarea='setting'; break;
       case 'idobjectiveId' : type = 'objective'; textarea=type; break;
     }
-		var obj;
 		var data = {'action': 'dealWithAjax', 'ajaxAction': 'getObjRuleDescription', 'type': type, 'id': $hj(this).val()};
 		$hj.post(
 			ajaxurl,
@@ -198,13 +195,12 @@ function addActionToMapEditorButtons() {
 				} catch (e) {
 					console.log("error: "+e);
 					console.log(response);
-				};
+				}
 				return false;
 			}
 		);
 	});
   $hj('.objectivesAndRules button').unbind().click(function() {
-		var obj;
 		var data = '';
     var type = $hj(this).data('type');
     var id = $hj(this).data('id');
@@ -231,7 +227,7 @@ function addActionToMapEditorButtons() {
 				} catch (e) {
 					console.log("error: "+e);
 					console.log(response);
-				};
+				}
 			}
     );
 		return false;

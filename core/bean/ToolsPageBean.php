@@ -60,18 +60,6 @@ class ToolsPageBean extends PagePageBean {
 		$str = file_get_contents( PLUGIN_PATH.'web/pages/public/public-page-piste-de-des.php' );
 		return vsprintf($str, $args);
 	}
-    private function getNumber($score) {
-        switch ( $score ) {
-            case 1  : $returned = 'one'; break;
-            case 2  : $returned = 'two'; break;
-            case 3  : $returned = 'three'; break;
-            case 4  : $returned = 'four'; break;
-            case 5  : $returned = 'five'; break;
-            case 6  : $returned = 'six'; break;
-            default : $returned = ''; break;
-        }
-        return $returned;
-    }
 	/**
 	 * @param WpPost $WpPage
 	 * @return string

@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * AdminMissionPageBean
  * @version 1.0.00
@@ -20,10 +20,10 @@ class AdminMissionPageBean extends AdminPageBean {
    */
   public static function getStaticContentPage($urlParams) {
     $Bean = new AdminMissionPageBean();
-    if ( !isset($urlParams[CST_POSTACTION]) ) { return $Bean->getListingPage(); }
+    if (!isset($urlParams[CST_POSTACTION]) ) { return $Bean->getListingPage(); }
     $MissionServices = FactoryServices::getMissionServices();
     $Mission = $MissionServices->select(__FILE__, __LINE__, $urlParams['id']);
-    switch ( $urlParams[CST_POSTACTION] ) {
+    switch ($urlParams[CST_POSTACTION] ) {
       case 'add'   : $returned = $Bean->getAddPage($Mission); break;
       case 'edit'  : $returned = ($Mission->getId() == '' ? $Bean->getListingPage() : $Bean->getEditPage($Mission)); break;
       case 'trash'   : $returned = 'trash'; break;
@@ -38,9 +38,9 @@ class AdminMissionPageBean extends AdminPageBean {
    * @return string
    */
   public function getAddPage($Mission) {
-    if ( isset($_POST) && !empty($_POST) ) {
+    if (isset($_POST) && !empty($_POST) ) {
       $doInsert = $Mission->initWithPost($_POST);
-      if ( $doInsert ) {
+      if ($doInsert ) {
         $this->MissionServices->insert(__FILE__, __LINE__, $Mission);
         $Mission->setId(MySQL::getLastInsertId());
         $this->dealWithExpansions($Mission, $_POST[CST_EXPANSIONID]);
@@ -54,10 +54,10 @@ class AdminMissionPageBean extends AdminPageBean {
      * @return string
      */
   public function getEditPage($Mission) {
-    if ( isset($_POST) && !empty($_POST) ) {
+    if (isset($_POST) && !empty($_POST) ) {
       $doUpdate = $Mission->updateWithPost($_POST);
       $this->dealWithExpansions($Mission, $_POST[CST_EXPANSIONID]);
-      if ( $doUpdate ) {
+      if ($doUpdate ) {
         $this->MissionServices->update(__FILE__, __LINE__, $Mission);
         return $this->getListingPage();
       }
@@ -69,32 +69,32 @@ class AdminMissionPageBean extends AdminPageBean {
     $DelMissionExpansions = array();
     $GetMissionExpansions = array();
     // Si au moins une Extension est déjà accrochée à la Mission et qu'il y en a au moins une de sélectionnée
-    if ( !empty($arrExpansions) && !empty($MissionExpansions) ) {
-      foreach ( $MissionExpansions as $MissionExpansion ) {
+    if (!empty($arrExpansions) && !empty($MissionExpansions) ) {
+      foreach ($MissionExpansions as $MissionExpansion ) {
         $expansionId = $MissionExpansion->getExpansionId();
         $isSelected = FALSE;
-        foreach ( $arrExpansions as $key=>$value ) {
+        foreach ($arrExpansions as $key=>$value ) {
           // On ne lui fait rien à cette extension.
-          if ( $expansionId == $value) {
+          if ($expansionId == $value) {
             $isSelected = TRUE;
             unset($arrExpansions[$key]);
             array_push($GetMissionExpansions, $MissionExpansion);
           }
         }
-        if ( !$isSelected ) {
+        if (!$isSelected ) {
           array_push($DelMissionExpansions, $MissionExpansion);
         }
       }
     }
     // Si des extensions rattachées n'ont pas été validées, on les supprime
-    if ( !empty($DelMissionExpansions) ) {
-      foreach ( $DelMissionExpansions as $MissionExpansion ) {
+    if (!empty($DelMissionExpansions) ) {
+      foreach ($DelMissionExpansions as $MissionExpansion ) {
         $this->MissionExpansionServices->delete(__FILE__, __LINE__, $MissionExpansion);
       }
     }
     // Si des extensions cochées n'ont pas été traitées, on les ajoute.    
     $args = array('missionId'=>$Mission->getId());
-    foreach ( $arrExpansions as $key=>$value ) {
+    foreach ($arrExpansions as $key=>$value ) {
       $args[CST_EXPANSIONID] = $value;
       $MissionExpansion = new MissionExpansion($args);
       $this->MissionExpansionServices->insert(__FILE__, __LINE__, $MissionExpansion);
@@ -152,7 +152,7 @@ class AdminMissionPageBean extends AdminPageBean {
   private function getSubs($queryArg, $post_status, $numbers) {
     $links = array('all'=>'Toutes', CST_PENDING=>'Non publiées', CST_PUBLISH=>'Publiées', CST_FUTURE=>'Planifiées');
     $strSubs = '';
-    foreach ( $links as $key=>$value ) {
+    foreach ($links as $key=>$value ) {
       $queryArg[CST_POSTSTATUS] = $key;
       $strSubs .= '<li class="'.$key.'"><a href="'.$this->getQueryArg($queryArg).'" ';
       $strSubs .= 'class="'.($post_status==$key?CST_CURRENT:'').'">'.$value.' ';
@@ -202,21 +202,21 @@ class AdminMissionPageBean extends AdminPageBean {
     $filter_by_playerId = $this->initVar('filter-by-playerId','');
     $filter_by_durationId = $this->initVar('filter-by-durationId','');
     $filter_by_origineId = $this->initVar('filter-by-origineId', '');
-    if ( $filter_by_levelId!='' ) { $arrFilters[CST_LEVELID] = $filter_by_levelId; }
-    if ( $filter_by_playerId!='' ) { $arrFilters[CST_PLAYERID] = $filter_by_playerId; }
-    if ( $filter_by_durationId!='' ) { $arrFilters[CST_DURATIONID] = $filter_by_durationId; }
-    if ( $filter_by_origineId!='' ) { $arrFilters[CST_ORIGINEID] = $filter_by_origineId; }
+    if ($filter_by_levelId!='' ) { $arrFilters[CST_LEVELID] = $filter_by_levelId; }
+    if ($filter_by_playerId!='' ) { $arrFilters[CST_PLAYERID] = $filter_by_playerId; }
+    if ($filter_by_durationId!='' ) { $arrFilters[CST_DURATIONID] = $filter_by_durationId; }
+    if ($filter_by_origineId!='' ) { $arrFilters[CST_ORIGINEID] = $filter_by_origineId; }
     $orderby = $this->initVar(self::CST_ORDERBY, CST_TITLE);
     $order = $this->initVar(self::CST_ORDER, 'ASC');
     $curPage = $this->initVar(self::CST_CURPAGE, 1);
     $post_status = $this->initVar(self::CST_POSTSTATUS, 'all');
-    if ( $post_status==CST_PENDING ) { $arrFilters['published'] = '0'; }
+    if ($post_status==CST_PENDING ) { $arrFilters['published'] = '0'; }
     $Missions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, array(), $orderby, $order);
     $NotPublishedMissions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, array('published'=>0));
     $FilteredMissions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, $arrFilters, $orderby, $order);
     $WpPostsPublished = $this->WpPostServices->getArticles(__FILE__, __LINE__, array(self::CST_POSTSTATUS=>CST_PUBLISH, CST_ORDERBY=>$orderby, CST_ORDER=>$order));
     $WpPostsFuture = $this->WpPostServices->getArticles(__FILE__, __LINE__, array(self::CST_POSTSTATUS=>CST_FUTURE, CST_ORDERBY=>$orderby, CST_ORDER=>$order));
-    switch ( $post_status ) {
+    switch ($post_status ) {
       case CST_PUBLISH  : $ToDisplayMissions = $WpPostsPublished; break;
       case CST_FUTURE  : $ToDisplayMissions = $WpPostsFuture; break;
       case CST_PENDING  :
@@ -226,33 +226,33 @@ class AdminMissionPageBean extends AdminPageBean {
     }
     $strRows = '';
     $nbPerPage = 15;
-    if ( $post_status == 'all' || $post_status == CST_PENDING ) {
+    if ($post_status == 'all' || $post_status == CST_PENDING ) {
       $nbElements = count($ToDisplayMissions);
       $nbPages = ceil($nbElements/$nbPerPage);
       $curPage = max(1, min($curPage, $nbPages));
       $DisplayedMissions = array_slice($ToDisplayMissions, ($curPage-1)*$nbPerPage, $nbPerPage); 
-      if ( !empty($DisplayedMissions) ) {
-        foreach ( $DisplayedMissions as $Mission ) {
+      if (!empty($DisplayedMissions) ) {
+        foreach ($DisplayedMissions as $Mission ) {
           $MissionBean = new MissionBean($Mission);
           $strRows .= $MissionBean->getRowForAdminPage();
         }
       }
     } else {
       $ToDisplayFiltered = array();
-      if ( !empty($ToDisplayMissions) ) {
-        foreach ( $ToDisplayMissions as $WpPost ) {
+      if (!empty($ToDisplayMissions) ) {
+        foreach ($ToDisplayMissions as $WpPost ) {
           $WpPostMissionBean = $WpPost->getBean();
           $Mission = $WpPostMissionBean->getMission();
-          if ( !empty($arrFilters[CST_LEVELID]) && $Mission->getLevelId()!=$arrFilters[CST_LEVELID] ) { continue; }
-          if ( !empty($arrFilters[CST_DURATIONID]) && $Mission->getDurationId()!=$arrFilters[CST_DURATIONID] ) { continue; }
-          if ( !empty($arrFilters[CST_PLAYERID]) && $Mission->getPlayerId()!=$arrFilters[CST_PLAYERID] ) { continue; }
-          if ( !empty($arrFilters[CST_ORIGINEID]) && $Mission->getOrigineId()!=$arrFilters[CST_ORIGINEID] ) { continue; }
+          if (!empty($arrFilters[CST_LEVELID]) && $Mission->getLevelId()!=$arrFilters[CST_LEVELID] ) { continue; }
+          if (!empty($arrFilters[CST_DURATIONID]) && $Mission->getDurationId()!=$arrFilters[CST_DURATIONID] ) { continue; }
+          if (!empty($arrFilters[CST_PLAYERID]) && $Mission->getPlayerId()!=$arrFilters[CST_PLAYERID] ) { continue; }
+          if (!empty($arrFilters[CST_ORIGINEID]) && $Mission->getOrigineId()!=$arrFilters[CST_ORIGINEID] ) { continue; }
           $MissionBean = new MissionBean($Mission);
           array_push($ToDisplayFiltered, $MissionBean);
         }
       }
-      if ( !empty($ToDisplayFiltered) ) {
-        foreach ( $ToDisplayFiltered as $MissionBean ) {
+      if (!empty($ToDisplayFiltered) ) {
+        foreach ($ToDisplayFiltered as $MissionBean ) {
           $strRows .= $MissionBean->getRowForAdminPage();
         }
       }
@@ -266,10 +266,10 @@ class AdminMissionPageBean extends AdminPageBean {
     $numbers = array('all'=>count($Missions), CST_PENDING=>count($NotPublishedMissions), CST_PUBLISH=>count($WpPostsPublished), CST_CURRENT=>count($WpPostsFuture));
     $subs = $this->getSubs($queryArg, $post_status, $numbers);
     // Pagination
-    if ( $filter_by_levelId!='' ) { $queryArg['filter-by-levelId'] = $filter_by_levelId; }
-    if ( $filter_by_playerId!='' ) { $queryArg['filter-by-playerId'] = $filter_by_playerId; }
-    if ( $filter_by_durationId!='' ) { $queryArg['filter-by-durationId'] = $filter_by_durationId; }
-    if ( $filter_by_origineId!='' ) { $queryArg['filter-by-origineId'] = $filter_by_origineId; }
+    if ($filter_by_levelId!='' ) { $queryArg['filter-by-levelId'] = $filter_by_levelId; }
+    if ($filter_by_playerId!='' ) { $queryArg['filter-by-playerId'] = $filter_by_playerId; }
+    if ($filter_by_durationId!='' ) { $queryArg['filter-by-durationId'] = $filter_by_durationId; }
+    if ($filter_by_origineId!='' ) { $queryArg['filter-by-origineId'] = $filter_by_origineId; }
     $strPagination = $this->getPagination($queryArg, $post_status, $curPage, $nbPages, $nbElements);
     // Filtre de la Difficulté
     $prefix = 'filter-by-';
@@ -282,13 +282,13 @@ class AdminMissionPageBean extends AdminPageBean {
     $queryArg[CST_POSTSTATUS] = 'all';
     $queryArg[CST_ORDERBY] = 'code';
     $queryArg[CST_ORDER] = 'asc';
-      if ( $orderby=='code' ) {
+      if ($orderby=='code' ) {
       $queryArg[CST_ORDER] = ($order=='asc'?'desc':'asc');
     }
     $urlSortCode = $this->getQueryArg($queryArg);
     $queryArg[CST_ORDERBY] = CST_TITLE;
     $queryArg[CST_ORDER] = 'asc';
-    if ( $orderby==CST_TITLE ) {
+    if ($orderby==CST_TITLE ) {
       $queryArg[CST_ORDER] = ($order=='asc'?'desc':'asc');
     }
     $urlSortTitle = $this->getQueryArg($queryArg);

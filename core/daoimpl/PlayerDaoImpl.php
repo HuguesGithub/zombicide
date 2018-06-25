@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe PlayerDaoImpl
  * @author Hugues.
@@ -42,7 +42,7 @@ class PlayerDaoImpl extends LocalDaoImpl {
    */
   public function select($file, $line, $arrParams) {
     $Objs = $this->selectEntry($file, $line, $arrParams);
-    return ( empty($Objs) ? new Player() : array_shift($Objs));
+    return (empty($Objs) ? new Player() : array_shift($Objs));
   }
   
 }

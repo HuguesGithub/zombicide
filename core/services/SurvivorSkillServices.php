@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe SurvivorSkillServices
  * @author Hugues.
@@ -17,10 +17,10 @@ class SurvivorSkillServices extends GlobalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    $arrParams[] = ( isset($arrFilters['survivorId']) ? $arrFilters['survivorId'] : '%');
-    $arrParams[] = ( isset($arrFilters['skillId']) ? $arrFilters['skillId'] : '%');
-    $arrParams[] = ( isset($arrFilters[CST_SURVIVORTYPEID]) ? $arrFilters[CST_SURVIVORTYPEID] : '%');
-    $arrParams[] = ( isset($arrFilters[CST_TAGLEVELID]) ? $arrFilters[CST_TAGLEVELID] : '%');
+    $arrParams[] = (isset($arrFilters['survivorId']) ? $arrFilters['survivorId'] : '%');
+    $arrParams[] = (isset($arrFilters['skillId']) ? $arrFilters['skillId'] : '%');
+    $arrParams[] = (isset($arrFilters[CST_SURVIVORTYPEID]) ? $arrFilters[CST_SURVIVORTYPEID] : '%');
+    $arrParams[] = (isset($arrFilters[CST_TAGLEVELID]) ? $arrFilters[CST_TAGLEVELID] : '%');
     return $arrParams;
   }
   /**

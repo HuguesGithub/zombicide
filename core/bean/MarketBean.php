@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe MarketBean
  * @author Hugues.
@@ -11,7 +11,7 @@ class MarketBean extends MainPageBean {
   public function __construct($Market='') {
     $services = array('Market');
     parent::__construct($services);
-    if ( $Market=='' ) { $Market = new Market(); }
+    if ($Market=='' ) { $Market = new Market(); }
     $this->Market = $Market;
   }
   
@@ -27,7 +27,7 @@ class MarketBean extends MainPageBean {
       $Market->getPrice(),
       $Market->getDescription(),
     );
-    $str = file_get_contents( PLUGIN_PATH.'web/pages/public/fragments/article-market-cardvisit.php' );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/article-market-cardvisit.php' );
     return vsprintf($str, $args);
   }
   

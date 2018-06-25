@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe LevelDaoImpl
  * @author Hugues.
@@ -42,7 +42,7 @@ class LevelDaoImpl extends LocalDaoImpl {
    */
   public function select($file, $line, $arrParams) {
     $Objs = $this->selectEntry($file, $line, $arrParams);
-    return ( empty($Objs) ? new Level() : array_shift($Objs));
+    return (empty($Objs) ? new Level() : array_shift($Objs));
   }
   
 }

@@ -1,6 +1,6 @@
 <?php
-if ( !defined( 'ABSPATH') ) {
-  die( 'Forbidden' );
+if (!defined('ABSPATH') ) {
+  die('Forbidden' );
 }
 /**
  * SpawnDeckActions
@@ -37,11 +37,11 @@ class SpawnDeckActions extends LocalActions {
     $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[KEYACCESS]);
     $SpawnLiveDeckServices = new SpawnLiveDeckServices();
     $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array(LIVEDECKID=>$LiveDeck->getId()));
-    if ( !empty($SpawnLiveDecks) ) {
+    if (!empty($SpawnLiveDecks) ) {
       shuffle($SpawnLiveDecks);
       $cpt = 1;
-      foreach ( $SpawnLiveDecks as $SpawnLiveDeck ) {
-        if ( $SpawnLiveDeck->getStatus()=='R' || $SpawnLiveDeck->getStatus()=='A' ) { continue; }
+      foreach ($SpawnLiveDecks as $SpawnLiveDeck ) {
+        if ($SpawnLiveDeck->getStatus()=='R' || $SpawnLiveDeck->getStatus()=='A' ) { continue; }
         $SpawnLiveDeck->setStatus('P');
         $SpawnLiveDeck->setRank($cpt);
         $SpawnLiveDeckServices->update(__FILE__, __LINE__, $SpawnLiveDeck);
@@ -60,7 +60,7 @@ class SpawnDeckActions extends LocalActions {
     $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[KEYACCESS]);
     $SpawnLiveDeckServices = new SpawnLiveDeckServices();
     $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array(LIVEDECKID=>$LiveDeck->getId(), STATUS=>'D'));
-    return '{'.( !empty($SpawnLiveDecks) ? '"page-selection-result":'.json_encode(SpawnDeckPageBean::getStaticSpawnCardActives($SpawnLiveDecks)) : '').'}';
+    return '{'.(!empty($SpawnLiveDecks) ? '"page-selection-result":'.json_encode(SpawnDeckPageBean::getStaticSpawnCardActives($SpawnLiveDecks)) : '').'}';
   }
   /**
    * @param array $post
@@ -70,8 +70,8 @@ class SpawnDeckActions extends LocalActions {
     $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[KEYACCESS]);
     $SpawnLiveDeckServices = new SpawnLiveDeckServices();
     $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array(LIVEDECKID=>$LiveDeck->getId(), STATUS=>'A'));
-    if ( !empty($SpawnLiveDecks) ) {
-      foreach ( $SpawnLiveDecks as $SpawnLiveDeck ) {
+    if (!empty($SpawnLiveDecks) ) {
+      foreach ($SpawnLiveDecks as $SpawnLiveDeck ) {
         $SpawnLiveDeck->setStatus('D');
         $SpawnLiveDeckServices->update(__FILE__, __LINE__, $SpawnLiveDeck);
       }
@@ -89,7 +89,7 @@ class SpawnDeckActions extends LocalActions {
     $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[KEYACCESS]);
     $SpawnLiveDeckServices = new SpawnLiveDeckServices();
     $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array(LIVEDECKID=>$LiveDeck->getId(), STATUS=>'P'), 'rank', 'DESC');
-    if ( !empty($SpawnLiveDecks) ) {
+    if (!empty($SpawnLiveDecks) ) {
       $SpawnLiveDeck = array_shift($SpawnLiveDecks);
       $SpawnLiveDeck->setStatus('A');
       $SpawnLiveDeckServices->update(__FILE__, __LINE__, $SpawnLiveDeck);

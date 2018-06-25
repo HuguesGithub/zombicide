@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe OnlinePageBean
  * @author Hugues.
@@ -26,7 +26,7 @@ class OnlinePageBean extends PagePageBean {
   public function getContentNotLogged() {
     $time = time();
     $args = array();
-    $str = file_get_contents( PLUGIN_PATH.'web/pages/public/fragments/fragment-online-identification.php' );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-online-identification.php' );
     $strCanvas = vsprintf($str, $args);
     $args = array(
       'Buttons',
@@ -36,7 +36,7 @@ class OnlinePageBean extends PagePageBean {
       'hidden',
       '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>',
     );
-    $str = file_get_contents( PLUGIN_PATH.'web/pages/public/public-page-online.php' );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php' );
     return vsprintf($str, $args);
   }
   /**
@@ -52,7 +52,7 @@ class OnlinePageBean extends PagePageBean {
       '',
       '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>',
     );
-    $str = file_get_contents( PLUGIN_PATH.'web/pages/public/public-page-online.php' );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php' );
     return vsprintf($str, $args);
   }
   /**
@@ -61,7 +61,7 @@ class OnlinePageBean extends PagePageBean {
   public function getContentLoggedAndLive() {
     $deckKey = $_SESSION[CST_DECKKEY];
     $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, array(self::CST_DECKKEY=>$deckKey));
-    if ( empty($Lives) ) {
+    if (empty($Lives) ) {
       unset($_SESSION[CST_DECKKEY]);
       return $this->getContentLoggedNotLive();
     }
@@ -78,7 +78,7 @@ class OnlinePageBean extends PagePageBean {
       '',
       '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$Live->getId().'">'.$Live->getDeckKey().'</a></li>',
     );
-    $str = file_get_contents( PLUGIN_PATH.'web/pages/public/public-page-online.php' );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php' );
     return vsprintf($str, $args);
   }
   /**
@@ -86,9 +86,9 @@ class OnlinePageBean extends PagePageBean {
    * @see PagePageBean::getContentPage()
    */
   public function getContentPage() {
-    if ( isset($_SESSION[CST_DECKKEY]) ) {
+    if (isset($_SESSION[CST_DECKKEY]) ) {
       return $this->getContentLoggedAndLive();
-    } elseif ( is_user_logged_in() ) {
+    } elseif (is_user_logged_in() ) {
       return $this->getContentLoggedNotLive();
     } else {
       return $this->getContentNotLogged();

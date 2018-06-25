@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe LiveMissionDaoImpl
  * @author Hugues.
@@ -47,7 +47,7 @@ class LiveMissionDaoImpl extends LocalDaoImpl {
    */
   public function select($file, $line, $arrParams) {
     $Objs = $this->selectEntry($file, $line, $arrParams);
-    return ( empty($Objs) ? new LiveMission() : array_shift($Objs));
+    return (empty($Objs) ? new LiveMission() : array_shift($Objs));
   }
   
 }

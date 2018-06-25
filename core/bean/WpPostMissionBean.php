@@ -33,7 +33,7 @@ class WpPostMissionBean extends MainPageBean {
       // Extensions de la Mission - 6
       $Mission->getStrExpansions(),
     );
-    $str = file_get_contents( PLUGIN_PATH.'web/pages/public/fragments/article-mission-thumb.php' );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/article-mission-thumb.php' );
     return vsprintf($str, $args);
   }
   /**
@@ -74,7 +74,7 @@ class WpPostMissionBean extends MainPageBean {
       // Dalles requises - 14
       $Mission->getStrTiles(),
     );
-    $str = file_get_contents( PLUGIN_PATH.'web/pages/public/fragments/article-mission-extract.php' );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/article-mission-extract.php' );
     return vsprintf($str, $args);
   }
   /**

@@ -6,14 +6,14 @@
  * @author Hugues
  */
 declare(strict_types=1);
-define ('PLUGIN_PATH', plugin_dir_path( __FILE__ ));
-define ('PLUGIN_PACKAGE', 'zombicide');
+define('PLUGIN_PATH', plugin_dir_path(__FILE__ ));
+define('PLUGIN_PACKAGE', 'zombicide');
 date_default_timezone_set('Europe/Paris');
 session_start([]);
 
 class Zombicide {
 	public function __construct() {
-		add_filter( 'template_include', array($this,'template_loader'));
+		add_filter('template_include', array($this,'template_loader'));
 	}
 
 	public function template_loader($template) {
@@ -29,21 +29,21 @@ $Zombicide = new Zombicide();
 ### Description: Gestion de l'inclusion des classes
 #######################################################################################
 */
-spl_autoload_register( PLUGIN_PACKAGE.'_autoloader' );
-function zombicide_autoloader( $classname ) {
+spl_autoload_register(PLUGIN_PACKAGE.'_autoloader' );
+function zombicide_autoloader($classname ) {
 	$pattern = "/(Bean|DaoImpl|Dao|Services|Actions|Utils)/";
 	preg_match($pattern, $classname, $matches);
-	if ( isset($matches[1]) ) {
-		switch ( $matches[1] ) {
+	if (isset($matches[1]) ) {
+		switch ($matches[1] ) {
 			case 'Actions' :
 			case 'Bean' :
 			case 'Dao' :
 			case 'DaoImpl' :
 			case 'Services' :
 			case 'Utils' :
-				if ( file_exists(PLUGIN_PATH.'core/'.strtolower($matches[1]).'/'.$classname.'.php') ) {
+				if (file_exists(PLUGIN_PATH.'core/'.strtolower($matches[1]).'/'.$classname.'.php') ) {
 					include_once(PLUGIN_PATH.'core/'.strtolower($matches[1]).'/'.$classname.'.php');
-				} elseif ( file_exists(PLUGIN_PATH.'../mycommon/core/'.strtolower($matches[1]).'/'.$classname.'.php') ) {
+				} elseif (file_exists(PLUGIN_PATH.'../mycommon/core/'.strtolower($matches[1]).'/'.$classname.'.php') ) {
 					include_once(PLUGIN_PATH.'../mycommon/core/'.strtolower($matches[1]).'/'.$classname.'.php');
 				}  
 			break;
@@ -52,18 +52,18 @@ function zombicide_autoloader( $classname ) {
 				break;
 		}
 	} else {
-		if ( substr($classname, 0, 1)=='i' ) {
-			$classfile = sprintf( '%score/implements/%s.php', PLUGIN_PATH, $classname );
-			if ( !file_exists($classfile) ) {
+		if (substr($classname, 0, 1)=='i' ) {
+			$classfile = sprintf('%score/implements/%s.php', PLUGIN_PATH, $classname );
+			if (!file_exists($classfile) ) {
 				$classfile = sprintf('%s../mycommon/core/implements/%s.php', PLUGIN_PATH, $classname);
 			}  
 		} else {
-			$classfile = sprintf( '%score/domain/%s.class.php',	PLUGIN_PATH, str_replace( '_', '-', $classname ) );
-			if ( !file_exists($classfile) ) {
-				$classfile = sprintf('%s../mycommon/core/domain/%s.class.php', PLUGIN_PATH, str_replace( '_', '-', $classname));
+			$classfile = sprintf('%score/domain/%s.class.php',	PLUGIN_PATH, str_replace('_', '-', $classname ) );
+			if (!file_exists($classfile) ) {
+				$classfile = sprintf('%s../mycommon/core/domain/%s.class.php', PLUGIN_PATH, str_replace('_', '-', $classname));
 			}  
 		}
-		if ( file_exists($classfile) ) {
+		if (file_exists($classfile) ) {
 			include_once($classfile);
 		}
 	}

@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe Mission
  * @author Hugues.
@@ -164,9 +164,9 @@ class Mission extends LocalDomain {
   public function getStrRules() {
     $MissionRules = $this->getMissionRules(self::CST_TITLE);
     $strList = '';
-    if ( !empty($MissionRules) ) {
-      foreach ( $MissionRules as $MissionRule ) {
-        $strList .= ( $strList!='' ? '<br>' : '' );
+    if (!empty($MissionRules) ) {
+      foreach ($MissionRules as $MissionRule ) {
+        $strList .= ($strList!='' ? '<br>' : '' );
         $strList .= '<span class="objRule">'.$MissionRule->getTitle().' <span class="tooltip"><header>'.$MissionRule->getRuleCode().'</header>';
         $strList .= '<content>'.$MissionRule->getRuleDescription().'</content></span></span> ';
       }
@@ -179,9 +179,9 @@ class Mission extends LocalDomain {
   public function getStrObjectives() {
     $MissionObjectives = $this->getMissionObjectives(self::CST_TITLE);
     $strList = '';
-    if ( !empty($MissionObjectives) ) {
-      foreach ( $MissionObjectives as $MissionObjective ) {
-        $strList .= ( $strList!='' ? '<br>' : '' );
+    if (!empty($MissionObjectives) ) {
+      foreach ($MissionObjectives as $MissionObjective ) {
+        $strList .= ($strList!='' ? '<br>' : '' );
         $strList .= '<span class="objRule">'.$MissionObjective->getTitle().' <span class="tooltip"><header>'.$MissionObjective->getObjectiveCode().'</header>';
         $strList .= '<content>'.$MissionObjective->getObjectiveDescription().'</content></span></span> ';
       }
@@ -194,9 +194,9 @@ class Mission extends LocalDomain {
   public function getStrTiles() {
     $MissionTiles = $this->getMissionTiles();
     $strName = '';
-    if ( !empty($MissionTiles) ) {
-      foreach ( $MissionTiles as $MissionTile ) {
-        if ( $strName!='' ) { $strName .= ', '; }
+    if (!empty($MissionTiles) ) {
+      foreach ($MissionTiles as $MissionTile ) {
+        if ($strName!='' ) { $strName .= ', '; }
         $strName .= $MissionTile->getTileCode();
       }
     }
@@ -208,9 +208,9 @@ class Mission extends LocalDomain {
   public function getStrExpansions() {
     $MissionExpansions = $this->getMissionExpansions();
     $strName = '';
-    if ( !empty($MissionExpansions) ) {
-      foreach ( $MissionExpansions as $MissionExpansion ) {
-        if ( $strName!='' ) { $strName .= ', '; }
+    if (!empty($MissionExpansions) ) {
+      foreach ($MissionExpansions as $MissionExpansion ) {
+        if ($strName!='' ) { $strName .= ', '; }
         $strName .= $MissionExpansion->getExpansionName();
       }
     }
@@ -254,9 +254,9 @@ class Mission extends LocalDomain {
    */
   public function getMissionTile($x, $y) {
     $MissionTiles = $this->getMissionTiles();
-    if ( !empty($MissionTiles) ) {
-      foreach ( $MissionTiles as $MissionTile ) {
-        if ( $MissionTile->getCoordX()==$x && $MissionTile->getCoordY()==$y ) {
+    if (!empty($MissionTiles) ) {
+      foreach ($MissionTiles as $MissionTile ) {
+        if ($MissionTile->getCoordX()==$x && $MissionTile->getCoordY()==$y ) {
           return $MissionTile;
         }
       }
@@ -294,7 +294,7 @@ class Mission extends LocalDomain {
     $url = '#';
     $args = array('meta_key'=>'missionId', 'meta_value'=>$this->id);
     $WpPosts = $this->WpPostServices->getArticles(__FILE__, __LINE__, $args);
-    if ( !empty($WpPosts) ) {
+    if (!empty($WpPosts) ) {
       $WpPost = array_shift($WpPosts);
       $url = $WpPost->getGuid();
     }
@@ -311,10 +311,10 @@ class Mission extends LocalDomain {
   public function updateWithPost($post) {
     $doUpdate = FALSE;
     $arr = array(self::CST_TITLE, 'code', 'levelId', 'durationId', 'playerId', 'origineId');
-    while ( !empty($arr) ) {
+    while (!empty($arr) ) {
       $key = array_shift($arr);
       $value = stripslashes($post[$key]);
-      if ( $this->{$key} != $value ) {
+      if ($this->{$key} != $value ) {
         $doUpdate = TRUE;
         $this->{$key} = $value;
       }
@@ -328,9 +328,9 @@ class Mission extends LocalDomain {
   public function initWithPost($post) {
     $doInsert = TRUE;
     $arr = array(self::CST_TITLE, 'code', 'levelId', 'durationId', 'playerId', 'origineId');
-    while ( !empty($arr) ) {
+    while (!empty($arr) ) {
       $key = array_shift($arr);
-      if ( $post[$key] == '' ) { $doInsert = FALSE; }
+      if ($post[$key] == '' ) { $doInsert = FALSE; }
       else { $this->{$key} = stripslashes($post[$key]); }
     }
     return $doInsert;

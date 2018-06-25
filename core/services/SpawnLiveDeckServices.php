@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe SpawnLiveDeckServices
  * @author Hugues.
@@ -17,9 +17,9 @@ class SpawnLiveDeckServices extends LocalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    $arrParams[] = ( isset($arrFilters['liveDeckId']) ? $arrFilters['liveDeckId'] : '%' );
-    $arrParams[] = ( isset($arrFilters['spawnCardId']) ? $arrFilters['spawnCardId'] : '%' );
-    $arrParams[] = ( isset($arrFilters['status']) ? $arrFilters['status'] : '%' );
+    $arrParams[] = (isset($arrFilters['liveDeckId']) ? $arrFilters['liveDeckId'] : '%' );
+    $arrParams[] = (isset($arrFilters['spawnCardId']) ? $arrFilters['spawnCardId'] : '%' );
+    $arrParams[] = (isset($arrFilters['status']) ? $arrFilters['status'] : '%' );
     return $arrParams;
   }
   /**

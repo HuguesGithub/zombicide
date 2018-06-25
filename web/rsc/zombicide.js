@@ -8,21 +8,21 @@ $hj(document).ready(function(){
     addMoreNews(offset);
   });
   
-  if ( $hj('#page-missions').length!=0 ) {
+  if ($hj('#page-missions').length!=0 ) {
     $hj('#page-missions .ajaxAction').unbind().click(function(){
       addPageMissionAjaxActions($hj(this));
       return false;
     });
   }
 
-  if ( $hj('#page-competences').length!=0 ) {
+  if ($hj('#page-competences').length!=0 ) {
     $hj('#page-competences .ajaxAction').unbind().click(function(){
       addPageCompetenceAjaxActions($hj(this));
       return false;
     });
   }
 
-  if ( $hj('#page-survivants').length!=0 ) {
+  if ($hj('#page-survivants').length!=0 ) {
     $hj('#page-survivants .ajaxAction').unbind().click(function(){
       addPageSurvivantAjaxActions($hj(this));
       return false;
@@ -35,16 +35,16 @@ $hj(document).ready(function(){
     
   }
  
-  if ( $hj('#page-selection-survivants').length!=0 ) {
+  if ($hj('#page-selection-survivants').length!=0 ) {
     addSelectionSurvivantActions();
     return false;
   }
   
-  if ( $hj('#filters').length!=0 ) {
+  if ($hj('#filters').length!=0 ) {
 	  $hj('#filters select').unbind().change(function(){
 		  var set = $hj(this).val(); 
 		  $hj('#card-container .card').each(function(){
-			  if ( set == '' || $hj(this).hasClass(set) ) {
+			  if (set == '' || $hj(this).hasClass(set) ) {
 				  $hj(this).css('display', 'inline-block');
 			  } else {
 				  $hj(this).css('display', 'none');
@@ -60,12 +60,12 @@ $hj(document).ready(function(){
 	  });
   }
   
-  if ( $hj('#page-live-spawn').length!=0 ) {
+  if ($hj('#page-live-spawn').length!=0 ) {
     addPageLiveSpawnActions();
     return false;
   }
 
-	if ( $hj('#page-online').length!=0 ) {
+	if ($hj('#page-online').length!=0 ) {
 		var height = $hj('body').height()-17;
 		height -= $hj('#wpadminbar').height();
 		height -= $hj('#shell > header').height();
@@ -80,13 +80,13 @@ $hj(document).ready(function(){
 		$hj('.online-chat-unfold').unbind().click(function(){ $hj(this).parent().parent().toggleClass('closed-chat'); });
 		$hj('.online-chat-fold').unbind().click(function(){ $hj(this).parent().parent().toggleClass('closed-chat'); });
 		$hj('#online-chat-input').bind('keypress', function(e) {
-			if ( e.keyCode == 13 ) {
+			if (e.keyCode == 13 ) {
 				sendMessage();
-			} else if ( e.keyCode == 38 ) {
+			} else if (e.keyCode == 38 ) {
         $hj('#online-chat-input').val(arrHisto[rkHisto]);
-        if ( rkHisto>0 ) { rkHisto--; }
-			} else if ( e.keyCode == 40 ) {
-        if ( rkHisto<arrHisto.length ) {
+        if (rkHisto>0 ) { rkHisto--; }
+			} else if (e.keyCode == 40 ) {
+        if (rkHisto<arrHisto.length ) {
           rkHisto++;
           $hj('#online-chat-input').val(arrHisto[rkHisto]);
         } else {
@@ -105,7 +105,7 @@ $hj(document).ready(function(){
 		
 		$hj('#startGame').unbind().click(function(){ joinGame(); });
 	}
-  if ( $hj('#canvas-background').length !=0 ) {
+  if ($hj('#canvas-background').length !=0 ) {
     $hj('canvas').drawImage({
       source: srcImg,
       x: xStart, y: yStart
@@ -130,10 +130,10 @@ $hj(document).ready(function(){
    * Filtres sur l'interface Survivors
    ********/
   $hj('.survivorFilters a').unbind().click(function() {
-    if ( !$hj(this).hasClass('selected') ) {
+    if (!$hj(this).hasClass('selected') ) {
       var exp = $hj(this).data('exp');
       var nb = $hj('article[data-exp="'+exp+'"]').length;
-      if ( nb==0 ) { getSurvivorsByExpansionCode(exp); }
+      if (nb==0 ) { getSurvivorsByExpansionCode(exp); }
     }
 	  $hj(this).toggleClass('selected');
     filterSurvivors();
@@ -158,9 +158,9 @@ $hj(document).ready(function(){
   
   $hj('.survivorTool .selectSurvivor a').unbind().click(function() {
     var exp = $hj(this).data('exp');
-    if ( !$hj(this).hasClass('selected') ) {
+    if (!$hj(this).hasClass('selected') ) {
       var nb = $hj('article[data-exp="'+exp+'"]').length;
-      if ( nb!=0 ) {
+      if (nb!=0 ) {
         $hj('article[data-exp="'+exp+'"]').each(function(e) {
           $hj(this).parent().remove();
         });
@@ -202,8 +202,8 @@ $hj(document).ready(function(){
   $hj('#exportSelectionTeam').click(function(e) {
     var data = '';
     $hj('#selectionSurvivors input').each(function(e) {
-      if ( $hj(this).is(':checked') ) {
-        if ( data !='' ) {
+      if ($hj(this).is(':checked') ) {
+        if (data !='' ) {
         data += ';';
         }
         data += $hj(this).attr('name').substr(8);
@@ -255,14 +255,14 @@ $hj(document).ready(function(){
    * Filtres sur l'interface Equipements
    ********/
   $hj('.equipmentFilters select').unbind().change(function() {
-    if ( $hj(this).hasClass('zoom') ) {
+    if ($hj(this).hasClass('zoom') ) {
       $hj('.batchArticles.equipments').removeClass().addClass('batchArticles equipments '+$hj(this).val());
     } else {
 	    filterCards();
     }
   });
   $hj('.invasionFilters select').unbind().change(function() {
-    if ( $hj(this).hasClass('zoom') ) {
+    if ($hj(this).hasClass('zoom') ) {
       $hj('.batchArticles.invasions').removeClass().addClass('batchArticles invasions '+$hj(this).val());
     } else {
 	    filterCards();
@@ -276,7 +276,7 @@ $hj(document).ready(function(){
 		var filter = $hj('input.chosen-search-input-skill').val().toLowerCase();
     $hj('.batchArticles.skills article').each(function() {
 	    var value = $hj(this).data('title');
-	    if ( value.toLowerCase().indexOf(filter)!=-1 ) {
+	    if (value.toLowerCase().indexOf(filter)!=-1 ) {
         $hj(this).show();
     	} else {
         $hj(this).hide();
@@ -289,8 +289,8 @@ $hj(document).ready(function(){
    ********/
   $hj('.missionFilters a').unbind().click(function() {
     var isSelected = $hj(this).hasClass('selected');
-    if ( isSelected ) {
-      if ( $hj(this).parent().parent().find('a.selected').length == 1 ) {
+    if (isSelected ) {
+      if ($hj(this).parent().parent().find('a.selected').length == 1 ) {
 	      $hj(this).parent().siblings('li').find('a[data-filter="all"]').addClass('selected');
       }
     } else {
@@ -322,7 +322,7 @@ $hj(document).ready(function(){
     var str = 'azertyupqsdfghjkmwxcvbnAZERTYUPQSDFGHJKMWXCVBN23456789';
     var max = str.length;
     var password = '';
-    for ( var i=1; i<=n; i++ ) {
+    for (var i=1; i<=n; i++ ) {
       var start = Math.floor(Math.random()*max);
       password += str.substring(start, start+1);
     }
@@ -330,7 +330,7 @@ $hj(document).ready(function(){
   });
   
   $hj('.slideinfo').click(function(){
-    if ( $hj(this).hasClass('show') ) {
+    if ($hj(this).hasClass('show') ) {
       $hj('.slideinfo').removeClass('show');
     } else {
       $hj('.slideinfo').removeClass('show');
@@ -347,7 +347,7 @@ $hj(document).ready(function(){
   $hj('#filter-expansion').change(function(){
     var filtre = $hj(this).val();
     $hj('#liveSurvivorsSelection li').each(function(){
-      if ( $hj(this).hasClass(filtre) || filtre=='' ) {
+      if ($hj(this).hasClass(filtre) || filtre=='' ) {
         $hj(this).show();
       } else {
         $hj(this).hide();
@@ -363,12 +363,12 @@ $hj(document).ready(function(){
     e.preventDefault();
     var nb = 6-$hj('#liveSurvivorsSelection input:checked').length;
     var nbEligible = $hj('#liveSurvivorsSelection input:visible:not(:checked)').length;
-    if ( nbEligible <= nb ) {
+    if (nbEligible <= nb ) {
       $hj('#liveSurvivorsSelection input:visible:not(:checked)').each(function(){
         $hj(this).prop('checked', true);
       });
     } else {
-      for ( var i=nb; i>0; i-- ) {
+      for (var i=nb; i>0; i-- ) {
 	      var rk = Math.floor(Math.random() * nbEligible);
   	    $hj('#liveSurvivorsSelection input:visible:not(:checked)').eq(rk).prop('checked', true);
         nbEligible--;
@@ -385,15 +385,15 @@ $hj(document).ready(function(){
     var isChecked = $hj(this).is(':checked');
     var span = $hj(this).data('href');
     var node = $hj('#invasionSpanSelection');
-    if ( isChecked && node.val().indexOf(span)==-1 ) {
+    if (isChecked && node.val().indexOf(span)==-1 ) {
       node.val(node.val()+span);
-    } else if ( !isChecked && node.val().indexOf(span)!=-1 ) {
+    } else if (!isChecked && node.val().indexOf(span)!=-1 ) {
       node.val(node.val().replace(span, ''));
     }
   });
   
-  $hj( function() {
-    $hj( "#sortable1, #sortable2" ).sortable({
+  $hj(function() {
+    $hj("#sortable1, #sortable2" ).sortable({
       connectWith: ".connectedSortable"
     }).disableSelection();
   });  
@@ -459,9 +459,9 @@ function fillOptionsList() {
   var nb = 0;
   $hj('select.chosen-select option').each(function() {
     var value = $hj(this).html();
-    if ( value.toLowerCase().indexOf(filter)!=-1 ) {
+    if (value.toLowerCase().indexOf(filter)!=-1 ) {
       var libelle = $hj('#searchSkill option:nth-child('+cpt+')').text().toLowerCase();
-      if ( filter!='' ) {
+      if (filter!='' ) {
         libelle = libelle.replace(filter, '<em>'+filter+'</em>');
       }
       str += '<li class="active-result'+(nb==0 ? ' highlighted' : '')+'" style="" data-option-array-index="'+cpt+'">'+libelle+'</li>';
@@ -488,19 +488,19 @@ function filterMissions() {
       var tmpShow = false;
       $hj(this).find('a.selected').each(function(){
 	      var filter = $hj(this).data('filter');
-        if ( filter == 'all' ){
+        if (filter == 'all' ){
           tmpShow = true;
           cpt++;
         } else {
-          if ( nodeArticle.hasClass(filter) ) {
+          if (nodeArticle.hasClass(filter) ) {
             tmpShow = true;
           }
         }
       });
       showArticle = (showArticle && tmpShow);
     });
-    if ( !showArticle && cpt==4 ) { showArticle = true; }
-    if ( showArticle && !nodeArticle.is(':visible')
+    if (!showArticle && cpt==4 ) { showArticle = true; }
+    if (showArticle && !nodeArticle.is(':visible')
        || !showArticle && nodeArticle.is(':visible') ) {
      	nodeArticle.animate({width: 'toggle'}, 2500);
     }
@@ -516,13 +516,13 @@ function filterCards() {
     var showArticle = true;
     $hj('.equipmentFilters select').each(function(){
       var select = $hj(this).val();
-      if ( select!='' && !$hj(this).hasClass('zoom') ) {
-        if ( !nodeArticle.hasClass(select) ) {
+      if (select!='' && !$hj(this).hasClass('zoom') ) {
+        if (!nodeArticle.hasClass(select) ) {
           showArticle = false;
         }
       }
     });
-    if ( showArticle && !nodeArticle.is(':visible')
+    if (showArticle && !nodeArticle.is(':visible')
        || !showArticle && nodeArticle.is(':visible') ) {
      	nodeArticle.animate({width: 'toggle'}, 2500);
     }
@@ -532,13 +532,13 @@ function filterCards() {
     var showArticle = true;
     $hj('.invasionFilters select').each(function(){
       var select = $hj(this).val();
-      if ( select!='' && !$hj(this).hasClass('zoom') ) {
-        if ( !nodeArticle.hasClass(select) ) {
+      if (select!='' && !$hj(this).hasClass('zoom') ) {
+        if (!nodeArticle.hasClass(select) ) {
           showArticle = false;
         }
       }
     });
-    if ( showArticle && !nodeArticle.is(':visible')
+    if (showArticle && !nodeArticle.is(':visible')
        || !showArticle && nodeArticle.is(':visible') ) {
      	nodeArticle.animate({width: 'toggle'}, 2500);
     }
@@ -559,66 +559,66 @@ function filterSurvivors() {
     var showArticle = true;
     var expValue = $hj(this).data('exp');
 
-    if ( !$hj('.survivorFilters a[data-exp="'+expValue+'"]').hasClass('selected') ) {
+    if (!$hj('.survivorFilters a[data-exp="'+expValue+'"]').hasClass('selected') ) {
       showArticle = false;
     }
     
     var blueSelection = $hj('#searchBlue').val();
-    if ( blueSelection!=0 && showArticle ) {
+    if (blueSelection!=0 && showArticle ) {
       showArticle = false;
       nodeSurvivor.find('li.compBlue').each(function() {
-        if ( $hj(this).data('idskill') == blueSelection ) {
+        if ($hj(this).data('idskill') == blueSelection ) {
           showArticle = true;
         }
       });
     }
 
     var yellowSelection = $hj('#searchYellow').val();
-    if ( yellowSelection!=0 && showArticle ) {
+    if (yellowSelection!=0 && showArticle ) {
       showArticle = false;
       nodeSurvivor.find('li.compYellow').each(function() {
-        if ( $hj(this).data('idskill') == yellowSelection ) {
+        if ($hj(this).data('idskill') == yellowSelection ) {
           showArticle = true;
         }
       });
     }
 
     var orangeSelection = $hj('#searchOrange').val();
-    if ( orangeSelection!=0 && showArticle ) {
+    if (orangeSelection!=0 && showArticle ) {
       showArticle = false;
       nodeSurvivor.find('li.compOrange').each(function() {
-        if ( $hj(this).data('idskill') == orangeSelection ) {
+        if ($hj(this).data('idskill') == orangeSelection ) {
           showArticle = true;
         }
       });
     }   
 
     var redSelection = $hj('#searchRed').val();
-    if ( redSelection!=0 && showArticle ) {
+    if (redSelection!=0 && showArticle ) {
       showArticle = false;
       nodeSurvivor.find('li.compRed').each(function() {
-        if ( $hj(this).data('idskill') == redSelection ) {
+        if ($hj(this).data('idskill') == redSelection ) {
           showArticle = true;
         }
       });
     }   
 
     var allSelection = $hj('#searchAll').val();
-    if ( allSelection!=0 && showArticle ) {
+    if (allSelection!=0 && showArticle ) {
       showArticle = false;
       nodeSurvivor.find('li').each(function() {
-        if ( $hj(this).data('idskill') == allSelection ) {
+        if ($hj(this).data('idskill') == allSelection ) {
           showArticle = true;
         }
       });
     }
     
-    if ( typeSelected=='zombivor' && !$hj(this).hasClass('zombivor') 
+    if (typeSelected=='zombivor' && !$hj(this).hasClass('zombivor') 
        || (typeSelected=='usurvivor' || typeSelected=='uzombivor') && !$hj(this).hasClass('ultimate') ) {
       showArticle = false;
     }
     
-    if ( showArticle && !nodeSurvivor.is(':visible')
+    if (showArticle && !nodeSurvivor.is(':visible')
        || !showArticle && nodeSurvivor.is(':visible') ) {
      	nodeSurvivor.animate({width: 'toggle'}, 2500);
     }
@@ -655,10 +655,10 @@ function getSurvivorsByExpansionCode(exp, type='') {
         console.log(response);
       }
       reloadComponents(obj, 'append');
-      if ( type=='' ) {
+      if (type=='' ) {
         filterSurvivors();
         sortSurvivors();
-      } else if ( type=='cartouche' ) {
+      } else if (type=='cartouche' ) {
         $hj('#selectionSurvivors i').unbind().click(function() {
           $hj(this).parent().parent().toggleClass('active');
           var inpSib = $hj(this).siblings('input');
@@ -673,9 +673,9 @@ function getSurvivorsByExpansionCode(exp, type='') {
  * Ajax Utilities
  ********/
 function reloadComponents(obj, type) {
-  for ( var anchor in obj ) {
-    if ( $hj('#'+anchor).length==1 ) {
-      switch ( anchor ) {
+  for (var anchor in obj ) {
+    if ($hj('#'+anchor).length==1 ) {
+      switch (anchor ) {
         case 'online-chat-content'	: $hj('#'+anchor).append(obj[anchor]); addChatMsgActions(); break;
         case 'header-ul-chat-saisie'	: $hj('#'+anchor).html(obj[anchor]); break;
         case 'descSkill'						:
@@ -683,7 +683,7 @@ function reloadComponents(obj, type) {
         case 'moreSurvivors'				:
         case 'selectionSkills' 			:
         case 'selectionSurvivors' 	:
-          switch ( type ) {
+          switch (type ) {
             case 'append'		: $hj('#'+anchor).append(obj[anchor]); break;
             case 'prepend'	: $hj('#'+anchor).prepend(obj[anchor]); break;
             case 'replace'	: $hj('#'+anchor).html(obj[anchor]); break;
@@ -737,9 +737,9 @@ function addMoreNews(offset) {
     function(response) {
       try {
         obj = JSON.parse(response);
-        if ( obj['homeSectionArticles'] != '' ) {
+        if (obj['homeSectionArticles'] != '' ) {
           $hj('#homeSectionArticles').append(obj['homeSectionArticles']);
-          if ( $hj('#homeSectionArticles>article').length%6 != 0 ) {
+          if ($hj('#homeSectionArticles>article').length%6 != 0 ) {
             $hj('#more_news').remove();
           }
         } else {
@@ -757,19 +757,19 @@ function addMoreNews(offset) {
  ********/
 var displayValue = $hj('#displayedRows').val();
 var colsort = $hj('section th[data-colorder="_asc"]').data('colsort');
-if ( colsort=='' ) { colsort = $hj('section th[data-colorder="_asc"]').data('colsort'); }
+if (colsort=='' ) { colsort = $hj('section th[data-colorder="_asc"]').data('colsort'); }
 var colorder = 'asc';
 var paged = $hj('.pagination.justify-content-end .page-item.disabled a').data('paged');
 function addPageMissionAjaxActions(clicked) {
   var ajaxaction = clicked.data('ajaxaction');
   var callAjax = true;
-  switch ( ajaxaction ) {
+  switch (ajaxaction ) {
     // On change le critère de tri
     case 'sort' :
       colsort = clicked.data('colsort');
-      if ( !clicked.hasClass('sorting') ) {
+      if (!clicked.hasClass('sorting') ) {
 	      var actualorder = clicked.data('colorder');
-        if ( actualorder=='_asc' ) { colorder = 'desc'; }
+        if (actualorder=='_asc' ) { colorder = 'desc'; }
         else { colorder = 'asc'; }
       }
     break;
@@ -783,14 +783,14 @@ function addPageMissionAjaxActions(clicked) {
       paged = clicked.data('paged');
     break;
     case 'filter' :
-      if ( $hj('#rowFilterMission').hasClass('hidden') ) {
+      if ($hj('#rowFilterMission').hasClass('hidden') ) {
 	      callAjax = false;
 	      $hj('#rowFilterMission').removeClass('hidden');
       }
     break;
     default : callAjax = false; break;
   }
-  if ( callAjax ) {
+  if (callAjax ) {
     var obj;
     var filters = $hj('select.filters').serialize();
     var data = {'action': 'dealWithAjax', 'ajaxAction': 'getMissions', 'colsort': colsort, 'colorder': colorder, 'nbperpage': displayValue, 'paged': paged, 'filters': filters};
@@ -800,7 +800,7 @@ function addPageMissionAjaxActions(clicked) {
       function(response) {
         try {
           obj = JSON.parse(response);
-          if ( obj['page-missions'] != '' ) {
+          if (obj['page-missions'] != '' ) {
             $hj('#page-missions').replaceWith(obj['page-missions']);
             $hj('#page-missions .ajaxAction').unbind().click(function(){
               addPageMissionAjaxActions($hj(this));
@@ -818,13 +818,13 @@ function addPageMissionAjaxActions(clicked) {
 function addPageCompetenceAjaxActions(clicked) {
   var ajaxaction = clicked.data('ajaxaction');
   var callAjax = true;
-  switch ( ajaxaction ) {
+  switch (ajaxaction ) {
     // On change le critère de tri
     case 'sort' :
       colsort = clicked.data('colsort');
-      if ( !clicked.hasClass('sorting') ) {
+      if (!clicked.hasClass('sorting') ) {
 	      var actualorder = clicked.data('colorder');
-        if ( actualorder=='_asc' ) { colorder = 'desc'; }
+        if (actualorder=='_asc' ) { colorder = 'desc'; }
         else { colorder = 'asc'; }
       }
     break;
@@ -852,7 +852,7 @@ function addPageCompetenceAjaxActions(clicked) {
     break;
     default : callAjax = false; break;
   }
-  if ( callAjax ) {
+  if (callAjax ) {
     var obj;
     var filters = $hj('input.filters').serialize();
     var data = {'action': 'dealWithAjax', 'ajaxAction': 'getCompetences', 'colsort': colsort, 'colorder': colorder, 'nbperpage': displayValue, 'paged': paged, 'filters': filters};
@@ -862,7 +862,7 @@ function addPageCompetenceAjaxActions(clicked) {
       function(response) {
         try {
           obj = JSON.parse(response);
-          if ( obj['page-competences'] != '' ) {
+          if (obj['page-competences'] != '' ) {
             $hj('#page-competences').replaceWith(obj['page-competences']);
             $hj('#page-competences .ajaxAction').unbind().click(function(){
               addPageCompetenceAjaxActions($hj(this));
@@ -880,13 +880,13 @@ function addPageCompetenceAjaxActions(clicked) {
 function addPageSurvivantAjaxActions(clicked) {
 	  var ajaxaction = clicked.data('ajaxaction');
 	  var callAjax = true;
-	  switch ( ajaxaction ) {
+	  switch (ajaxaction ) {
 	    // On change le critère de tri
 	    case 'sort' :
 	      colsort = clicked.data('colsort');
-	      if ( !clicked.hasClass('sorting') ) {
+	      if (!clicked.hasClass('sorting') ) {
 		      var actualorder = clicked.data('colorder');
-	        if ( actualorder=='_asc' ) { colorder = 'desc'; }
+	        if (actualorder=='_asc' ) { colorder = 'desc'; }
 	        else { colorder = 'asc'; }
 	      }
 	    break;
@@ -913,7 +913,7 @@ function addPageSurvivantAjaxActions(clicked) {
 	    break;
 	    default : callAjax = false; break;
 	  }
-	  if ( callAjax ) {
+	  if (callAjax ) {
 	    var obj;
 	    var filters = $hj('input.filters').serialize();
 	    var data = {'action': 'dealWithAjax', 'ajaxAction': 'getSurvivants', 'colsort': colsort, 'colorder': colorder, 'nbperpage': displayValue, 'paged': paged, 'filters': filters};
@@ -923,7 +923,7 @@ function addPageSurvivantAjaxActions(clicked) {
 	      function(response) {
 	        try {
 	          obj = JSON.parse(response);
-	          if ( obj['page-survivants'] != '' ) {
+	          if (obj['page-survivants'] != '' ) {
 	            $hj('#page-survivants').replaceWith(obj['page-survivants']);
 	            $hj('#page-survivants .ajaxAction').unbind().click(function(){
 	              addPageSurvivantAjaxActions($hj(this));
@@ -943,8 +943,8 @@ function addPageSurvivantAjaxActions(clicked) {
 	}
 function addPageSurvivantLocalActions(clicked) {
 	var type = clicked.data('type');
-	if ( type=='zombivant' ) { clicked.parent().toggleClass('zombivant survivant'); }
-	if ( type=='ultimate' ) { clicked.parent().toggleClass('ultimate'); }
+	if (type=='zombivant' ) { clicked.parent().toggleClass('zombivant survivant'); }
+	if (type=='ultimate' ) { clicked.parent().toggleClass('ultimate'); }
 	clicked.find('svg').toggleClass('fa-square fa-check-square');
 }
 function addSelectionSurvivantActions() {
@@ -959,7 +959,7 @@ function addSelectionSurvivantActions() {
     $hj(this).parent().nextUntil('.btn-expansion').toggleClass('hidden');
     var rmvClass = '';
     var addClass = '';
-    if ( $hj(this).find('svg').hasClass('fa-square') ) {
+    if ($hj(this).find('svg').hasClass('fa-square') ) {
       $hj(this).find('svg').removeClass('fa-square').addClass('fa-check-square');
       rmvClass = 'fa-square';
       addClass = 'fa-check-square';
@@ -980,11 +980,11 @@ function addSelectionSurvivantActions() {
     var childNb = children.length;
     var checkedNb = 0;
     children.each(function(){
-      if ( $hj(this).find('svg').hasClass('fa-check-square') ) { checkedNb++; }
+      if ($hj(this).find('svg').hasClass('fa-check-square') ) { checkedNb++; }
     });
-    if ( checkedNb==0 ) {
+    if (checkedNb==0 ) {
       parentNode.find('svg').removeClass('fa-check-square fa-minus-square').addClass('fa-square');
-    } else if ( checkedNb==childNb ) {
+    } else if (checkedNb==childNb ) {
       parentNode.find('svg').removeClass('fa-square fa-minus-square').addClass('fa-check-square');
     } else {
       parentNode.find('svg').removeClass('fa-check-square fa-square').addClass('fa-minus-square');
@@ -993,7 +993,7 @@ function addSelectionSurvivantActions() {
   $hj('#proceedBuildTeam').unbind().click(function(){
     var selection = '';
     $hj('#page-selection-survivants .btn-survivor').each(function(){
-      if ( $hj(this).find('svg').hasClass('fa-check-square') ) {
+      if ($hj(this).find('svg').hasClass('fa-check-square') ) {
         selection += (selection==''?'':',')+$hj(this).data('survivor-id');
       }
     });
@@ -1023,10 +1023,10 @@ function doSpawnDeckActions(data, type) {
     function(response) {
       try {
         obj = JSON.parse(response);
-        for ( var anchor in obj ) {
-          if ( type == 'insert' ) {
+        for (var anchor in obj ) {
+          if (type == 'insert' ) {
           	$hj('#'+anchor).html(obj[anchor]);
-          } else if ( type == 'replace' ) {
+          } else if (type == 'replace' ) {
           	$hj('#'+anchor).replaceWith(obj[anchor]);
             addPageLiveSpawnActions();
           }
@@ -1045,7 +1045,7 @@ function addPageLiveSpawnActions() {
     var str = 'azertyupqsdfghjkmwxcvbnAZERTYUPQSDFGHJKMWXCVBN23456789';
     var max = str.length;
     var password = '';
-    for ( var i=1; i<=n; i++ ) {
+    for (var i=1; i<=n; i++ ) {
       var start = Math.floor(Math.random()*max);
       password += str.substring(start, start+1);
     }
@@ -1056,14 +1056,14 @@ function addPageLiveSpawnActions() {
     var isChecked = $hj(this).find('svg').hasClass('fa-check-square');
     var span = $hj(this).data('spawnspan');
     var node = $hj('#invasionSpanSelection');
-    if ( isChecked && node.val().indexOf(span)==-1 ) {
+    if (isChecked && node.val().indexOf(span)==-1 ) {
       node.val(node.val()+span);
-    } else if ( !isChecked && node.val().indexOf(span)!=-1 ) {
+    } else if (!isChecked && node.val().indexOf(span)!=-1 ) {
       node.val(node.val().replace(span, ''));
     }
   });
   
-  if ( $hj('#btnDrawSpawnCard').length!=0 ) {
+  if ($hj('#btnDrawSpawnCard').length!=0 ) {
     $hj('#btnDrawSpawnCard').unbind().click(function(){
       var data = {'action': 'dealWithAjax', 'ajaxAction': 'drawSpawnCard', 'keyAccess': $hj(this).data('keyaccess')};
       doSpawnDeckActions(data, 'insert');
@@ -1119,7 +1119,7 @@ function sendMessage() {
     function(response) {
       try {
         obj = JSON.parse(response);
-        if ( arrWords[0] == '/clean' ) {
+        if (arrWords[0] == '/clean' ) {
           $hj('#online-chat-content').html('');
         }
         $hj('#online-chat-input').val('');
@@ -1135,7 +1135,7 @@ function sendMessage() {
   );
 }
 function addChatMsgActions() {
-  if ( $hj('#online-chat-content').length != 0 ) {
+  if ($hj('#online-chat-content').length != 0 ) {
     $hj('#online-chat-content .author').unbind().click(function(){
       $hj('#online-chat-input').val('@'+$hj(this).data('displayname')+' ');
     });

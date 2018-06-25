@@ -1,9 +1,9 @@
 var $hj = jQuery;
 $hj(document).ready(function(){
-	if ( $hj('.tileRow .tile').length != 0 ) {
+	if ($hj('.tileRow .tile').length != 0 ) {
     addActionToMapEditorButtons();
 	}
-  if ( $hj('#list-table button').length != 0) {
+  if ($hj('#list-table button').length != 0) {
     addActionToParamEditorButtons();
   }
 });
@@ -26,9 +26,9 @@ function ajaxCall(data) {
 function addActionToParamEditorButtons() {
   $hj('#list-table button').unbind().click(function(){
     var type = $hj(this).data('type');
-    if ( $hj(this).hasClass('editParam') ) {
+    if ($hj(this).hasClass('editParam') ) {
       var id = $hj(this).data('id');
-      if ( id == undefined ) {
+      if (id == undefined ) {
         // On a un nouvel objet, il faut l'envoyer en base via Ajax.
         // Puis on doit mettre à jour la table...
 	      $hj('#list-table tfoot button.btn-success').addClass('addParam').removeClass('editParam');
@@ -44,7 +44,7 @@ function addActionToParamEditorButtons() {
           function(response) {
             try {
               var obj = JSON.parse(response);
-              for ( var p in obj ) {
+              for (var p in obj ) {
                 $hj('#'+type+'-'+p).val(obj[p]);
               }
               $hj('#list-table tfoot button.btn-success').removeClass('addParam').addClass('editParam');
@@ -55,16 +55,16 @@ function addActionToParamEditorButtons() {
           }
         );
       }
-    } else if ( $hj(this).hasClass('cleanParam') ) {
+    } else if ($hj(this).hasClass('cleanParam') ) {
       $hj('#list-table tfoot button.btn-success').addClass('addParam').removeClass('editParam');
       $hj('#list-table tfoot input').each(function(){ $hj(this).val(''); });
-    } else if ( $hj(this).hasClass('addParam') ) {
+    } else if ($hj(this).hasClass('addParam') ) {
         //***************/
         // Création d'un Paramètre
         //***************/
       	var inputs = '';
       	$hj('#list-table tfoot input').each(function(){
-          if ( inputs != '' ) { inputs += '|'; }
+          if (inputs != '' ) { inputs += '|'; }
           inputs += $hj(this).attr('id')+'='+$hj(this).val();
         });
 				var data = {'action': 'dealWithAjax', 'ajaxAction': 'addParameter', 'type': type, 'inputs': inputs};
@@ -81,7 +81,7 @@ function addActionToParamEditorButtons() {
             }
           }
         );
-    } else if ( $hj(this).hasClass('rmvParam') ) {
+    } else if ($hj(this).hasClass('rmvParam') ) {
       // On supprime un élément. Il faut l'envoyer en base via Ajax
       // Puis on doit mettre à jour la table.
       $hj(this).parent().parent().remove();
@@ -92,7 +92,7 @@ function addActionToParamEditorButtons() {
 function addActionToMapEditorButtons() {
 	var width = $hj('.tileRow .tile').width();
 	$hj('.tileRow .tile').each(function(e) {
-		if ( !$hj(this).hasClass('firstRow') ) {
+		if (!$hj(this).hasClass('firstRow') ) {
 			$hj(this).css('height', width);
 		}
 	});
@@ -135,7 +135,7 @@ function addActionToMapEditorButtons() {
 			function(response) {
 				try {
 					obj = JSON.parse(response);
-					if ( obj['mapEditor'] != '' ) {
+					if (obj['mapEditor'] != '' ) {
 						$hj('#mapEditor').html(obj['mapEditor']);
 						addActionToMapEditorButtons();
 					}
@@ -161,7 +161,7 @@ function addActionToMapEditorButtons() {
 			function(response) {
 				try {
 					var classImg = 'north';
-					switch ( dealAction ) {
+					switch (dealAction ) {
 						case 'E' : classImg = 'east'; break;
 						case 'O' : classImg = 'west'; break;
 						case 'S' : classImg = 'south'; break;
@@ -180,7 +180,7 @@ function addActionToMapEditorButtons() {
   $hj('.objectivesAndRules select').unbind().change(function() {
     var type = '';
     var textarea = '';
-    switch ( $hj(this).attr('id') ) {
+    switch ($hj(this).attr('id') ) {
       case 'idruleId' : type = 'rule'; textarea=type; break;
       case 'idsettingId' : type = 'rule'; textarea='setting'; break;
       case 'idobjectiveId' : type = 'objective'; textarea=type; break;
@@ -204,7 +204,7 @@ function addActionToMapEditorButtons() {
 		var data = '';
     var type = $hj(this).data('type');
     var id = $hj(this).data('id');
-    if ( id==undefined ) {
+    if (id==undefined ) {
       var title = $hj('#'+type+'-title').val();
       var description = $hj('#'+type+'-description').val();
       var selId = $hj('#id'+type+'Id').val();
@@ -218,7 +218,7 @@ function addActionToMapEditorButtons() {
 			data,
 			function(response) {
 				try {
-          switch ( type ) {
+          switch (type ) {
             case 'rule' : $hj('#ulAdminRules').html(response); break;
             case 'setting' : $hj('#ulAdminSettings').html(response); break;
             case 'objective' : $hj('#ulAdminObjectives').html(response); break;

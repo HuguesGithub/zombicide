@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe Tile
  * @author Hugues.
@@ -125,9 +125,9 @@ class Tile extends LocalDomain {
   public static function convertElementFromPost($row) {
     $Obj = new Tile();
     $vars = get_class_vars('Tile');
-    if ( !empty($vars) ) {
-      foreach ( $vars as $key=>$value ) { $Obj->setField($key, str_replace("\\", '', $row[$key])); }
-      if ( $row['active']=='on' ) { $Obj->setField('active', 1); }
+    if (!empty($vars) ) {
+      foreach ($vars as $key=>$value ) { $Obj->setField($key, str_replace("\\", '', $row[$key])); }
+      if ($row['active']=='on' ) { $Obj->setField('active', 1); }
     }
     return $Obj;
   }  

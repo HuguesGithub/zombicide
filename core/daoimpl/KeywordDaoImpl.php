@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe KeywordDaoImpl
  * @author Hugues.
@@ -47,7 +47,7 @@ class KeywordDaoImpl extends LocalDaoImpl {
    */
   public function select($file, $line, $arrParams) {
     $Objs = $this->selectEntry($file, $line, $arrParams);
-    return ( empty($Objs) ? new Keyword() : array_shift($Objs));
+    return (empty($Objs) ? new Keyword() : array_shift($Objs));
   }
 
 }

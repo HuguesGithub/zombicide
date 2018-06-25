@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe MissionBean
  * @author Hugues.
@@ -16,7 +16,7 @@ class MissionBean extends MainPageBean {
   public function __construct($Mission='') {
     $services = array('Expansion', 'Mission', 'Objective', 'Rule', 'Tile');
     parent::__construct($services);
-    if ( $Mission=='' ) { $Mission = new Mission(); }
+    if ($Mission=='' ) { $Mission = new Mission(); }
     $this->Mission = $Mission;
     $this->tplRow = 'web/pages/admin/mission/row.php';
     $this->tplEdit = 'web/pages/admin/mission/edit.php';
@@ -96,14 +96,14 @@ class MissionBean extends MainPageBean {
     $MissionTileServices = new MissionTileServices();
     $Mission = $MissionServices->select(__FILE__, __LINE__, $missionId);
     $Bean = new MissionBean($Mission);
-    switch ( $action ) {
+    switch ($action ) {
       case CST_RMVROW :
         $MissionTiles = $Mission->getMissionTiles();
-        if ( !empty($MissionTiles) ) {
-          foreach ( $MissionTiles as $MissionTile ) {
-            if ( $MissionTile->getCoordY()==$rkRow ) {
+        if (!empty($MissionTiles) ) {
+          foreach ($MissionTiles as $MissionTile ) {
+            if ($MissionTile->getCoordY()==$rkRow ) {
               $MissionTileServices->delete(__FILE__, __LINE__, $MissionTile);
-            } elseif ( $MissionTile->getCoordY()>$rkRow ) {
+            } elseif ($MissionTile->getCoordY()>$rkRow ) {
               $MissionTile->setCoordY($MissionTile->getCoordY()-1);
               $MissionTileServices->update(__FILE__, __LINE__, $MissionTile);
             }
@@ -113,11 +113,11 @@ class MissionBean extends MainPageBean {
       break;
       case CST_RMVCOL  :
         $MissionTiles = $Mission->getMissionTiles();
-        if ( !empty($MissionTiles) ) {
-          foreach ( $MissionTiles as $MissionTile ) {
-            if ( $MissionTile->getCoordX()==$rkCol ) {
+        if (!empty($MissionTiles) ) {
+          foreach ($MissionTiles as $MissionTile ) {
+            if ($MissionTile->getCoordX()==$rkCol ) {
               $MissionTileServices->delete(__FILE__, __LINE__, $MissionTile);
-            } elseif ( $MissionTile->getCoordX()>$rkCol ) {
+            } elseif ($MissionTile->getCoordX()>$rkCol ) {
               $MissionTile->setCoordX($MissionTile->getCoordX()-1);
               $MissionTileServices->update(__FILE__, __LINE__, $MissionTile);
             }
@@ -152,19 +152,19 @@ class MissionBean extends MainPageBean {
     $firstRow  = vsprintf($openDivTile, array(0, ' firstRow')).$disabledButton.$closeDivTile;
     $lastRow  =  $colBreaker.'<div class="col tile prependBefore firstRow" data-rkcol="0">'.sprintf($addButton, 'addRow').$closeDivTile;
     $innerRows = array();
-    for ( $i=0; $i<$height; $i++ ) {
+    for ($i=0; $i<$height; $i++ ) {
       $innerRows[$i] = $colBreaker.vsprintf($openDivTile, array(0, '')).vsprintf($rmvButton, array(self::CST_RMVROW, 'row', $i+1)).$closeDivTile;
     }
-    for ( $i=1; $i<=$width; $i++ ) {
+    for ($i=1; $i<=$width; $i++ ) {
       $firstRow  .= vsprintf($openDivTile, array($i, ' firstRow')).vsprintf($rmvButton, array(self::CST_RMVCOL, 'col', $i)).$closeDivTile;
       $lastRow  .= vsprintf($openDivTile, array($i, ' firstRow')).$disabledButton.$closeDivTile;
     }
     $classe = 'custom-select custom-select-sm filters';
-    for ( $i=0; $i<$height; $i++ ) {
-      for ( $j=1; $j<=$width; $j++ ) {
+    for ($i=0; $i<$height; $i++ ) {
+      for ($j=1; $j<=$width; $j++ ) {
         $name = 'tile_'.$j.'_'.($i+1).'-';
         $orientation = $Mission->getTileOrientation($j, $i+1);
-        switch ( $orientation ) {
+        switch ($orientation ) {
           case 'N' : $classImg = ' north'; break;
           case 'E' : $classImg = ' east'; break;
           case 'S' : $classImg = ' south'; break;
@@ -189,10 +189,10 @@ class MissionBean extends MainPageBean {
   private function getMissionObjAndRuleGenericBlock($Objs, $none, $type, $select) {
     $Mission = $this->Mission;
     $str = '';
-    if ( empty($Objs) ) {
+    if (empty($Objs) ) {
       $str .= '<li>'.$none.'</li>';
     } else {
-      foreach ( $Objs as $id=>$Obj ) {
+      foreach ($Objs as $id=>$Obj ) {
         $str .= '<li class="showTooltip"><span class="tooltip"><header>'.$Obj->getTitle().' <button class="btn btn-xs btn-danger float-right" data-type="'.$type;
         $str .= '" data-id="'.$id.'"><i class="fas fa-times-circle"></i></button></header><content>'.$Obj->getDescription().'</content></span></li>';
       }
@@ -209,10 +209,10 @@ class MissionBean extends MainPageBean {
   public function getMissionRulesBlock() {
     $this->MissionRules = $this->Mission->getMissionRules();
     $displayMissionRules = array();
-    if ( !empty($this->MissionRules) ) {
-      foreach ( $this->MissionRules as $MissionRule ) {
+    if (!empty($this->MissionRules) ) {
+      foreach ($this->MissionRules as $MissionRule ) {
         $Rule = $MissionRule->getRule();
-        if ( $Rule->getSetting()==1 ) { continue; }
+        if ($Rule->getSetting()==1 ) { continue; }
         $displayMissionRules[$MissionRule->getId()] = $MissionRule;
       }
     }
@@ -225,10 +225,10 @@ class MissionBean extends MainPageBean {
    * @return string
    */
   public function getMissionSettingsBlock() {
-    if ( !empty($this->MissionRules) ) {
-      foreach ( $this->MissionRules as $MissionRule ) {
+    if (!empty($this->MissionRules) ) {
+      foreach ($this->MissionRules as $MissionRule ) {
         $Rule = $MissionRule->getRule();
-        if ( $Rule->getSetting()==0 ) { continue; }
+        if ($Rule->getSetting()==0 ) { continue; }
         $displayMissionRules[$MissionRule->getId()] = $MissionRule;
       }
     }
@@ -242,8 +242,8 @@ class MissionBean extends MainPageBean {
    */
   public function getMissionObjectivesBlock() {
     $this->MissionObjectives = $this->Mission->getMissionObjectives();
-    if ( !empty($this->MissionObjectives) ) {
-      foreach ( $this->MissionObjectives as $MissionObjective ) {
+    if (!empty($this->MissionObjectives) ) {
+      foreach ($this->MissionObjectives as $MissionObjective ) {
         $displayMissionObjectives[$MissionObjective->getId()] = $MissionObjective;
       }
     }

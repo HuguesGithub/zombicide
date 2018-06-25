@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe OrigineDaoImpl
  * @author Hugues.
@@ -47,7 +47,7 @@ class OrigineDaoImpl extends LocalDaoImpl {
    */
    public function select($file, $line, $arrParams) {
     $Objs = $this->selectEntry($file, $line, $arrParams);
-    return ( empty($Objs) ? new Origine() : array_shift($Objs));
+    return (empty($Objs) ? new Origine() : array_shift($Objs));
   }
 
 }

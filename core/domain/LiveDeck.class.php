@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe LiveDeck
  * @author Hugues.
@@ -70,9 +70,9 @@ class LiveDeck extends LocalDomain {
   public function getNbCardsInDeck() {
     $SpawnLiveDecks = $this->getSpawnLiveDecks();
     $nb = 0;
-    if ( !empty($SpawnLiveDecks) ) {
-      foreach ( $SpawnLiveDecks as $SpawnLiveDeck ) {
-        if ( $SpawnLiveDeck->getStatus()=='P' ) { $nb++; }
+    if (!empty($SpawnLiveDecks) ) {
+      foreach ($SpawnLiveDecks as $SpawnLiveDeck ) {
+        if ($SpawnLiveDeck->getStatus()=='P' ) { $nb++; }
       }
     }
     return $nb;
@@ -83,9 +83,9 @@ class LiveDeck extends LocalDomain {
   public function getNbCardsInDiscard() {
     $SpawnLiveDecks = $this->getSpawnLiveDecks();
     $nb = 0;
-    if ( !empty($SpawnLiveDecks) ) {
-      foreach ( $SpawnLiveDecks as $SpawnLiveDeck ) {
-        if ( $SpawnLiveDeck->getStatus()=='D' ) { $nb++; }
+    if (!empty($SpawnLiveDecks) ) {
+      foreach ($SpawnLiveDecks as $SpawnLiveDeck ) {
+        if ($SpawnLiveDeck->getStatus()=='D' ) { $nb++; }
       }
     }
     return $nb;

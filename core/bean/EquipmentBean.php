@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe EquipmentBean
  * @author Hugues.
@@ -18,22 +18,22 @@ class EquipmentBean extends MainPageBean {
    */
   public function displayCard($expansionId='') {
     $EquipmentCard = $this->EquipmentCard;
-    if ( $expansionId=='' ) {
+    if ($expansionId=='' ) {
       $expansionId = $EquipmentCard->getExpansionId();
     }
     $arrKeyWords = array();
     $strClasse = '';
-    if ( $EquipmentCard->isRanged() ) { $strClasse .= ' ranged weapon'; }
-    if ( $EquipmentCard->isMelee() ) { $strClasse .= ' melee weapon'; }
-    if ( $EquipmentCard->isPimp() ) {
+    if ($EquipmentCard->isRanged() ) { $strClasse .= ' ranged weapon'; }
+    if ($EquipmentCard->isMelee() ) { $strClasse .= ' melee weapon'; }
+    if ($EquipmentCard->isPimp() ) {
       $strClasse .= ' pimp';
       array_push($arrKeyWords, 'Pimp');
     }
-    if ( $EquipmentCard->isStarter() ) {
+    if ($EquipmentCard->isStarter() ) {
       $strClasse .= ' starter';
       array_push($arrKeyWords, 'Starter');
     }
-    if ( $EquipmentCard->isDual() ) {
+    if ($EquipmentCard->isDual() ) {
       $strClasse .= ' dual';
       array_push($arrKeyWords, 'Dual');
     }
@@ -41,8 +41,8 @@ class EquipmentBean extends MainPageBean {
         'Embuscade', '9mm', 'Pistolet', 'Précision', 'Vivres', '12mm', 'Recharge', 'Effraction', 'Katana',
         'Munitions', 'Composite'
     );
-    foreach ( $arrKeyWordsToCheck as $keyWord ) {
-      if ( $EquipmentCard->hasKeyword($keyWord) ) {
+    foreach ($arrKeyWordsToCheck as $keyWord ) {
+      if ($EquipmentCard->hasKeyword($keyWord) ) {
         array_push($arrKeyWords, $keyWord);
       }
     }

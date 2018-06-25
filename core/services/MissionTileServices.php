@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe MissionTileServices
  * @author Hugues.
@@ -17,9 +17,9 @@ class MissionTileServices extends GlobalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    $arrParams[] = ( isset($arrFilters[CST_MISSIONID]) ? $arrFilters[CST_MISSIONID] : '%' );
-    $arrParams[] = ( isset($arrFilters[CST_COORDX]) ? $arrFilters[CST_COORDX] : '%' );
-    $arrParams[] = ( isset($arrFilters['coordY']) ? $arrFilters['coordY'] : '%' );
+    $arrParams[] = (isset($arrFilters[CST_MISSIONID]) ? $arrFilters[CST_MISSIONID] : '%' );
+    $arrParams[] = (isset($arrFilters[CST_COORDX]) ? $arrFilters[CST_COORDX] : '%' );
+    $arrParams[] = (isset($arrFilters['coordY']) ? $arrFilters['coordY'] : '%' );
     return $arrParams;
   }
   /**
@@ -42,9 +42,9 @@ class MissionTileServices extends GlobalServices {
     $MissionTileServices = new MissionTileServices();
     $args = array(self::CST_MISSIONID=>$post[CST_MISSIONID], CST_COORDX=>$post[CST_COORDX], CST_COORDY=>$post[CST_COORDY]);
     $MissionTiles = $MissionTileServices->getMissionTilesWithFilters(__FILE__, __LINE__, $args);
-    if ( !empty($MissionTiles) ) {
+    if (!empty($MissionTiles) ) {
       $MissionTile = array_shift($MissionTiles);
-      while ( !empty($MissionTiles) ) {
+      while (!empty($MissionTiles) ) {
         $DelMissionTile = array_shift($MissionTiles);
         $MissionTileServices->delete(__FILE__, __LINE__, $DelMissionTile);
       }
@@ -59,14 +59,14 @@ class MissionTileServices extends GlobalServices {
     $MissionTileServices = new MissionTileServices();
     $args = array(self::CST_MISSIONID=>$post[CST_MISSIONID], CST_COORDX=>$post[CST_COORDX], CST_COORDY=>$post[CST_COORDY]);
     $MissionTiles = $MissionTileServices->getMissionTilesWithFilters(__FILE__, __LINE__, $args);
-    if ( empty($MissionTiles) ) {
+    if (empty($MissionTiles) ) {
       $args['orientation'] = 'N';
       $args['tileId'] = $post['value'];
       $MissionTile = new MissionTile($args);
       $MissionTileServices->insert(__FILE__, __LINE__, $MissionTile);
     } else {
       $MissionTile = array_shift($MissionTiles);
-      while ( !empty($MissionTiles) ) {
+      while (!empty($MissionTiles) ) {
         $DelMissionTile = array_shift($MissionTiles);
         $MissionTileServices->delete(__FILE__, __LINE__, $DelMissionTile);
       }

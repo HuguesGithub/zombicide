@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe MissionExpansionDaoImpl
  * @author Hugues.
@@ -47,7 +47,7 @@ class MissionExpansionDaoImpl extends LocalDaoImpl {
    */
   public function select($file, $line, $arrParams) {
     $MissionExpansions = $this->selectEntry($file, $line, $arrParams);
-    return ( empty($MissionExpansions) ? new MissionExpansion() : array_shift($MissionExpansions));
+    return (empty($MissionExpansions) ? new MissionExpansion() : array_shift($MissionExpansions));
   }
   
 }

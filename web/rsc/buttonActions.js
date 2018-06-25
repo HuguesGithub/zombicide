@@ -17,7 +17,7 @@ function bindLiveActionButtons() {
 }
 
 function dealWithButton(action) {
-	switch ( action ) {
+	switch (action ) {
 		case 'select-survivor' : dealWithStartButton(); break;
       default : console.log('Y a un problème avec la valeur du paramètre : ['+action+']');
 	}

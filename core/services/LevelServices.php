@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe LevelServices
  * @author Hugues.
@@ -55,7 +55,7 @@ class LevelServices extends LocalServices {
    */
   public function getLevelsSelectAlreadyRequested($file, $line, $Levels, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultLabel='') {
     $arrSetLabels = array();
-    foreach ( $Levels as $Level ) {
+    foreach ($Levels as $Level ) {
       $arrSetLabels[$Level->getId()] = $Level->getName();
     }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'levelId', $value, $defaultLabel, $classe, $multiple);

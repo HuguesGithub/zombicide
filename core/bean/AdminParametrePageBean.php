@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * AdminParametrePageBean
  * @version 1.0.00
@@ -30,20 +30,20 @@ class AdminParametrePageBean extends AdminPageBean {
     $table = $this->initVar('table');
     $arrTabs = array('level'=>'Difficultés', 'duration'=>'Durées', 'player'=>'Joueurs', 'rule'=>'Règles', 'objective'=>'Objectifs', 'expansion'=>'Expansions', 'tile'=>'Dalles');
     $strTabs = '';
-    foreach ( $arrTabs as $key=>$value ) {
+    foreach ($arrTabs as $key=>$value ) {
       $strTabs .= '<a href="'.$this->getQueryArg(array('onglet'=>'parametre', 'table'=>$key)).'" class="list-group-item list-group-item-action';
       $strTabs .= ($key==$table ? ' active' : '' ).'">'.$value.'</a>';
     }
     $tBody = '';
     $tBodyButtons  = '<td><button class="btn btn-xs btn-success editParam" data-type="%2$s" data-id="%3$s"><i class="fas fa-pencil-alt"></i></button>';
     $tBodyButtons .= '<button class="btn btn-xs btn-danger rmvParam" data-type="%2$s" data-id="%3$s"><i class="fas fa-trash-alt"></i></button></td><td>%1$s</td>';
-    switch ( $table ) {
+    switch ($table ) {
       case 'level' :
         $Level = new Level();
         $classVars = $Level->getClassVars();
         $Levels = $this->LevelServices->getLevelsWithFilters(__FILE__, __LINE__);
-        if ( !empty($Levels) ) {
-          foreach ( $Levels as $Level ) {
+        if (!empty($Levels) ) {
+          foreach ($Levels as $Level ) {
             $id = $Level->getId();
             $Missions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, array('levelId'=>$id));
             $nb = count($Missions);
@@ -57,8 +57,8 @@ class AdminParametrePageBean extends AdminPageBean {
         $Duration = new Duration();
         $classVars = $Duration->getClassVars();
         $Durations = $this->DurationServices->getDurationsWithFilters(__FILE__, __LINE__);
-        if ( !empty($Durations) ) {
-          foreach ( $Durations as $Duration ) {
+        if (!empty($Durations) ) {
+          foreach ($Durations as $Duration ) {
             $id = $Duration->getId();
             $Missions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, array('durationId'=>$id));
             $nb = count($Missions);
@@ -72,8 +72,8 @@ class AdminParametrePageBean extends AdminPageBean {
         $Player = new Player();
         $classVars = $Player->getClassVars();
         $Players = $this->PlayerServices->getPlayersWithFilters(__FILE__, __LINE__);
-        if ( !empty($Players) ) {
-          foreach ( $Players as $Player ) {
+        if (!empty($Players) ) {
+          foreach ($Players as $Player ) {
             $id = $Player->getId();
             $Missions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, array('playerId'=>$id));
             $nb = count($Missions);
@@ -87,8 +87,8 @@ class AdminParametrePageBean extends AdminPageBean {
         $Expansion = new Expansion();
         $classVars = $Expansion->getClassVars();
         $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__);
-        if ( !empty($Expansions) ) {
-          foreach ( $Expansions as $Expansion ) {
+        if (!empty($Expansions) ) {
+          foreach ($Expansions as $Expansion ) {
             $id = $Expansion->getId();
             $MissionExpansions = $this->MissionExpansionServices->getMissionExpansionsWithFilters(__FILE__, __LINE__, array('expansionId'=>$id));
             $nb = count($MissionExpansions);
@@ -102,8 +102,8 @@ class AdminParametrePageBean extends AdminPageBean {
         $Rule = new Rule();
         $classVars = $Rule->getClassVars();
         $Rules = $this->RuleServices->getRulesWithFilters(__FILE__, __LINE__);
-        if ( !empty($Rules) ) {
-          foreach ( $Rules as $Rule ) {
+        if (!empty($Rules) ) {
+          foreach ($Rules as $Rule ) {
             $id = $Rule->getId();
             $MissionRules = $this->MissionRuleServices->getMissionRulesWithFilters(__FILE__, __LINE__, array('ruleId'=>$id));
             $nb = count($MissionRules);
@@ -117,8 +117,8 @@ class AdminParametrePageBean extends AdminPageBean {
         $Objective = new Objective();
         $classVars = $Objective->getClassVars();
         $Objectives = $this->ObjectiveServices->getObjectivesWithFilters(__FILE__, __LINE__);
-        if ( !empty($Objectives) ) {
-          foreach ( $Objectives as $Objective ) {
+        if (!empty($Objectives) ) {
+          foreach ($Objectives as $Objective ) {
             $id = $Objective->getId();
             $MissionObjectives = $this->MissionObjectiveServices->getMissionObjectivesWithFilters(__FILE__, __LINE__, array('objectiveId'=>$id));
             $nb = count($MissionObjectives);
@@ -132,7 +132,7 @@ class AdminParametrePageBean extends AdminPageBean {
     }
     $tHeader  = '<tr>';
     $tFooter  = '<tr>';
-    foreach ( $classVars as $key=>$value ) {
+    foreach ($classVars as $key=>$value ) {
       $tHeader .= '<td>'.$key.'</td>';
       $tFooter .= '<td><input type="text" class="form-control" id="'.$table.'-'.$key.'"'.($key=='id'?' disabled':'').'/></td>';
     }

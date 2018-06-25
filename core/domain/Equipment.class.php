@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe Equipment
  * @author Hugues.
@@ -71,10 +71,10 @@ class Equipment extends LocalDomain {
   public function getImgUrl($expansionId='00') {
     $uniqueId = (str_pad($this->id, 3, '0', STR_PAD_LEFT)).(str_pad($expansionId, 2, '0', STR_PAD_LEFT));
     $urlThumb = '/wp-content/plugins/zombicide/web/rsc/images/equipments/'.$uniqueId.'-thumb.jpg';
-    if ( !is_file($urlThumb) ) {
+    if (!is_file($urlThumb) ) {
     // /homepages/42/d239730921/htdocs
       $urlOriginal = '/wp-content/plugins/zombicide/web/rsc/images/equipments/'.$uniqueId.'.png';
-      if ( !is_file('http://zombicide.jhugues.fr'.$urlOriginal) ) {
+      if (!is_file('http://zombicide.jhugues.fr'.$urlOriginal) ) {
         
         // Fix de sonarCLoud. A développer.
         return $urlOriginal;
@@ -90,17 +90,17 @@ class Equipment extends LocalDomain {
    * @return boolean
    */
   public function isRanged() {
-    if ( $this->ranged==null ) {
-      if ( $this->EquipmentWeaponProfiles == null ) {
+    if ($this->ranged==null ) {
+      if ($this->EquipmentWeaponProfiles == null ) {
         $this->EquipmentWeaponProfiles = $this->getEquipmentWeaponProfiles();
       }
-      if ( empty($this->EquipmentWeaponProfiles) ) { 
+      if (empty($this->EquipmentWeaponProfiles) ) { 
         $this->ranged = FALSE;
       } else {
         $isRanged = FALSE;
-        foreach ( $this->EquipmentWeaponProfiles as $EquipmentWeaponProfile ) {
+        foreach ($this->EquipmentWeaponProfiles as $EquipmentWeaponProfile ) {
           $WeaponProfile = $EquipmentWeaponProfile->getWeaponProfile();
-          if ( $WeaponProfile->getMaxRange()>0 ) { $isRanged = TRUE; }
+          if ($WeaponProfile->getMaxRange()>0 ) { $isRanged = TRUE; }
           else { $this->melee = TRUE; }
         }
         $this->ranged = $isRanged;
@@ -112,17 +112,17 @@ class Equipment extends LocalDomain {
    * @return boolean
    */
   public function isMelee() {
-    if ( $this->melee==null ) {
-      if ( $this->EquipmentWeaponProfiles == null ) {
+    if ($this->melee==null ) {
+      if ($this->EquipmentWeaponProfiles == null ) {
         $this->EquipmentWeaponProfiles = $this->getEquipmentWeaponProfiles();
       }
-      if ( empty($this->EquipmentWeaponProfiles) ) { 
+      if (empty($this->EquipmentWeaponProfiles) ) { 
         $this->melee = FALSE;
       } else {
         $isMelee = FALSE;
-        foreach ( $this->EquipmentWeaponProfiles as $EquipmentWeaponProfile ) {
+        foreach ($this->EquipmentWeaponProfiles as $EquipmentWeaponProfile ) {
           $WeaponProfile = $EquipmentWeaponProfile->getWeaponProfile();
-          if ( $WeaponProfile->getMaxRange()==0 ) { $isMelee = TRUE; }
+          if ($WeaponProfile->getMaxRange()==0 ) { $isMelee = TRUE; }
           else { $this->ranged = TRUE; }
         }
         $this->melee = $isMelee;
@@ -148,10 +148,10 @@ class Equipment extends LocalDomain {
    */
   public function hasKeyword($keyword) {
     $hasKeyword = FALSE;
-    if ( $this->Keywords == null ) { $this->initKeywords(); }
-    if ( !empty($this->Keywords) ) {
-      foreach ( $this->Keywords as $Keyword ) {
-        if ( $Keyword->getName()==$keyword ) { $hasKeyword = TRUE; }
+    if ($this->Keywords == null ) { $this->initKeywords(); }
+    if (!empty($this->Keywords) ) {
+      foreach ($this->Keywords as $Keyword ) {
+        if ($Keyword->getName()==$keyword ) { $hasKeyword = TRUE; }
       }
     }
     return $hasKeyword;
@@ -159,8 +159,8 @@ class Equipment extends LocalDomain {
   private function initKeywords() {
     $EquipmentKeywords = $this->getEquipmentKeywords();
     $this->Keywords = array();
-    if ( !empty($EquipmentKeywords) ) {
-      foreach ( $EquipmentKeywords as $EquipmentKeyword ) {
+    if (!empty($EquipmentKeywords) ) {
+      foreach ($EquipmentKeywords as $EquipmentKeyword ) {
         array_push($this->Keywords, $EquipmentKeyword->getKeyword());
       }
     }

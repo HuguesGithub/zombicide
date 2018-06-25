@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe Survivor
  * @author Hugues.
@@ -150,13 +150,13 @@ class Survivor extends LocalDomain {
     $SurvivorSkills = $this->getSurvivorSkills();
     $str = '';
     $strTmp = '';
-    if ( !empty($SurvivorSkills) ) {
-      foreach ( $SurvivorSkills as $SurvivorSkill ) {
-        if ( $type=='' && $SurvivorSkill->getSurvivorTypeId()!=1 ) { continue; }
-        if ( $type=='z' && $SurvivorSkill->getSurvivorTypeId()!=2 ) { continue; }
-        if ( $type=='u' && $SurvivorSkill->getSurvivorTypeId()!=3 ) { continue; }
-        if ( $type=='uz' && $SurvivorSkill->getSurvivorTypeId()!=4 ) { continue; }
-        switch ( $SurvivorSkill->getTagLevelId() ) {
+    if (!empty($SurvivorSkills) ) {
+      foreach ($SurvivorSkills as $SurvivorSkill ) {
+        if ($type=='' && $SurvivorSkill->getSurvivorTypeId()!=1 ) { continue; }
+        if ($type=='z' && $SurvivorSkill->getSurvivorTypeId()!=2 ) { continue; }
+        if ($type=='u' && $SurvivorSkill->getSurvivorTypeId()!=3 ) { continue; }
+        if ($type=='uz' && $SurvivorSkill->getSurvivorTypeId()!=4 ) { continue; }
+        switch ($SurvivorSkill->getTagLevelId() ) {
           case 10 :
           case 11 :
             $strTmp .= '<li><span class="badge badge-blue-skill">'.$SurvivorSkill->getSkillName().'</span></li>';

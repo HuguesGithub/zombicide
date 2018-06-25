@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe LocalDomain
  * @author Hugues.
@@ -15,9 +15,9 @@ class LocalDomain extends GlobalDomain {
    */
   public function __construct($attributes=array(), $services=array()) {
     parent::__construct($attributes);
-    if ( !empty($services) ) {
-      foreach ( $services as $service ) {
-        switch ( $service ) {
+    if (!empty($services) ) {
+      foreach ($services as $service ) {
+        switch ($service ) {
           case 'Duration'      : $this->DurationServices = FactoryServices::getDurationServices(); break;
           case 'Equipment'        : $this->EquipmentServices = FactoryServices::getEquipmentServices(); break;
           case 'EquipmentExpansion'     : $this->EquipmentExpansionServices = FactoryServices::getEquipmentExpansionServices(); break;
@@ -59,133 +59,133 @@ class LocalDomain extends GlobalDomain {
    * @return Equipment
    */
   public function getEquipment() {
-    if ( $this->Equipment == null ) { $this->Equipment = $this->EquipmentServices->select(__FILE__, __LINE__, $this->equipmentId); }
+    if ($this->Equipment == null ) { $this->Equipment = $this->EquipmentServices->select(__FILE__, __LINE__, $this->equipmentId); }
     return $this->Equipment;
   }
   /**
    * @return EquipmentExpansion
    */
   public function getEquipmentExpansion() {
-    if ( $this->EquipmentExpansion == null ) { $this->EquipmentExpansion = $this->EquipmentExpansionServices->select(__FILE__, __LINE__, $this->equipmentExpansionId); }
+    if ($this->EquipmentExpansion == null ) { $this->EquipmentExpansion = $this->EquipmentExpansionServices->select(__FILE__, __LINE__, $this->equipmentExpansionId); }
     return $this->EquipmentExpansion;
   }
   /**
    * @return Expansion
    */
   public function getExpansion() {
-    if ( $this->Expansion == null ) { $this->Expansion = $this->getExpansionFromGlobal($this->expansionId); }
+    if ($this->Expansion == null ) { $this->Expansion = $this->getExpansionFromGlobal($this->expansionId); }
     return $this->Expansion;
   }
   /**
    * @return Invasion
    */
   public function getInvasion() { 
-    if ( $this->Invasion == null ) { $this->Invasion = $this->InvasionServices->select(__FILE__, __LINE__, $this->invasionId); }
+    if ($this->Invasion == null ) { $this->Invasion = $this->InvasionServices->select(__FILE__, __LINE__, $this->invasionId); }
     return $this->Invasion;
   }
   /**
    * @return Mission
    */
   public function getMission() {
-    if ( $this->Mission == null ) { $this->Mission = $this->MissionServices->select(__FILE__, __LINE__, $this->missionId); }
+    if ($this->Mission == null ) { $this->Mission = $this->MissionServices->select(__FILE__, __LINE__, $this->missionId); }
     return $this->Mission;
   }
   /**
    * @return Duration
    */
   public function getDuration() {
-    if ( $this->Duration == null ) { $this->Duration = $this->DurationServices->select(__FILE__, __LINE__, $this->durationId); }
+    if ($this->Duration == null ) { $this->Duration = $this->DurationServices->select(__FILE__, __LINE__, $this->durationId); }
     return $this->Duration;
   }
   /**
    * @return Keyword
    */
   public function getKeyword() {
-    if ( $this->Keyword == null ) { $this->Keyword = $this->KeywordServices->select(__FILE__, __LINE__, $this->keywordId); }
+    if ($this->Keyword == null ) { $this->Keyword = $this->KeywordServices->select(__FILE__, __LINE__, $this->keywordId); }
     return $this->Keyword;
   }
   /**
    * @return Level
    */
   public function getLevel() {
-    if ( $this->Level == null ) { $this->Level = $this->LevelServices->select(__FILE__, __LINE__, $this->levelId); }
+    if ($this->Level == null ) { $this->Level = $this->LevelServices->select(__FILE__, __LINE__, $this->levelId); }
     return $this->Level;
   }
   /**
    * @return Player
    */
   public function getPlayer() {
-    if ( $this->Player == null ) { $this->Player = $this->PlayerServices->select(__FILE__, __LINE__, $this->playerId); }
+    if ($this->Player == null ) { $this->Player = $this->PlayerServices->select(__FILE__, __LINE__, $this->playerId); }
     return $this->Player;
   }
   /**
    * @return Origine
    */
   public function getOrigine() {
-    if ( $this->Origine==null ) { $this->Origine = $this->getOrigineFromGlobal($this->origineId);  }
+    if ($this->Origine==null ) { $this->Origine = $this->getOrigineFromGlobal($this->origineId);  }
     return $this->Origine;
   }
   /**
    * @return Objective
    */
   public function getObjective() {
-    if ( $this->Objective==null ) { $this->Objective = $this->getObjectiveFromGlobal($this->objectiveId);  }
+    if ($this->Objective==null ) { $this->Objective = $this->getObjectiveFromGlobal($this->objectiveId);  }
     return $this->Objective;
   }
   /**
    * @return Rule
    */
   public function getRule() {
-    if ( $this->Rule==null ) { $this->Rule = $this->getRuleFromGlobal($this->ruleId);  }
+    if ($this->Rule==null ) { $this->Rule = $this->getRuleFromGlobal($this->ruleId);  }
     return $this->Rule;
   }
   /**
    * @return Skill
    */
   public function getSkill() {
-    if ( $this->Skill == null ) { $this->Skill = $this->SkillServices->select(__FILE__, __LINE__, $this->skillId); }
+    if ($this->Skill == null ) { $this->Skill = $this->SkillServices->select(__FILE__, __LINE__, $this->skillId); }
     return $this->Skill;
   }
   /**
    * @return SpawnCard
    */
   public function getSpawnCard() {
-    if ( $this->SpawnCard == null ) { $this->SpawnCard = $this->SpawnServices->select(__FILE__, __LINE__, $this->spawnCardId); }
+    if ($this->SpawnCard == null ) { $this->SpawnCard = $this->SpawnServices->select(__FILE__, __LINE__, $this->spawnCardId); }
     return $this->SpawnCard;
   }
   /**
    * @return Survivor
    */
   public function getSurvivor() { 
-    if ( $this->Survivor == null ) { $this->Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $this->survivorId); }
+    if ($this->Survivor == null ) { $this->Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $this->survivorId); }
     return $this->Survivor;
   }
   /**
    * @return Tile
    */
   public function getTile() {
-    if ( $this->Tile==null ) { $this->Tile = $this->TileServices->select(__FILE__, __LINE__, $this->tileId); }
+    if ($this->Tile==null ) { $this->Tile = $this->TileServices->select(__FILE__, __LINE__, $this->tileId); }
     return $this->Tile;
   }
   /**
    * @return Token
    */
   public function getToken() {
-    if ( $this->Token==null ) { $this->Token = $this->TokenServices->select(__FILE__, __LINE__, $this->tokenId); }
+    if ($this->Token==null ) { $this->Token = $this->TokenServices->select(__FILE__, __LINE__, $this->tokenId); }
     return $this->Token;
   }
   /**
    * @return WeaponProfile
    */
   public function getWeaponProfile() {
-    if ( $this->WeaponProfile==null ) { $this->WeaponProfile = $this->WeaponProfileServices->select(__FILE__, __LINE__, $this->weaponProfileId); }
+    if ($this->WeaponProfile==null ) { $this->WeaponProfile = $this->WeaponProfileServices->select(__FILE__, __LINE__, $this->weaponProfileId); }
     return $this->WeaponProfile;
   }
   /**
    * @return Zone
    */
   public function getZone() {
-    if ( $this->Zone==null ) { $this->Zone = $this->ZoneServices->select(__FILE__, __LINE__, $this->zoneId);  }
+    if ($this->Zone==null ) { $this->Zone = $this->ZoneServices->select(__FILE__, __LINE__, $this->zoneId);  }
     return $this->Zone;
   }
   /**
@@ -193,7 +193,7 @@ class LocalDomain extends GlobalDomain {
    * @return array EquipmentExpansion
    */
   public function getEquipmentExpansions($type=CST_EQUIPMENTCARDID) {
-    if ( $this->EquipmentExpansions == null &&  $this->id!='' ) {
+    if ($this->EquipmentExpansions == null &&  $this->id!='' ) {
       $this->EquipmentExpansions = $this->EquipmentExpansionServices->getEquipmentExpansionsWithFilters(__FILE__, __LINE__, array($type=>$this->id));
     }
     return $this->EquipmentExpansions;
@@ -202,7 +202,7 @@ class LocalDomain extends GlobalDomain {
    * @return array EquipmenKeyword
    */
   public function getEquipmentKeywords() {
-    if ( $this->EquipmentKeywords == null &&  $this->id!='' ) {
+    if ($this->EquipmentKeywords == null &&  $this->id!='' ) {
       $this->EquipmentKeywords = $this->EquipmentKeywordServices->getEquipmentKeywordsWithFilters(__FILE__, __LINE__, array(self::CST_EQUIPMENTCARDID=>$this->id));
     }
     return $this->EquipmentKeywords;
@@ -211,7 +211,7 @@ class LocalDomain extends GlobalDomain {
    * @return array EquipmentWeaponProfile
    */
   public function getEquipmentWeaponProfiles() {
-    if ( $this->EquipmentWeaponProfiles == null &&  $this->id!='' ) {
+    if ($this->EquipmentWeaponProfiles == null &&  $this->id!='' ) {
       $this->EquipmentWeaponProfiles = $this->EquipmentWeaponProfileServices->getEquipmentWeaponProfilesWithFilters(__FILE__, __LINE__, array(self::CST_EQUIPMENTCARDID=>$this->id));
     }
     return $this->EquipmentWeaponProfiles;
@@ -220,7 +220,7 @@ class LocalDomain extends GlobalDomain {
    * @return array MissionExpansion
    */
   public function getMissionExpansions() {
-    if ( $this->MissionExpansions == null &&  $this->id!='' ) {
+    if ($this->MissionExpansions == null &&  $this->id!='' ) {
       $this->MissionExpansions = $this->MissionExpansionServices->getMissionExpansionsWithFilters(__FILE__, __LINE__, array(self::CST_MISSIONID=>$this->id));
     }
     return $this->MissionExpansions;
@@ -229,7 +229,7 @@ class LocalDomain extends GlobalDomain {
    * @return array MissionObjective
    */
   public function getMissionObjectives($orderBy='id') {
-    if ( $this->MissionObjectives == null &&  $this->id!='' ) {
+    if ($this->MissionObjectives == null &&  $this->id!='' ) {
       $this->MissionObjectives = $this->MissionObjectiveServices->getMissionObjectivesWithFilters(__FILE__, __LINE__, array(self::CST_MISSIONID=>$this->id), $orderBy);
     }
     return $this->MissionObjectives;
@@ -238,7 +238,7 @@ class LocalDomain extends GlobalDomain {
    * @return array MissionRule
    */
   public function getMissionRules($orderBy='id') {
-    if ( $this->MissionRules == null &&  $this->id!='' ) {
+    if ($this->MissionRules == null &&  $this->id!='' ) {
       $this->MissionRules = $this->MissionRuleServices->getMissionRulesWithFilters(__FILE__, __LINE__, array(self::CST_MISSIONID=>$this->id), $orderBy);
     }
     return $this->MissionRules;
@@ -249,7 +249,7 @@ class LocalDomain extends GlobalDomain {
    * @return array MissionTile
    */
   public function getMissionTiles($arrFields='id', $arrOrder='asc') {
-    if ( $this->MissionTiles == null &&  $this->id!='' ) {
+    if ($this->MissionTiles == null &&  $this->id!='' ) {
       $this->MissionTiles = $this->MissionTileServices->getMissionTilesWithFilters(__FILE__, __LINE__, array(self::CST_MISSIONID=>$this->id), $arrFields, $arrOrder);
     }
     return $this->MissionTiles;
@@ -260,7 +260,7 @@ class LocalDomain extends GlobalDomain {
    * @return array MissionToken
    */
   public function getMissionTokens($arrFields='id', $arrOrder='asc') {
-    if ( $this->MissionTokens == null &&  $this->id!='' ) {
+    if ($this->MissionTokens == null &&  $this->id!='' ) {
       $this->MissionTokens = $this->MissionTokenServices->getMissionTokensWithFilters(__FILE__, __LINE__, array(self::CST_MISSIONID=>$this->id), $arrFields, $arrOrder);
     }
     return $this->MissionTokens;
@@ -269,7 +269,7 @@ class LocalDomain extends GlobalDomain {
    * @return array MissionZone
    */
   public function getMissionZones() {
-    if ( $this->MissionZones == null &&  $this->id!='' ) {
+    if ($this->MissionZones == null &&  $this->id!='' ) {
       $this->MissionZones = $this->MissionZoneServices->getMissionZonesWithFilters(__FILE__, __LINE__, array(self::CST_MISSIONID=>$this->id));
     }
     return $this->MissionZones;
@@ -278,7 +278,7 @@ class LocalDomain extends GlobalDomain {
    * @return array SpawnLiveDeck
    */
   public function getSpawnLiveDecks() {
-    if ( $this->SpawnLiveDecks == null && $this->id!='' ) {
+    if ($this->SpawnLiveDecks == null && $this->id!='' ) {
       $this->SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array('liveDeckId'=>$this->id));
     }
     return $this->SpawnLiveDecks;
@@ -287,7 +287,7 @@ class LocalDomain extends GlobalDomain {
    * @return array SurvivorLive
    */
   public function getSurvivorLives() {
-    if ( $this->SurvivorLives == null &&  $this->id!='' ) {
+    if ($this->SurvivorLives == null &&  $this->id!='' ) {
       $this->SurvivorLives = $this->SurvivorLiveServices->getSurvivorsLiveWithFilters(__FILE__, __LINE__, array('missionLiveId'=>$this->id));
     }
     return $this->SurvivorLives;
@@ -296,7 +296,7 @@ class LocalDomain extends GlobalDomain {
    * @return array SurvivorSkill
    */
   public function getSurvivorSkills() {
-    if ( $this->SurvivorSkills == null &&  $this->id!='' ) {
+    if ($this->SurvivorSkills == null &&  $this->id!='' ) {
       $this->SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, array('survivorId'=>$this->id));
     }
     return $this->SurvivorSkills;
@@ -306,10 +306,10 @@ class LocalDomain extends GlobalDomain {
    * @return WpPost
    */
   public function getWpPost($metaKey) {
-    if ( $this->WpPost == null ) {
+    if ($this->WpPost == null ) {
       $args = array('post_status' => 'publish,future', 'meta_key' => $metaKey, 'meta_value' => $this->id);
       $Articles = $this->WpPostServices->getArticles(__FILE__, __LINE__, $args, TRUE);
-      if ( !empty($Articles) ) { $this->WpPost = array_shift($Articles); }
+      if (!empty($Articles) ) { $this->WpPost = array_shift($Articles); }
     }
     return $this->WpPost;
   }
@@ -319,11 +319,11 @@ class LocalDomain extends GlobalDomain {
    */
   public function getPdfUrl() {
     $WpPost = $this->getWpPost();
-    if ( $WpPost!=null ) {
-      $medias = get_attached_media( 'application/pdf', $WpPost->getID() );
-      if ( !empty($medias) ) {
+    if ($WpPost!=null ) {
+      $medias = get_attached_media('application/pdf', $WpPost->getID() );
+      if (!empty($medias) ) {
         $media = array_shift($medias);
-        if ( $media->guid!='' ) {
+        if ($media->guid!='' ) {
           return $media->guid;
         }
       }
@@ -337,14 +337,14 @@ class LocalDomain extends GlobalDomain {
   public function getExpansionFromGlobal($expansionId) {
     global $globalExpansions;
     $GlobalExpansion = null;
-    if ( !empty($globalExpansions) ) {
-      foreach ( $globalExpansions as $Expansion ) {
-        if ( $Expansion->getId()==$expansionId ) { $GlobalExpansion = $Expansion; }
+    if (!empty($globalExpansions) ) {
+      foreach ($globalExpansions as $Expansion ) {
+        if ($Expansion->getId()==$expansionId ) { $GlobalExpansion = $Expansion; }
       }
     }
-    if ( $GlobalExpansion==null ) {
+    if ($GlobalExpansion==null ) {
       $GlobalExpansion = $this->ExpansionServices->select(__FILE__, __LINE__, $expansionId);
-      if ( $GlobalExpansion != null ) { $globalExpansions[] = $GlobalExpansion; }
+      if ($GlobalExpansion != null ) { $globalExpansions[] = $GlobalExpansion; }
     }
     return $GlobalExpansion;
   }
@@ -355,14 +355,14 @@ class LocalDomain extends GlobalDomain {
   protected function getObjectiveFromGlobal($objectiveId) {
     global $globalObjectives;
     $GlobalObjective = null;
-    if ( !empty($globalObjectives) ) {
-      foreach ( $globalObjectives as $Objective ) {
-        if ( $Objective->getId()==$objectiveId ) { $GlobalObjective = $Objective; }
+    if (!empty($globalObjectives) ) {
+      foreach ($globalObjectives as $Objective ) {
+        if ($Objective->getId()==$objectiveId ) { $GlobalObjective = $Objective; }
       }
     } 
-    if ( $GlobalObjective == null ) {
+    if ($GlobalObjective == null ) {
       $GlobalObjective = $this->ObjectiveServices->select(__FILE__, __LINE__, $objectiveId);
-      if ( $GlobalObjective != null ) { $globalObjectives[] = $GlobalObjective; }
+      if ($GlobalObjective != null ) { $globalObjectives[] = $GlobalObjective; }
     }
     return $GlobalObjective;
   }
@@ -373,14 +373,14 @@ class LocalDomain extends GlobalDomain {
   protected function getOrigineFromGlobal($origineId) {
     global $globalOrigines;
     $GlobalOrigine = null;
-    if ( !empty($globalOrigines) ) {
-      foreach ( $globalOrigines as $Origine ) {
-        if ( $Origine->getId() == $origineId ) { $GlobalOrigine = $Origine; }
+    if (!empty($globalOrigines) ) {
+      foreach ($globalOrigines as $Origine ) {
+        if ($Origine->getId() == $origineId ) { $GlobalOrigine = $Origine; }
       }
     }
-    if ( $GlobalOrigine==null ) {
+    if ($GlobalOrigine==null ) {
       $GlobalOrigine = $this->OrigineServices->select(__FILE__, __LINE__, $origineId);
-      if ( $GlobalOrigine != null ) { $globalOrigines[] = $GlobalOrigine; }
+      if ($GlobalOrigine != null ) { $globalOrigines[] = $GlobalOrigine; }
     }
     return $GlobalOrigine;
   }
@@ -391,14 +391,14 @@ class LocalDomain extends GlobalDomain {
   protected function getRuleFromGlobal($ruleId) {
     global $globalRules;
     $GlobalRule = null;
-    if ( !empty($globalRules) ) {
-      foreach ( $globalRules as $Rule ) {
-        if ( $Rule->getId()==$ruleId ) { $GlobalRule = $Rule; }
+    if (!empty($globalRules) ) {
+      foreach ($globalRules as $Rule ) {
+        if ($Rule->getId()==$ruleId ) { $GlobalRule = $Rule; }
       }
     } 
-    if ( $GlobalRule == null ) {
+    if ($GlobalRule == null ) {
       $GlobalRule = $this->RuleServices->select(__FILE__, __LINE__, $ruleId);
-      if ( $GlobalRule != null ) { $globalRules[] = $GlobalRule; }
+      if ($GlobalRule != null ) { $globalRules[] = $GlobalRule; }
     }
     return $GlobalRule;
   }
@@ -409,14 +409,14 @@ class LocalDomain extends GlobalDomain {
   protected function getWeaponProfileFromGlobal($weaponProfileId) {
     global $globalWeaponProfiles;
     $GlobalWeaponProfile = null;
-    if ( !empty($globalWeaponProfiles) ) {
-      foreach ( $globalWeaponProfiles as $WeaponProfile ) {
-        if ( $WeaponProfile->getId()==$weaponProfileId ) { $GlobalWeaponProfile = $WeaponProfile; }
+    if (!empty($globalWeaponProfiles) ) {
+      foreach ($globalWeaponProfiles as $WeaponProfile ) {
+        if ($WeaponProfile->getId()==$weaponProfileId ) { $GlobalWeaponProfile = $WeaponProfile; }
       }
     }
-    if ( $GlobalWeaponProfile == null ) {
+    if ($GlobalWeaponProfile == null ) {
       $GlobalWeaponProfile = $this->WeaponProfileServices->select(__FILE__, __LINE__, $weaponProfileId);
-      if ( $GlobalWeaponProfile != null ) { $globalWeaponProfiles[] = $GlobalWeaponProfile; }
+      if ($GlobalWeaponProfile != null ) { $globalWeaponProfiles[] = $GlobalWeaponProfile; }
     }
     return $GlobalWeaponProfile;
   }
@@ -426,8 +426,8 @@ class LocalDomain extends GlobalDomain {
   public function toJson() {
     $classVars = $this->getClassVars();
     $str = '';
-    foreach ( $classVars as $key=>$value ) {
-      if ( $str!='' ) { $str .= ', '; }
+    foreach ($classVars as $key=>$value ) {
+      if ($str!='' ) { $str .= ', '; }
       $str .= '"'.$key.'":'.json_encode($this->getField($key));
     }
     return '{'.$str.'}';

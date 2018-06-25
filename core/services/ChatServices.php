@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe ChatServices
  * @author Hugues.
@@ -17,10 +17,10 @@ class ChatServices extends LocalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    $arrParams[] = ( isset($arrFilters['liveId']) ? $arrFilters['liveId'] : '-1');
-    $arrParams[] = ( isset($arrFilters['sendToId']) ? $arrFilters['sendToId'] : '-1');
-    $arrParams[] = ( isset($arrFilters['senderId']) ? $arrFilters['senderId'] : '-1');
-    $arrParams[] = ( isset($arrFilters[CST_TIMESTAMP]) ? $arrFilters[CST_TIMESTAMP] : '2018-06');
+    $arrParams[] = (isset($arrFilters['liveId']) ? $arrFilters['liveId'] : '-1');
+    $arrParams[] = (isset($arrFilters['sendToId']) ? $arrFilters['sendToId'] : '-1');
+    $arrParams[] = (isset($arrFilters['senderId']) ? $arrFilters['senderId'] : '-1');
+    $arrParams[] = (isset($arrFilters[CST_TIMESTAMP]) ? $arrFilters[CST_TIMESTAMP] : '2018-06');
     return $arrParams;
   }
   /**

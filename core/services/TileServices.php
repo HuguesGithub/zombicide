@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe TileServices
  * @author Hugues.
@@ -17,9 +17,9 @@ class TileServices extends LocalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    $arrParams[] = ( isset($arrFilters['code']) ? $arrFilters['code'] : '%');
-    $arrParams[] = ( isset($arrFilters['expansionId']) ? $arrFilters['expansionId'] : '%');
-    $arrParams[] = ( isset($arrFilters['active']) ? $arrFilters['active'] : '%');
+    $arrParams[] = (isset($arrFilters['code']) ? $arrFilters['code'] : '%');
+    $arrParams[] = (isset($arrFilters['expansionId']) ? $arrFilters['expansionId'] : '%');
+    $arrParams[] = (isset($arrFilters['active']) ? $arrFilters['active'] : '%');
     return $arrParams;
   }
   /**
@@ -46,12 +46,12 @@ class TileServices extends LocalServices {
    * @return string
    */
   public function getTilesSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultLabel='') {
-  if ( empty($this->MissionTiles) ) {
+  if (empty($this->MissionTiles) ) {
       $MissionTiles = $this->getTilesWithFilters($file, $line, array(), 'id', 'asc');
     $this->MissionTiles = $MissionTiles;
   }
     $arrSetLabels = array();
-    foreach ( $this->MissionTiles as $MissionTile ) {
+    foreach ($this->MissionTiles as $MissionTile ) {
       $arrSetLabels[$MissionTile->getId()] = $MissionTile->getCode();
     }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'id', $value, $defaultLabel, $classe, $multiple);

@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe AdminPageBean
  * @author Hugues.
@@ -27,10 +27,10 @@ class AdminPageBean extends MainPageBean {
   public function analyzeUri() {
     $uri = $_SERVER['REQUEST_URI'];
     $pos = strpos($uri, '?');
-    if ( $pos!==FALSE ) {
+    if ($pos!==FALSE ) {
       $arrParams = explode('&', substr($uri, $pos+1, strlen($uri)));
-      if ( !empty($arrParams) ) {
-        foreach ( $arrParams as $param ) {
+      if (!empty($arrParams) ) {
+        foreach ($arrParams as $param ) {
           list($key, $value) = explode('=', $param);
           $this->urlParams[$key] = $value;
         }
@@ -38,16 +38,16 @@ class AdminPageBean extends MainPageBean {
       $uri = substr($uri, 0, $pos-1);
     }
     $pos = strpos($uri, '#');
-    if ( $pos!==FALSE ) { $this->anchor = substr($uri, $pos+1, strlen($uri)); }
-    if ( isset($_POST) ) { foreach ( $_POST as $key=>$value ) { $this->urlParams[$key] = $value; } }
+    if ($pos!==FALSE ) { $this->anchor = substr($uri, $pos+1, strlen($uri)); }
+    if (isset($_POST) ) { foreach ($_POST as $key=>$value ) { $this->urlParams[$key] = $value; } }
     return $uri;
   }
   /**
    * @return string
    */
   public function getContentPage() {
-    if ( self::isAdmin() ) {
-      switch ( $this->urlParams['onglet'] ) {
+    if (self::isAdmin() ) {
+      switch ($this->urlParams['onglet'] ) {
         case 'mission'    : $returned = AdminMissionPageBean::getStaticContentPage($this->urlParams); break;
         case 'parametre'  : $returned = AdminParametrePageBean::getStaticContentPage($this->urlParams); break;
         case ''       : $returned = $this->getHomeContentPage(); break;
@@ -62,24 +62,24 @@ class AdminPageBean extends MainPageBean {
   public function getHomeContentPage() {
     $reset = $this->initVar('reset', '');
     $doReset = !empty($reset);
-    if ( $doReset ) {
+    if ($doReset ) {
       $ts = time();
       list($N, $d, $m, $y) = explode(' ', date('N d m y', $ts));
-      $nd = $d + ( $N==1 ? 1 : 9-$N );
+      $nd = $d + ($N==1 ? 1 : 9-$N );
       $resetTs = mktime(1, 0, 0, $m, $nd, $y);
     }
     $request = "SELECT option_value FROM wp_11_options WHERE option_name='cron';";
     $row = MySQL::wpdbSelect($request);
     $Obj = array_shift($row);
     $arrOptions = unserialize($Obj->option_value);
-    foreach ( $arrOptions as $key=>$value ) {
-      if ( isset($value[WP_DB_BACKUP_CRON]) ) {
+    foreach ($arrOptions as $key=>$value ) {
+      if (isset($value[WP_DB_BACKUP_CRON]) ) {
         $nextTs = $key;
         $arrOptions[$resetTs][WP_DB_BACKUP_CRON] = $value[WP_DB_BACKUP_CRON];
         unset($arrOptions[$key]);
       }
     }
-    if ( $doReset ) {
+    if ($doReset ) {
       $serialized = serialize($arrOptions);
       $request = "UPDATE wp_11_options SET option_value='$serialized' WHERE option_name='cron';";
     }

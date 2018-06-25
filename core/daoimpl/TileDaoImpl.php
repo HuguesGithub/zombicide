@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe TileDaoImpl
  * @author Hugues.
@@ -62,7 +62,7 @@ class TileDaoImpl extends LocalDaoImpl {
    */
   public function select($file, $line, $arrParams) {
     $Tiles = $this->selectEntry($file, $line, $arrParams);
-    return ( empty($Tiles) ? new Tile() : array_shift($Tiles));
+    return (empty($Tiles) ? new Tile() : array_shift($Tiles));
   }
 
 }

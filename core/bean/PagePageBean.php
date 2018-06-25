@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * PagePageBean
  * @author Hugues
@@ -15,8 +15,8 @@ class PagePageBean extends MainPageBean {
    * @param array $services
    */
   public function __construct($post='', $services=array()) {
-    if ( $post=='' ) { $post = get_post(); }
-    if ( get_class($post) == 'WpPost' ) { $this->WpPage = $post; }
+    if ($post=='' ) { $post = get_post(); }
+    if (get_class($post) == 'WpPost' ) { $this->WpPage = $post; }
     else { $this->WpPage = WpPost::convertElement($post); }
     parent::__construct($services);
   }
@@ -24,7 +24,7 @@ class PagePageBean extends MainPageBean {
    * @return string|Error404PageBean
    */
   public function getContentPage() {
-    switch ( $this->WpPage->getPostName() ) {
+    switch ($this->WpPage->getPostName() ) {
       case 'page-competences'      : $returned = SkillsPageBean::getStaticPageContent($this->WpPage); break;
       case 'page-live-pioche-invasion' : $returned = SpawnDeckPageBean::getStaticSpawnDeckContent($this->WpPage); break;
       case 'page-market'         : $returned = MarketPageBean::getStaticPageContent($this->WpPage); break;

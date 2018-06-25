@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe TokenServices
  * @author Hugues.
@@ -17,7 +17,7 @@ class TokenServices extends LocalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    $arrParams[] = ( isset($arrFilters['code']) ? $arrFilters['code'] : '%');
+    $arrParams[] = (isset($arrFilters['code']) ? $arrFilters['code'] : '%');
     return $arrParams;
   }
   /**
@@ -46,7 +46,7 @@ class TokenServices extends LocalServices {
   public function getTokensSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultLabel='') {
     $Tokens = $this->getTokensWithFilters($file, $line, array(), 'id', 'asc');
     $arrSetLabels = array();
-    foreach ( $Tokens as $Token ) {
+    foreach ($Tokens as $Token ) {
       $arrSetLabels[$Token->getId()] = $Token->getCode();
     }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'id', $value, $defaultLabel, $classe, $multiple);

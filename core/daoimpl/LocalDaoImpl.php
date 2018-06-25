@@ -1,7 +1,7 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
-define ('SQL_PARAMS_WHERE', 'where');
-define ('SQL_PARAMS_ORDERBY', '__orderby__');
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
+define('SQL_PARAMS_WHERE', 'where');
+define('SQL_PARAMS_ORDERBY', '__orderby__');
 /**
  * Classe LocalDaoImpl
  * @author Hugues.
@@ -37,9 +37,9 @@ class LocalDaoImpl extends GlobalDaoImpl {
    */
   protected function globalConvertToArray($type, $rows) {
     $Items = array();
-    if ( !empty($rows) ) {
-      foreach ( $rows as $row ) {
-        switch ( $type ) {
+    if (!empty($rows) ) {
+      foreach ($rows as $row ) {
+        switch ($type ) {
           case 'Chat'           : $Items[] = Chat::convertElement($row); break;
           case 'Duration'         : $Items[] = Duration::convertElement($row); break;
           case 'Equipment'        : $Items[] = Equipment::convertElement($row); break;

@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe LiveDeckDaoImpl
  * @author Hugues.
@@ -47,7 +47,7 @@ class LiveDeckDaoImpl extends LocalDaoImpl {
    */
   public function select($file, $line, $arrParams) {
     $Objs = $this->selectEntry($file, $line, $arrParams);
-    return ( empty($Objs) ? new LiveDeck() : array_shift($Objs));
+    return (empty($Objs) ? new LiveDeck() : array_shift($Objs));
   }
   
 }

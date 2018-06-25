@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe SkillDaoImpl
  * @author Hugues.
@@ -47,7 +47,7 @@ class SkillDaoImpl extends LocalDaoImpl {
    */
   public function select($file, $line, $arrParams) {
     $Skills = $this->selectEntry($file, $line, $arrParams);
-    return ( empty($Skills) ? new Skill() : array_shift($Skills));
+    return (empty($Skills) ? new Skill() : array_shift($Skills));
   }
   
 }

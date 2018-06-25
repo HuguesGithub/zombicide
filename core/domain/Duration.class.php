@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe Duration
  * @author Hugues.
@@ -66,6 +66,6 @@ class Duration extends LocalDomain {
   /**
    * @return string
    */
-  public function getStrDuree() { return $this->minDuration.( $this->maxDuration == 0 ? '' : ' à '.$this->maxDuration ).' minutes'; }
+  public function getStrDuree() { return $this->minDuration.($this->maxDuration == 0 ? '' : ' à '.$this->maxDuration ).' minutes'; }
 }
 ?>

@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe EquipmentKeywordServices
  * @author Hugues.
@@ -20,8 +20,8 @@ class EquipmentKeywordServices extends LocalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    $arrParams[] = ( isset($arrFilters['equipmentCardId']) ? $arrFilters['equipmentCardId'] : '%' );
-    $arrParams[] = ( isset($arrFilters['keywordId']) ? $arrFilters['keywordId'] : '%' );
+    $arrParams[] = (isset($arrFilters['equipmentCardId']) ? $arrFilters['equipmentCardId'] : '%' );
+    $arrParams[] = (isset($arrFilters['keywordId']) ? $arrFilters['keywordId'] : '%' );
     return $arrParams;
   }
   /**

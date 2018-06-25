@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe OrigineServices
  * @author Hugues.
@@ -17,7 +17,7 @@ class OrigineServices extends LocalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    $arrParams[] = ( isset($arrFilters['name']) ? $arrFilters['name'] : '%' );
+    $arrParams[] = (isset($arrFilters['name']) ? $arrFilters['name'] : '%' );
     return $arrParams;
   }
   /**
@@ -46,7 +46,7 @@ class OrigineServices extends LocalServices {
   public function getOriginesSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultLabel='') {
     $Origines = $this->getOriginesWithFilters($file, $line, array(), 'name', 'ASC');
     $arrSetLabels = array();
-    foreach ( $Origines as $Origine ) {
+    foreach ($Origines as $Origine ) {
       $arrSetLabels[$Origine->getId()] = $Origine->getName();
     }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'origineId', $value, $defaultLabel, $classe, $multiple);

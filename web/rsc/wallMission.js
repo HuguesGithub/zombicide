@@ -1,5 +1,5 @@
 var $hj = jQuery.noConflict();
-$hj( document ).ready(function() {
+$hj(document ).ready(function() {
 	setWorkZoneHeight();
   setButtonAction();
   setCanvasAction();
@@ -8,10 +8,10 @@ $hj( document ).ready(function() {
 	});
   
   $hj('ul.equipments').sortable({
-  	start: function( event, ui ) {
+  	start: function(event, ui ) {
 //      console.log(ui.item.data('elid'));
   	},
-  	stop: function( event, ui ) {
+  	stop: function(event, ui ) {
   	}
   });
   $hj('ul.equipments').disableSelection();  
@@ -42,24 +42,24 @@ function setCanvasAction() {
   $hj('#tokenInterface .draggable' ).draggable({ revert: true });
   
   $hj('.droppable').droppable({
-  	drop: function( event, ui ) {
+  	drop: function(event, ui ) {
       var node = $hj(this);
       // Si on lache dans Trash (et qu'on vient de Canvas : TODO), faut supprimer
-      if ( node.hasClass('trash') ) {
+      if (node.hasClass('trash') ) {
         var id = ui.draggable.attr('id');
         canvasAction('remove', id, '', '');
       }
       // Si on lache dans Canvas
-      if ( node.attr('id')=='mapInterfaceBackground' ) {
+      if (node.attr('id')=='mapInterfaceBackground' ) {
         // Si on vient de TokenInterface, on créé une copie.
         var id = ui.draggable;
-        if ( id.hasClass('copyCreate') ) {
+        if (id.hasClass('copyCreate') ) {
 	        var pos = getMousePos(canvas, event);
 	        canvasAction('create', id.data('ref'), pos.x, pos.y);
         } else {
           var ratio = 1;
-          if ( $hj('#mapInterface').hasClass('sm') ) { ratio = 2; }
-          else if ( $hj('#mapInterface').hasClass('xs') ) { ratio = 4; }
+          if ($hj('#mapInterface').hasClass('sm') ) { ratio = 2; }
+          else if ($hj('#mapInterface').hasClass('xs') ) { ratio = 4; }
           
           var left = $hj('#'+id.attr('id'))[0].offsetLeft*ratio;
           var top = $hj('#'+id.attr('id'))[0].offsetTop*ratio;
@@ -81,7 +81,7 @@ function setWorkZoneHeight() {
 	var nbArticles = $hj('#survivorsMission article').length;
   var survivorsHeight = wallMission-h1-2*(nbArticles-1);
   var articleHeight = survivorsHeight/Math.max(1, nbArticles);
-  if ( articleHeight>140 ) { articleHeight = 140; }
+  if (articleHeight>140 ) { articleHeight = 140; }
 
   $hj('#survivorsMission article').each(function() {
     $hj(this).height(articleHeight);
@@ -105,15 +105,15 @@ function setWorkZoneHeight() {
   var nbRows = mapInterfaceBackground.data('rows');
   var nbCols = mapInterfaceBackground.data('cols');
 	var tileDim = 500;
-  while ( nbRows*tileDim > canvasMissionHeight && tileDim != 125 ) { tileDim /= 2; }
-  while ( nbCols*tileDim > canvasMissionWidth && tileDim != 125 ) { tileDim /= 2; }
+  while (nbRows*tileDim > canvasMissionHeight && tileDim != 125 ) { tileDim /= 2; }
+  while (nbCols*tileDim > canvasMissionWidth && tileDim != 125 ) { tileDim /= 2; }
   drawCanvas(mapInterfaceBackground, tileDim);
   var ratio = 1;
-  if ( $hj('#mapInterface').hasClass('sm') ) { ratio = 2; }
-  else if ( $hj('#mapInterface').hasClass('xs') ) { ratio = 4; }
+  if ($hj('#mapInterface').hasClass('sm') ) { ratio = 2; }
+  else if ($hj('#mapInterface').hasClass('xs') ) { ratio = 4; }
   $hj('#mapInterface').removeClass();
-  if ( tileDim == 250 ) { $hj('#mapInterface').addClass('sm'); ratio /= 2; }
-  else if ( tileDim == 125 ) { $hj('#mapInterface').addClass('xs'); ratio /= 4; }
+  if (tileDim == 250 ) { $hj('#mapInterface').addClass('sm'); ratio /= 2; }
+  else if (tileDim == 125 ) { $hj('#mapInterface').addClass('xs'); ratio /= 4; }
   $hj('#mapInterface > div.token').each(function() { $hj(this).css({top: $hj(this).position().top*ratio, left: $hj(this).position().left*ratio}); });
 }
 
@@ -124,7 +124,7 @@ function canvasAction(type, id, x, y) {
     data,
     function(response) {
 			console.log(response);
-      switch ( type ) {
+      switch (type ) {
         case 'remove' :
           $hj('#'+id).remove();
         break;
@@ -141,7 +141,7 @@ function canvasAction(type, id, x, y) {
 var tileDimRef = 0;
 function drawCanvas(mapInterfaceBackground, tileDim) {
   // Si on n'a pas besoin de redimensionner, on ne le fait pas.
-  if ( tileDimRef == tileDim ) { return; }
+  if (tileDimRef == tileDim ) { return; }
   tileDimRef = tileDim;
 	var canvas = $hj('#mapInterfaceBackground')[0];
   if (!canvas) { console.log("Impossible de récupérer le canvas"); return; }
@@ -176,13 +176,13 @@ function getMousePos(canvas, evt) {
 }
 
 function fillIdWithContent(anchor, content) {
-	if ( $hj('#'+anchor).length==1 ) {
+	if ($hj('#'+anchor).length==1 ) {
 		$hj('#'+anchor).html(content);
   }
 }
 
 function reloadIdElement(obj) {
-	for ( var prop in obj ) {
+	for (var prop in obj ) {
 		fillIdWithContent(prop, obj[prop]);
 	}	
 }
@@ -192,10 +192,10 @@ function setButtonAction() {
   //s_xps_and_inventory_
   $hj('button.showWhole').unbind().click(function() {
     var slid = $hj(this).find('i').data('slid');
-    if ( !$hj('.layoutRightMission').is(':visible') ) {
+    if (!$hj('.layoutRightMission').is(':visible') ) {
       $hj('#s_xps_and_inventory_'+slid).addClass('layoutRightMission');
       $hj('#layouts').toggleClass('showContent');
-    } else if ( !$hj('.layoutLeftMission').is(':visible') ) {
+    } else if (!$hj('.layoutLeftMission').is(':visible') ) {
       $hj('#s_xps_and_inventory_'+slid).addClass('layoutLeftMission');
     } else {
       $hj('.layoutLeftMission').removeClass('layoutLeftMission');
@@ -203,13 +203,13 @@ function setButtonAction() {
     }
   });
   $hj('i.closeLayout').unbind().click(function() {
-    if ( $hj(this).parent().hasClass('layoutRightMission') && $hj('.layoutLeftMission').is(':visible') ) {
+    if ($hj(this).parent().hasClass('layoutRightMission') && $hj('.layoutLeftMission').is(':visible') ) {
 	    $hj(this).parent().removeClass('layoutRightMission');
       $hj('.layoutLeftMission').removeClass('layoutLeftMission').addClass('layoutRightMission');
     } else {
 	    $hj(this).parent().removeClass('layoutLeftMission').removeClass('layoutRightMission');
     }
-    if ( !$hj('.layoutLeftMission').is(':visible') && !$hj('.layoutRightMission').is(':visible') ) {
+    if (!$hj('.layoutLeftMission').is(':visible') && !$hj('.layoutRightMission').is(':visible') ) {
       $hj('#layouts').toggleClass('showContent');
     }
   });
@@ -287,8 +287,8 @@ function buttonDrawCard() {
     var data = {};
 		var obj;
     var type = $hj(this).data('type');
-    var ajaxAction = ( type=='equipment' ? 'drawEquipment' : 'drawInvasion' );
-    if ( $hj(this).data('nbdraw')!=undefined ) {
+    var ajaxAction = (type=='equipment' ? 'drawEquipment' : 'drawInvasion' );
+    if ($hj(this).data('nbdraw')!=undefined ) {
 	    data = {'action': 'dealWithAjax', 'ajaxAction': ajaxAction, 'draw': $hj(this).data('nbdraw')};
     }
     $hj.post(
@@ -313,7 +313,7 @@ function buttonTrashCard() {
   $hj('.equipments i.glyphicon-trash, .invasions i.glyphicon-trash').unbind().click(function() {
     var type = $hj(this).parent().data('type');
     var data = {};
-    if ( type=='equipment' ) {
+    if (type=='equipment' ) {
       data = {'action': 'dealWithAjax', 'ajaxAction': 'trashEquipment', 'elid': $hj(this).parent().data('elid')};
     } else {
       data = {'action': 'dealWithAjax', 'ajaxAction': 'trashInvasion', 'ilid': $hj(this).parent().data('ilid')};
@@ -357,9 +357,9 @@ function buttonGrantXp() {
         reloadIdElement(obj);
         buttonGrantXp();
         var nb = $hj('#survivorsMission .xp li').length;
-        if ( nb <= 7 ) { $hj('#survivorsMission .xp').removeClass().addClass('xp bgBlue'); }
-        else if ( nb <= 19 ) { $hj('#survivorsMission .xp').removeClass().addClass('xp bgYellow'); }
-        else if ( nb <= 43 ) { $hj('#survivorsMission .xp').removeClass().addClass('xp bgOrange'); }
+        if (nb <= 7 ) { $hj('#survivorsMission .xp').removeClass().addClass('xp bgBlue'); }
+        else if (nb <= 19 ) { $hj('#survivorsMission .xp').removeClass().addClass('xp bgYellow'); }
+        else if (nb <= 43 ) { $hj('#survivorsMission .xp').removeClass().addClass('xp bgOrange'); }
         else { $hj('#survivorsMission .xp').removeClass().addClass('xp bgRed'); }
       } catch (e) {
         console.log("error: "+e);

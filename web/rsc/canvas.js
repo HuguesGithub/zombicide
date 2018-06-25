@@ -62,7 +62,7 @@ $hj(document).ready(function(){
 });
 
 function loadAndDisplayTokens(tokens, contextToken, cpt) {
-  if ( cpt == tokens.length ) { return; }
+  if (cpt == tokens.length ) { return; }
   var token = tokens[cpt];
   var image = new Image();
   image.src = '/wp-content/plugins/zomb/web/rsc/img/tokens/'+token.code+'.png';
@@ -73,12 +73,12 @@ function loadAndDisplayTokens(tokens, contextToken, cpt) {
 }
 
 function loadAndDisplaySurvivors(survivors, contextToken, cpt) {
-	if ( cpt == survivors.length ) { return; }
+	if (cpt == survivors.length ) { return; }
 	var survivor = survivors[cpt];
 	var image = new Image();
-	if ( survivor.type == 'survivor' ) {
+	if (survivor.type == 'survivor' ) {
 		image.src = '/wp-content/plugins/zomb/web/rsc/img/portraits/'+survivor.code+'.jpg';
-	} else if ( survivor.type == 'zombie' ) {
+	} else if (survivor.type == 'zombie' ) {
 		image.src = '/wp-content/plugins/zomb/web/rsc/img/tokens/'+survivor.code+'.png';
 	}
 	image.onload = function() {

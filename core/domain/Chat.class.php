@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe Chat
  * @author Hugues.
@@ -112,19 +112,19 @@ class Chat extends LocalDomain {
   
   public function getChatLine($userId) {
     $strChats  = '<li class="msg-';
-    if ( $this->getSenderId()==$userId ) { $strChats .= 'right'; }
-    elseif ( $this->getSenderId()==0 ) { $strChats .= 'technique'; }
+    if ($this->getSenderId()==$userId ) { $strChats .= 'right'; }
+    elseif ($this->getSenderId()==0 ) { $strChats .= 'technique'; }
     else { $strChats .= 'left'; }
     $strChats .= '" data-timestamp="'.$this->timestamp.'"><div>';
-    if ( $this->getSenderId()!=$userId ) {
+    if ($this->getSenderId()!=$userId ) {
       $strChats .= '<span class="author" data-displayname="'.$this->getSenderDisplayName().'">'.$this->getSenderDisplayName().'</span> ';
     }
     $arr1 = explode(' ', $this->timestamp);
     list($Y, $m, $d) = explode('-', $arr1[0]);
     list($H, $i, ) = explode(':', $arr1[1]);
     list($cY, $cm, $cd) = explode('-', date('Y-m-d'));
-    if ( $Y!=$cY ) { $strTimestamp = $d.'/'.$m.'/'.$Y.' '; }
-    elseif ( $m!=$cm || $d!=$cd ) { $strTimestamp = $d.'/'.$m.' '; }
+    if ($Y!=$cY ) { $strTimestamp = $d.'/'.$m.'/'.$Y.' '; }
+    elseif ($m!=$cm || $d!=$cd ) { $strTimestamp = $d.'/'.$m.' '; }
     $strTimestamp .= $H.':'.$i;
     return $strChats.'<span class="timestamp">'.$strTimestamp.'</span></div>'.$this->getTexte().'</li>';
   }

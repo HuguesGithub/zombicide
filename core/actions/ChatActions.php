@@ -1,6 +1,6 @@
 <?php
-if ( !defined( 'ABSPATH') ) {
-  die( 'Forbidden' );
+if (!defined('ABSPATH')) {
+  die('Forbidden');
 }
 /**
  * ChatActions
@@ -16,8 +16,8 @@ class ChatActions extends LocalActions {
     $Data = $this->User->data;
     $this->userId = $Data->ID;
     $this->displayName = $Data->display_name;
-    $arrParams = array(LIVEID=>'0', 'text'=>'', TIMESTAMP=>'');
-    foreach ( $arrParams as $key => $param ) {
+    $arrParams = array(self::CST_LIVEID=>'0', self::CST_TEXTE=>'', self::CST_TIMESTAMP=>'');
+    foreach ($arrParams as $key => $param ) {
       $this->{$key} = isset($post[$key]) ? $post[$key] : $param;
     }
     $services = array('Chat', 'Live');
@@ -37,16 +37,20 @@ class ChatActions extends LocalActions {
    */
   public function dealWithPostChat() {
     $text = trim($this->text);
-    if ( $text!='' ) {
+    if ($text!='' ) {
       $arrCmds = explode(' ', $text);
-      switch ( $arrCmds[0] ) {
+      switch ($arrCmds[0] ) {
         case '/join'   : $returned = $this->joinNewLive($arrCmds[1]); break;
         case '/exit'   : $returned = $this->exitLive(); break;
         case '/help'   : $returned = $this->helpLive(); break;
         case '/invite' : $returned = $this->inviteUser($arrCmds[1]); break;
         case '/clean'  : $returned = $this->cleanChat(); break;
         default :
-          $arr = array(LIVEID=>$this->liveId, 'senderId'=>$this->userId, TEXTE=>stripslashes($text), TIMESTAMP=>date(FORMATDATE));
+          $arr = array(
+            self::CST_LIVEID=>$this->liveId,
+            'senderId'=>$this->userId,
+            self::CST_TEXTE=>stripslashes($text),
+            self::CST_TIMESTAMP=>date(self::CST_FORMATDATE));
           $this->postChat($arr);
           $returned = $this->getChatContent(); 
         break;
@@ -57,21 +61,38 @@ class ChatActions extends LocalActions {
     return $returned;
   }
   private function cleanChat() {
-    $arr = array(SENDTOID=>$this->userId, TEXTE=>'Vous avez vidé l\'interface.', TIMESTAMP=>date(FORMATDATE));
+    $arr = array(
+      self::CST_SENDTOID=>$this->userId,
+      self::CST_TEXTE=>'Vous avez vidé l\'interface.', 
+      self::CST_TIMESTAMP=>date(FORMATDATE));
     $this->postChat($arr);
     return $this->getChatContent();
   }
   private function inviteUser($displayName='') {
     $WpUser = WpUser::getWpUserBy('user_login', $displayName);
-    if ( $WpUser->getID()=='' ) {
-      $arr = array(SENDTOID=>$this->userId, TEXTE=>'Cet utilisateur <b>'.$displayName.'</b> n\'existe pas.', TIMESTAMP=>date(FORMATDATE));
+    if ($WpUser->getID()=='' ) {
+      $arr = array(
+        self::CST_SENDTOID=>$this->userId,
+      	self::CST_TEXTE=>'Cet utilisateur <b>'.$displayName.'</b> n\'existe pas.',
+      	self::CST_TIMESTAMP=>date(self::CST_FORMATDATE),
+      );
       $this->postChat($arr);
       return $this->getChatContent();
     }
     $Live = $this->LiveServices->select(__FILE__, __LINE__, $this->liveId);
-    $arr = array(SENDTOID=>$WpUser->getID(), 'senderId'=>$this->userId, TEXTE=>'Rejoins moi sur l\'espace <span class="keyDeck" data-keydeck="'.$Live->getDeckKey().'">'.$Live->getDeckKey().'</span>', TIMESTAMP=>date(FORMATDATE));
+    $deckKey = $Live->getDeckKey();
+    $arr = array(
+      self::CST_SENDTOID=>$WpUser->getID(),
+      'senderId'=>$this->userId,
+      self::CST_TEXTE=>'Rejoins moi sur l\'espace <span class="keyDeck" data-keydeck="'.$deckKey.'">'.$deckKey.'</span>',
+      self::CST_TIMESTAMP=>date(self::CST_FORMATDATE),
+    );
     $this->postChat($arr);
-    $arr = array(SENDTOID=>$this->userId, TEXTE=>'Invitation envoyée à <span class="author" data-displayName="'.$displayName.'">'.$displayName.'</span>', TIMESTAMP=>date(FORMATDATE));
+    $arr = array(
+      self::CST_SENDTOID=>$this->userId,
+      self::CST_TEXTE=>'Invitation envoyée à <span class="author" data-displayName="'.$displayName.'">'.$displayName.'</span>',
+      self::CST_TIMESTAMP=>date(self::CST_FORMATDATE),
+    );
     $this->postChat($arr);
     return $this->getChatContent();
   }
@@ -82,29 +103,44 @@ class ChatActions extends LocalActions {
     $text .= '<br><b>/help</b> Affiche cette aide.';
     $text .= '<br><b>/invite xxxxx</b> Envoie une invitation à rejoindre l\'espace courant.';
     $text .= '<br><b>/join xxxxx</b> Rejoindre un espace dédié.';
-    $arr = array(SENDTOID=>$this->userId, TEXTE=>$text, TIMESTAMP=>date(FORMATDATE));
+    $arr = array(self::CST_SENDTOID=>$this->userId, self::CST_TEXTE=>$text, self::CST_TIMESTAMP=>date(self::CST_FORMATDATE));
     $this->postChat($arr);
     return $this->getChatContent();
   }
   private function exitLive() {
-    $arr = array(LIVEID=>$this->liveId, TEXTE=>$this->displayName.' a quitté l\'espace de conversation.', TIMESTAMP=>date(FORMATDATE));
+    $arr = array(
+      self::CST_LIVEID=>$this->liveId,
+      self::CST_TEXTE=>$this->displayName.' a quitté l\'espace de conversation.',
+      self::CST_TIMESTAMP=>date(self::CST_FORMATDATE),
+    );
     $this->postChat($arr);
-    unset($_SESSION[DECKKEY]);
+    unset($_SESSION[self::CST_DECKKEY]);
     $this->liveId = 0;
-    $arr = array(LIVEID=>$this->liveId, SENDTOID=>$this->userId, TEXTE=>'Vous êtes de retour sur le canal par défaut', TIMESTAMP=>date(FORMATDATE));
+    $arr = array(
+      self::CST_LIVEID=>$this->liveId,
+      self::CST_SENDTOID=>$this->userId,
+      self::CST_TEXTE=>'Vous êtes de retour sur le canal par défaut',
+      self::CST_TIMESTAMP=>date(self::CST_FORMATDATE),
+    );
     $this->postChat($arr);
-    return '{'.$this->getChatContent(FALSE).', "header-ul-chat-saisie":'.json_encode('<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>').'}';
+    $returned = '{'.$this->getChatContent(FALSE).', "header-ul-chat-saisie":';
+    return $returned.json_encode('<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>').'}';
   }
   private function joinNewLive($deckKey='') {
     $LiveServices = FactoryServices::getLiveServices();
-    $Lives = $LiveServices->getLivesWithFilters(__FILE__, __LINE__, array(DECKKEY=>$deckKey));
-    if ( empty($Lives) ) { return $this->getChatContent(); }
+    $Lives = $LiveServices->getLivesWithFilters(__FILE__, __LINE__, array(self::CST_DECKKEY=>$deckKey));
+    if (empty($Lives) ) { return $this->getChatContent(); }
     $Live = array_shift($Lives);
     $this->liveId = $Live->getId();
-    $arr = array(LIVEID=>$this->liveId, TEXTE=>$this->displayName.' a rejoint l\'espace de conversation.', TIMESTAMP=>date(FORMATDATE));
+    $arr = array(
+      self::CST_LIVEID=>$this->liveId,
+      self::CST_TEXTE=>$this->displayName.' a rejoint l\'espace de conversation.',
+      self::CST_TIMESTAMP=>date(self::CST_FORMATDATE),
+    );
     $this->postChat($arr);
-    $_SESSION[DECKKEY] = $deckKey;
-    return '{'.$this->getChatContent(FALSE).', "header-ul-chat-saisie":'.json_encode('<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$this->liveId.'">'.$deckKey.'</a></li>').'}';
+    $_SESSION[self::CST_DECKKEY] = $deckKey;
+    $returned = '{'.$this->getChatContent(FALSE).', "header-ul-chat-saisie":';
+    return $returned.json_encode('<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$this->liveId.'">'.$deckKey.'</a></li>').'}';
   }
   private function postChat($arr) {
     $Chat = new Chat($arr);
@@ -124,15 +160,15 @@ class ChatActions extends LocalActions {
    * @return string
    */
   public function getChatContent($directReturn=TRUE) {
-    $arr = array(LIVEID=>$this->liveId, SENDTOID=>$this->userId, TIMESTAMP=>$this->timestamp);
+    $arr = array(self::CST_LIVEID=>$this->liveId, self::CST_SENDTOID=>$this->userId, self::CST_TIMESTAMP=>$this->timestamp);
     $Chats = $this->ChatServices->getChatsWithFilters(__FILE__, __LINE__, $arr);
     $strChats = '';
-    if ( !empty($Chats) ) {
-      foreach ( $Chats as $Chat ) {
+    if (!empty($Chats) ) {
+      foreach ($Chats as $Chat ) {
         $strChats .= $Chat->getChatLine($this->userId);
       }
     }
-    return ( $directReturn ? '{"online-chat-content":'.json_encode($strChats).'}' : '"online-chat-content":'.json_encode($strChats) );
+    return ($directReturn ? '{"online-chat-content":'.json_encode($strChats).'}' : '"online-chat-content":'.json_encode($strChats) );
   }  
 }
 ?>

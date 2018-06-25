@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe RuleServices
  * @author Hugues.
@@ -17,9 +17,9 @@ class RuleServices extends LocalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    $arrParams[] = ( isset($arrFilters[CST_SETTING]) ? $arrFilters[CST_SETTING] : '%');
-    $arrParams[] = ( isset($arrFilters['code']) ? $arrFilters['code'] : '%');
-    $arrParams[] = ( isset($arrFilters[CST_DESCRIPTION]) ? $arrFilters[CST_DESCRIPTION] : '%');
+    $arrParams[] = (isset($arrFilters[CST_SETTING]) ? $arrFilters[CST_SETTING] : '%');
+    $arrParams[] = (isset($arrFilters['code']) ? $arrFilters['code'] : '%');
+    $arrParams[] = (isset($arrFilters[CST_DESCRIPTION]) ? $arrFilters[CST_DESCRIPTION] : '%');
     return $arrParams;
   }
   /**
@@ -48,7 +48,7 @@ class RuleServices extends LocalServices {
   public function getRuleSelect($file, $line, $value='', $prefix='id', $classe=CST_FORMCONTROL, $multiple=FALSE, $defaultLabel='') {
     $Rules = $this->getRulesWithFilters($file, $line);
     $arrSetLabels = array();
-    foreach ( $Rules as $Rule ) {
+    foreach ($Rules as $Rule ) {
       $arrSetLabels[$Rule->getId()] = $Rule->getCode();
     }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'ruleId', $value, $defaultLabel, $classe, $multiple);
@@ -66,7 +66,7 @@ class RuleServices extends LocalServices {
   public function getRuleNoSettingSelect($file, $line, $value='', $prefix='id', $classe=CST_FORMCONTROL, $multiple=FALSE, $defaultLabel='---') {
     $Rules = $this->getRulesWithFilters($file, $line, array(self::CST_SETTING=>0));
     $arrSetLabels = array();
-    foreach ( $Rules as $Rule ) {
+    foreach ($Rules as $Rule ) {
       $arrSetLabels[$Rule->getId()] = $Rule->getCode();
     }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'ruleId', $value, $defaultLabel, $classe, $multiple);
@@ -84,7 +84,7 @@ class RuleServices extends LocalServices {
   public function getRuleSettingSelect($file, $line, $value='', $prefix='id', $classe=CST_FORMCONTROL, $multiple=FALSE, $defaultLabel='---') {
     $Rules = $this->getRulesWithFilters($file, $line, array(self::CST_SETTING=>1));
     $arrSetLabels = array();
-    foreach ( $Rules as $Rule ) {
+    foreach ($Rules as $Rule ) {
       $arrSetLabels[$Rule->getId()] = $Rule->getCode();
     }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'settingId', $value, $defaultLabel, $classe, $multiple);

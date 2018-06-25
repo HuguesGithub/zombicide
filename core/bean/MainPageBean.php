@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe MainPageBean
  * @author Hugues.
@@ -32,9 +32,9 @@ class MainPageBean implements iConstants {
    * @param array $services
    */
   public function __construct($services=array()) {
-    if ( !empty($services) ) {
-      foreach ( $services as $service ) {
-        switch ( $service ) {
+    if (!empty($services) ) {
+      foreach ($services as $service ) {
+        switch ($service ) {
           case 'Duration'      : $this->DurationServices = FactoryServices::getDurationServices(); break;
           case 'Equipment'        : $this->EquipmentServices = FactoryServices::getEquipmentServices(); break;
           case 'EquipmentExpansion'        : $this->EquipmentExpansionServices = FactoryServices::getEquipmentExpansionServices(); break;
@@ -83,24 +83,24 @@ class MainPageBean implements iConstants {
    * @return string
    */
   public function displayPublicHeader() {
-    if ( $this->showHeaderAndFooter ) {
+    if ($this->showHeaderAndFooter ) {
       $arrMenuDisplay  = array();
       $children = $this->WpPostServices->getChildPagesByParentId(1022);
-      if ( !empty($children) ) {
-        foreach ( $children as $WpPost ) {
+      if (!empty($children) ) {
+        foreach ($children as $WpPost ) {
           $cpt = 0;
           $strMenuDisplay = '<span>'.$WpPost->getPostTitle().'</span><ul>';
           $grandChildren = $this->WpPostServices->getChildPagesByParentId($WpPost->getID());
-          if ( !empty($grandChildren) ) {
-            foreach ( $grandChildren as $WpPost ) {
-              if ( $WpPost->getPostMeta('selected') ) {
+          if (!empty($grandChildren) ) {
+            foreach ($grandChildren as $WpPost ) {
+              if ($WpPost->getPostMeta('selected') ) {
                 $strMenuDisplay .= '<li><a href="'.$WpPost->getGuid().'">'.$WpPost->getPostTitle().'</a></li>';
                 $cpt++;
               }
             }
           }
           $strMenuDisplay .= '</ul>';
-          if ( $cpt > 0 ) {
+          if ($cpt > 0 ) {
             $arrMenuDisplay[] = $strMenuDisplay;
           }
         }
@@ -133,11 +133,11 @@ class MainPageBean implements iConstants {
    * @return Bean
    */
   public static function getPageBean() {
-    if ( is_front_page() ) {
+    if (is_front_page() ) {
       $returned = new HomePageBean();
     } else {
       $post = get_post();
-      if ( empty($post) ) {
+      if (empty($post) ) {
         // On a un probl�me (ou pas). On pourrait �tre sur une page avec des variables, mais qui n'est pas prise en compte.
         $slug = str_replace('/', '', $_SERVER['REDIRECT_SCRIPT_URL']);
         $args = array(
@@ -148,9 +148,9 @@ class MainPageBean implements iConstants {
         $my_posts = get_posts($args);
         $post = array_shift($my_posts);
       }
-      if ( $post->post_type == 'page' ) {
+      if ($post->post_type == 'page' ) {
         $returned = new PagePageBean($post);
-      } elseif ( $post->post_type == 'post' ) {
+      } elseif ($post->post_type == 'post' ) {
         $returned = new PostPageBean($post);
       } else {
         $returned = new Error404PageBean();
@@ -183,8 +183,8 @@ class MainPageBean implements iConstants {
    * @return mixed
    */
   public function initVar($id, $default='') {
-    if ( isset($_POST[$id]) ) { return $_POST[$id]; }
-    if ( isset($_GET[$id]) ) { return $_GET[$id]; }
+    if (isset($_POST[$id]) ) { return $_POST[$id]; }
+    if (isset($_GET[$id]) ) { return $_GET[$id]; }
     return $default;
   }
   

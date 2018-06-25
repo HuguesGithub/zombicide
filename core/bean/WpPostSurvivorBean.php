@@ -50,7 +50,7 @@ class WpPostSurvivorBean extends MainPageBean {
       $Survivor->isUltimate() ? 'Oui' : 'Non',
     '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''
     );
-    $str = file_get_contents( PLUGIN_PATH.'web/pages/public/fragments/article-survivor-extract.php' );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/article-survivor-extract.php' );
     return vsprintf($str, $args);
   }
   /**

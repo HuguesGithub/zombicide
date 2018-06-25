@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe DurationServices
  * @author Hugues.
@@ -17,8 +17,8 @@ class DurationServices extends LocalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    $arrParams[] = ( isset($arrFilters[CST_MINDURATION]) ? $arrFilters[CST_MINDURATION] : '%' );
-    $arrParams[] = ( isset($arrFilters['maxDuration']) ? $arrFilters['maxDuration'] : '%' );
+    $arrParams[] = (isset($arrFilters[CST_MINDURATION]) ? $arrFilters[CST_MINDURATION] : '%' );
+    $arrParams[] = (isset($arrFilters['maxDuration']) ? $arrFilters['maxDuration'] : '%' );
     return $arrParams;
   }
   /**
@@ -47,7 +47,7 @@ class DurationServices extends LocalServices {
   public function getDurationsSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultValue='') {
     $Durations = $this->getDurationsWithFilters($file, $line, array(), CST_MINDURATION, 'asc');
     $arrSetLabels = array();
-    foreach ( $Durations as $Duration ) {
+    foreach ($Durations as $Duration ) {
       $arrSetLabels[$Duration->getId()] = $Duration->getStrDuree();
     }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.CST_DURATIONID, $value, $defaultValue, $classe, $multiple);

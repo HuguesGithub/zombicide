@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe Expansion
  * @author Hugues.
@@ -96,12 +96,12 @@ class Expansion extends LocalDomain {
   public static function convertElementFromPost($row) {
     $Obj = new Expansion();
     $vars = get_class_vars('Expansion');
-    if ( !empty($vars) ) {
-      foreach ( $vars as $key=>$value ) {
+    if (!empty($vars) ) {
+      foreach ($vars as $key=>$value ) {
         $Obj->setField($key, $row[$key]);
       }
-      if ( $row['officielle']=='on' ) { $Obj->setField('officielle', 1); }
-      if ( $row['active']=='on' ) { $Obj->setField('active', 1); }
+      if ($row['officielle']=='on' ) { $Obj->setField('officielle', 1); }
+      if ($row['active']=='on' ) { $Obj->setField('active', 1); }
     }
     return $Obj;
   }

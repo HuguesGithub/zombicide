@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH') ) { die('Forbidden' ); }
 /**
  * Classe SurvivorsPageBean
  * @author Hugues.
@@ -28,7 +28,7 @@ class SurvivorsPageBean extends PagePageBean {
     shuffle($arrValues);
     $nb = 0;
     $strReturned  = '';
-    while ( !empty($arrValues) && $nb<$nbMax ) {
+    while (!empty($arrValues) && $nb<$nbMax ) {
       $value = array_shift($arrValues);
       $Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $value);
       $Bean = new SurvivorBean($Survivor);
@@ -44,10 +44,10 @@ class SurvivorsPageBean extends PagePageBean {
   public static function staticGetSurvivorsSortedAndFiltered($post) {
     $Bean = new SurvivorsPageBean();
     $arrFilters = array();
-    if ( $post['filters']!='' ) {
+    if ($post['filters']!='' ) {
       $arrParams = explode('&', $post['filters']);
-      if ( !empty($arrParams) ) {
-        foreach ( $arrParams as $arrParam ) {
+      if (!empty($arrParams) ) {
+        foreach ($arrParams as $arrParam ) {
           list($key, $value) = explode('=', $arrParam);
           $arrFilters[$key]= $value;
         }
@@ -73,14 +73,14 @@ class SurvivorsPageBean extends PagePageBean {
     $nbPages = ceil($nbElements/$nbPerPage);
     $displayedSurvivors = array_slice($Survivors, $nbPerPage*($curPage-1), $nbPerPage);
     $strBody = '';
-    if ( !empty($displayedSurvivors) ) {
-      foreach ( $displayedSurvivors as $Survivor ) {
+    if (!empty($displayedSurvivors) ) {
+      foreach ($displayedSurvivors as $Survivor ) {
         $SurvivorBean = new SurvivorBean($Survivor);
         $strBody .= $SurvivorBean->getRowForSurvivorsPage();
       }
     }
     $strPagination = '';
-    for ( $i=1; $i<=$nbPages; $i++ ) {
+    for ($i=1; $i<=$nbPages; $i++ ) {
       $strPagination .= '<li class="page-item'.($i==$curPage?' disabled':'').'"><a class="page-link ';
       $strPagination .= 'ajaxAction" href="#" data-paged="'.$i.'" data-ajaxaction="paged">'.$i.'</a></li>';
     }
@@ -107,7 +107,7 @@ class SurvivorsPageBean extends PagePageBean {
       // Nombre de pages - 12
       $nbPages,
     );
-    $str = file_get_contents( PLUGIN_PATH.'web/pages/public/public-page-survivors.php' );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-survivors.php' );
     return vsprintf($str, $args);
   }
   

@@ -7,34 +7,34 @@ if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
  * @since 1.0.00
  */
 class SkillServices extends LocalServices {
-	/**
-	 * L'objet Dao pour faire les requêtes
-	 * @var SkillDaoImpl $Dao
-	 */
-	protected $Dao;
-	
-	public function __construct() {	$this->Dao = new SkillDaoImpl(); }
+  /**
+   * L'objet Dao pour faire les requêtes
+   * @var SkillDaoImpl $Dao
+   */
+  protected $Dao;
+  
+  public function __construct() {  $this->Dao = new SkillDaoImpl(); }
 
-	private function buildFilters($arrFilters) {
-		$arrParams = array();
-		array_push($arrParams, (!empty($arrFilters['code']) && !is_array($arrFilters['code'])) ? $arrFilters['code'] : '%');
-		array_push($arrParams, (!empty($arrFilters['name']) && !is_array($arrFilters['name'])) ? '%'.$arrFilters['name'].'%' : '%');
-		array_push($arrParams, (!empty($arrFilters[CST_DESCRIPTION]) && !is_array($arrFilters[CST_DESCRIPTION])) ? '%'.$arrFilters[CST_DESCRIPTION].'%' : '%');
-		return $arrParams;
-	}
-	/**
-	 * @param string $file
-	 * @param string $line
-	 * @param array $arrFilters
-	 * @param string $orderby
-	 * @param string $order
-	 * @return array
-	 */
-	public function getSkillsWithFilters($file, $line, $arrFilters=array(), $orderby='name', $order='asc') {
-		$arrParams = $this->buildOrderAndLimit($orderby, $order);
-		$arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
-		return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
-	}
+  private function buildFilters($arrFilters) {
+    $arrParams = array();
+    array_push($arrParams, (!empty($arrFilters['code']) && !is_array($arrFilters['code'])) ? $arrFilters['code'] : '%');
+    array_push($arrParams, (!empty($arrFilters['name']) && !is_array($arrFilters['name'])) ? '%'.$arrFilters['name'].'%' : '%');
+    array_push($arrParams, (!empty($arrFilters[CST_DESCRIPTION]) && !is_array($arrFilters[CST_DESCRIPTION])) ? '%'.$arrFilters[CST_DESCRIPTION].'%' : '%');
+    return $arrParams;
+  }
+  /**
+   * @param string $file
+   * @param string $line
+   * @param array $arrFilters
+   * @param string $orderby
+   * @param string $order
+   * @return array
+   */
+  public function getSkillsWithFilters($file, $line, $arrFilters=array(), $orderby='name', $order='asc') {
+    $arrParams = $this->buildOrderAndLimit($orderby, $order);
+    $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
+    return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
+  }
 
   
 }

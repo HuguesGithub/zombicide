@@ -7,44 +7,44 @@ if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
  * @since 1.0.00
  */
 class PlayerServices extends LocalServices {
-	/**
-	 * L'objet Dao pour faire les requêtes
-	 * @var PlayerDaoImpl $Dao
-	 */
-	protected $Dao;
-	
-	public function __construct() { $this->Dao = new PlayerDaoImpl(); }
+  /**
+   * L'objet Dao pour faire les requêtes
+   * @var PlayerDaoImpl $Dao
+   */
+  protected $Dao;
+  
+  public function __construct() { $this->Dao = new PlayerDaoImpl(); }
 
-	/**
-	 * @param string $file
-	 * @param string $line
-	 * @param array $arrFilters
-	 * @param string $orderby
-	 * @param string $order
-	 * @return array
-	 */
-	public function getPlayersWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc') {
-		$arrParams = $this->buildOrderAndLimit($orderby, $order);
-		return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
-	}
-	/**
-	 * @param string $file
-	 * @param string $line
-	 * @param string $value
-	 * @param string $prefix
-	 * @param string $classe
-	 * @param bool $multiple
-	 * @param string $defaultValue
-	 * @return string
-	 */
-	public function getNbPlayersSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultValue='') {
-		$Players = $this->getPlayersWithFilters($file, $line, array(), 'name', 'asc');
-		$arrSetLabels = array();
-		foreach ( $Players as $Player ) {
-			$arrSetLabels[$Player->getId()] = $Player->getNbJoueurs();
-		}
-		return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'playerId', $value, $defaultValue, $classe, $multiple);
-	}
+  /**
+   * @param string $file
+   * @param string $line
+   * @param array $arrFilters
+   * @param string $orderby
+   * @param string $order
+   * @return array
+   */
+  public function getPlayersWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc') {
+    $arrParams = $this->buildOrderAndLimit($orderby, $order);
+    return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
+  }
+  /**
+   * @param string $file
+   * @param string $line
+   * @param string $value
+   * @param string $prefix
+   * @param string $classe
+   * @param bool $multiple
+   * @param string $defaultValue
+   * @return string
+   */
+  public function getNbPlayersSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultValue='') {
+    $Players = $this->getPlayersWithFilters($file, $line, array(), 'name', 'asc');
+    $arrSetLabels = array();
+    foreach ( $Players as $Player ) {
+      $arrSetLabels[$Player->getId()] = $Player->getNbJoueurs();
+    }
+    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'playerId', $value, $defaultValue, $classe, $multiple);
+  }
 
   
 }

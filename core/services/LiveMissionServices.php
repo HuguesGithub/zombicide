@@ -7,26 +7,26 @@ if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
  * @since 1.0.00
  */
 class LiveMissionServices extends LocalServices {
-    /**
-     * L'objet Dao pour faire les requêtes
-     * @var DurationDaoImpl $Dao
-     */
-    protected $Dao;
-    
-    public function __construct() { $this->Dao = new LiveMissionDaoImpl(); }
+  /**
+   * L'objet Dao pour faire les requêtes
+   * @var DurationDaoImpl $Dao
+   */
+  protected $Dao;
+  
+  public function __construct() { $this->Dao = new LiveMissionDaoImpl(); }
 
-    /**
-     * @param string $file
-     * @param string $line
-     * @param array $arrFilters
-     * @param string $orderby
-     * @param string $order
-     * @return array
-     */
-    public function getLiveMissionsWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc') {
-        $arrParams = $this->buildOrderAndLimit($orderby, $order);
-        return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
-    }
-    
+  /**
+   * @param string $file
+   * @param string $line
+   * @param array $arrFilters
+   * @param string $orderby
+   * @param string $order
+   * @return array
+   */
+  public function getLiveMissionsWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc') {
+    $arrParams = $this->buildOrderAndLimit($orderby, $order);
+    return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
+  }
+  
 }
 ?>

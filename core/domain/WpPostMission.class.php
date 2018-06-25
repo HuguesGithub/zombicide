@@ -8,18 +8,18 @@ if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
  */
 class WpPostMission extends WpPost {
   
-	/**
-	 * @param array $attributes
-	 */
-	public function __construct($attributes=array()) {
-		parent::__construct($attributes);
-	}
-	/**
-	 * @return int
-	 */
-	public function getIdMission() {
-		return $this->getPostMeta('missionId');
-	}
+  /**
+   * @param array $attributes
+   */
+  public function __construct($attributes=array()) {
+    parent::__construct($attributes);
+  }
+  /**
+   * @return int
+   */
+  public function getIdMission() {
+    return $this->getPostMeta('missionId');
+  }
   
 }
 ?>

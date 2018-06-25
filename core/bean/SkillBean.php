@@ -8,29 +8,29 @@ if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
  */
 class SkillBean extends MainPageBean {
 
-	public function __construct($Skill='') {
-		$services = array('Skill');
-		parent::__construct($services);
-		if ( $Skill=='' ) { $Skill = new Skill(); }
-		$this->Skill = $Skill;
-	}
+  public function __construct($Skill='') {
+    $services = array('Skill');
+    parent::__construct($services);
+    if ( $Skill=='' ) { $Skill = new Skill(); }
+    $this->Skill = $Skill;
+  }
   
-	/**
-	 * @return string
-	 */	
-	public function getRowForAdminPage() {
-        return '';
-    }
-	/**
-	 * @return string
-	 */	
-	public function getRowForSkillsPage() {
-		$Skill = $this->Skill;
-		$strRow  = '<tr>';
-		$strRow .= '<td style="white-space: nowrap;">'.$Skill->getName().'</td>';
-		$strRow .= '<td>'.$Skill->getDescription().'</td>';
-		return $strRow.'</tr>';
-	}
+  /**
+   * @return string
+   */  
+  public function getRowForAdminPage() {
+    return '';
+  }
+  /**
+   * @return string
+   */  
+  public function getRowForSkillsPage() {
+    $Skill = $this->Skill;
+    $strRow  = '<tr>';
+    $strRow .= '<td style="white-space: nowrap;">'.$Skill->getName().'</td>';
+    $strRow .= '<td>'.$Skill->getDescription().'</td>';
+    return $strRow.'</tr>';
+  }
   
 }
 ?>

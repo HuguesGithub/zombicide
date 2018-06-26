@@ -15,8 +15,7 @@ class LocalDomain extends GlobalDomain implements iConstants
    * @param array $attributes
    * @param array $services
    */
-  public function __construct($attributes=array(), $services=array())
-  {
+  public function __construct($attributes=array(), $services=array()) {
     parent::__construct($attributes);
     if (!empty($services)) {
       foreach ($services as $service) {
@@ -87,7 +86,7 @@ class LocalDomain extends GlobalDomain implements iConstants
           case 'Rule'            :
           	$this->RuleServices = FactoryServices::getRuleServices();
           break;
-          case 'Skill'          : 
+          case 'Skill'          :
           	$this->SkillServices = FactoryServices::getSkillServices();
           break;
           case 'Spawn'        :
@@ -125,8 +124,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Equipment
    */
-  public function getEquipment()
-  {
+  public function getEquipment() {
     if ($this->Equipment == null) {
       $this->Equipment = $this->EquipmentServices->select(__FILE__, __LINE__, $this->equipmentId);
     }
@@ -135,8 +133,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return EquipmentExpansion
    */
-  public function getEquipmentExpansion()
-  {
+  public function getEquipmentExpansion() {
     if ($this->EquipmentExpansion == null) {
       $this->EquipmentExpansion = $this->EquipmentExpansionServices->select(__FILE__, __LINE__, $this->equipmentExpansionId);
     }
@@ -145,8 +142,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Expansion
    */
-  public function getExpansion()
-  {
+  public function getExpansion() {
     if ($this->Expansion == null) {
       $this->Expansion = $this->getExpansionFromGlobal($this->expansionId);
     }
@@ -155,8 +151,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Invasion
    */
-  public function getInvasion()
-  {
+  public function getInvasion() {
     if ($this->Invasion == null) {
       $this->Invasion = $this->InvasionServices->select(__FILE__, __LINE__, $this->invasionId);
     }
@@ -165,8 +160,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Mission
    */
-  public function getMission()
-  {
+  public function getMission() {
     if ($this->Mission == null) {
       $this->Mission = $this->MissionServices->select(__FILE__, __LINE__, $this->missionId);
     }
@@ -175,8 +169,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Duration
    */
-  public function getDuration()
-  {
+  public function getDuration() {
     if ($this->Duration == null) {
       $this->Duration = $this->DurationServices->select(__FILE__, __LINE__, $this->durationId);
     }
@@ -185,8 +178,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Keyword
    */
-  public function getKeyword()
-  {
+  public function getKeyword() {
     if ($this->Keyword == null) {
       $this->Keyword = $this->KeywordServices->select(__FILE__, __LINE__, $this->keywordId);
     }
@@ -195,8 +187,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Level
    */
-  public function getLevel()
-  {
+  public function getLevel() {
     if ($this->Level == null) {
       $this->Level = $this->LevelServices->select(__FILE__, __LINE__, $this->levelId);
     }
@@ -205,8 +196,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Player
    */
-  public function getPlayer()
-  {
+  public function getPlayer() {
     if ($this->Player == null) {
       $this->Player = $this->PlayerServices->select(__FILE__, __LINE__, $this->playerId);
     }
@@ -215,8 +205,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Origine
    */
-  public function getOrigine()
-  {
+  public function getOrigine() {
     if ($this->Origine==null) {
       $this->Origine = $this->getOrigineFromGlobal($this->origineId);
     }
@@ -225,8 +214,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Objective
    */
-  public function getObjective()
-  {
+  public function getObjective() {
     if ($this->Objective==null) {
       $this->Objective = $this->getObjectiveFromGlobal($this->objectiveId);
     }
@@ -235,8 +223,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Rule
    */
-  public function getRule()
-  {
+  public function getRule() {
     if ($this->Rule==null) {
      $this->Rule = $this->getRuleFromGlobal($this->ruleId);
     }
@@ -245,8 +232,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Skill
    */
-  public function getSkill()
-  {
+  public function getSkill() {
     if ($this->Skill == null) {
       $this->Skill = $this->SkillServices->select(__FILE__, __LINE__, $this->skillId);
     }
@@ -255,8 +241,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return SpawnCard
    */
-  public function getSpawnCard()
-  {
+  public function getSpawnCard() {
     if ($this->SpawnCard == null) {
       $this->SpawnCard = $this->SpawnServices->select(__FILE__, __LINE__, $this->spawnCardId);
     }
@@ -265,8 +250,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Survivor
    */
-  public function getSurvivor()
-  {
+  public function getSurvivor() {
     if ($this->Survivor == null) {
       $this->Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $this->survivorId);
     }
@@ -275,8 +259,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Tile
    */
-  public function getTile()
-  {
+  public function getTile() {
     if ($this->Tile==null) {
       $this->Tile = $this->TileServices->select(__FILE__, __LINE__, $this->tileId);
     }
@@ -285,8 +268,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Token
    */
-  public function getToken()
-  {
+  public function getToken() {
     if ($this->Token==null) {
       $this->Token = $this->TokenServices->select(__FILE__, __LINE__, $this->tokenId);
     }
@@ -295,8 +277,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return WeaponProfile
    */
-  public function getWeaponProfile()
-  {
+  public function getWeaponProfile() {
     if ($this->WeaponProfile==null) {
       $this->WeaponProfile = $this->WeaponProfileServices->select(__FILE__, __LINE__, $this->weaponProfileId);
     }
@@ -305,8 +286,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return Zone
    */
-  public function getZone()
-  {
+  public function getZone() {
     if ($this->Zone==null) {
       $this->Zone = $this->ZoneServices->select(__FILE__, __LINE__, $this->zoneId);
     }
@@ -316,8 +296,7 @@ class LocalDomain extends GlobalDomain implements iConstants
    * @param string $type
    * @return array EquipmentExpansion
    */
-  public function getEquipmentExpansions($type=self::CST_EQUIPMENTCARDID)
-  {
+  public function getEquipmentExpansions($type=self::CST_EQUIPMENTCARDID) {
     if ($this->EquipmentExpansions == null &&  $this->id!='') {
       $arrFilters = array($type=>$this->id);
       $this->EquipmentExpansions = $this->EquipmentExpansionServices->getEquipmentExpansionsWithFilters(__FILE__, __LINE__, $arrFilters);
@@ -327,8 +306,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return array EquipmenKeyword
    */
-  public function getEquipmentKeywords()
-  {
+  public function getEquipmentKeywords() {
     if ($this->EquipmentKeywords == null &&  $this->id!='') {
       $arrFilters = array(self::CST_EQUIPMENTCARDID=>$this->id);
       $this->EquipmentKeywords = $this->EquipmentKeywordServices->getEquipmentKeywordsWithFilters(__FILE__, __LINE__, $arrFilters);
@@ -338,8 +316,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return array EquipmentWeaponProfile
    */
-  public function getEquipmentWeaponProfiles()
-  {
+  public function getEquipmentWeaponProfiles() {
     if ($this->EquipmentWeaponProfiles == null &&  $this->id!='') {
       $arrFilters = array(self::CST_EQUIPMENTCARDID=>$this->id);
       $this->EquipmentWeaponProfiles = $this->EquipmentWeaponProfileServices->getEquipmentWeaponProfilesWithFilters(__FILE__, __LINE__, $arrFilters);
@@ -349,8 +326,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return array MissionExpansion
    */
-  public function getMissionExpansions()
-  {
+  public function getMissionExpansions() {
     if ($this->MissionExpansions == null &&  $this->id!='') {
       $arrFilters = array(self::CST_MISSIONID=>$this->id);
       $this->MissionExpansions = $this->MissionExpansionServices->getMissionExpansionsWithFilters(__FILE__, __LINE__, $arrFilters);
@@ -360,8 +336,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return array MissionObjective
    */
-  public function getMissionObjectives($orderBy='id')
-  {
+  public function getMissionObjectives($orderBy='id') {
     if ($this->MissionObjectives == null &&  $this->id!='') {
       $arrFilters = array(self::CST_MISSIONID=>$this->id);
       $this->MissionObjectives = $this->MissionObjectiveServices->getMissionObjectivesWithFilters(__FILE__, __LINE__, $arrFilters, $aF);
@@ -371,8 +346,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return array MissionRule
    */
-  public function getMissionRules($aF='id')
-  {
+  public function getMissionRules($aF='id') {
     if ($this->MissionRules == null &&  $this->id!='') {
       $arrFilters = array(self::CST_MISSIONID=>$this->id);
       $this->MissionRules = $this->MissionRuleServices->getMissionRulesWithFilters(__FILE__, __LINE__, $arrFilters, $aF);
@@ -384,11 +358,10 @@ class LocalDomain extends GlobalDomain implements iConstants
    * @param string $aO
    * @return array MissionTile
    */
-  public function getMissionTiles($aF='id', $aO='asc')
-  {
+  public function getMissionTiles($aF='id', $aO='asc') {
     if ($this->MissionTiles == null &&  $this->id!='') {
       $arrFilters = array(self::CST_MISSIONID=>$this->id);
-      $this->MissionTiles = $this->MissionTileServices->getMissionTilesWithFilters(__FILE__, __LINE__, $aF, $arrFields, $aO);
+      $this->MissionTiles = $this->MissionTileServices->getMissionTilesWithFilters(__FILE__, __LINE__, $arrFilters, $aF, $aO);
     }
     return $this->MissionTiles;
   }
@@ -397,19 +370,17 @@ class LocalDomain extends GlobalDomain implements iConstants
    * @param string $aO
    * @return array MissionToken
    */
-  public function getMissionTokens($aF='id', $aO='asc')
-  {
+  public function getMissionTokens($aF='id', $aO='asc') {
     if ($this->MissionTokens == null &&  $this->id!='') {
       $arrFilters = array(self::CST_MISSIONID=>$this->id);
-      $this->MissionTokens = $this->MissionTokenServices->getMissionTokensWithFilters(__FILE__, __LINE__, $aF, $arrFields, $aO);
+      $this->MissionTokens = $this->MissionTokenServices->getMissionTokensWithFilters(__FILE__, __LINE__, $arrFilters, $aF, $aO);
     }
     return $this->MissionTokens;
   }
   /**
    * @return array MissionZone
    */
-  public function getMissionZones()
-  {
+  public function getMissionZones() {
     if ($this->MissionZones == null &&  $this->id!='') {
       $arrFilters = array(self::CST_MISSIONID=>$this->id);
       $this->MissionZones = $this->MissionZoneServices->getMissionZonesWithFilters(__FILE__, __LINE__, $arrFilters);
@@ -419,8 +390,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return array SpawnLiveDeck
    */
-  public function getSpawnLiveDecks()
-  {
+  public function getSpawnLiveDecks() {
     if ($this->SpawnLiveDecks == null && $this->id!='') {
       $arrFilters = array('liveDeckId'=>$this->id);
       $this->SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
@@ -430,8 +400,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return array SurvivorLive
    */
-  public function getSurvivorLives()
-  {
+  public function getSurvivorLives() {
     if ($this->SurvivorLives == null &&  $this->id!='') {
       $arrFilters = array('missionLiveId'=>$this->id);
       $this->SurvivorLives = $this->SurvivorLiveServices->getSurvivorsLiveWithFilters(__FILE__, __LINE__, $arrFilters);
@@ -441,8 +410,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return array SurvivorSkill
    */
-  public function getSurvivorSkills()
-  {
+  public function getSurvivorSkills() {
     if ($this->SurvivorSkills == null &&  $this->id!='') {
       $arrFilters = array('survivorId'=>$this->id);
       $this->SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
@@ -453,8 +421,7 @@ class LocalDomain extends GlobalDomain implements iConstants
    * @param string $metaKey
    * @return WpPost
    */
-  public function getWpPost($metaKey)
-  {
+  public function getWpPost($metaKey) {
     if ($this->WpPost == null) {
       $args = array('post_status' => 'publish,future', 'meta_key' => $metaKey, 'meta_value' => $this->id);
       $Articles = $this->WpPostServices->getArticles(__FILE__, __LINE__, $args, true);
@@ -468,8 +435,7 @@ class LocalDomain extends GlobalDomain implements iConstants
    * Retourne l'url du PDF associé à la Mission, s'il existe.
    * @return string
    */
-  public function getPdfUrl()
-  {
+  public function getPdfUrl() {
     $WpPost = $this->getWpPost();
     if ($WpPost!=null) {
       $medias = get_attached_media('application/pdf', $WpPost->getID());
@@ -486,8 +452,7 @@ class LocalDomain extends GlobalDomain implements iConstants
    * @param int $expansionId
    * @return Expansion
    */
-  public function getExpansionFromGlobal($expansionId)
-  {
+  public function getExpansionFromGlobal($expansionId) {
     global $globalExpansions;
     $GlobalExpansion = null;
     if (!empty($globalExpansions)) {
@@ -509,8 +474,7 @@ class LocalDomain extends GlobalDomain implements iConstants
    * @param int $objectiveId
    * @return Objective
    */
-  protected function getObjectiveFromGlobal($objectiveId)
-  {
+  protected function getObjectiveFromGlobal($objectiveId) {
     global $globalObjectives;
     $GlobalObjective = null;
     if (!empty($globalObjectives)) {
@@ -532,8 +496,7 @@ class LocalDomain extends GlobalDomain implements iConstants
    * @param int $origineId
    * @return Origine
    */
-  protected function getOrigineFromGlobal($origineId)
-  {
+  protected function getOrigineFromGlobal($origineId) {
     global $globalOrigines;
     $GlobalOrigine = null;
     if (!empty($globalOrigines)) {
@@ -555,8 +518,7 @@ class LocalDomain extends GlobalDomain implements iConstants
    * @param int $ruleId
    * @return Rule
    */
-  protected function getRuleFromGlobal($ruleId)
-  {
+  protected function getRuleFromGlobal($ruleId) {
     global $globalRules;
     $GlobalRule = null;
     if (!empty($globalRules)) {
@@ -578,8 +540,7 @@ class LocalDomain extends GlobalDomain implements iConstants
    * @param int $weaponProfileId
    * @return WeaponProfile
    */
-  protected function getWeaponProfileFromGlobal($weaponProfileId)
-  {
+  protected function getWeaponProfileFromGlobal($weaponProfileId) {
     global $globalWeaponProfiles;
     $GlobalWeaponProfile = null;
     if (!empty($globalWeaponProfiles)) {
@@ -600,8 +561,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   /**
    * @return string
    */
-  public function toJson()
-  {
+  public function toJson() {
     $classVars = $this->getClassVars();
     $str = '';
     foreach ($classVars as $key=>$value) {

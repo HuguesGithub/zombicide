@@ -66,8 +66,8 @@ class Mission extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    $services = array( 'Duration', 'MissionExpansion', 'Level', 'MissionObjective', 'Origine', 'Player', 'MissionRule',
-                       'MissionTile', 'WpPost');
+    $services = array('Duration', 'MissionExpansion', 'Level', 'MissionObjective', 'Origine', 'Player', 'MissionRule',
+                      'MissionTile', 'WpPost');
     parent::__construct($attributes, $services);
   }
 
@@ -224,6 +224,7 @@ class Mission extends LocalDomain
   public function getStrTiles()
   {
     $MissionTiles = $this->getMissionTiles();
+    $strName = '';
     if (!empty($MissionTiles)) {
       foreach ($MissionTiles as $MissionTile) {
         if ($strName!='') {
@@ -240,6 +241,7 @@ class Mission extends LocalDomain
   public function getStrExpansions()
   {
     $MissionExpansions = $this->getMissionExpansions();
+    $strName = '';
     if (!empty($MissionExpansions)) {
       foreach ($MissionExpansions as $MissionExpansion) {
         if ($strName!='') {
@@ -380,9 +382,9 @@ class Mission extends LocalDomain
     while (!empty($arr)) {
       $key = array_shift($arr);
       if ($post[$key] == '') {
-      	$doInsert = false;
+        $doInsert = false;
       } else {
-      	$this->{$key} = stripslashes($post[$key]);
+        $this->{$key} = stripslashes($post[$key]);
       }
     }
     return $doInsert;

@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe Survivor
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class Survivor extends LocalDomain {
+class Survivor extends LocalDomain
+{
   /**
    * Id technique de la donnée
    * @var int $id
@@ -47,7 +50,8 @@ class Survivor extends LocalDomain {
    * 
    * @param array $attributes
    */
-  public function __construct($attributes=array()) {
+  public function __construct($attributes=array())
+  {
     $services = array('Expansion', 'Skill', 'SurvivorSkill');
     parent::__construct($attributes, $services);
   }
@@ -55,84 +59,103 @@ class Survivor extends LocalDomain {
   /**
    * @return int 
    */
-  public function getId() {return $this->id; }
+  public function getId()
+  {return $this->id; }
   /**
    * @return string
    */
-  public function getName() { return $this->name; }
+  public function getName()
+  { return $this->name; }
   /**
    * @return boolean 
    */
-  public function isZombivor() {return ($this->zombivor==1); }
+  public function isZombivor()
+  { return ($this->zombivor==1); }
   /**
    * @return boolean 
    */
-  public function isUltimate() {return ($this->ultimate==1); }
+  public function isUltimate()
+  { return ($this->ultimate==1); }
   /**
    * @return int 
    */
-  public function getExpansionId() {return $this->expansionId; }
+  public function getExpansionId()
+  { return $this->expansionId; }
   /**
    * @return string
    */
-  public function getBackground() { return $this->background; }
+  public function getBackground()
+  { return $this->background; }
   /**
    * @return string
    */
-  public function getAltImgName() { return $this->altImgName; }
+  public function getAltImgName()
+  { return $this->altImgName; }
   /**
    * @param int $id
    */
-  public function setId($id) { $this->id=$id; }
+  public function setId($id)
+  { $this->id=$id; }
   /**
    * @param string $name
    */
-  public function setName($name) { $this->name=$name; }
+  public function setName($name)
+  { $this->name=$name; }
   /**
    * @param int $zombivor
    */
-  public function setZombivor($zombivor) { $this->zombivor=$zombivor; }
+  public function setZombivor($zombivor)
+  { $this->zombivor=$zombivor; }
   /**
    * @param int $ultimate
    */
-  public function setUltimate($ultimate) { $this->ultimate=$ultimate; }
+  public function setUltimate($ultimate)
+  { $this->ultimate=$ultimate; }
   /**
    * @param int $expansionId
    */
-  public function setExpansionId($expansionId) { $this->expansionId=$expansionId; }
+  public function setExpansionId($expansionId)
+  { $this->expansionId=$expansionId; }
   /**
    * @param string $background
    */
-  public function setBackground($background) { $this->background=$background; }
+  public function setBackground($background)
+  { $this->background=$background; }
   /**
    * @param string $altImgName
    */
-  public function setAltImgName($altImgName) { $this->altImgName=$altImgName; }
+  public function setAltImgName($altImgName)
+  { $this->altImgName=$altImgName; }
   /**
    * @return array
    */
-  public function getClassVars() { return get_class_vars('Survivor'); }
+  public function getClassVars()
+  { return get_class_vars('Survivor'); }
   /**
    * @param array $row
    * @param string $a
    * @param string $b
    * @return Survivor
    */
-  public static function convertElement($row, $a='', $b='') { return parent::convertElement(new Survivor(), self::getClassVars(), $row); }
+  public static function convertElement($row, $a='', $b='')
+  { return parent::convertElement(new Survivor(), self::getClassVars(), $row); }
   /**
    * @return string
    */
-  public function getExpansionName() { return $this->getExpansion()->getName(); }
+  public function getExpansionName()
+  { return $this->getExpansion()->getName(); }
   /**
    * @param string $str
    * @return string
    */
-  public function getNiceName($str) { return str_replace(array(' ', '#'), '', strtolower($str)); }
+  public function getNiceName($str)
+  { return str_replace(array(' ', '#'), '', strtolower($str)); }
   /**
    * @param string $type
    * @return string
    */
-  public function getPortraitUrl($type='') {
+  public function getPortraitUrl($type='')
+  {
     $nicename = $this->getNiceName($this->name);
     $baseUrl = '/wp-content/plugins/zombicide/web/rsc/images/portraits/p';
     return $baseUrl.$nicename.($type!=''?'-'.$type:'').'.jpg';
@@ -141,22 +164,32 @@ class Survivor extends LocalDomain {
    * @param bool $isHome
    * @return string
    */
-  public function getStrClassFilters($isHome) { return ' col-12 col-sm-6 col-md-4'; }
+  public function getStrClassFilters($isHome)
+  { return ' col-12 col-sm-6 col-md-4'; }
   /**
    * @param string $type
    * @return string
    */
-  public function getUlSkills($type='') {
+  public function getUlSkills($type='')
+  {
     $SurvivorSkills = $this->getSurvivorSkills();
     $str = '';
     $strTmp = '';
-    if (!empty($SurvivorSkills) ) {
-      foreach ($SurvivorSkills as $SurvivorSkill ) {
-        if ($type=='' && $SurvivorSkill->getSurvivorTypeId()!=1 ) { continue; }
-        if ($type=='z' && $SurvivorSkill->getSurvivorTypeId()!=2 ) { continue; }
-        if ($type=='u' && $SurvivorSkill->getSurvivorTypeId()!=3 ) { continue; }
-        if ($type=='uz' && $SurvivorSkill->getSurvivorTypeId()!=4 ) { continue; }
-        switch ($SurvivorSkill->getTagLevelId() ) {
+    if (!empty($SurvivorSkills)) {
+      foreach ($SurvivorSkills as $SurvivorSkill) {
+        if ($type=='' && $SurvivorSkill->getSurvivorTypeId()!=1) {
+          continue;
+        }
+        if ($type=='z' && $SurvivorSkill->getSurvivorTypeId()!=2) {
+          continue;
+        }
+        if ($type=='u' && $SurvivorSkill->getSurvivorTypeId()!=3) {
+          continue;
+        }
+        if ($type=='uz' && $SurvivorSkill->getSurvivorTypeId()!=4) {
+          continue;
+        }
+        switch ($SurvivorSkill->getTagLevelId()) {
           case 10 :
           case 11 :
             $strTmp .= '<li><span class="badge badge-blue-skill">'.$SurvivorSkill->getSkillName().'</span></li>';
@@ -187,4 +220,3 @@ class Survivor extends LocalDomain {
     return $str;
   }
 }
-?>

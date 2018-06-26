@@ -604,7 +604,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   {
     $classVars = $this->getClassVars();
     $str = '';
-    foreach ($classVars as $key=>$value) {
+    foreach ($classVars as $key => $value) {
       if ($str!='') {
         $str .= ', ';
       }

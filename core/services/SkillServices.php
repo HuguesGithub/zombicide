@@ -19,7 +19,7 @@ class SkillServices extends LocalServices {
     $arrParams = array();
     array_push($arrParams, (!empty($arrFilters['code']) && !is_array($arrFilters['code'])) ? $arrFilters['code'] : '%');
     array_push($arrParams, (!empty($arrFilters['name']) && !is_array($arrFilters['name'])) ? '%'.$arrFilters['name'].'%' : '%');
-    array_push($arrParams, (!empty($arrFilters[CST_DESCRIPTION]) && !is_array($arrFilters[CST_DESCRIPTION])) ? '%'.$arrFilters[CST_DESCRIPTION].'%' : '%');
+    array_push($arrParams, (!empty($arrFilters[self::CST_DESCRIPTION]) && !is_array($arrFilters[self::CST_DESCRIPTION])) ? '%'.$arrFilters[self::CST_DESCRIPTION].'%' : '%');
     return $arrParams;
   }
   /**

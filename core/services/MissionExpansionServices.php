@@ -20,8 +20,8 @@ class MissionExpansionServices extends LocalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    $arrParams[] = (isset($arrFilters[CST_MISSIONID]) ? $arrFilters[CST_MISSIONID] : '%' );
-    $arrParams[] = (isset($arrFilters[CST_EXPANSIONID]) ? $arrFilters[CST_EXPANSIONID] : '%' );
+    $arrParams[] = (isset($arrFilters[self::CST_MISSIONID]) ? $arrFilters[self::CST_MISSIONID] : '%' );
+    $arrParams[] = (isset($arrFilters[self::CST_EXPANSIONID]) ? $arrFilters[self::CST_EXPANSIONID] : '%' );
     return $arrParams;
   }
   /**
@@ -47,7 +47,7 @@ class MissionExpansionServices extends LocalServices {
    * @param string $defaultValue
    * @return string
    */
-  public function getMissionExpansionsSelect($file, $line, $Mission, $prefix='', $classe=CST_FORMCONTROL, $multiple=FALSE, $defaultValue='') {
+  public function getMissionExpansionsSelect($file, $line, $Mission, $prefix='', $classe=self::CST_FORMCONTROL, $multiple=FALSE, $defaultValue='') {
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters($file, $line);
     $arrSetLabels = array();
     foreach ($Expansions as $Expansion ) {
@@ -60,7 +60,7 @@ class MissionExpansionServices extends LocalServices {
         array_push($arrSelValues, $MissionExpansion->getExpansionId());
       }
     }
-    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.CST_EXPANSIONID, $arrSelValues, $defaultValue, $classe, $multiple);
+    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.self::CST_EXPANSIONID, $arrSelValues, $defaultValue, $classe, $multiple);
   }
   
 }

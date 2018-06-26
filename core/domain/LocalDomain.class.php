@@ -6,7 +6,7 @@ if (!defined('ABSPATH') ) { die('Forbidden' ); }
  * @version 1.0.00
  * @since 1.0.00
  */
-class LocalDomain extends GlobalDomain {
+class LocalDomain extends GlobalDomain implements iConstants {
 
   /**
    * 

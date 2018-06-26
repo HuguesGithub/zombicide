@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
 /**
  * Classe Equipment
  * @author Hugues.
@@ -7,164 +7,173 @@ if (!defined('ABSPATH') ) { die('Forbidden' ); }
  * @since 1.0.00
  */
 class Equipment extends LocalDomain {
+    /**
+     * Id technique de la donnée
+     * @var int $id
+     */
+    protected $id;
+    /**
+     * Nom de la carte
+     * @var string $name
+     */
+    protected $name;
+    /**
+     * Abilité spéciale de l'équipement
+     * @var string $textAbility
+     */
+    protected $textAbility;
+    /**
+     * @param array $attributes
+     */
+    public function __construct($attributes=array()) {
+    $services = array('EquipmentKeyword', 'EquipmentWeaponProfile');
+        parent::__construct($attributes, $services);
+    }
+    /**
+     * @return $id
+     */
+    public function getId() {return $this->id; }
+    /**
+     * @return $name
+     */
+    public function getName() { return $this->name; }
+    /**
+     * @return $textAbility
+     */
+    public function getTextAbility() { return $this->textAblity; }
+    /**
+     * @param int $id
+     */
+    public function setId($id) { $this->id=$id; }
+    /**
+     * @param int $name
+     */
+    public function setName($name) { $this->name=$name; }
+    /**
+     * @param int $textAbility
+     */
+    public function setTextAbility($textAbility) { $this->textAbility=$textAbility; }
+    /**
+     * @return array
+     */
+    public function getClassVars() { return get_class_vars('Equipment'); }
+    /**
+     * @param array $row
+     * @param string $a
+     * @param string $b
+     * @return Spawn
+     */
+    public static function convertElement($row, $a='', $b='') { return parent::convertElement(new Equipment(), self::getClassVars(), $row); }
+    public function getExpansionId() { return $this->expansionId; }
   /**
-   * Id technique de la donnée
-   * @var int $id
-   */
-  protected $id;
-  /**
-   * Nom de la carte
-   * @var string $name
-   */
-  protected $name;
-  /**
-   * Abilité spéciale de l'équipement
-   * @var string $textAbility
-   */
-  protected $textAbility;
-  /**
-   * @param array $attributes
-   */
-  public function __construct($attributes=array()) {
-  $services = array('EquipmentKeyword', 'EquipmentWeaponProfile');
-    parent::__construct($attributes, $services);
-  }
-  /**
-   * @return $id
-   */
-  public function getId() {return $this->id; }
-  /**
-   * @return $name
-   */
-  public function getName() { return $this->name; }
-  /**
-   * @return $textAbility
-   */
-  public function getTextAbility() { return $this->textAblity; }
-  /**
-   * @param int $id
-   */
-  public function setId($id) { $this->id=$id; }
-  /**
-   * @param int $name
-   */
-  public function setName($name) { $this->name=$name; }
-  /**
-   * @param int $textAbility
-   */
-  public function setTextAbility($textAbility) { $this->textAbility=$textAbility; }
-  /**
-   * @return array
-   */
-  public function getClassVars() { return get_class_vars('Equipment'); }
-  /**
-   * @param array $row
-   * @param string $a
-   * @param string $b
-   * @return Spawn
-   */
-  public static function convertElement($row, $a='', $b='') { return parent::convertElement(new Equipment(), self::getClassVars(), $row); }
-  public function getExpansionId() { return $this->expansionId; }
-  /**
+   * @param $expansionId
    * @return string
    */
   public function getImgUrl($expansionId='00') {
     $uniqueId = (str_pad($this->id, 3, '0', STR_PAD_LEFT)).(str_pad($expansionId, 2, '0', STR_PAD_LEFT));
     $urlThumb = '/wp-content/plugins/zombicide/web/rsc/images/equipments/'.$uniqueId.'-thumb.jpg';
-    if (!is_file($urlThumb) ) {
-    // /homepages/42/d239730921/htdocs
+    // Si l'image Thumb n'existe pas, on va la créer à partir de l'original. Puis on supprime l'original.
+    if ( !is_file(getcwd().$urlThumb) ) {
       $urlOriginal = '/wp-content/plugins/zombicide/web/rsc/images/equipments/'.$uniqueId.'.png';
-      if (!is_file('http://zombicide.jhugues.fr'.$urlOriginal) ) {
-        
-        // Fix de sonarCLoud. A développer.
-        return $urlOriginal;
-      }
+      $adminUrl = getcwd().$urlOriginal;
+      $src = imagecreatefrompng($adminUrl);
+      $dst = imagecreatetruecolor(320, 440);
+      imagecopyresized($dst, $src, 0, 0, 0, 0, 320, 440, 597, 822);
+      imagejpeg($dst, getcwd().$urlThumb);
+      unlink($adminUrl);
     }
     return $urlThumb;
   }
-  public function getNiceName() {
-    $cleanDigits = array(' ', '#', '-', '!', 'à', 'é', "'", '(', ')', 'ê', 'ç', '&', '.', 'è');
-    return str_replace($cleanDigits, '', strtolower($this->getName()));
-  }
-  /**
-   * @return boolean
-   */
+    public function getNiceName() {
+    	$cleanDigits = array(' ', '#', '-', '!', 'à', 'é', "'", '(', ')', 'ê', 'ç', '&', '.', 'è');
+    	return str_replace($cleanDigits, '', strtolower($this->getName()));
+    }
+    /**
+     * @return boolean
+     */
   public function isRanged() {
-    if ($this->ranged==null ) {
-      if ($this->EquipmentWeaponProfiles == null ) {
-        $this->EquipmentWeaponProfiles = $this->getEquipmentWeaponProfiles();
-      }
-      if (empty($this->EquipmentWeaponProfiles) ) { 
-        $this->ranged = FALSE;
-      } else {
-        $isRanged = FALSE;
-        foreach ($this->EquipmentWeaponProfiles as $EquipmentWeaponProfile ) {
-          $WeaponProfile = $EquipmentWeaponProfile->getWeaponProfile();
-          if ($WeaponProfile->getMaxRange()>0 ) { $isRanged = TRUE; }
-          else { $this->melee = TRUE; }
+    if ($this->ranged == null) {
+            if ( $this->EquipmentWeaponProfiles == null ) {
+                $this->EquipmentWeaponProfiles = $this->getEquipmentWeaponProfiles(__FILE__, __LINE__);
+            }
+        if ( empty($this->EquipmentWeaponProfiles) ) { 
+                $this->ranged = FALSE;
+            } else {
+                $isRanged = FALSE;
+                foreach ( $this->EquipmentWeaponProfiles as $EquipmentWeaponProfile ) {
+                    $WeaponProfile = $EquipmentWeaponProfile->getWeaponProfile(__FILE__, __LINE__);
+                    if ( $WeaponProfile->getMaxRange()>0 ) { $isRanged = TRUE; }
+                    else { $this->melee = TRUE; }
+                }
+                $this->ranged = $isRanged;
+            }
         }
-        $this->ranged = $isRanged;
-      }
+        return $this->ranged;
     }
-    return $this->ranged;
-  }
-  /**
-   * @return boolean
-   */
-  public function isMelee() {
-    if ($this->melee==null ) {
-      if ($this->EquipmentWeaponProfiles == null ) {
-        $this->EquipmentWeaponProfiles = $this->getEquipmentWeaponProfiles();
-      }
-      if (empty($this->EquipmentWeaponProfiles) ) { 
-        $this->melee = FALSE;
-      } else {
-        $isMelee = FALSE;
-        foreach ($this->EquipmentWeaponProfiles as $EquipmentWeaponProfile ) {
-          $WeaponProfile = $EquipmentWeaponProfile->getWeaponProfile();
-          if ($WeaponProfile->getMaxRange()==0 ) { $isMelee = TRUE; }
-          else { $this->ranged = TRUE; }
+    /**
+     * @return boolean
+     */
+    public function isMelee() {
+        if ( $this->melee==null ) {
+            if ( $this->EquipmentWeaponProfiles == null ) {
+                $this->EquipmentWeaponProfiles = $this->getEquipmentWeaponProfiles(__FILE__, __LINE__);
+            }
+            if ( empty($this->EquipmentWeaponProfiles) ) { 
+                $this->melee = FALSE;
+            } else {
+                $isMelee = FALSE;
+                foreach ( $this->EquipmentWeaponProfiles as $EquipmentWeaponProfile ) {
+                    $WeaponProfile = $EquipmentWeaponProfile->getWeaponProfile(__FILE__, __LINE__);
+                    if ( $WeaponProfile->getMaxRange()==0 ) { $isMelee = TRUE; }
+                    else { $this->ranged = TRUE; }
+                }
+                $this->melee = $isMelee;
+            }
         }
-        $this->melee = $isMelee;
-      }
+        return $this->melee;
     }
-    return $this->melee;
-  }
-  /**
-   * @return boolean
-   */
-  public function isPimp() { return $this->hasKeyword('Pimp'); }
-  /**
-   * @return boolean
-   */
-  public function isStarter() { return $this->hasKeyword('Starter'); }
-  /**
-   * @return boolean
-   */
-  public function isDual() { return $this->hasKeyword('Dual'); }
-  /**
-   * @param string $keyword
-   * @return boolean
-   */
+    /**
+     * @return boolean
+     */
+    public function isPimp() { return $this->hasKeyword('Pimp'); }
+    /**
+     * @return boolean
+     */
+    public function isStarter() { return $this->hasKeyword('Starter'); }
+    /**
+     * @return boolean
+     */
+    public function isDual() { return $this->hasKeyword('Dual'); }
+    /**
+     * @param string $keyword
+     * @return boolean
+     */
   public function hasKeyword($keyword) {
     $hasKeyword = FALSE;
-    if ($this->Keywords == null ) { $this->initKeywords(); }
-    if (!empty($this->Keywords) ) {
-      foreach ($this->Keywords as $Keyword ) {
-        if ($Keyword->getName()==$keyword ) { $hasKeyword = TRUE; }
+    if ($this->Keywords == null) {
+      $this->initKeywords();
+    }
+    if (!empty($this->Keywords)) {
+      foreach ($this->Keywords as $Keyword) {
+        if ($Keyword->getName()==$keyword) {
+          $hasKeyword = TRUE;
+        }
       }
     }
     return $hasKeyword;
   }
   private function initKeywords() {
-    $EquipmentKeywords = $this->getEquipmentKeywords();
-    $this->Keywords = array();
-    if (!empty($EquipmentKeywords) ) {
-      foreach ($EquipmentKeywords as $EquipmentKeyword ) {
-        array_push($this->Keywords, $EquipmentKeyword->getKeyword());
+    if ($this->Keywords==null) {
+      $EquipmentKeywords = $this->getEquipmentKeywords(__FILE__, __LINE__);
+      $ownKeyWords = array();
+      if ( !empty($EquipmentKeywords) ) {
+        foreach ( $EquipmentKeywords as $EquipmentKeyword ) {
+          array_push($ownKeyWords, $EquipmentKeyword->getKeyword(__FILE__, __LINE__));
+        }
       }
+      $this->Keywords = empty($ownKeyWords) ? array(new Equipment()) : $ownKeyWords;
     }
   }
-  public function setExpansionId($expansionId) { $this->expansionId = $expansionId; }
+    public function setExpansionId($expansionId) { $this->expansionId = $expansionId; }
 }
 ?>

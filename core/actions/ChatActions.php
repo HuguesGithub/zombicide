@@ -139,8 +139,9 @@ class ChatActions extends LocalActions {
     );
     $this->postChat($arr);
     $_SESSION[self::CST_DECKKEY] = $deckKey;
-    $returned = '{'.$this->getChatContent(FALSE).', "header-ul-chat-saisie":';
-    return $returned.json_encode('<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$this->liveId.'">'.$deckKey.'</a></li>').'}';
+    $returned  = '{'.$this->getChatContent(FALSE).', "header-ul-chat-saisie":';
+    $strJson = '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$this->liveId.'">'.$deckKey.'</a></li>';
+    return $returned.json_encode($strJson).'}';
   }
   private function postChat($arr) {
     $Chat = new Chat($arr);

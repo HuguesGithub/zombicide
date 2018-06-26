@@ -6,7 +6,7 @@ if (!defined('ABSPATH') ) { die('Forbidden' ); }
  * @version 1.0.00
  * @since 1.0.00
  */
-class SurvivorSkillServices extends GlobalServices {
+class SurvivorSkillServices extends LocalServices {
   /**
    * L'objet Dao pour faire les requêtes
    * @var SurvivorDaoImpl $Dao
@@ -19,8 +19,8 @@ class SurvivorSkillServices extends GlobalServices {
     $arrParams = array();
     $arrParams[] = (isset($arrFilters['survivorId']) ? $arrFilters['survivorId'] : '%');
     $arrParams[] = (isset($arrFilters['skillId']) ? $arrFilters['skillId'] : '%');
-    $arrParams[] = (isset($arrFilters[CST_SURVIVORTYPEID]) ? $arrFilters[CST_SURVIVORTYPEID] : '%');
-    $arrParams[] = (isset($arrFilters[CST_TAGLEVELID]) ? $arrFilters[CST_TAGLEVELID] : '%');
+    $arrParams[] = (isset($arrFilters[self::CST_SURVIVORTYPEID]) ? $arrFilters[self::CST_SURVIVORTYPEID] : '%');
+    $arrParams[] = (isset($arrFilters[self::CST_TAGLEVELID]) ? $arrFilters[self::CST_TAGLEVELID] : '%');
     return $arrParams;
   }
   /**
@@ -31,7 +31,7 @@ class SurvivorSkillServices extends GlobalServices {
    * @param string $order
    * @return array
    */
-  public function getSurvivorSkillsWithFilters($file, $line, $arrFilters=array(), $orderby=array(self::CST_SURVIVORTYPEID, CST_TAGLEVELID), $order=array('ASC', 'ASC')) {
+  public function getSurvivorSkillsWithFilters($file, $line, $arrFilters=array(), $orderby=array(self::CST_SURVIVORTYPEID, self::CST_TAGLEVELID), $order=array('ASC', 'ASC')) {
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
     $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);

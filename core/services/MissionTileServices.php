@@ -6,7 +6,7 @@ if (!defined('ABSPATH') ) { die('Forbidden' ); }
  * @version 1.0.00
  * @since 1.0.00
  */
-class MissionTileServices extends GlobalServices {
+class MissionTileServices extends LocalServices {
   /**
    * L'objet Dao pour faire les requêtes
    * @var MissionTileDaoImpl $Dao
@@ -17,8 +17,8 @@ class MissionTileServices extends GlobalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    $arrParams[] = (isset($arrFilters[CST_MISSIONID]) ? $arrFilters[CST_MISSIONID] : '%' );
-    $arrParams[] = (isset($arrFilters[CST_COORDX]) ? $arrFilters[CST_COORDX] : '%' );
+    $arrParams[] = (isset($arrFilters[self::CST_MISSIONID]) ? $arrFilters[self::CST_MISSIONID] : '%' );
+    $arrParams[] = (isset($arrFilters[self::CST_COORDX]) ? $arrFilters[self::CST_COORDX] : '%' );
     $arrParams[] = (isset($arrFilters['coordY']) ? $arrFilters['coordY'] : '%' );
     return $arrParams;
   }
@@ -40,7 +40,7 @@ class MissionTileServices extends GlobalServices {
    */
   public static function staticRotate($post) {
     $MissionTileServices = new MissionTileServices();
-    $args = array(self::CST_MISSIONID=>$post[CST_MISSIONID], CST_COORDX=>$post[CST_COORDX], CST_COORDY=>$post[CST_COORDY]);
+    $args = array(self::CST_MISSIONID=>$post[self::CST_MISSIONID], self::CST_COORDX=>$post[self::CST_COORDX], self::CST_COORDY=>$post[self::CST_COORDY]);
     $MissionTiles = $MissionTileServices->getMissionTilesWithFilters(__FILE__, __LINE__, $args);
     if (!empty($MissionTiles) ) {
       $MissionTile = array_shift($MissionTiles);
@@ -57,7 +57,7 @@ class MissionTileServices extends GlobalServices {
    */
   public static function staticUpdate($post) {
     $MissionTileServices = new MissionTileServices();
-    $args = array(self::CST_MISSIONID=>$post[CST_MISSIONID], CST_COORDX=>$post[CST_COORDX], CST_COORDY=>$post[CST_COORDY]);
+    $args = array(self::CST_MISSIONID=>$post[self::CST_MISSIONID], self::CST_COORDX=>$post[self::CST_COORDX], self::CST_COORDY=>$post[self::CST_COORDY]);
     $MissionTiles = $MissionTileServices->getMissionTilesWithFilters(__FILE__, __LINE__, $args);
     if (empty($MissionTiles) ) {
       $args['orientation'] = 'N';

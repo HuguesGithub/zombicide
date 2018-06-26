@@ -8,8 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class LocalDomain extends GlobalDomain implements iConstants
-{
+class LocalDomain extends GlobalDomain implements iConstants {
 
   /**
    * @param array $attributes

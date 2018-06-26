@@ -47,7 +47,6 @@ class Survivor extends LocalDomain
   protected $altImgName;
   
   /**
-   * 
    * @param array $attributes
    */
   public function __construct($attributes=array())
@@ -57,7 +56,7 @@ class Survivor extends LocalDomain
   }
 
   /**
-   * @return int 
+   * @return int
    */
   public function getId()
   {return $this->id; }
@@ -67,17 +66,17 @@ class Survivor extends LocalDomain
   public function getName()
   { return $this->name; }
   /**
-   * @return boolean 
+   * @return boolean
    */
   public function isZombivor()
   { return ($this->zombivor==1); }
   /**
-   * @return boolean 
+   * @return boolean
    */
   public function isUltimate()
   { return ($this->ultimate==1); }
   /**
-   * @return int 
+   * @return int
    */
   public function getExpansionId()
   { return $this->expansionId; }

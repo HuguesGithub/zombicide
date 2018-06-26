@@ -1,5 +1,7 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe Spawn
  * @author Hugues.
@@ -82,121 +84,149 @@ class Spawn extends LocalDomain {
   /**
    * @return $id
    */
-  public function getId() {return $this->id; }
+  public function getId()
+  {return $this->id; }
   /**
    * @return $expansionId
    */
-  public function getExpansionId() { return $this->expansionId; }
+  public function getExpansionId()
+  { return $this->expansionId; }
   /**
    * @return $spawnNumber
    */
-  public function getSpawnNumber() { return $this->spawnNumber; }
+  public function getSpawnNumber()
+  { return $this->spawnNumber; }
   /**
    * @return $spawnTypeId
    */
-  public function getSpawnTypeId() { return $this->spawnTypeId; }
+  public function getSpawnTypeId()
+  { return $this->spawnTypeId; }
   /**
    * @return $zombieCategoryId
    */
-  public function getZombieCategoryId() { return $this->zombieCategoryId; }
+  public function getZombieCategoryId()
+  { return $this->zombieCategoryId; }
   /**
    * @return $blueZombieTypeId
    */
-  public function getBlueZombieTypeId() { return $this->blueZombieTypeId; }
+  public function getBlueZombieTypeId()
+  { return $this->blueZombieTypeId; }
   /**
    * @return $blueQuantity
    */
-  public function getBlueQuantity() { return $this->blueQuantity; }
+  public function getBlueQuantity()
+  { return $this->blueQuantity; }
   /**
    * @return $yellowZombieTypeId
    */
-  public function getYellowZombieTypeId() { return $this->yellowZombieTypeId; }
+  public function getYellowZombieTypeId()
+  { return $this->yellowZombieTypeId; }
   /**
    * @return $yellowQuantity
    */
-  public function getYellowQuantity() { return $this->yellowQuantity; }
+  public function getYellowQuantity()
+  { return $this->yellowQuantity; }
   /**
    * @return $orangeZombieTypeId
    */
-  public function getOrangeZombieTypeId() { return $this->orangeZombieTypeId; }
+  public function getOrangeZombieTypeId()
+  { return $this->orangeZombieTypeId; }
   /**
    * @return $orangeQuantity
    */
-  public function getOrangeQuantity() { return $this->orangeQuantity; }
+  public function getOrangeQuantity()
+  { return $this->orangeQuantity; }
   /**
    * @return $redZombieTypeId
    */
-  public function getRedZombieTypeId() { return $this->redZombieTypeId; }
+  public function getRedZombieTypeId()
+  { return $this->redZombieTypeId; }
   /**
    * @return $redQuantity
    */
-  public function getRedQuantity() { return $this->redQuantity; }
+  public function getRedQuantity()
+  { return $this->redQuantity; }
   /**
    * @param int $id
    */
-  public function setId($id) { $this->id=$id; }
+  public function setId($id)
+  { $this->id=$id; }
   /**
    * @param int $expansionId
    */
-  public function setExpansionId($expansionId) { $this->expansionId=$expansionId; }
+  public function setExpansionId($expansionId)
+  { $this->expansionId=$expansionId; }
   /**
    * @param int $spawnNumber
    */
-  public function setSpawnNumber($spawnNumber) { $this->spawnNumber=$spawnNumber; }
+  public function setSpawnNumber($spawnNumber)
+  { $this->spawnNumber=$spawnNumber; }
   /**
    * @param int $spawnTypeId
    */
-  public function setSpawnTypeId($spawnTypeId) { $this->spawnTypeId=$spawnTypeId; }
+  public function setSpawnTypeId($spawnTypeId)
+  { $this->spawnTypeId=$spawnTypeId; }
   /**
    * @param int $zombieCategoryId
    */
-  public function setZombieCategoryId($zombieCategoryId) { $this->zombieCategoryId=$zombieCategoryId; }
+  public function setZombieCategoryId($zombieCategoryId)
+  { $this->zombieCategoryId=$zombieCategoryId; }
   /**
    * @param int $blueZombieTypeId
    */
-  public function setBlueZombieTypeId($blueZombieTypeId) { $this->blueZombieTypeId=$blueZombieTypeId; }
+  public function setBlueZombieTypeId($blueZombieTypeId)
+  { $this->blueZombieTypeId=$blueZombieTypeId; }
   /**
    * @param int $blueQuantity
    */
-  public function setBlueQuantity($blueQuantity) { $this->blueQuantity=$blueQuantity; }
+  public function setBlueQuantity($blueQuantity)
+  { $this->blueQuantity=$blueQuantity; }
   /**
    * @param int $yellowZombieTypeId
    */
-  public function setYellowZombieTypeId($yellowZombieTypeId) { $this->yellowZombieTypeId=$yellowZombieTypeId; }
+  public function setYellowZombieTypeId($yellowZombieTypeId)
+  { $this->yellowZombieTypeId=$yellowZombieTypeId; }
   /**
    * @param int $yellowQuantity
    */
-  public function setYellowQuantity($yellowQuantity) { $this->yellowQuantity=$yellowQuantity; }
+  public function setYellowQuantity($yellowQuantity)
+  { $this->yellowQuantity=$yellowQuantity; }
   /**
    * @param int $orangeZombieTypeId
    */
-  public function setOrangeZombieTypeId($orangeZombieTypeId) { $this->orangeZombieTypeId=$orangeZombieTypeId; }
+  public function setOrangeZombieTypeId($orangeZombieTypeId)
+  { $this->orangeZombieTypeId=$orangeZombieTypeId; }
   /**
    * @param int $orangeQuantity
    */
-  public function setOrangeQuantity($orangeQuantity) { $this->orangeQuantity=$orangeQuantity; }
+  public function setOrangeQuantity($orangeQuantity)
+  { $this->orangeQuantity=$orangeQuantity; }
   /**
    * @param int $redZombieTypeId
    */
-  public function setRedZombieTypeId($redZombieTypeId) { $this->redZombieTypeId=$redZombieTypeId; }
+  public function setRedZombieTypeId($redZombieTypeId)
+  { $this->redZombieTypeId=$redZombieTypeId; }
   /**
    * @param int $redQuantity
    */
-  public function setRedQuantity($redQuantity) { $this->redQuantity=$redQuantity; }
+  public function setRedQuantity($redQuantity)
+  { $this->redQuantity=$redQuantity; }
   /**
    * @return array
    */
-  public function getClassVars() { return get_class_vars('Spawn'); }
+  public function getClassVars()
+  { return get_class_vars('Spawn'); }
   /**
    * @param array $row
    * @param string $a
    * @param string $b
    * @return Spawn
    */
-  public static function convertElement($row, $a='', $b='') { return parent::convertElement(new Spawn(), self::getClassVars(), $row); }
+  public static function convertElement($row, $a='', $b='')
+  { return parent::convertElement(new Spawn(), self::getClassVars(), $row); }
   /**
    * @return string
    */
-  public function getImgUrl() { return '/wp-content/plugins/zombicide/web/rsc/images/spawns/'.(str_pad($this->spawnNumber, 4, '0', STR_PAD_LEFT)).'-thumb.jpg'; }
+  public function getImgUrl()
+  { return '/wp-content/plugins/zombicide/web/rsc/images/spawns/'.(str_pad($this->spawnNumber, 4, '0', STR_PAD_LEFT)).'-thumb.jpg'; }
 }
-?>

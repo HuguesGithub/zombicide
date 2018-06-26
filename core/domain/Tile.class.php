@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe Tile
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class Tile extends LocalDomain {
+class Tile extends LocalDomain
+{
   /**
    * Id technique de la donnée
    * @var int $id
@@ -40,81 +43,99 @@ class Tile extends LocalDomain {
   /**
    * @param array $attributes
    */
-  public function __construct($attributes=array()) {
+  public function __construct($attributes=array())
+  {
     $services = array('Expansion', 'Tile');
     parent::__construct($attributes, $services);
   }
   /**
    * @return int
    */
-  public function getId() {return $this->id; }
+  public function getId()
+  {return $this->id; }
   /**
    * @return string
    */
-  public function getCode() { return $this->code; }
+  public function getCode()
+  { return $this->code; }
   /**
    * @return int
    */
-  public function getExpansionId() { return $this->expansionId; }
+  public function getExpansionId()
+  { return $this->expansionId; }
   /**
    * @return string
    */
-  public function getZoneAcces() { return $this->zoneAcces; }
+  public function getZoneAcces()
+  { return $this->zoneAcces; }
   /**
    * @return int
    */
-  public function isActive() { return ($this->active==1); }
+  public function isActive()
+  { return ($this->active==1); }
   /**
    * @return int
    */
-  public function isOfficielle() { return ($this->officielle==1); }
+  public function isOfficielle()
+  { return ($this->officielle==1); }
   /**
    * @param int $id
    */
-  public function setId($id) { $this->id=$id; }
+  public function setId($id)
+  { $this->id=$id; }
   /**
    * @param string $code
    */
-  public function setCode($code) { $this->code=$code; }
+  public function setCode($code)
+  { $this->code=$code; }
   /**
    * @param int $expansionId
    */
-  public function setExpansionId($expansionId) { $this->expansionId=$expansionId; }
+  public function setExpansionId($expansionId)
+  { $this->expansionId=$expansionId; }
   /**
    * @param string $zoneAcces
    */
-  public function setZoneAcces($zoneAcces) { $this->zoneAcces=$zoneAcces; }
+  public function setZoneAcces($zoneAcces)
+  { $this->zoneAcces=$zoneAcces; }
   /**
    * @param int $active
    */
-  public function setActive($active) { $this->active=$active; }
+  public function setActive($active)
+  { $this->active=$active; }
   /**
    * @param int $officielle
    */
-  public function setOfficielle($officielle) { $this->officielle=$officielle; }
+  public function setOfficielle($officielle)
+  { $this->officielle=$officielle; }
   /**
    * @return array
    */
-  public function getClassVars() { return get_class_vars('Tile'); }
+  public function getClassVars()
+  { return get_class_vars('Tile'); }
   /**
    * @param array $row
    * @param string $a
    * @param string $b
    * @return Tile
    */
-  public static function convertElement($row, $a='', $b='') { return parent::convertElement(new Tile(), self::getClassVars(), $row); }
+  public static function convertElement($row, $a='', $b='')
+  { return parent::convertElement(new Tile(), self::getClassVars(), $row); }
   /**
    * @return string
    */
-  public function getExpansionName() { return $this->getExpansion()->getName(); }
+  public function getExpansionName()
+  { return $this->getExpansion()->getName(); }
   /**
    * @return string
    */
-  public function getImgUrl() { return '/wp-content/plugins/zomb/web/rsc/img/tiles/'.$this->code.'-500px.png'; }
+  public function getImgUrl()
+  { return '/wp-content/plugins/zomb/web/rsc/img/tiles/'.$this->code.'-500px.png'; }
   /**
    * @return string
    */
-  public function getDimensions() {
+  public function getDimensions()
+  {
     list($width, $height, , ) = getimagesize('http://zombicide.jhugues.fr'.$this->getImgUrl());
     return $width.'px x '.$height.'px';
   }
@@ -122,14 +143,18 @@ class Tile extends LocalDomain {
    * @param array $row
    * @return Tile
    */
-  public static function convertElementFromPost($row) {
+  public static function convertElementFromPost($row)
+  {
     $Obj = new Tile();
     $vars = get_class_vars('Tile');
     if (!empty($vars) ) {
-      foreach ($vars as $key=>$value ) { $Obj->setField($key, str_replace("\\", '', $row[$key])); }
-      if ($row['active']=='on' ) { $Obj->setField('active', 1); }
+      foreach ($vars as $key => $value) {
+      	$Obj->setField($key, str_replace("\\", '', $row[$key]));
+      }
+      if ($row['active']=='on') {
+      	$Obj->setField('active', 1);
+      }
     }
     return $Obj;
   }  
 }
-?>

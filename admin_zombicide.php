@@ -7,11 +7,11 @@
 <link rel="stylesheet" href="<?php echo PLUGINS_MYCOMMON; ?>/web/rsc/css/bootstrap-4.min.css" type="text/css" media="all" />
 <link rel="stylesheet" href="<?php echo PLUGINS_ZOMBICIDE; ?>/web/rsc/admin_zombicide.css" type="text/css" media="all" />
 <?php
-if (!defined('ABSPATH') ) {
-  die('Forbidden' );
+if (!defined('ABSPATH')) {
+  die('Forbidden');
 }
 global $Zombicide;
-if (empty($Zombicide) ) { $Zombicide = new Zombicide(); }
+if (empty($Zombicide)) { $Zombicide = new Zombicide(); }
 $AdminPageBean = new AdminPageBean();
 echo $AdminPageBean->getContentPage();
 ?>

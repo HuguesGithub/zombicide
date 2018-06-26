@@ -1,6 +1,6 @@
 <?php
-if (!defined('ABSPATH') ) {
-  die('Forbidden' );
+if (!defined('ABSPATH')) {
+  die('Forbidden');
 }
 /**
  * AjaxActions
@@ -14,11 +14,11 @@ class AjaxActions extends LocalActions {
   public function __construct() {}
 
   /**
-   * Gère les actions Ajax 
+   * Gère les actions Ajax
    * @since 1.0.00
    */
   public static function dealWithAjax() {
-    switch ($_POST['ajaxAction'] ) {
+    switch ($_POST['ajaxAction']) {
       case 'addMissionObjRule'     : $returned = self::dealWithAddMissionObjRule($_POST); break;
       case 'addMoreNews'         : $returned = HomePageBean::staticAddMoreNews($_POST['value']); break;
       case 'addParameter'        : $returned = self::dealWithAddParameter($_POST); break;
@@ -50,18 +50,18 @@ class AjaxActions extends LocalActions {
   public function dealWithJoinLive($post) {
     $deckKey = $post['keyAccess'];
     $LiveServices = FactoryServices::getLiveServices();
-    $arr = array(self::DECKKEY=>$deckKey);
+    $arr = array(self::CST_DECKKEY=>$deckKey);
     $Lives = $LiveServices->getLivesWithFilters(__FILE__, __LINE__, $arr);
-    if (empty($Lives) ) {
+    if (empty($Lives)) {
       $arr['dateUpdate'] = date('Y-m-d H:i:s');
       $Live = new Live($arr);
       $LiveServices->insert(__FILE__, __LINE__, $Live);
-      $_SESSION[self::DECKKEY] = $deckKey;
+      $_SESSION[self::CST_DECKKEY] = $deckKey;
     } else {
       $Live = array_shift($Lives);
       $Live->setDateUpdate(date('Y-m-d H:i:s'));
       $LiveServices->update(__FILE__, __LINE__, $Live);
-      $_SESSION[self::DECKKEY] = $deckKey;
+      $_SESSION[self::CST_DECKKEY] = $deckKey;
     }
   }
   /**
@@ -69,24 +69,24 @@ class AjaxActions extends LocalActions {
    * @return string
    */
   public static function dealWithAddParameter($post) {
-    $arrExpected = array('player', self::LEVEL);
+    $arrExpected = array('player', self::CST_LEVEL);
     $postType = $post['type'];
-    if (in_array($postType, $arrExpected) ) {
+    if (in_array($postType, $arrExpected)) {
       $args = array();
       $inputs = explode('|', $post['inputs']);
-      foreach ($inputs as $key=>$value ) {
+      foreach ($inputs as $key => $value) {
         list($field, $value) = explode('=', $value);
-        $field = str_replace($postType.'-','',$field);
-        if ($field == 'id' ) { continue; }
+        $field = str_replace($postType.'-', '', $field);
+        if ($field == 'id') { continue; }
         $args[$field] = $value;
       }
-      if ($postType == 'player' ) {
+      if ($postType == 'player') {
         $Player = new Player($args);
         $PlayerServices = new PlayerServices();
         $PlayerServices->insert(__FILE__, __LINE__, $Player);
         $Player->setId(MySQL::getLastInsertId());
         return $Player->toJson();
-      } elseif ($postType == self::LEVEL ) {
+      } elseif ($postType == self::CST_LEVEL) {
         $Level = new Level($args);
         $LevelServices = new LevelServices();
         $LevelServices->insert(__FILE__, __LINE__, $Level);
@@ -100,7 +100,7 @@ class AjaxActions extends LocalActions {
    * @return string
    */
   public static function dealWithGetParameter($post) {
-    if ($post['type'] == self::LEVEL ) {
+    if ($post['type'] == self::CST_LEVEL) {
       $LevelServices = new LevelServices();
       $Level = $LevelServices->select(__FILE__, __LINE__, $post['id']);
       return $Level->toJson();
@@ -112,11 +112,11 @@ class AjaxActions extends LocalActions {
    */
   public static function dealWithObjRuleDescription($post) {
     $description = '';
-    if ($post['type'] == 'rule' ) {
+    if ($post['type'] == 'rule') {
       $RuleServices = new RuleServices();
       $Rule = $RuleServices->select(__FILE__, __LINE__, $post['id']);
       $description = $Rule->getDescription();
-    } elseif ($post['type'] == self::OBJECTIVE ) {
+    } elseif ($post['type'] == self::CST_OBJECTIVE) {
       $ObjectiveServices = new ObjectiveServices();
       $Objective = $ObjectiveServices->select(__FILE__, __LINE__, $post['id']);
       $description = $Objective->getDescription();
@@ -128,12 +128,12 @@ class AjaxActions extends LocalActions {
    * @return string
    */
   public static function dealWithAddMissionObjRule($post) {
-    switch ($post['type'] ) {
+    switch ($post['type']) {
       case 'rule' :
       case 'setting' :
         $insert = MissionRuleActions::staticInsert($post);
       break;
-      case self::OBJECTIVE : 
+      case self::CST_OBJECTIVE :
         $insert = MissionObjectiveActions::staticInsert($post);
       break;
       default :
@@ -147,15 +147,15 @@ class AjaxActions extends LocalActions {
    * @return string
    */
   public static function dealWithRmvMissionObjRule($post) {
-    switch ($post['type'] ) {
+    switch ($post['type']) {
       case 'rule' :
       case 'setting' :
         $delete = MissionRuleActions::staticDelete($post);
       break;
-      case self::OBJECTIVE : 
+      case self::CST_OBJECTIVE :
         $delete = MissionObjectiveActions::staticDelete($post);
       break;
-      default : 
+      default :
         $delete = '';
       break;
     }
@@ -163,4 +163,3 @@ class AjaxActions extends LocalActions {
   }
 
 }
-?>

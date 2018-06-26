@@ -57,7 +57,7 @@ class WpPostServices extends GlobalServices {
    * @param int $limit
    * @return array
    */
-  function getChildPagesByParentId($pageId, $limit = -1) {
+  public function getChildPagesByParentId($pageId, $limit = -1) {
     global $post;
     $pages = array();
     $args = array(

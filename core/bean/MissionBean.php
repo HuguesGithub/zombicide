@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe MissionBean
  * @author Hugues.
@@ -16,7 +16,7 @@ class MissionBean extends MainPageBean {
   public function __construct($Mission='') {
     $services = array('Expansion', 'Mission', 'Objective', 'Rule', 'Tile');
     parent::__construct($services);
-    if ($Mission=='' ) { $Mission = new Mission(); }
+    if ($Mission=='') { $Mission = new Mission(); }
     $this->Mission = $Mission;
     $this->tplRow = 'web/pages/admin/mission/row.php';
     $this->tplEdit = 'web/pages/admin/mission/edit.php';
@@ -24,7 +24,7 @@ class MissionBean extends MainPageBean {
   
   /**
    * @return string
-   */  
+   */
   public function getRowForAdminPage() {
     $Mission = $this->Mission;
     $queryArgs = array('onglet'=>'mission', CST_POSTACTION=>'edit', 'id'=>$Mission->getId());
@@ -65,7 +65,7 @@ class MissionBean extends MainPageBean {
   }
   /**
    * @return string
-   */  
+   */
   public function getRowForMissionsPage() {
     $Mission = $this->Mission;
     $urlWpPost = $Mission->getWpPostUrl();
@@ -96,14 +96,14 @@ class MissionBean extends MainPageBean {
     $MissionTileServices = new MissionTileServices();
     $Mission = $MissionServices->select(__FILE__, __LINE__, $missionId);
     $Bean = new MissionBean($Mission);
-    switch ($action ) {
+    switch ($action) {
       case CST_RMVROW :
         $MissionTiles = $Mission->getMissionTiles();
-        if (!empty($MissionTiles) ) {
-          foreach ($MissionTiles as $MissionTile ) {
-            if ($MissionTile->getCoordY()==$rkRow ) {
+        if (!empty($MissionTiles)) {
+          foreach ($MissionTiles as $MissionTile) {
+            if ($MissionTile->getCoordY()==$rkRow) {
               $MissionTileServices->delete(__FILE__, __LINE__, $MissionTile);
-            } elseif ($MissionTile->getCoordY()>$rkRow ) {
+            } elseif ($MissionTile->getCoordY()>$rkRow) {
               $MissionTile->setCoordY($MissionTile->getCoordY()-1);
               $MissionTileServices->update(__FILE__, __LINE__, $MissionTile);
             }
@@ -113,11 +113,11 @@ class MissionBean extends MainPageBean {
       break;
       case CST_RMVCOL  :
         $MissionTiles = $Mission->getMissionTiles();
-        if (!empty($MissionTiles) ) {
-          foreach ($MissionTiles as $MissionTile ) {
-            if ($MissionTile->getCoordX()==$rkCol ) {
+        if (!empty($MissionTiles)) {
+          foreach ($MissionTiles as $MissionTile) {
+            if ($MissionTile->getCoordX()==$rkCol) {
               $MissionTileServices->delete(__FILE__, __LINE__, $MissionTile);
-            } elseif ($MissionTile->getCoordX()>$rkCol ) {
+            } elseif ($MissionTile->getCoordX()>$rkCol) {
               $MissionTile->setCoordX($MissionTile->getCoordX()-1);
               $MissionTileServices->update(__FILE__, __LINE__, $MissionTile);
             }

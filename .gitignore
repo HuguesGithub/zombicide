@@ -1,4 +1,6 @@
 ./doxy/*
+./doxy/html/*
+./doxy/html/search/*
 ./old/*
 *.doxyfile
 .buildpath
@@ -12,5 +14,5 @@
 .travis.yml
 *.html
 *.png
-logs/*
+./logs/*
 sonar-zombicide.properties

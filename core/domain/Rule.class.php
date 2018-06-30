@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe Rule
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class Rule extends LocalDomain {
+class Rule extends LocalDomain
+{
   /**
    * Id technique de la donnée
    * @var int $id
@@ -30,52 +33,62 @@ class Rule extends LocalDomain {
   /**
    * @param array $attributes
    */
-  public function __construct($attributes=array()) {
+  public function __construct($attributes=array())
+  {
     parent::__construct($attributes);
   }
   /**
    * @return int
    */
-  public function getId() {return $this->id; }
+  public function getId()
+  { return $this->id; }
   /**
    * @return int
    */
-  public function getSetting() { return $this->setting; }
+  public function getSetting()
+  { return $this->setting; }
   /**
    * @return string
    */
-  public function getCode() { return $this->code; }
+  public function getCode()
+  { return $this->code; }
   /**
    * @return string
    */
-  public function getDescription() { return $this->description; }
+  public function getDescription()
+  { return $this->description; }
   /**
    * @param int $id
    */
-  public function setId($id) { $this->id=$id; }
+  public function setId($id)
+  { $this->id=$id; }
   /**
    * @param int $setting
    */
-  public function setSetting($setting) { $this->setting=$setting; }
+  public function setSetting($setting)
+  { $this->setting=$setting; }
   /**
    * @param string $code
    */
-  public function setCode($code) { $this->code=$code; }
+  public function setCode($code)
+  { $this->code=$code; }
   /**
    * @param string $description
    */
-  public function setDescription($description) { $this->description=$description; }
+  public function setDescription($description)
+  { $this->description=$description; }
   /**
    * @return array
    */
-  public function getClassVars() { return get_class_vars('Rule'); }
+  public function getClassVars()
+  { return get_class_vars('Rule'); }
   /**
    * @param array $row
    * @param string $a
    * @param string $b
    * @return Rule
    */
-  public static function convertElement($row, $a='', $b='') { return parent::convertElement(new Rule(), self::getClassVars(), $row); }
+  public static function convertElement($row, $a='', $b='')
+  { return parent::convertElement(new Rule(), self::getClassVars(), $row); }
 
 }
-?>

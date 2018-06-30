@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe LiveMissionToken
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class LiveMissionToken extends LocalDomain {
+class LiveMissionToken extends LocalDomain
+{
     /**
      * Id technique de la donnée
      * @var int $id
@@ -30,52 +33,62 @@ class LiveMissionToken extends LocalDomain {
     /**
      * @param array $attributes
      */
-    public function __construct($attributes=array()) {
+    public function __construct($attributes=array())
+    {
         parent::__construct($attributes);
     }
     /**
      * @return int
      */
-    public function getId() { return $this->id; }
+    public function getId()
+    { return $this->id; }
     /**
      * @return int
      */
-    public function getLiveId() { return $this->liveId; }
+    public function getLiveId()
+    { return $this->liveId; }
     /**
      * @return int
      */
-    public function getMissionTokenId() { return $this->missionTokenId; }
+    public function getMissionTokenId()
+    { return $this->missionTokenId; }
     /**
      * @return string
      */
-    public function getStatus() { return $this->status; }
+    public function getStatus()
+    { return $this->status; }
     /**
      * @param int $id
      */
-    public function setId($id) { $this->id = $id; }
+    public function setId($id)
+    { $this->id = $id; }
     /**
      * @param int $liveId
      */
-    public function setLiveId($liveId) { $this->liveId = $liveId; }
+    public function setLiveId($liveId)
+    { $this->liveId = $liveId; }
     /**
      * @param int $missionTokenId
      */
-    public function setMissionTokenId($missionTokenId) { $this->missionTokenId = $missionTokenId; }
+    public function setMissionTokenId($missionTokenId)
+    { $this->missionTokenId = $missionTokenId; }
     /**
      * @param string $status
      */
-    public function setStatus($status) { $this->status = $status; }
+    public function setStatus($status)
+    { $this->status = $status; }
     /**
      * @return array
      */
-    public function getClassVars() { return get_class_vars('LiveToken'); }
+    public function getClassVars()
+    { return get_class_vars('LiveToken'); }
     /**
      * @param array $row
      * @param string $a
      * @param string $b
      * @return LiveToken
      */
-    public static function convertElement($row, $a='', $b='') { return parent::convertElement(new LiveToken(), self::getClassVars(), $row); }
+    public static function convertElement($row, $a='', $b='')
+    { return parent::convertElement(new LiveToken(), self::getClassVars(), $row); }
 
 }
-?>

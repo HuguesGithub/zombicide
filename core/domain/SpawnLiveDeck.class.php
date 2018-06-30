@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe SpawnLiveDeck
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class SpawnLiveDeck extends LocalDomain {
+class SpawnLiveDeck extends LocalDomain
+{
   /**
    * Id technique de la donnée
    * @var int $id
@@ -39,60 +42,72 @@ class SpawnLiveDeck extends LocalDomain {
   /**
    * @param array $attributes
    */
-  public function __construct($attributes=array()) {
-  $services = array('LiveDeck', 'Spawn');
+  public function __construct($attributes=array())
+  {
+    $services = array('LiveDeck', 'Spawn');
     parent::__construct($attributes, $services);
   }
   /**
    * @return int
    */
-  public function getId() { return $this->id; }
+  public function getId()
+  { return $this->id; }
   /**
    * @return int
    */
-  public function getLiveDeckId() { return $this->liveDeckId; }
+  public function getLiveDeckId()
+  { return $this->liveDeckId; }
   /**
    * @return int
    */
-  public function getSpawnCardId() { return $this->spawnCardId; }
+  public function getSpawnCardId()
+  { return $this->spawnCardId; }
   /**
    * @return int
    */
-  public function getRank() { return $this->rank; }
+  public function getRank()
+  { return $this->rank; }
   /**
    * @return string
    */
-  public function getStatus() { return $this->status; }
+  public function getStatus()
+  { return $this->status; }
   /**
    * @param int $id
    */
-  public function setId($id) { $this->id = $id; }
+  public function setId($id)
+  { $this->id = $id; }
   /**
    * @param int $liveDeckId
    */
-  public function setLiveDeckId($liveDeckId) { $this->liveDeckId = $liveDeckId; }
+  public function setLiveDeckId($liveDeckId)
+  { $this->liveDeckId = $liveDeckId; }
   /**
    * @param int $spawnCardId
    */
-  public function setSpawnCardId($spawnCardId) { $this->spawnCardId = $spawnCardId; }
+  public function setSpawnCardId($spawnCardId)
+  { $this->spawnCardId = $spawnCardId; }
   /**
    * @param int $rank
    */
-  public function setRank($rank) { $this->rank = $rank; }
+  public function setRank($rank)
+  { $this->rank = $rank; }
   /**
    * @param string $status
    */
-  public function setStatus($status) { $this->status = $status; }
+  public function setStatus($status)
+  { $this->status = $status; }
   /**
    * @return array
    */
-  public function getClassVars() { return get_class_vars('SpawnLiveDeck'); }
+  public function getClassVars()
+  { return get_class_vars('SpawnLiveDeck'); }
   /**
    * @param array $row
    * @param string $a
    * @param string $b
    * @return SpawnLiveDeck
    */
-  public static function convertElement($row, $a='', $b='') { return parent::convertElement(new SpawnLiveDeck(), self::getClassVars(), $row); }
+  public static function convertElement($row, $a='', $b='')
+  { return parent::convertElement(new SpawnLiveDeck(), self::getClassVars(), $row); }
 }
-?>

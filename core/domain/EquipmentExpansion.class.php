@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe EquipmentExpansion
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class EquipmentExpansion extends LocalDomain {
+class EquipmentExpansion extends LocalDomain
+{
   /**
    * Id technique de la jointure
    * @var int $id
@@ -30,52 +33,62 @@ class EquipmentExpansion extends LocalDomain {
   /**
    * @param array $attributes
    */
-  public function __construct($attributes=array()) {
+  public function __construct($attributes=array())
+  {
     parent::__construct($attributes);
   }
   /**
    * @return int
    */
-  public function getId() {return $this->id; }
+  public function getId()
+  { return $this->id; }
   /**
    * @ return int
    */
-  public function getEquipmentCardId() { return $this->equipmentCardId; }
+  public function getEquipmentCardId()
+  { return $this->equipmentCardId; }
   /**
    * @ return int
    */
-  public function getExpansionId() { return $this->expansionId; }
+  public function getExpansionId()
+  { return $this->expansionId; }
   /**
    * @ return int
    */
-  public function getQuantity() { return $this->quantity; }
+  public function getQuantity()
+  { return $this->quantity; }
   /**
    * @param int $id
    */
-  public function setId($id) { $this->id=$id; }
+  public function setId($id)
+  { $this->id=$id; }
   /**
    * @param int $equipmentCardId
    */
-  public function setEquipmentCardId($equipmentCardId) { $this->equipmentCardId = $equipmentCardId; }
+  public function setEquipmentCardId($equipmentCardId)
+  { $this->equipmentCardId = $equipmentCardId; }
   /**
    * @param int $expansionId
    */
-  public function setExpansionId($expansionId) { $this->expansionId = $expansionId; }
+  public function setExpansionId($expansionId)
+  { $this->expansionId = $expansionId; }
   /**
    * @param int $quantity
    */
-  public function setQuantity($quantity) { $this->quantity = $quantity; }
+  public function setQuantity($quantity)
+  { $this->quantity = $quantity; }
   /**
    * @return array
    */
-  public function getClassVars() { return get_class_vars('EquipmentExpansion'); }
+  public function getClassVars()
+  { return get_class_vars('EquipmentExpansion'); }
   /**
    * @param array $row
    * @param string $a
    * @param string $b
    * @return EquipmentExpansion
    */
-  public static function convertElement($row, $a='', $b='') { return parent::convertElement(new EquipmentExpansion(), self::getClassVars(), $row); }
+  public static function convertElement($row, $a='', $b='')
+  { return parent::convertElement(new EquipmentExpansion(), self::getClassVars(), $row); }
 
 }
-?>

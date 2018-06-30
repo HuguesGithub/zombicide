@@ -1,5 +1,6 @@
 <?php
-interface iConstants {
+interface iConstants
+{
   const DECKKEY = 'deckKey';
   const FORMATDATE = 'Y-m-d H:i:s';
   const KEYACCESS = 'keyAccess';
@@ -65,6 +66,4 @@ interface iConstants {
   const CST_ULTIMATE    = 'ultimate';
   const CST_UPLOADFILES   = 'upload_files';
   const CST_ZOMBIVOR    = 'zombivor';
-  
 }
-?>

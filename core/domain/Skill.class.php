@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe Skill
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class Skill extends LocalDomain {
+class Skill extends LocalDomain
+{
   /**
    * Id technique de la donnée
    * @var int $id
@@ -32,54 +35,63 @@ class Skill extends LocalDomain {
    * 
    * @param array $attributes
    */
-  public function __construct($attributes=array()) {
-    $services = array();
-    parent::__construct($attributes, $services);
+  public function __construct($attributes=array())
+  {
+    parent::__construct($attributes);
   }
 
   /**
    * @return int 
    */
-  public function getId() {return $this->id; }
+  public function getId()
+  { return $this->id; }
   /**
    * @return string
    */
-  public function getCode() { return $this->code; }
+  public function getCode()
+  { return $this->code; }
   /**
    * @return string
    */
-  public function getName() { return $this->name; }
+  public function getName()
+  { return $this->name; }
   /**
    * @return string
    */
-  public function getDescription() { return $this->description; }
+  public function getDescription()
+  { return $this->description; }
   /**
    * @param int $id
    */
-  public function setId($id) { $this->id=$id; }
+  public function setId($id)
+  { $this->id=$id; }
   /**
    * @param string $code
    */
-  public function setCode($code) { $this->code=$code; }
+  public function setCode($code)
+  { $this->code=$code; }
   /**
    * @param string $name
    */
-  public function setName($name) { $this->name=$name; }
+  public function setName($name)
+  { $this->name=$name; }
   /**
    * @param string $description
    */
-  public function setDescription($description) { $this->description=$description; }
+  public function setDescription($description)
+  { $this->description=$description; }
   /**
    * @return array
    */
-  public function getClassVars() { return get_class_vars('Skill'); }
+  public function getClassVars()
+  { return get_class_vars('Skill'); }
   /**
    * @param array $row
    * @param string $a
    * @param string $b
    * @return Skill
    */
-  public static function convertElement($row, $a='', $b='') { return parent::convertElement(new Skill(), self::getClassVars(), $row); }
+  public static function convertElement($row, $a='', $b='')
+  { return parent::convertElement(new Skill(), self::getClassVars(), $row); }
   
 }
-?>

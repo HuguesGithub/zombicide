@@ -11,32 +11,12 @@ if (!defined('ABSPATH')) {
 class EquipmentExpansionDaoImpl extends LocalDaoImpl
 {
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT id, equipmentCardId, expansionId, quantity ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_equipment_expansion ";
-  /**
-   * Recherche avec filtres
-   * @var string $whereFilters
-   */
-  protected $whereFilters = "WHERE equipmentCardId LIKE '%s' AND expansionId LIKE '%s' ";
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_equipment_expansion (equipmentCardId, expansionId, quantity) VALUES ('%s', '%s', '%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_equipment_expansion SET equipmentCardId='%s', expansionId='%s', quantity='%s' ";
-  
-  public function __construct() {}
+  public function __construct()
+  {
+  	parent::__construct('EquipementExpansion');
+  }
   /**
    * @param array $rows
    * @return array

@@ -11,32 +11,12 @@ if (!defined('ABSPATH')) {
 class EquipmentWeaponProfileDaoImpl extends LocalDaoImpl
 {
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT id, equipmentCardId, weaponProfileId, noisy ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_equipment_weaponprofile ";
-  /**
-   * Recherche avec filtres
-   * @var string $whereFilters
-   */
-  protected $whereFilters = "WHERE equipmentCardId LIKE '%s' AND weaponProfileId LIKE '%s' ";
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_equipment_weaponprofile (equipmentCardId, weaponProfileId, noisy) VALUES ('%s', '%s', '%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_equipment_weaponprofile SET equipmentCardId='%s', weaponProfileId='%s', noisy='%s' ";
-  
-  public function __construct() {}
+  public function __construct()
+  {
+  	parent::__construct('EquipementWeaponProfile');
+  }
   /**
    * @param array $rows
    * @return array

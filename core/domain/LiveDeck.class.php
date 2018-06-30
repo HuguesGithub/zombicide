@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe LiveDeck
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class LiveDeck extends LocalDomain {
+class LiveDeck extends LocalDomain
+{
   /**
    * Id technique de la donnée
    * @var int $id
@@ -25,54 +28,66 @@ class LiveDeck extends LocalDomain {
   /**
    * @param array $attributes
    */
-  public function __construct($attributes=array()) {
+  public function __construct($attributes=array())
+  {
     $services = array('SpawnLiveDeck');
     parent::__construct($attributes, $services);
   }
   /**
    * @return int
    */
-  public function getId() { return $this->id; }
+  public function getId()
+  { return $this->id; }
   /**
    * @return string
    */
-  public function getDeckKey() { return $this->deckKey; }
+  public function getDeckKey()
+  { return $this->deckKey; }
   /**
    * @return string
    */
-  public function getDateUpdate() { return $this->dateUpdate; }
+  public function getDateUpdate()
+  { return $this->dateUpdate; }
   /**
    * @param int $id
    */
-  public function setId($id) { $this->id = $id; }
+  public function setId($id)
+  { $this->id = $id; }
   /**
    * @param string $deckKey
    */
-  public function setDeckKey($deckKey) { $this->deckKey = $deckKey; }
+  public function setDeckKey($deckKey)
+  { $this->deckKey = $deckKey; }
   /**
    * @param string $dateUpdate
    */
-  public function setDateUpdate($dateUpdate) { $this->dateUpdate = $dateUpdate; }
+  public function setDateUpdate($dateUpdate)
+  { $this->dateUpdate = $dateUpdate; }
   /**
    * @return array
    */
-  public function getClassVars() { return get_class_vars('LiveDeck'); }
+  public function getClassVars()
+  { return get_class_vars('LiveDeck'); }
   /**
    * @param array $row
    * @param string $a
    * @param string $b
    * @return LiveDeck
    */
-  public static function convertElement($row, $a='', $b='') { return parent::convertElement(new LiveDeck(), self::getClassVars(), $row); }
+  public static function convertElement($row, $a='', $b='')
+  { return parent::convertElement(new LiveDeck(), self::getClassVars(), $row); }
   /**
    * @return int
    */
-  public function getNbCardsInDeck() {
+  public function getNbCardsInDeck()
+  {
     $SpawnLiveDecks = $this->getSpawnLiveDecks();
     $nb = 0;
-    if (!empty($SpawnLiveDecks) ) {
-      foreach ($SpawnLiveDecks as $SpawnLiveDeck ) {
-        if ($SpawnLiveDeck->getStatus()=='P' ) { $nb++; }
+    if (!empty($SpawnLiveDecks)) {
+      foreach ($SpawnLiveDecks as $SpawnLiveDeck) {
+        if ($SpawnLiveDeck->getStatus()=='P') {
+          $nb++;
+        }
       }
     }
     return $nb;
@@ -80,12 +95,15 @@ class LiveDeck extends LocalDomain {
   /**
    * @return int
    */
-  public function getNbCardsInDiscard() {
+  public function getNbCardsInDiscard()
+  {
     $SpawnLiveDecks = $this->getSpawnLiveDecks();
     $nb = 0;
-    if (!empty($SpawnLiveDecks) ) {
-      foreach ($SpawnLiveDecks as $SpawnLiveDeck ) {
-        if ($SpawnLiveDeck->getStatus()=='D' ) { $nb++; }
+    if (!empty($SpawnLiveDecks)) {
+      foreach ($SpawnLiveDecks as $SpawnLiveDeck) {
+        if ($SpawnLiveDeck->getStatus()=='D') {
+          $nb++;
+        }
       }
     }
     return $nb;
@@ -93,7 +111,7 @@ class LiveDeck extends LocalDomain {
   /**
    * @param array $SpawnLiveDecks
    */
-  public function setSpawnLiveDecks($SpawnLiveDecks) { $this->SpawnLiveDecks = $SpawnLiveDecks; }
+  public function setSpawnLiveDecks($SpawnLiveDecks)
+  { $this->SpawnLiveDecks = $SpawnLiveDecks; }
   
 }
-?>

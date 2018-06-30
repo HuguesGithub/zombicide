@@ -37,7 +37,7 @@ class LevelServices extends LocalServices {
    * @param string $defaultLabel
    * @return string
    */
-  public function getLevelsSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultLabel='') {
+  public function getLevelsSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=false, $defaultLabel='') {
     $Levels = $this->getLevelsWithFilters($file, $line);
   return $this->getLevelsSelectAlreadyRequested($file, $line, $Levels, $value, $prefix, $classe, $multiple, $defaultLabel);
   }
@@ -53,7 +53,7 @@ class LevelServices extends LocalServices {
    * @param string $defaultLabel
    * @return string
    */
-  public function getLevelsSelectAlreadyRequested($file, $line, $Levels, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultLabel='') {
+  public function getLevelsSelectAlreadyRequested($file, $line, $Levels, $value='', $prefix='', $classe='form-control', $multiple=false, $defaultLabel='') {
     $arrSetLabels = array();
     foreach ($Levels as $Level) {
       $arrSetLabels[$Level->getId()] = $Level->getName();

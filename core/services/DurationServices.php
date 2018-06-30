@@ -44,7 +44,7 @@ class DurationServices extends LocalServices {
    * @param string $defaultValue
    * @return string
    */
-  public function getDurationsSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultValue='') {
+  public function getDurationsSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=false, $defaultValue='') {
     $Durations = $this->getDurationsWithFilters($file, $line, array(), CST_MINDURATION, 'asc');
     $arrSetLabels = array();
     foreach ($Durations as $Duration) {

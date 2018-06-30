@@ -59,14 +59,14 @@ class MissionsPageBean extends PagePageBean {
       $strPagination .= '<li class="page-item'.($i==$curPage?' disabled':'').'"><a class="page-link ';
       $strPagination .= 'ajaxAction" href="#" data-paged="'.$i.'" data-ajaxaction="paged">'.$i.'</a></li>';
     }
-    $hasFilters = FALSE;
+    $hasFilters = false;
     $arrLevelIds = '';
     $Levels = $this->LevelServices->getLevelsWithFilters(__FILE__, __LINE__);
     if (isset($arrFilters[CST_LEVELID]) && !empty($arrFilters[CST_LEVELID])) {
         $arrLevelIds = $arrFilters[CST_LEVELID];
         foreach ($arrFilters[CST_LEVELID] as $id) {
         $name = $this->getNameById($Levels, $id);
-        $hasFilters = TRUE;
+        $hasFilters = true;
         }
     }
     $arrPlayerIds = '';
@@ -75,7 +75,7 @@ class MissionsPageBean extends PagePageBean {
       $arrPlayerIds = $arrFilters[CST_PLAYERID];
         foreach ($arrFilters[CST_PLAYERID] as $id) {
         $name = $this->getNameById($Players, $id);
-        $hasFilters = TRUE;
+        $hasFilters = true;
         }
     }
     $arrDurationIds = '';
@@ -84,7 +84,7 @@ class MissionsPageBean extends PagePageBean {
         $arrDurationIds = $arrFilters[CST_DURATIONID];
         foreach ($arrFilters[CST_DURATIONID] as $id) {
         $name = $this->getNameById($Durations, $id);
-        $hasFilters = TRUE;
+        $hasFilters = true;
         }
     }
     $arrOrigineIds = '';
@@ -93,7 +93,7 @@ class MissionsPageBean extends PagePageBean {
         $arrOrigineIds = $arrFilters[CST_ORIGINEID];
         foreach ($arrFilters[CST_ORIGINEID] as $id) {
         $name = $this->getNameById($Origines, $id);
-        $hasFilters = TRUE;
+        $hasFilters = true;
         }
     }
     $arrExpansionIds = '';
@@ -102,7 +102,7 @@ class MissionsPageBean extends PagePageBean {
         $arrExpansionIds = $arrFilters[CST_EXPANSIONID];
         foreach ($arrFilters[CST_EXPANSIONID] as $id) {
         $name = $this->getNameById($Expansions, $id);
-        $hasFilters = TRUE;
+        $hasFilters = true;
         }
     }
     $selectClasses = 'custom-select custom-select-sm filters';
@@ -115,9 +115,9 @@ class MissionsPageBean extends PagePageBean {
       // Tri sue le Titre - 5
       ($sort_col=='title' ? '_'.$sort_order:''),
       // Filtre sur Difficulté
-      $this->LevelServices->getLevelsSelectAlreadyRequested(__FILE__, __LINE__, $Levels, $arrLevelIds, '', $selectClasses, TRUE),
+      $this->LevelServices->getLevelsSelectAlreadyRequested(__FILE__, __LINE__, $Levels, $arrLevelIds, '', $selectClasses, true),
       // Filtre sur Joueurs
-      $this->PlayerServices->getNbPlayersSelect(__FILE__, __LINE__, $arrPlayerIds, '', $selectClasses, TRUE),
+      $this->PlayerServices->getNbPlayersSelect(__FILE__, __LINE__, $arrPlayerIds, '', $selectClasses, true),
       // Les lignes du tableau - 8
       $strBody,
       // N° du premier élément - 9
@@ -135,13 +135,13 @@ class MissionsPageBean extends PagePageBean {
       // Nombre de pages - 15
       $nbPages,
       // Filtre sur Durée - 16
-      $this->DurationServices->getDurationsSelect(__FILE__, __LINE__, $arrDurationIds, '', $selectClasses, TRUE),
+      $this->DurationServices->getDurationsSelect(__FILE__, __LINE__, $arrDurationIds, '', $selectClasses, true),
       // Filtre sur Origine - 17
-      $this->OrigineServices->getOriginesSelect(__FILE__, __LINE__, $arrOrigineIds, '', $selectClasses, TRUE),
+      $this->OrigineServices->getOriginesSelect(__FILE__, __LINE__, $arrOrigineIds, '', $selectClasses, true),
         // Doit-on afficher les filtres ? - 18
         (!$hasFilters ? 'hidden' : ''),
       // Filtre sur Extension - 19
-      ($this->isAdmin() ? $this->ExpansionServices->getExpansionsSelectAlreadyRequested(__FILE__, __LINE__, $Expansions, $arrExpansionIds, '', $selectClasses, TRUE) : ''),
+      ($this->isAdmin() ? $this->ExpansionServices->getExpansionsSelectAlreadyRequested(__FILE__, __LINE__, $Expansions, $arrExpansionIds, '', $selectClasses, true) : ''),
     
    );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-missions.php');

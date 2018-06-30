@@ -16,7 +16,7 @@ class WpPostSurvivorBean extends MainPageBean {
    * @param string $isHome
    * @return string
    */
-  public function displayWpPost($isHome=FALSE) {
+  public function displayWpPost($isHome=false) {
     $WpPost = $this->WpPost;
     $Survivor = $this->getSurvivor();
     $args = array(

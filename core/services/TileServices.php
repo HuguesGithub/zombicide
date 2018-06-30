@@ -45,7 +45,7 @@ class TileServices extends LocalServices {
    * @param string $defaultLabel
    * @return string
    */
-  public function getTilesSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultLabel='') {
+  public function getTilesSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=false, $defaultLabel='') {
   if (empty($this->MissionTiles)) {
       $MissionTiles = $this->getTilesWithFilters($file, $line, array(), 'id', 'asc');
     $this->MissionTiles = $MissionTiles;

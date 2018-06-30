@@ -1,22 +1,29 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe LocalServices
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class LocalServices extends GlobalServices implements iConstants {
+class LocalServices extends GlobalServices implements iConstants
+{
 
   /**
    * @param array $services
    */
-  public function __construct($services=array()) {
+  public function __construct($services=array())
+  {
     if (!empty($services)) {
       foreach ($services as $service) {
         switch ($service) {
-          case 'Expansion'         : $this->ExpansionServices = FactoryServices::getExpansionServices(); break;
-          default : break;
+          case 'Expansion'         :
+          	$this->ExpansionServices = FactoryServices::getExpansionServices();
+          break;
+          default :
+          	break;
         }
       }
     }
@@ -32,15 +39,20 @@ class LocalServices extends GlobalServices implements iConstants {
    * @param string $classe
    * @param bool $multiple
    */
-  protected function getSetSelect($file, $line, $arrSetLabels, $name, $value, $labelDefault='', $classe='form-control', $multiple=FALSE) {
+  protected function getSetSelect($file, $line, $arrSetLabels, $name, $value, $labelDefault='', $classe='form-control', $multiple=false)
+  {
     $strSelect = '';
     $selName = $name;
     if ($labelDefault!='') { $strSelect .= '<label class="screen-reader-text" for="'.$name.'">'.$labelDefault.'</label>'; }
     $strSelect .= '<select id="'.$name.'" name="'.$selName.'" class="'.$classe.'"'.($multiple?' multiple':'').'>';
-    if (!$multiple && $labelDefault!='') { $strSelect .= '<option value="">'.$labelDefault.'</option>'; }
+    if (!$multiple && $labelDefault!='') {
+      $strSelect .= '<option value="">'.$labelDefault.'</option>';
+    }
     if (!empty($arrSetLabels)) {
-      foreach ($arrSetLabels as $key=>$labelValue) {
-        if ($key=='') { continue; }
+      foreach ($arrSetLabels as $key => $labelValue) {
+        if ($key=='') {
+          continue;
+        }
         $strSelect .= '<option value="'.$key.'"';
         $strSelect .= ($this->isKeySelected($key, $value) ? ' selected="selected"' : '');
         $strSelect .= '>'.$labelValue.'</option>';
@@ -49,15 +61,18 @@ class LocalServices extends GlobalServices implements iConstants {
     return $strSelect.'</select>';
   }
   private function isKeySelected($key, $values) {
-    if (!is_array($values)) { return $key==$values; }
-    $isSelected = FALSE;
+    if (!is_array($values)) {
+      return $key==$values;
+    }
+    $isSelected = false;
     if (!empty($values)) {
-      foreach ($values as $_=>$value) {
-        if ($key==$value) { $isSelected = TRUE; }
+      foreach ($values as $_ => $value) {
+        if ($key==$value) {
+          $isSelected = true;
+        }
       }
     }
     return $isSelected;
   }
   
 }
-?>

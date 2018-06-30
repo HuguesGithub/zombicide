@@ -42,7 +42,7 @@ class PostPageBean extends MainPageBean {
     if (!empty($WpPosts)) {
       foreach ($WpPosts as $WpPost) {
         $WpBean = new WpPostMissionBean($WpPost);
-        $strContent .= $WpBean->displayThumbWpPost(TRUE);
+        $strContent .= $WpBean->displayThumbWpPost(true);
       }
     }
     $strModel = '<li class="objRule">%1$s <span class="tooltip"><header>%1$s</header><content>%2$s</content></span></li>';

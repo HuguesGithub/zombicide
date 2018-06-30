@@ -43,7 +43,7 @@ class TokenServices extends LocalServices {
    * @param string $defaultLabel
    * @return string
    */
-  public function getTokensSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultLabel='') {
+  public function getTokensSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=false, $defaultLabel='') {
     $Tokens = $this->getTokensWithFilters($file, $line, array(), 'id', 'asc');
     $arrSetLabels = array();
     foreach ($Tokens as $Token) {

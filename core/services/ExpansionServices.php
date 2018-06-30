@@ -1,24 +1,31 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe ExpansionServices
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class ExpansionServices extends LocalServices {
+class ExpansionServices extends LocalServices
+{
   /**
    * L'objet Dao pour faire les requêtes
    * @var ExpansionDaoImpl $Dao
    */
   protected $Dao;
   
-  public function __construct() { $this->Dao = new ExpansionDaoImpl(); }
+  public function __construct()
+  {
+  	$this->Dao = new ExpansionDaoImpl();
+  }
 
-  private function buildFilters($arrFilters) {
+  private function buildFilters($arrFilters)
+  {
     $arrParams = array();
     array_push($arrParams, (isset($arrFilters['code']) && !is_array($arrFilters['code'])) ? $arrFilters['code'] : '%');
-    array_push($arrParams, (isset($arrFilters[CST_NBMISSIONS]) && !is_array($arrFilters[CST_NBMISSIONS])) ? $arrFilters[CST_NBMISSIONS] : '0');
+    array_push($arrParams, (isset($arrFilters[self::CST_NBMISSIONS]) && !is_array($arrFilters[self::CST_NBMISSIONS])) ? $arrFilters[self::CST_NBMISSIONS] : '0');
     return $arrParams;
   }
   /**
@@ -29,7 +36,8 @@ class ExpansionServices extends LocalServices {
    * @param string $order
    * @return array
    */
-  public function getExpansionsWithFilters($file, $line, $arrFilters=array(), $orderby='name', $order='asc') {
+  public function getExpansionsWithFilters($file, $line, $arrFilters=array(), $orderby='name', $order='asc')
+  {
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
     $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
@@ -45,7 +53,8 @@ class ExpansionServices extends LocalServices {
    * @param string $defaultLabel
    * @return string
    */
-  public function getExpansionsSelect($file, $line, $value='', $prefix='', $classe=CST_FORMCONTROL, $multiple=FALSE, $defaultLabel='') {
+  public function getExpansionsSelect($file, $line, $value='', $prefix='', $classe=self::CST_FORMCONTROL, $multiple=false, $defaultLabel='')
+  {
     $Expansions = $this->getExpansionsWithFilters($file, $line);
   return $this->getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value, $prefix, $classe, $multiple, $defaultLabel);
   }
@@ -61,12 +70,13 @@ class ExpansionServices extends LocalServices {
    * @param string $defaultLabel
    * @return string
    */
-  public function getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value='', $prefix='', $classe=CST_FORMCONTROL, $multiple=FALSE, $defaultLabel='') {
+  public function getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value='', $prefix='', $classe=self::CST_FORMCONTROL, $multiple=false, $defaultLabel='')
+  {
     $arrSetLabels = array();
     foreach ($Expansions as $Expansion) {
       $arrSetLabels[$Expansion->getId()] = $Expansion->getName();
     }
-    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.CST_EXPANSIONID, $value, $defaultLabel, $classe, $multiple);
+    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.self::CST_EXPANSIONID, $value, $defaultLabel, $classe, $multiple);
   }
   
   
@@ -96,4 +106,3 @@ class ExpansionServices extends LocalServices {
   }
   */
 }
-?>

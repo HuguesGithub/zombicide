@@ -45,7 +45,7 @@ class RuleServices extends LocalServices {
    * @param string $defaultLabel
    * @return string
    */
-  public function getRuleSelect($file, $line, $value='', $prefix='id', $classe=CST_FORMCONTROL, $multiple=FALSE, $defaultLabel='') {
+  public function getRuleSelect($file, $line, $value='', $prefix='id', $classe=CST_FORMCONTROL, $multiple=false, $defaultLabel='') {
     $Rules = $this->getRulesWithFilters($file, $line);
     $arrSetLabels = array();
     foreach ($Rules as $Rule) {
@@ -63,7 +63,7 @@ class RuleServices extends LocalServices {
    * @param string $defaultLabel
    * @return string
    */
-  public function getRuleNoSettingSelect($file, $line, $value='', $prefix='id', $classe=CST_FORMCONTROL, $multiple=FALSE, $defaultLabel='---') {
+  public function getRuleNoSettingSelect($file, $line, $value='', $prefix='id', $classe=CST_FORMCONTROL, $multiple=false, $defaultLabel='---') {
     $Rules = $this->getRulesWithFilters($file, $line, array(self::CST_SETTING=>0));
     $arrSetLabels = array();
     foreach ($Rules as $Rule) {
@@ -81,7 +81,7 @@ class RuleServices extends LocalServices {
    * @param string $defaultLabel
    * @return string
    */
-  public function getRuleSettingSelect($file, $line, $value='', $prefix='id', $classe=CST_FORMCONTROL, $multiple=FALSE, $defaultLabel='---') {
+  public function getRuleSettingSelect($file, $line, $value='', $prefix='id', $classe=CST_FORMCONTROL, $multiple=false, $defaultLabel='---') {
     $Rules = $this->getRulesWithFilters($file, $line, array(self::CST_SETTING=>1));
     $arrSetLabels = array();
     foreach ($Rules as $Rule) {

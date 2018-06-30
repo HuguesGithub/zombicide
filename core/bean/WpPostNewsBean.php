@@ -15,7 +15,7 @@ class WpPostNewsBean extends MainPageBean {
    * @param string $isHome
    * @return string
    */
-  public function displayThumbWpPost($isHome=FALSE) {
+  public function displayThumbWpPost($isHome=false) {
   return 'News Thumb';
 
   }
@@ -23,7 +23,7 @@ class WpPostNewsBean extends MainPageBean {
    * @param string $isHome
    * @return string
    */
-  public function displayWpPost($isHome=FALSE) {
+  public function displayWpPost($isHome=false) {
     $WpPost = $this->WpPost;
     $args = array(
       $WpPost->getPostContent(),

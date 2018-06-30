@@ -27,7 +27,7 @@ class AdminPageBean extends MainPageBean {
   public function analyzeUri() {
     $uri = $_SERVER['REQUEST_URI'];
     $pos = strpos($uri, '?');
-    if ($pos!==FALSE) {
+    if ($pos!==false) {
       $arrParams = explode('&', substr($uri, $pos+1, strlen($uri)));
       if (!empty($arrParams)) {
         foreach ($arrParams as $param) {
@@ -38,7 +38,7 @@ class AdminPageBean extends MainPageBean {
       $uri = substr($uri, 0, $pos-1);
     }
     $pos = strpos($uri, '#');
-    if ($pos!==FALSE) { $this->anchor = substr($uri, $pos+1, strlen($uri)); }
+    if ($pos!==false) { $this->anchor = substr($uri, $pos+1, strlen($uri)); }
     if (isset($_POST)) { foreach ($_POST as $key=>$value) { $this->urlParams[$key] = $value; } }
     return $uri;
   }

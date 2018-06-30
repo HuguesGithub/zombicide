@@ -19,7 +19,7 @@ class HomePageBean extends MainPageBean {
    */
   public function getContentPage() {
     $strContent  = '<section id="homeSectionArticles" class="batchArticles missions survivors show-survivor">';
-    $strContent .= $this->addMoreNews(0, FALSE);
+    $strContent .= $this->addMoreNews(0, false);
     $strContent .= '</section>';
     $strContent .= '<section class="col-xs-4 col-xs-offset-4">';
     $strContent .= '<div class="text-center"><div id="more_news" class="special_buttons">Plus de news</div></div>';
@@ -39,14 +39,14 @@ class HomePageBean extends MainPageBean {
    * @param string $isAjax
    * @return string
    */
-  public function addMoreNews($offset=0, $isAjax=TRUE) {
+  public function addMoreNews($offset=0, $isAjax=true) {
   $postStatus = ($this->isAdmin() ? 'publish, private, future' : 'publish');
     $WpPosts = $this->WpPostServices->getArticles(__FILE__, __LINE__, array('orderby'=> 'post_date', 'order'=>'DESC', 'posts_per_page'=>6, 'offset'=>$offset, 'post_status'=>$postStatus));
     $strContent = '';
     if (!empty($WpPosts)) {
       foreach ($WpPosts as $WpPost) {
     $WpBean = $WpPost->getBean();
-        $strContent .= $WpBean->displayWpPost(TRUE);
+        $strContent .= $WpBean->displayWpPost(true);
       }
       $strContent .= '<div class="clearfix"></div>';
     }

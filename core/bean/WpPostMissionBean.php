@@ -16,7 +16,7 @@ class WpPostMissionBean extends MainPageBean {
    * @param string $isHome
    * @return string
    */
-  public function displayThumbWpPost($isHome=FALSE) {
+  public function displayThumbWpPost($isHome=false) {
     $WpPost = $this->WpPost;
     $Mission = $this->getMission();
     $args = array(
@@ -40,7 +40,7 @@ class WpPostMissionBean extends MainPageBean {
    * @param string $isHome
    * @return string
    */
-  public function displayWpPost($isHome=FALSE) {
+  public function displayWpPost($isHome=false) {
     $WpPost = $this->WpPost;
     $Mission = $this->getMission();
     $missionImg = 'http://zombicide.jhugues.fr/wp-content/uploads/sites/11'.$WpPost->getPostMeta('missionImg');

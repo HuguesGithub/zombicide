@@ -123,7 +123,7 @@ class ChatActions extends LocalActions {
       self::CST_TIMESTAMP=>date(self::CST_FORMATDATE),
    );
     $this->postChat($arr);
-    $returned = '{'.$this->getChatContent(FALSE).', "header-ul-chat-saisie":';
+    $returned = '{'.$this->getChatContent(false).', "header-ul-chat-saisie":';
     return $returned.json_encode('<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>').'}';
   }
   private function joinNewLive($deckKey='') {
@@ -139,7 +139,7 @@ class ChatActions extends LocalActions {
    );
     $this->postChat($arr);
     $_SESSION[self::CST_DECKKEY] = $deckKey;
-    $returned  = '{'.$this->getChatContent(FALSE).', "header-ul-chat-saisie":';
+    $returned  = '{'.$this->getChatContent(false).', "header-ul-chat-saisie":';
     $strJson = '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$this->liveId.'">'.$deckKey.'</a></li>';
     return $returned.json_encode($strJson).'}';
   }
@@ -160,7 +160,7 @@ class ChatActions extends LocalActions {
    * @param boolean $directReturn
    * @return string
    */
-  public function getChatContent($directReturn=TRUE) {
+  public function getChatContent($directReturn=true) {
     $arr = array(self::CST_LIVEID=>$this->liveId, self::CST_SENDTOID=>$this->userId, self::CST_TIMESTAMP=>$this->timestamp);
     $Chats = $this->ChatServices->getChatsWithFilters(__FILE__, __LINE__, $arr);
     $strChats = '';

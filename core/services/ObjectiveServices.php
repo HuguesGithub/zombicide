@@ -44,7 +44,7 @@ class ObjectiveServices extends LocalServices {
    * @param string $defaultLabel
    * @return string
    */
-  public function getObjectiveSelect($file, $line, $value='', $prefix='id', $classe='form-control', $multiple=FALSE, $defaultLabel='---') {
+  public function getObjectiveSelect($file, $line, $value='', $prefix='id', $classe='form-control', $multiple=false, $defaultLabel='---') {
     $Objectives = $this->getObjectivesWithFilters($file, $line);
     $arrSetLabels = array();
     foreach ($Objectives as $Objective) {

@@ -132,7 +132,7 @@ class SpawnDeckPageBean extends PagePageBean {
         $id = $Expansion->getId();
         $Spawns = $this->SpawnServices->getSpawnsWithFilters(__FILE__, __LINE__, array('expansionId'=>$id), 'spawnNumber', 'ASC');
         if (empty($Spawns)) {
-        	continue;
+          continue;
         }
         $FirstSpawn = array_shift($Spawns);
         $LastSpawn = array_pop($Spawns);

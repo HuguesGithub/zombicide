@@ -35,15 +35,15 @@ class LocalDaoImpl extends GlobalDaoImpl implements iConstants
   protected $update;
 
   public function __construct($strDao='') {
-  	$urlIni = '/wp-content/plugins/zombicide/core/daoimpl/requests.ini';
-  	$adminUrl = getcwd().$urlIni;
-  	$arrConfigs = parse_ini_file($adminUrl, true);
-  	
-  	$this->selectRequest = $arrConfigs[$strDao]['select'];
-  	$this->fromRequest = $arrConfigs[$strDao]['from'];
-  	$this->whereFilters = isset($arrConfigs[$strDao]['where']) ? $arrConfigs[$strDao]['where'] : "WHERE 1=1 ";
-  	$this->insert = $arrConfigs[$strDao]['insert'];
-  	$this->update = $arrConfigs[$strDao]['update'];
+    $urlIni = '/wp-content/plugins/zombicide/core/daoimpl/requests.ini';
+    $adminUrl = getcwd().$urlIni;
+    $arrConfigs = parse_ini_file($adminUrl, true);
+    
+    $this->selectRequest = $arrConfigs[$strDao]['select'];
+    $this->fromRequest = $arrConfigs[$strDao]['from'];
+    $this->whereFilters = isset($arrConfigs[$strDao]['where']) ? $arrConfigs[$strDao]['where'] : "WHERE 1=1 ";
+    $this->insert = $arrConfigs[$strDao]['insert'];
+    $this->update = $arrConfigs[$strDao]['update'];
   }
   /**
    * @param string $type
@@ -56,94 +56,94 @@ class LocalDaoImpl extends GlobalDaoImpl implements iConstants
       foreach ($rows as $row) {
         switch ($type) {
           case 'Chat'           :
-          	$Items[] = Chat::convertElement($row);
+            $Items[] = Chat::convertElement($row);
           break;
           case 'Duration'         :
-          	$Items[] = Duration::convertElement($row);
+            $Items[] = Duration::convertElement($row);
           break;
           case 'Equipment'        :
-          	$Items[] = Equipment::convertElement($row);
+            $Items[] = Equipment::convertElement($row);
           break;
           case 'EquipmentExpansion'   :
-          	$Items[] = EquipmentExpansion::convertElement($row);
+            $Items[] = EquipmentExpansion::convertElement($row);
           break;
           case 'EquipmentKeyword'     :
-          	$Items[] = EquipmentKeyword::convertElement($row);
+            $Items[] = EquipmentKeyword::convertElement($row);
           break;
           case 'EquipmentWeaponProfile' :
-          	$Items[] = EquipmentWeaponProfile::convertElement($row);
+            $Items[] = EquipmentWeaponProfile::convertElement($row);
           break;
           case 'Expansion'        :
-          	$Items[] = Expansion::convertElement($row);
+            $Items[] = Expansion::convertElement($row);
           break;
           case 'Keyword'        :
-          	$Items[] = Keyword::convertElement($row);
+            $Items[] = Keyword::convertElement($row);
           break;
           case 'Level'          :
-          	$Items[] = Level::convertElement($row);
+            $Items[] = Level::convertElement($row);
           break;
           case 'Live'           :
-          	$Items[] = Live::convertElement($row);
+            $Items[] = Live::convertElement($row);
           break;
           case 'LiveDeck'         :
-          	$Items[] = LiveDeck::convertElement($row);
+            $Items[] = LiveDeck::convertElement($row);
           break;
           case 'Market'         :
-          	$Items[] = Market::convertElement($row);
+            $Items[] = Market::convertElement($row);
           break;
           case 'Mission'        :
-          	$Items[] = Mission::convertElement($row);
+            $Items[] = Mission::convertElement($row);
           break;
           case 'MissionExpansion'     :
-          	$Items[] = MissionExpansion::convertElement($row);
+            $Items[] = MissionExpansion::convertElement($row);
           break;
           case 'MissionObjective'     :
-          	$Items[] = MissionObjective::convertElement($row);
+            $Items[] = MissionObjective::convertElement($row);
           break;
           case 'MissionRule'      :
-          	$Items[] = MissionRule::convertElement($row);
+            $Items[] = MissionRule::convertElement($row);
           break;
           case 'MissionTile'      :
-          	$Items[] = MissionTile::convertElement($row);
+            $Items[] = MissionTile::convertElement($row);
           break;
           case 'Objective'        :
-          	$Items[] = Objective::convertElement($row);
+            $Items[] = Objective::convertElement($row);
           break;
           case 'Origine'        :
-          	$Items[] = Origine::convertElement($row);
+            $Items[] = Origine::convertElement($row);
           break;
           case 'Player'         :
-          	$Items[] = Player::convertElement($row);
+            $Items[] = Player::convertElement($row);
           break;
           case 'Rule'           :
-          	$Items[] = Rule::convertElement($row);
+            $Items[] = Rule::convertElement($row);
           break;
           case 'Skill'          :
-          	$Items[] = Skill::convertElement($row);
+            $Items[] = Skill::convertElement($row);
           break;
           case 'Spawn'          :
-          	$Items[] = Spawn::convertElement($row);
+            $Items[] = Spawn::convertElement($row);
           break;
           case 'SpawnLiveDeck'      :
-          	$Items[] = SpawnLiveDeck::convertElement($row);
+            $Items[] = SpawnLiveDeck::convertElement($row);
           break;
           case 'Survivor'         :
-          	$Items[] = Survivor::convertElement($row);
+            $Items[] = Survivor::convertElement($row);
           break;
           case 'SurvivorSkill'      :
-          	$Items[] = SurvivorSkill::convertElement($row);
+            $Items[] = SurvivorSkill::convertElement($row);
           break;
           case 'Tile'           :
-          	$Items[] = Tile::convertElement($row);
+            $Items[] = Tile::convertElement($row);
           break;
           case 'Token'          :
-          	$Items[] = Token::convertElement($row);
+            $Items[] = Token::convertElement($row);
           break;
           case 'WeaponProfile'      :
-          	$Items[] = WeaponProfile::convertElement($row);
+            $Items[] = WeaponProfile::convertElement($row);
           break;
           default                    :
-          	echo 'Must add ['.$type.'] in Zomb::LocalDaoImpl.<br>';
+            echo 'Must add ['.$type.'] in Zomb::LocalDaoImpl.<br>';
           break;
         }
       }

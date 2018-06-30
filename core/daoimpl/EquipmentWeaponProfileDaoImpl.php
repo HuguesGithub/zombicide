@@ -15,7 +15,7 @@ class EquipmentWeaponProfileDaoImpl extends LocalDaoImpl
    */
   public function __construct()
   {
-  	parent::__construct('EquipementWeaponProfile');
+    parent::__construct('EquipementWeaponProfile');
   }
   /**
    * @param array $rows

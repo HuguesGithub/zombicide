@@ -18,7 +18,7 @@ class ExpansionServices extends LocalServices
   
   public function __construct()
   {
-  	$this->Dao = new ExpansionDaoImpl();
+    $this->Dao = new ExpansionDaoImpl();
   }
 
   private function buildFilters($arrFilters)

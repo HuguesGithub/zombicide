@@ -65,7 +65,7 @@ class MissionDaoImpl extends LocalDaoImpl
   {
     $requete  = $this->selectRequest.$this->fromRequest;
     if (isset($filters[self::CST_EXPANSIONID])) {
-  	  $requete .= 'INNER JOIN wp_11_zombicide_mission_expansion me ON m.id=me.missionId ';
+      $requete .= 'INNER JOIN wp_11_zombicide_mission_expansion me ON m.id=me.missionId ';
     }
     $requete .= $this->whereFilters;
     if (isset($filters['levelId'])) {

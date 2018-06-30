@@ -20,10 +20,10 @@ class LocalServices extends GlobalServices implements iConstants
       foreach ($services as $service) {
         switch ($service) {
           case 'Expansion'         :
-          	$this->ExpansionServices = FactoryServices::getExpansionServices();
+            $this->ExpansionServices = FactoryServices::getExpansionServices();
           break;
           default :
-          	break;
+            break;
         }
       }
     }

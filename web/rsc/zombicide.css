@@ -559,7 +559,7 @@ li.compRed::before { content: url("./img/icons/red.png"); padding-right: 5px; }
     display: block;
     margin-right: 26px;
     overflow: hidden;
-  	padding: 0 6px !important;
+    padding: 0 6px !important;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -607,7 +607,7 @@ li.compRed::before { content: url("./img/icons/red.png"); padding-right: 5px; }
     background: rgba(0, 0, 0, 0) url("./img/icons/chosen-sprite.png") no-repeat scroll 100% -20px;
     border: 1px solid #aaa;
     border-radius: 0;
-  	color: #ffffff;
+    color: #ffffff;
     font-family: sans-serif;
     font-size: 1em;
     height: auto;
@@ -615,7 +615,7 @@ li.compRed::before { content: url("./img/icons/red.png"); padding-right: 5px; }
     margin: 1px 0;
     outline: 0 none;
     padding: 4px 20px 4px 5px;
-  	text-transform: uppercase;
+    text-transform: uppercase;
     width: 100%;
 }
 .chosen-container-single .chosen-drop {
@@ -985,7 +985,7 @@ button#genKey i { color: #f6a800; padding-top: 4px; padding-right: 0px; }
 }
 @font-face {
     font-family: "Crackhouse";
-    src:	url("/wp-content/plugins/mycommon/web/rsc/fonts/crackhouse/crackhouse.eot") format("embedded-opentype"),
-      		url("/wp-content/plugins/mycommon/web/rsc/fonts/crackhouse/crackhouse.woff") format("woff"),
-      		url("./wp-content/plugins/mycommon/web/rsc/fonts/crackhouse/crackhouse.ttf") format("truetype");
+    src:  url("/wp-content/plugins/mycommon/web/rsc/fonts/crackhouse/crackhouse.eot") format("embedded-opentype"),
+          url("/wp-content/plugins/mycommon/web/rsc/fonts/crackhouse/crackhouse.woff") format("woff"),
+          url("./wp-content/plugins/mycommon/web/rsc/fonts/crackhouse/crackhouse.ttf") format("truetype");
 }

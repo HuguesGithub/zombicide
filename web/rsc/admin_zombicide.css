@@ -431,7 +431,7 @@ li.compRed::before { content: url("./img/icons/red.png"); padding-right: 5px; }
     background: #fff none repeat scroll 0 0;
     border: 1px solid #000;
     bottom: 20px;
-  	display: none;
+    display: none;
     height: inherit;
     position: absolute;
     white-space: normal;
@@ -456,7 +456,7 @@ li.compRed::before { content: url("./img/icons/red.png"); padding-right: 5px; }
 }
 #the-list span.objRule:hover .tooltip,
 #objectivesAndRules .btn:hover .tooltip {
-  	display: block;
+    display: block;
 }
 
 .condensed > tbody > tr > td, .condensed > tbody > tr > th, .condensed > tfoot > tr > td, .condensed > tfoot > tr > th, .condensed > thead > tr > td, .condensed > thead > tr > th { padding: 5px; }

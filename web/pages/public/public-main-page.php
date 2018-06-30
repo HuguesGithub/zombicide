@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="http://zombicide.jhugues.fr/wp-content/plugins/mycommon/web/rsc/css/bootstrap-4.min.css" type="text/css" media="all" />
 <link rel="stylesheet" href="http://zombicide.jhugues.fr/wp-content/plugins/zombicide/web/rsc/zombicide.css" type="text/css" media="all" />
 <?php
-	$PageBean = MainPageBean::getPageBean();
+  $PageBean = MainPageBean::getPageBean();
 ?>
 <div id="shell" class="shell <?php echo $PageBean->getShellClass(); ?>">
 <?php

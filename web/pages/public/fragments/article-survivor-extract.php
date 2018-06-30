@@ -4,8 +4,8 @@
       <div class="col-5">
         <a href="%1$s"><span class="article-survivor-extract-image"><img src="%2$s" alt="%6$s"></span></a>
         <div class="survivor_version">
-        	Zombivant : <b>%11$s </b><br>
-        	Ultimate : <b>%14$s </b>
+          Zombivant : <b>%11$s </b><br>
+          Ultimate : <b>%14$s </b>
         </div>
       </div>
       <div class="slide-content col-7">
@@ -17,7 +17,7 @@
             <a href="%5$s">%6$s</a>
           </h3>
         </header>
-		    <ul class="colSkills">%7$s</ul>
+        <ul class="colSkills">%7$s</ul>
       </div>
       <div class="col-12">
         <hr>

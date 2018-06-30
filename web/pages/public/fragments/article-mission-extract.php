@@ -25,8 +25,8 @@
           <span class="mission_time_label">%10$s</span>
         </div>
         <div class="mission_material col-6">
-        	Matériel requis : <b>%11$s </b><br>
-        	Dalles requises : <b>%14$s </b>
+          Matériel requis : <b>%11$s </b><br>
+          Dalles requises : <b>%14$s </b>
         </div>
       </div>
       <div class="col-12">

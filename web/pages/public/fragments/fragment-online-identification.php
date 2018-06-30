@@ -1,5 +1,5 @@
 <div id="canvas-content" class="popup-like online-identification">
-	<form action="#" method="post" class="row">
+  <form action="#" method="post" class="row">
     <div class="col-12">
       <div class="input-group mb-3">
         <div class="input-group-prepend">

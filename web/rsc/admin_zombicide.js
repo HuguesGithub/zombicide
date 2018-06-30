@@ -1,8 +1,8 @@
 var $hj = jQuery;
 $hj(document).ready(function(){
-	if ($hj('.tileRow .tile').length != 0 ) {
+  if ($hj('.tileRow .tile').length != 0 ) {
     addActionToMapEditorButtons();
-	}
+  }
   if ($hj('#list-table button').length != 0) {
     addActionToParamEditorButtons();
   }
@@ -31,13 +31,13 @@ function addActionToParamEditorButtons() {
       if (id == undefined ) {
         // On a un nouvel objet, il faut l'envoyer en base via Ajax.
         // Puis on doit mettre à jour la table...
-	      $hj('#list-table tfoot button.btn-success').addClass('addParam').removeClass('editParam');
-	      $hj('#list-table tfoot input').each(function(){ $hj(this).val(''); });
+        $hj('#list-table tfoot button.btn-success').addClass('addParam').removeClass('editParam');
+        $hj('#list-table tfoot input').each(function(){ $hj(this).val(''); });
       } else {
         //***************/
         // Edition d'un Paramètre
         //***************/
-				var data = {'action': 'dealWithAjax', 'ajaxAction': 'getParameter', 'type': type, 'id': id};
+        var data = {'action': 'dealWithAjax', 'ajaxAction': 'getParameter', 'type': type, 'id': id};
         $hj.post(
           ajaxurl,
           data,
@@ -62,19 +62,19 @@ function addActionToParamEditorButtons() {
         //***************/
         // Création d'un Paramètre
         //***************/
-      	var inputs = '';
-      	$hj('#list-table tfoot input').each(function(){
+        var inputs = '';
+        $hj('#list-table tfoot input').each(function(){
           if (inputs != '' ) { inputs += '|'; }
           inputs += $hj(this).attr('id')+'='+$hj(this).val();
         });
-				var data = {'action': 'dealWithAjax', 'ajaxAction': 'addParameter', 'type': type, 'inputs': inputs};
+        var data = {'action': 'dealWithAjax', 'ajaxAction': 'addParameter', 'type': type, 'inputs': inputs};
         $hj.post(
           ajaxurl,
           data,
           function(response) {
             try {
               console.log(response);
-				      $hj('#list-table tfoot input').each(function(){ $hj(this).val(''); });
+              $hj('#list-table tfoot input').each(function(){ $hj(this).val(''); });
             } catch (e) {
               console.log("error: "+e);
               console.log(response);
@@ -90,93 +90,93 @@ function addActionToParamEditorButtons() {
   });
 }
 function addActionToMapEditorButtons() {
-	var width = $hj('.tileRow .tile').width();
-	$hj('.tileRow .tile').each(function(e) {
-		if (!$hj(this).hasClass('firstRow') ) {
-			$hj(this).css('height', width);
-		}
-	});
-	$hj('.tileRow select').unbind().change(function(){
-		var node = $hj(this);
-		var value = $hj(this).val();
-		var id = $hj(this).attr('id');
-		var arrTmp = id.split('-');
-		var arrCoords = arrTmp[0].split('_');
-		var coordX = arrCoords[1];
-		var coordY = arrCoords[2];
-		var missionId = $hj('#id').val();
-		var data = {'action': 'dealWithAjax', 'ajaxAction': 'updateMissionTile', 'coordX': coordX, 'coordY': coordY, 'missionId': missionId, 'value': value};
-		$hj.post(
-			ajaxurl,
-			data,
-			function(response) {
-				try {
-					var code = $hj('#'+id+' option:selected').text();
-					console.log('all good : '+code);
-					node.siblings('.thumbTile').attr('src', '/wp-content/plugins/zombicide/web/rsc/images/tiles/'+code+'-500px.png');
-				} catch (e) {
-					console.log("error: "+e);
-					console.log(response);
-				}
-			}
-		);
-	});
-	$hj('.tileRow button').unbind().click(function(){
-		var dealAction = $hj(this).data('action');
-		var ajaxAction = 'buildBlockTiles';
-		var rkCol = $hj(this).data('col');
-		var rkRow = $hj(this).data('row');
-		var missionId = $hj('#id').val();
-		var obj;
-		var data = {'action': 'dealWithAjax', 'ajaxAction': ajaxAction, 'dealAction': dealAction, 'rkCol': rkCol, 'rkRow': rkRow, 'missionId': missionId};
-		$hj.post(
-			ajaxurl,
-			data,
-			function(response) {
-				try {
-					obj = JSON.parse(response);
-					if (obj['mapEditor'] != '' ) {
-						$hj('#mapEditor').html(obj['mapEditor']);
-						addActionToMapEditorButtons();
-					}
-				} catch (e) {
-					console.log("error: "+e);
-					console.log(response);
-				}
-				return false;
-			}
-		);
-	});
-	$hj('.tileRow button.rdv').unbind().click(function(){
-		var node = $hj(this);
-		var dealAction = $hj(this).data('action');
-		var ajaxAction = 'rotateMissionTile';
-		var rkCol = $hj(this).data('col');
-		var rkRow = $hj(this).data('row');
-		var missionId = $hj('#id').val();
-		var data = {'action': 'dealWithAjax', 'ajaxAction': ajaxAction, 'orientation': dealAction, 'coordX': rkCol, 'coordY': rkRow, 'missionId': missionId};
-		$hj.post(
-			ajaxurl,
-			data,
-			function(response) {
-				try {
-					var classImg = 'north';
-					switch (dealAction ) {
-						case 'E' : classImg = 'east'; break;
-						case 'O' : classImg = 'west'; break;
-						case 'S' : classImg = 'south'; break;
-					}
-					node.siblings('.thumbTile').removeClass('north south east west').addClass('thumbTile '+classImg);
-					node.siblings('.rdv').removeClass('active');
-					node.addClass('active');
-				} catch (e) {
-					console.log("error: "+e);
-					console.log(response);
-				}
-				return false;
-			}
-	    );
-	});
+  var width = $hj('.tileRow .tile').width();
+  $hj('.tileRow .tile').each(function(e) {
+    if (!$hj(this).hasClass('firstRow') ) {
+      $hj(this).css('height', width);
+    }
+  });
+  $hj('.tileRow select').unbind().change(function(){
+    var node = $hj(this);
+    var value = $hj(this).val();
+    var id = $hj(this).attr('id');
+    var arrTmp = id.split('-');
+    var arrCoords = arrTmp[0].split('_');
+    var coordX = arrCoords[1];
+    var coordY = arrCoords[2];
+    var missionId = $hj('#id').val();
+    var data = {'action': 'dealWithAjax', 'ajaxAction': 'updateMissionTile', 'coordX': coordX, 'coordY': coordY, 'missionId': missionId, 'value': value};
+    $hj.post(
+      ajaxurl,
+      data,
+      function(response) {
+        try {
+          var code = $hj('#'+id+' option:selected').text();
+          console.log('all good : '+code);
+          node.siblings('.thumbTile').attr('src', '/wp-content/plugins/zombicide/web/rsc/images/tiles/'+code+'-500px.png');
+        } catch (e) {
+          console.log("error: "+e);
+          console.log(response);
+        }
+      }
+    );
+  });
+  $hj('.tileRow button').unbind().click(function(){
+    var dealAction = $hj(this).data('action');
+    var ajaxAction = 'buildBlockTiles';
+    var rkCol = $hj(this).data('col');
+    var rkRow = $hj(this).data('row');
+    var missionId = $hj('#id').val();
+    var obj;
+    var data = {'action': 'dealWithAjax', 'ajaxAction': ajaxAction, 'dealAction': dealAction, 'rkCol': rkCol, 'rkRow': rkRow, 'missionId': missionId};
+    $hj.post(
+      ajaxurl,
+      data,
+      function(response) {
+        try {
+          obj = JSON.parse(response);
+          if (obj['mapEditor'] != '' ) {
+            $hj('#mapEditor').html(obj['mapEditor']);
+            addActionToMapEditorButtons();
+          }
+        } catch (e) {
+          console.log("error: "+e);
+          console.log(response);
+        }
+        return false;
+      }
+    );
+  });
+  $hj('.tileRow button.rdv').unbind().click(function(){
+    var node = $hj(this);
+    var dealAction = $hj(this).data('action');
+    var ajaxAction = 'rotateMissionTile';
+    var rkCol = $hj(this).data('col');
+    var rkRow = $hj(this).data('row');
+    var missionId = $hj('#id').val();
+    var data = {'action': 'dealWithAjax', 'ajaxAction': ajaxAction, 'orientation': dealAction, 'coordX': rkCol, 'coordY': rkRow, 'missionId': missionId};
+    $hj.post(
+      ajaxurl,
+      data,
+      function(response) {
+        try {
+          var classImg = 'north';
+          switch (dealAction ) {
+            case 'E' : classImg = 'east'; break;
+            case 'O' : classImg = 'west'; break;
+            case 'S' : classImg = 'south'; break;
+          }
+          node.siblings('.thumbTile').removeClass('north south east west').addClass('thumbTile '+classImg);
+          node.siblings('.rdv').removeClass('active');
+          node.addClass('active');
+        } catch (e) {
+          console.log("error: "+e);
+          console.log(response);
+        }
+        return false;
+      }
+      );
+  });
   $hj('.objectivesAndRules select').unbind().change(function() {
     var type = '';
     var textarea = '';
@@ -185,23 +185,23 @@ function addActionToMapEditorButtons() {
       case 'idsettingId' : type = 'rule'; textarea='setting'; break;
       case 'idobjectiveId' : type = 'objective'; textarea=type; break;
     }
-		var data = {'action': 'dealWithAjax', 'ajaxAction': 'getObjRuleDescription', 'type': type, 'id': $hj(this).val()};
-		$hj.post(
-			ajaxurl,
-			data,
-			function(response) {
-				try {
+    var data = {'action': 'dealWithAjax', 'ajaxAction': 'getObjRuleDescription', 'type': type, 'id': $hj(this).val()};
+    $hj.post(
+      ajaxurl,
+      data,
+      function(response) {
+        try {
           $hj('#'+textarea+'-description').val(response);
-				} catch (e) {
-					console.log("error: "+e);
-					console.log(response);
-				}
-				return false;
-			}
-		);
-	});
+        } catch (e) {
+          console.log("error: "+e);
+          console.log(response);
+        }
+        return false;
+      }
+    );
+  });
   $hj('.objectivesAndRules button').unbind().click(function() {
-		var data = '';
+    var data = '';
     var type = $hj(this).data('type');
     var id = $hj(this).data('id');
     if (id==undefined ) {
@@ -213,23 +213,23 @@ function addActionToMapEditorButtons() {
     } else {
       data = {'action': 'dealWithAjax', 'ajaxAction': 'rmwMissionObjRule', 'type': type, 'id': id};
     }
-		$hj.post(
-			ajaxurl,
-			data,
-			function(response) {
-				try {
+    $hj.post(
+      ajaxurl,
+      data,
+      function(response) {
+        try {
           switch (type ) {
             case 'rule' : $hj('#ulAdminRules').html(response); break;
             case 'setting' : $hj('#ulAdminSettings').html(response); break;
             case 'objective' : $hj('#ulAdminObjectives').html(response); break;
           }
-        	addActionToMapEditorButtons();
-				} catch (e) {
-					console.log("error: "+e);
-					console.log(response);
-				}
-			}
+          addActionToMapEditorButtons();
+        } catch (e) {
+          console.log("error: "+e);
+          console.log(response);
+        }
+      }
     );
-		return false;
+    return false;
   });
 }

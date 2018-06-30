@@ -2,7 +2,7 @@
             <fieldset class="spawn-filter">
                 <select>
                     <option value="">ALL SETS</option>
-					%1$s
+          %1$s
                 </select>
             </fieldset>
             <span class="button" id="idReset">Reset</span>

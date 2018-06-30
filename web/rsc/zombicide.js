@@ -41,23 +41,23 @@ $hj(document).ready(function(){
   }
   
   if ($hj('#filters').length!=0 ) {
-	  $hj('#filters select').unbind().change(function(){
-		  var set = $hj(this).val(); 
-		  $hj('#card-container .card').each(function(){
-			  if (set == '' || $hj(this).hasClass(set) ) {
-				  $hj(this).css('display', 'inline-block');
-			  } else {
-				  $hj(this).css('display', 'none');
-			  }
-		  })
-	  });
-	  $hj('#idReset').unbind().click(function(){
-		  $hj('#filters select').val('');
-		  $hj('#card-container .card').each(function(){
-			  $hj(this).css('display', 'inline-block');
-		  });
-		  return false; 
-	  });
+    $hj('#filters select').unbind().change(function(){
+      var set = $hj(this).val(); 
+      $hj('#card-container .card').each(function(){
+        if (set == '' || $hj(this).hasClass(set) ) {
+          $hj(this).css('display', 'inline-block');
+        } else {
+          $hj(this).css('display', 'none');
+        }
+      })
+    });
+    $hj('#idReset').unbind().click(function(){
+      $hj('#filters select').val('');
+      $hj('#card-container .card').each(function(){
+        $hj(this).css('display', 'inline-block');
+      });
+      return false; 
+    });
   }
   
   if ($hj('#page-live-spawn').length!=0 ) {
@@ -65,27 +65,27 @@ $hj(document).ready(function(){
     return false;
   }
 
-	if ($hj('#page-online').length!=0 ) {
-		var height = $hj('body').height()-17;
-		height -= $hj('#wpadminbar').height();
-		height -= $hj('#shell > header').height();
-		height -= $hj('#shell > footer').height();
-		height -= $hj('#online-btn-actions').height();
-		$hj('#online-board').css('height', height);
+  if ($hj('#page-online').length!=0 ) {
+    var height = $hj('body').height()-17;
+    height -= $hj('#wpadminbar').height();
+    height -= $hj('#shell > header').height();
+    height -= $hj('#shell > footer').height();
+    height -= $hj('#online-btn-actions').height();
+    $hj('#online-board').css('height', height);
 
-		height =  $hj('#online-sidebar-chat').height();
-		height -= $hj('.online-chat-saisie').height();
-		$hj('#online-chat-content').css('height', height);
+    height =  $hj('#online-sidebar-chat').height();
+    height -= $hj('.online-chat-saisie').height();
+    $hj('#online-chat-content').css('height', height);
 
-		$hj('.online-chat-unfold').unbind().click(function(){ $hj(this).parent().parent().toggleClass('closed-chat'); });
-		$hj('.online-chat-fold').unbind().click(function(){ $hj(this).parent().parent().toggleClass('closed-chat'); });
-		$hj('#online-chat-input').bind('keypress', function(e) {
-			if (e.keyCode == 13 ) {
-				sendMessage();
-			} else if (e.keyCode == 38 ) {
+    $hj('.online-chat-unfold').unbind().click(function(){ $hj(this).parent().parent().toggleClass('closed-chat'); });
+    $hj('.online-chat-fold').unbind().click(function(){ $hj(this).parent().parent().toggleClass('closed-chat'); });
+    $hj('#online-chat-input').bind('keypress', function(e) {
+      if (e.keyCode == 13 ) {
+        sendMessage();
+      } else if (e.keyCode == 38 ) {
         $hj('#online-chat-input').val(arrHisto[rkHisto]);
         if (rkHisto>0 ) { rkHisto--; }
-			} else if (e.keyCode == 40 ) {
+      } else if (e.keyCode == 40 ) {
         if (rkHisto<arrHisto.length ) {
           rkHisto++;
           $hj('#online-chat-input').val(arrHisto[rkHisto]);
@@ -95,16 +95,16 @@ $hj(document).ready(function(){
       } else {
         //console.log(e.keyCode);
       }
-		});
-		$hj('#online-chat-submit').unbind().click(function(e){
-			e.preventDefault();
-			sendMessage();
-			return false;
-		});
-		window.setInterval(function(){refreshChatContent()}, 5000);
-		
-		$hj('#startGame').unbind().click(function(){ joinGame(); });
-	}
+    });
+    $hj('#online-chat-submit').unbind().click(function(e){
+      e.preventDefault();
+      sendMessage();
+      return false;
+    });
+    window.setInterval(function(){refreshChatContent()}, 5000);
+    
+    $hj('#startGame').unbind().click(function(){ joinGame(); });
+  }
   if ($hj('#canvas-background').length !=0 ) {
     $hj('canvas').drawImage({
       source: srcImg,
@@ -135,7 +135,7 @@ $hj(document).ready(function(){
       var nb = $hj('article[data-exp="'+exp+'"]').length;
       if (nb==0 ) { getSurvivorsByExpansionCode(exp); }
     }
-	  $hj(this).toggleClass('selected');
+    $hj(this).toggleClass('selected');
     filterSurvivors();
   });
   
@@ -149,7 +149,7 @@ $hj(document).ready(function(){
     var strLi  = '<li class=\\"active\\"><article><input type=\\"checkbox\\" checked=\\"checked\\" name=\\"cb-sk-'+exp+'\\" id=\\"cb-sk-'+exp+'\\" class=\\"hidden\\">';
     strLi += '<i class=\\"glyphicon glyphicon-check pull-right\\"></i><span>'+txt+'</span></article></li>';
     var json = '{"selectionSkills":"'+strLi+'"}';
-		var obj = JSON.parse(json);
+    var obj = JSON.parse(json);
     reloadComponents(obj, 'append');
     $hj('#selectionSkills i').unbind().click(function() {
       $hj(this).parent().parent().remove();
@@ -176,7 +176,7 @@ $hj(document).ready(function(){
         */
       })
     }
-	  $hj(this).toggleClass('selected');
+    $hj(this).toggleClass('selected');
   });
   
   $hj('#generateTeam').click(function(e) {
@@ -229,27 +229,27 @@ $hj(document).ready(function(){
   });
   
   $hj('#importSelectionTeam').change(function(e) {
-	  var obj;
-  	var data = {'action': 'dealWithAjax', 'ajaxAction': 'getSurvivorsForImport', 'value': $hj(this).val()};
-	  $hj.post(
-  	  ajaxurl,
-    	data,
-    	function(response) {
-      	try {
-        	obj = JSON.parse(response);
-      	} catch (e) {
-        	console.log("error: "+e);
-        	console.log(response);
-      	}
-      	reloadComponents(obj, 'replace');
+    var obj;
+    var data = {'action': 'dealWithAjax', 'ajaxAction': 'getSurvivorsForImport', 'value': $hj(this).val()};
+    $hj.post(
+      ajaxurl,
+      data,
+      function(response) {
+        try {
+          obj = JSON.parse(response);
+        } catch (e) {
+          console.log("error: "+e);
+          console.log(response);
+        }
+        reloadComponents(obj, 'replace');
         $hj('#selectionSurvivors i').unbind().click(function() {
           $hj(this).parent().parent().toggleClass('active');
           var inpSib = $hj(this).siblings('input');
           inpSib.prop("checked", !inpSib.prop("checked"))
         });
       }
-	  );
-	});
+    );
+  });
   
   /********
    * Filtres sur l'interface Equipements
@@ -258,14 +258,14 @@ $hj(document).ready(function(){
     if ($hj(this).hasClass('zoom') ) {
       $hj('.batchArticles.equipments').removeClass().addClass('batchArticles equipments '+$hj(this).val());
     } else {
-	    filterCards();
+      filterCards();
     }
   });
   $hj('.invasionFilters select').unbind().change(function() {
     if ($hj(this).hasClass('zoom') ) {
       $hj('.batchArticles.invasions').removeClass().addClass('batchArticles invasions '+$hj(this).val());
     } else {
-	    filterCards();
+      filterCards();
     }
   });
   
@@ -273,12 +273,12 @@ $hj(document).ready(function(){
    * Filtres sur l'interface Skills
    ********/
   $hj('input.chosen-search-input-skill').keyup(function() {
-		var filter = $hj('input.chosen-search-input-skill').val().toLowerCase();
+    var filter = $hj('input.chosen-search-input-skill').val().toLowerCase();
     $hj('.batchArticles.skills article').each(function() {
-	    var value = $hj(this).data('title');
-	    if (value.toLowerCase().indexOf(filter)!=-1 ) {
+      var value = $hj(this).data('title');
+      if (value.toLowerCase().indexOf(filter)!=-1 ) {
         $hj(this).show();
-    	} else {
+      } else {
         $hj(this).hide();
       }
     });
@@ -291,7 +291,7 @@ $hj(document).ready(function(){
     var isSelected = $hj(this).hasClass('selected');
     if (isSelected ) {
       if ($hj(this).parent().parent().find('a.selected').length == 1 ) {
-	      $hj(this).parent().siblings('li').find('a[data-filter="all"]').addClass('selected');
+        $hj(this).parent().siblings('li').find('a[data-filter="all"]').addClass('selected');
       }
     } else {
       $hj(this).parent().siblings('li').find('a[data-filter="all"]').removeClass('selected');
@@ -303,13 +303,13 @@ $hj(document).ready(function(){
   $hj('div.chosen-container.chosen-container-single a')
     .unbind()
     .click(
-    	function(){
+      function(){
         fillOptionsList();
         $hj(this).parent().toggleClass('chosen-with-drop chosen-container-active');
-	  		$hj('ul.chosen-results li.result-selected').addClass('highlighted');
+        $hj('ul.chosen-results li.result-selected').addClass('highlighted');
         $hj('input.chosen-search-input').val('').focus();
-  		}
-  	);
+      }
+    );
   addActionsOnList();
   $hj('input.chosen-search-input').keyup(function() { fillOptionsList(); });
   
@@ -339,9 +339,9 @@ $hj(document).ready(function(){
   });
   
   $hj('#liveMissionSelection li input').click(function(){
-	  var id = $hj(this).val();
-	  $hj('.hideAllMaps > li').hide();
-	  $hj('.hideAllMaps > li[data-missionId="'+id+'"]').show();
+    var id = $hj(this).val();
+    $hj('.hideAllMaps > li').hide();
+    $hj('.hideAllMaps > li[data-missionId="'+id+'"]').show();
   });
   
   $hj('#filter-expansion').change(function(){
@@ -369,8 +369,8 @@ $hj(document).ready(function(){
       });
     } else {
       for (var i=nb; i>0; i-- ) {
-	      var rk = Math.floor(Math.random() * nbEligible);
-  	    $hj('#liveSurvivorsSelection input:visible:not(:checked)').eq(rk).prop('checked', true);
+        var rk = Math.floor(Math.random() * nbEligible);
+        $hj('#liveSurvivorsSelection input:visible:not(:checked)').eq(rk).prop('checked', true);
         nbEligible--;
       }
     }
@@ -431,17 +431,17 @@ function addActionsOnList() {
   $hj('ul.chosen-results li.active-result')
     .unbind()
     .hover(
-    	function() {
-      	$hj(this).siblings().removeClass('highlighted');
-      	$hj(this).addClass('highlighted');
-    	},
-    	function() {
-      	$hj(this).removeClass('highlighted');
-    	}
-  	)
-  	.click(
-    	function() {
-      	$hj(this).siblings().removeClass('result-selected');
+      function() {
+        $hj(this).siblings().removeClass('highlighted');
+        $hj(this).addClass('highlighted');
+      },
+      function() {
+        $hj(this).removeClass('highlighted');
+      }
+    )
+    .click(
+      function() {
+        $hj(this).siblings().removeClass('result-selected');
         $hj(this).addClass('result-selected');
         var rank = $hj(this).data('option-array-index');
         var libelle = $hj('#searchSkill option:nth-child('+rank+')').text();
@@ -471,7 +471,7 @@ function fillOptionsList() {
   }).promise()
     .done(function() {
       $hj('ul.chosen-results').html(str);
-    	addActionsOnList();
+      addActionsOnList();
     });
 }
 
@@ -487,7 +487,7 @@ function filterMissions() {
     $hj('.missionFilters ul').each(function(){
       var tmpShow = false;
       $hj(this).find('a.selected').each(function(){
-	      var filter = $hj(this).data('filter');
+        var filter = $hj(this).data('filter');
         if (filter == 'all' ){
           tmpShow = true;
           cpt++;
@@ -502,7 +502,7 @@ function filterMissions() {
     if (!showArticle && cpt==4 ) { showArticle = true; }
     if (showArticle && !nodeArticle.is(':visible')
        || !showArticle && nodeArticle.is(':visible') ) {
-     	nodeArticle.animate({width: 'toggle'}, 2500);
+       nodeArticle.animate({width: 'toggle'}, 2500);
     }
   });  
 }
@@ -524,7 +524,7 @@ function filterCards() {
     });
     if (showArticle && !nodeArticle.is(':visible')
        || !showArticle && nodeArticle.is(':visible') ) {
-     	nodeArticle.animate({width: 'toggle'}, 2500);
+       nodeArticle.animate({width: 'toggle'}, 2500);
     }
   });
   $hj('.batchArticles article.invasion').each(function(){
@@ -540,7 +540,7 @@ function filterCards() {
     });
     if (showArticle && !nodeArticle.is(':visible')
        || !showArticle && nodeArticle.is(':visible') ) {
-     	nodeArticle.animate({width: 'toggle'}, 2500);
+       nodeArticle.animate({width: 'toggle'}, 2500);
     }
   });
 }
@@ -620,7 +620,7 @@ function filterSurvivors() {
     
     if (showArticle && !nodeSurvivor.is(':visible')
        || !showArticle && nodeSurvivor.is(':visible') ) {
-     	nodeSurvivor.animate({width: 'toggle'}, 2500);
+       nodeSurvivor.animate({width: 'toggle'}, 2500);
     }
   });
 }
@@ -676,22 +676,22 @@ function reloadComponents(obj, type) {
   for (var anchor in obj ) {
     if ($hj('#'+anchor).length==1 ) {
       switch (anchor ) {
-        case 'online-chat-content'	: $hj('#'+anchor).append(obj[anchor]); addChatMsgActions(); break;
-        case 'header-ul-chat-saisie'	: $hj('#'+anchor).html(obj[anchor]); break;
-        case 'descSkill'						:
-        case 'homeSectionArticles'	:
-        case 'moreSurvivors'				:
-        case 'selectionSkills' 			:
-        case 'selectionSurvivors' 	:
+        case 'online-chat-content'  : $hj('#'+anchor).append(obj[anchor]); addChatMsgActions(); break;
+        case 'header-ul-chat-saisie'  : $hj('#'+anchor).html(obj[anchor]); break;
+        case 'descSkill'            :
+        case 'homeSectionArticles'  :
+        case 'moreSurvivors'        :
+        case 'selectionSkills'       :
+        case 'selectionSurvivors'   :
           switch (type ) {
-            case 'append'		: $hj('#'+anchor).append(obj[anchor]); break;
-            case 'prepend'	: $hj('#'+anchor).prepend(obj[anchor]); break;
-            case 'replace'	: $hj('#'+anchor).html(obj[anchor]); break;
+            case 'append'    : $hj('#'+anchor).append(obj[anchor]); break;
+            case 'prepend'  : $hj('#'+anchor).prepend(obj[anchor]); break;
+            case 'replace'  : $hj('#'+anchor).html(obj[anchor]); break;
           }
           break;
       }
     }
-  }	
+  }  
 }
 function sortSurvivors() {
   $hj('#moreSurvivors article')
@@ -768,7 +768,7 @@ function addPageMissionAjaxActions(clicked) {
     case 'sort' :
       colsort = clicked.data('colsort');
       if (!clicked.hasClass('sorting') ) {
-	      var actualorder = clicked.data('colorder');
+        var actualorder = clicked.data('colorder');
         if (actualorder=='_asc' ) { colorder = 'desc'; }
         else { colorder = 'asc'; }
       }
@@ -784,8 +784,8 @@ function addPageMissionAjaxActions(clicked) {
     break;
     case 'filter' :
       if ($hj('#rowFilterMission').hasClass('hidden') ) {
-	      callAjax = false;
-	      $hj('#rowFilterMission').removeClass('hidden');
+        callAjax = false;
+        $hj('#rowFilterMission').removeClass('hidden');
       }
     break;
     default : callAjax = false; break;
@@ -823,7 +823,7 @@ function addPageCompetenceAjaxActions(clicked) {
     case 'sort' :
       colsort = clicked.data('colsort');
       if (!clicked.hasClass('sorting') ) {
-	      var actualorder = clicked.data('colorder');
+        var actualorder = clicked.data('colorder');
         if (actualorder=='_asc' ) { colorder = 'desc'; }
         else { colorder = 'asc'; }
       }
@@ -846,8 +846,8 @@ function addPageCompetenceAjaxActions(clicked) {
       $hj('#popover'+filter.charAt(0).toUpperCase()+filter.slice(1))
         .toggleClass('show')
         .css('transform', 'translate3d('+(left+widthCol-widthPopup+14)+'px, '+(top-162)+'px, 0px)')
-      	.css('z-index', 100000)
-      	.find('.arrow').css('left', (widthPopup-54)+'px');
+        .css('z-index', 100000)
+        .find('.arrow').css('left', (widthPopup-54)+'px');
       callAjax = !$hj('#popover'+filter.charAt(0).toUpperCase()+filter.slice(1)).hasClass('show');
     break;
     default : callAjax = false; break;
@@ -878,74 +878,74 @@ function addPageCompetenceAjaxActions(clicked) {
   }
 }
 function addPageSurvivantAjaxActions(clicked) {
-	  var ajaxaction = clicked.data('ajaxaction');
-	  var callAjax = true;
-	  switch (ajaxaction ) {
-	    // On change le critère de tri
-	    case 'sort' :
-	      colsort = clicked.data('colsort');
-	      if (!clicked.hasClass('sorting') ) {
-		      var actualorder = clicked.data('colorder');
-	        if (actualorder=='_asc' ) { colorder = 'desc'; }
-	        else { colorder = 'asc'; }
-	      }
-	    break;
-	    // On change le nombre d'éléments affichés
-	    case 'display' :
-	      displayValue = clicked.val();
-	      paged = 1;
-	    break;
-	    // On change la page affichée
-	    case 'paged' :
-	      paged = clicked.data('paged');
-	    break;
-	    case 'filter' :
-	      var filter = clicked.data('filter');
-	      var top = clicked.offset().top;
-	      var left = clicked.offset().left;
-	      var widthCol = clicked.width();
-	      var widthPopup = $hj('#popover'+filter.charAt(0).toUpperCase()+filter.slice(1)).width();
-	      $hj('#popover'+filter.charAt(0).toUpperCase()+filter.slice(1))
-	        .toggleClass('show')
-	        .css('transform', 'translate3d('+(left+widthCol-widthPopup+34)+'px, '+(top-182)+'px, 0px)')
-	      	.find('.arrow').css('left', (widthPopup-34)+'px');
-	      callAjax = !$hj('#popover'+filter.charAt(0).toUpperCase()+filter.slice(1)).hasClass('show');
-	    break;
-	    default : callAjax = false; break;
-	  }
-	  if (callAjax ) {
-	    var obj;
-	    var filters = $hj('input.filters').serialize();
-	    var data = {'action': 'dealWithAjax', 'ajaxAction': 'getSurvivants', 'colsort': colsort, 'colorder': colorder, 'nbperpage': displayValue, 'paged': paged, 'filters': filters};
-	    $hj.post(
-	      ajaxurl,
-	      data,
-	      function(response) {
-	        try {
-	          obj = JSON.parse(response);
-	          if (obj['page-survivants'] != '' ) {
-	            $hj('#page-survivants').replaceWith(obj['page-survivants']);
-	            $hj('#page-survivants .ajaxAction').unbind().click(function(){
-	              addPageSurvivantAjaxActions($hj(this));
-	            });
-	            $hj('#page-survivants .changeProfile').unbind().click(function(){
-	            	addPageSurvivantLocalActions($hj(this));
-	            	return false;
-	            });
-	          }
-	        } catch (e) {
-	          console.log("error: "+e);
-	          console.log(response);
-	        }
-	      }
-	    );
-	  }
-	}
+    var ajaxaction = clicked.data('ajaxaction');
+    var callAjax = true;
+    switch (ajaxaction ) {
+      // On change le critère de tri
+      case 'sort' :
+        colsort = clicked.data('colsort');
+        if (!clicked.hasClass('sorting') ) {
+          var actualorder = clicked.data('colorder');
+          if (actualorder=='_asc' ) { colorder = 'desc'; }
+          else { colorder = 'asc'; }
+        }
+      break;
+      // On change le nombre d'éléments affichés
+      case 'display' :
+        displayValue = clicked.val();
+        paged = 1;
+      break;
+      // On change la page affichée
+      case 'paged' :
+        paged = clicked.data('paged');
+      break;
+      case 'filter' :
+        var filter = clicked.data('filter');
+        var top = clicked.offset().top;
+        var left = clicked.offset().left;
+        var widthCol = clicked.width();
+        var widthPopup = $hj('#popover'+filter.charAt(0).toUpperCase()+filter.slice(1)).width();
+        $hj('#popover'+filter.charAt(0).toUpperCase()+filter.slice(1))
+          .toggleClass('show')
+          .css('transform', 'translate3d('+(left+widthCol-widthPopup+34)+'px, '+(top-182)+'px, 0px)')
+          .find('.arrow').css('left', (widthPopup-34)+'px');
+        callAjax = !$hj('#popover'+filter.charAt(0).toUpperCase()+filter.slice(1)).hasClass('show');
+      break;
+      default : callAjax = false; break;
+    }
+    if (callAjax ) {
+      var obj;
+      var filters = $hj('input.filters').serialize();
+      var data = {'action': 'dealWithAjax', 'ajaxAction': 'getSurvivants', 'colsort': colsort, 'colorder': colorder, 'nbperpage': displayValue, 'paged': paged, 'filters': filters};
+      $hj.post(
+        ajaxurl,
+        data,
+        function(response) {
+          try {
+            obj = JSON.parse(response);
+            if (obj['page-survivants'] != '' ) {
+              $hj('#page-survivants').replaceWith(obj['page-survivants']);
+              $hj('#page-survivants .ajaxAction').unbind().click(function(){
+                addPageSurvivantAjaxActions($hj(this));
+              });
+              $hj('#page-survivants .changeProfile').unbind().click(function(){
+                addPageSurvivantLocalActions($hj(this));
+                return false;
+              });
+            }
+          } catch (e) {
+            console.log("error: "+e);
+            console.log(response);
+          }
+        }
+      );
+    }
+  }
 function addPageSurvivantLocalActions(clicked) {
-	var type = clicked.data('type');
-	if (type=='zombivant' ) { clicked.parent().toggleClass('zombivant survivant'); }
-	if (type=='ultimate' ) { clicked.parent().toggleClass('ultimate'); }
-	clicked.find('svg').toggleClass('fa-square fa-check-square');
+  var type = clicked.data('type');
+  if (type=='zombivant' ) { clicked.parent().toggleClass('zombivant survivant'); }
+  if (type=='ultimate' ) { clicked.parent().toggleClass('ultimate'); }
+  clicked.find('svg').toggleClass('fa-square fa-check-square');
 }
 function addSelectionSurvivantActions() {
   $hj('#nbSurvSel button').unbind().click(function(){
@@ -1025,9 +1025,9 @@ function doSpawnDeckActions(data, type) {
         obj = JSON.parse(response);
         for (var anchor in obj ) {
           if (type == 'insert' ) {
-          	$hj('#'+anchor).html(obj[anchor]);
+            $hj('#'+anchor).html(obj[anchor]);
           } else if (type == 'replace' ) {
-          	$hj('#'+anchor).replaceWith(obj[anchor]);
+            $hj('#'+anchor).replaceWith(obj[anchor]);
             addPageLiveSpawnActions();
           }
         }
@@ -1146,17 +1146,17 @@ function addChatMsgActions() {
 }
 function joinGame() {
     var data = {'action': 'dealWithAjax', 'ajaxAction': 'joinGame', 'keyAccess': $hj('#keyAccess').val()};
-	$hj.post(
-		ajaxurl,
-		data,
-		function(response) {
-			try {
-				var obj = JSON.parse(response);
-				console.log(obj);
-			} catch (e) {
-				console.log("error: "+e);
-				console.log(response);
-			}
-		}
-	);
+  $hj.post(
+    ajaxurl,
+    data,
+    function(response) {
+      try {
+        var obj = JSON.parse(response);
+        console.log(obj);
+      } catch (e) {
+        console.log("error: "+e);
+        console.log(response);
+      }
+    }
+  );
 }

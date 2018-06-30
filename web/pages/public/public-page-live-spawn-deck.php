@@ -1,5 +1,5 @@
 <section id="page-live-spawn">
-	<form action="#" method="post" class="row">
+  <form action="#" method="post" class="row">
     <div id="spawnSetupSelection" class="col-3">%1$s</div>
     <div class="col-9 %2$s">
       <div class="input-group mb-3">

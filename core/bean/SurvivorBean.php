@@ -1,30 +1,38 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe SurvivorBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class SurvivorBean extends MainPageBean {
+class SurvivorBean extends MainPageBean
+{
 
-  public function __construct($Survivor='') {
+  public function __construct($Survivor='')
+  {
     $services = array('Survivor', 'Expansion');
     parent::__construct($services);
-    if ($Survivor=='') { $Survivor = new Survivor(); }
+    if ($Survivor=='') {
+      $Survivor = new Survivor();
+    }
     $this->Survivor = $Survivor;
   }
   
   /**
    * @return string
    */  
-  public function getRowForAdminPage() {
-  return '';
+  public function getRowForAdminPage()
+  {
+    return '';
   }
   /**
    * @return string
    */  
-  public function getRowForSurvivorsPage() {
+  public function getRowForSurvivorsPage()
+  {
     $Survivor = $this->Survivor;
     $strRow  = '<tr class="survivant">';
     $strRow .= '<td rowspan="3">'.$this->getAllPortraits().'</td>';
@@ -37,7 +45,8 @@ class SurvivorBean extends MainPageBean {
     $strRow .= '<tr><td colspan="5" style="height:0;line-height:0;padding:0;border:0 none;">&nbsp;</td></tr>';
     return $strRow.'<tr><td colspan="5">'.$Survivor->getBackground().'</td></tr>';
   }
-  private function getAllSkills() {
+  private function getAllSkills()
+  {
     $Survivor = $this->Survivor;
     $str  = '<ul>';
     $str .= $this->getSkillsBySurvivorType('skills-survivant', $Survivor->getUlSkills());
@@ -50,8 +59,10 @@ class SurvivorBean extends MainPageBean {
     }
     return $str.'</ul>';
   }
-  private function getSkillsBySurvivorType($addClass, $content) { return '<li class="'.$addClass.'">'.$content.'</li>'; }
-  private function getAllPortraits() {
+  private function getSkillsBySurvivorType($addClass, $content)
+  { return '<li class="'.$addClass.'">'.$content.'</li>'; }
+  private function getAllPortraits()
+  {
     $Survivor = $this->Survivor;
     $name = $Survivor->getName();
     $str  = $this->getStrImgPortrait($Survivor->getPortraitUrl(), 'Portrait Survivant - '.$name, 'portrait-survivant');
@@ -64,12 +75,14 @@ class SurvivorBean extends MainPageBean {
     }
     return $str;
   }
-  private function getStrImgPortrait($src, $alt, $addClass) { return '<img src="'.$src.'" alt="'.$alt.'" class="thumb '.$addClass.'"/>'; }
+  private function getStrImgPortrait($src, $alt, $addClass)
+  { return '<img src="'.$src.'" alt="'.$alt.'" class="thumb '.$addClass.'"/>'; }
   /**
    * @param string $addClass
    * @return string
    */
-  public function getVisitCard($addClass='') {
+  public function getVisitCard($addClass='')
+  {
     $Survivor = $this->Survivor;
     $name = $Survivor->getName();
     $args = array(
@@ -83,4 +96,3 @@ class SurvivorBean extends MainPageBean {
   }
   
 }
-?>

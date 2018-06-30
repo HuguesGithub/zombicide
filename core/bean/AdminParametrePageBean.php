@@ -1,16 +1,21 @@
 <?php
 declare(strict_types=1);
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * AdminParametrePageBean
  * @version 1.0.00
  * @since 1.0.00
  * @author Hugues
  */
-class AdminParametrePageBean extends AdminPageBean {
+class AdminParametrePageBean extends AdminPageBean
+{
 
-  public function __construct() {
-    $services = array('Expansion', 'Mission', 'Duration', 'MissionExpansion', 'Level', 'MissionObjective', 'Player', 'MissionRule', 'Objective', 'Rule');
+  public function __construct()
+  {
+    $services = array('Expansion', 'Mission', 'Duration', 'MissionExpansion', 'Level', 'MissionObjective',
+      'Player', 'MissionRule', 'Objective', 'Rule');
     $tag = 'parametre';
     parent::__construct($tag, $services);
     $this->title = 'Paramètres';
@@ -19,16 +24,19 @@ class AdminParametrePageBean extends AdminPageBean {
    * @param array $urlParams
    * @return $Bean
    */
-  public static function getStaticContentPage($urlParams) {
+  public static function getStaticContentPage($urlParams)
+  {
     $Bean = new AdminParametrePageBean();
     return $Bean->getContentPage();
   }
   /**
    * @return string
    */
-  public function getContentPage() {
+  public function getContentPage()
+  {
     $table = $this->initVar('table');
-    $arrTabs = array('level'=>'Difficultés', 'duration'=>'Durées', 'player'=>'Joueurs', 'rule'=>'Règles', 'objective'=>'Objectifs', 'expansion'=>'Expansions', 'tile'=>'Dalles');
+    $arrTabs = array('level'=>'Difficultés', 'duration'=>'Durées', 'player'=>'Joueurs', 'rule'=>'Règles',
+      'objective'=>'Objectifs', 'expansion'=>'Expansions', 'tile'=>'Dalles');
     $strTabs = '';
     foreach ($arrTabs as $key=>$value) {
       $strTabs .= '<a href="'.$this->getQueryArg(array('onglet'=>'parametre', 'table'=>$key)).'" class="list-group-item list-group-item-action';
@@ -128,11 +136,12 @@ class AdminParametrePageBean extends AdminPageBean {
           }
         }
       break;
-      default : break;
+      default :
+      break;
     }
     $tHeader  = '<tr>';
     $tFooter  = '<tr>';
-    foreach ($classVars as $key=>$value) {
+    foreach ($classVars as $key => $value) {
       $tHeader .= '<td>'.$key.'</td>';
       $tFooter .= '<td><input type="text" class="form-control" id="'.$table.'-'.$key.'"'.($key=='id'?' disabled':'').'/></td>';
     }
@@ -156,4 +165,3 @@ class AdminParametrePageBean extends AdminPageBean {
   }
 
 }
-?>

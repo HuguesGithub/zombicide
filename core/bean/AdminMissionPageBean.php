@@ -240,7 +240,7 @@ class AdminMissionPageBean extends AdminPageBean
     if ($filter_by_origineId!='') {
       $arrFilters[self::CST_ORIGINEID] = $filter_by_origineId;
     }
-    $orderby = $this->initVar(self::CST_ORDERBY, CST_TITLE);
+    $orderby = $this->initVar(self::CST_ORDERBY,self:: CST_TITLE);
     $order = $this->initVar(self::CST_ORDER, 'ASC');
     $curPage = $this->initVar(self::CST_CURPAGE, 1);
     $post_status = $this->initVar(self::CST_POSTSTATUS, 'all');
@@ -378,5 +378,4 @@ class AdminMissionPageBean extends AdminPageBean
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/missions-admin-board.php');
     return vsprintf($str, $args);
   }
-
 }

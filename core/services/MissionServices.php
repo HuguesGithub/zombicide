@@ -17,11 +17,11 @@ class MissionServices extends LocalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    array_push($arrParams, (!empty($arrFilters[CST_LEVELID]) && !is_array($arrFilters[CST_LEVELID])) ? $arrFilters[CST_LEVELID] : '%');
-    array_push($arrParams, ($arrFilters[CST_DURATIONID]!='' && !is_array($arrFilters[CST_DURATIONID])) ? $arrFilters[CST_DURATIONID] : '%');
-    array_push($arrParams, (!empty($arrFilters[CST_PLAYERID]) && !is_array($arrFilters[CST_PLAYERID])) ? $arrFilters[CST_PLAYERID] : '%');
-    array_push($arrParams, (!empty($arrFilters[CST_ORIGINEID]) && !is_array($arrFilters[CST_ORIGINEID])) ? $arrFilters[CST_ORIGINEID] : '%');
-    array_push($arrParams, (isset($arrFilters[CST_PUBLISHED]) && !is_array($arrFilters[CST_PUBLISHED])) ? $arrFilters[CST_PUBLISHED] : '%');
+    array_push($arrParams, (!empty($arrFilters[self::CST_LEVELID]) && !is_array($arrFilters[self::CST_LEVELID])) ? $arrFilters[self::CST_LEVELID] : '%');
+    array_push($arrParams, ($arrFilters[self::CST_DURATIONID]!='' && !is_array($arrFilters[self::CST_DURATIONID])) ? $arrFilters[self::CST_DURATIONID] : '%');
+    array_push($arrParams, (!empty($arrFilters[self::CST_PLAYERID]) && !is_array($arrFilters[self::CST_PLAYERID])) ? $arrFilters[self::CST_PLAYERID] : '%');
+    array_push($arrParams, (!empty($arrFilters[self::CST_ORIGINEID]) && !is_array($arrFilters[self::CST_ORIGINEID])) ? $arrFilters[self::CST_ORIGINEID] : '%');
+    array_push($arrParams, (isset($arrFilters[self::CST_PUBLISHED]) && !is_array($arrFilters[self::CST_PUBLISHED])) ? $arrFilters[self::CST_PUBLISHED] : '%');
     return $arrParams;
   }
   /**

@@ -10,18 +10,13 @@ define('SQL_PARAMS_ORDERBY', '__orderby__');
  * @version 1.0.00
  * @since 1.0.00
  */
-class LocalDaoImpl extends GlobalDaoImpl
+class LocalDaoImpl extends GlobalDaoImpl implements iConstants
 {
   /**
    * Recherche unitaire
    * @var string $whereId
    */
   protected $whereId = "WHERE id='%s' ";
-  /**
-   * Recherche avec filtres
-   * @var string $whereFilters
-   */
-  protected $whereFilters = "WHERE 1=1 ";
   /**
    * Règle de tri
    * @var string $orderBy
@@ -32,8 +27,24 @@ class LocalDaoImpl extends GlobalDaoImpl
    * @var string $delete
    */
   protected $delete = "DELETE ";
-  
-  public function __construct() {}
+
+  protected $selectRequest;
+  protected $fromRequest;
+  protected $whereFilters;
+  protected $insert;
+  protected $update;
+
+  public function __construct($strDao='') {
+  	$urlIni = '/wp-content/plugins/zombicide/core/daoimpl/requests.ini';
+  	$adminUrl = getcwd().$urlIni;
+  	$arrConfigs = parse_ini_file($adminUrl, true);
+  	
+  	$this->selectRequest = $arrConfigs[$strDao]['select'];
+  	$this->fromRequest = $arrConfigs[$strDao]['from'];
+  	$this->whereFilters = isset($arrConfigs[$strDao]['where']) ? $arrConfigs[$strDao]['where'] : "WHERE 1=1 ";
+  	$this->insert = $arrConfigs[$strDao]['insert'];
+  	$this->update = $arrConfigs[$strDao]['update'];
+  }
   /**
    * @param string $type
    * @param array $rows

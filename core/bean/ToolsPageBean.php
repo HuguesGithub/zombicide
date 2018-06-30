@@ -24,6 +24,10 @@ class ToolsPageBean extends PagePageBean {
    * @return string
    */
   public function getPisteContent() {
+  	if ( self::isAdmin() ) {
+  		$ChatDaoImpl = new ChatDaoImpl();
+  		print_r($Chat);
+  	}
   // Nombre de dés à lancer
     $nbDeDes = $this->initVar('nbDeDes');
   // Seuil de réussite

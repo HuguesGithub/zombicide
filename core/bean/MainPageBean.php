@@ -190,7 +190,7 @@ class MainPageBean implements iConstants
           $arrMenuDisplay[0],
           $arrMenuDisplay[1],
           $strPages
-     );
+    );
     } else {
       $args = array('', '', '');
     }
@@ -213,7 +213,7 @@ class MainPageBean implements iConstants
             'name'=>$slug,
             'post_type'=>'page',
             'numberposts'=>1
-       );
+      );
         $my_posts = get_posts($args);
         $post = array_shift($my_posts);
       }

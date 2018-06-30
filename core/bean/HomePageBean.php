@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe HomePageBean
  * @author Hugues.
@@ -40,18 +40,18 @@ class HomePageBean extends MainPageBean {
    * @return string
    */
   public function addMoreNews($offset=0, $isAjax=TRUE) {
-  $postStatus = ($this->isAdmin() ? 'publish, private, future' : 'publish' );
+  $postStatus = ($this->isAdmin() ? 'publish, private, future' : 'publish');
     $WpPosts = $this->WpPostServices->getArticles(__FILE__, __LINE__, array('orderby'=> 'post_date', 'order'=>'DESC', 'posts_per_page'=>6, 'offset'=>$offset, 'post_status'=>$postStatus));
     $strContent = '';
-    if (!empty($WpPosts) ) {
-      foreach ($WpPosts as $WpPost ) {
+    if (!empty($WpPosts)) {
+      foreach ($WpPosts as $WpPost) {
     $WpBean = $WpPost->getBean();
         $strContent .= $WpBean->displayWpPost(TRUE);
       }
       $strContent .= '<div class="clearfix"></div>';
     }
   
-    return ($isAjax ?  '{"homeSectionArticles":'.json_encode($strContent).'}' : $strContent );
+    return ($isAjax ?  '{"homeSectionArticles":'.json_encode($strContent).'}' : $strContent);
   }
   
 }

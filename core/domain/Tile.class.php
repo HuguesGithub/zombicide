@@ -136,7 +136,7 @@ class Tile extends LocalDomain
    */
   public function getDimensions()
   {
-    list($width, $height, , ) = getimagesize('http://zombicide.jhugues.fr'.$this->getImgUrl());
+    list($width, $height, ,) = getimagesize('http://zombicide.jhugues.fr'.$this->getImgUrl());
     return $width.'px x '.$height.'px';
   }
   /**
@@ -147,12 +147,12 @@ class Tile extends LocalDomain
   {
     $Obj = new Tile();
     $vars = get_class_vars('Tile');
-    if (!empty($vars) ) {
+    if (!empty($vars)) {
       foreach ($vars as $key => $value) {
-      	$Obj->setField($key, str_replace("\\", '', $row[$key]));
+        $Obj->setField($key, str_replace("\\", '', $row[$key]));
       }
       if ($row['active']=='on') {
-      	$Obj->setField('active', 1);
+        $Obj->setField('active', 1);
       }
     }
     return $Obj;

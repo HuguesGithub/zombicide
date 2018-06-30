@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe ObjectiveServices
  * @author Hugues.
@@ -47,7 +47,7 @@ class ObjectiveServices extends LocalServices {
   public function getObjectiveSelect($file, $line, $value='', $prefix='id', $classe='form-control', $multiple=FALSE, $defaultLabel='---') {
     $Objectives = $this->getObjectivesWithFilters($file, $line);
     $arrSetLabels = array();
-    foreach ($Objectives as $Objective ) {
+    foreach ($Objectives as $Objective) {
       $arrSetLabels[$Objective->getId()] = $Objective->getCode();
     }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'objectiveId', $value, $defaultLabel, $classe, $multiple);

@@ -117,9 +117,9 @@ class Equipment extends LocalDomain {
         foreach ($this->EquipmentWeaponProfiles as $EquipmentWeaponProfile) {
           $WeaponProfile = $EquipmentWeaponProfile->getWeaponProfile(__FILE__, __LINE__);
           if ($WeaponProfile->getMaxRange()>0) {
-          	$isRanged = true;
+            $isRanged = true;
           } else {
-          	$this->melee = true;
+            $this->melee = true;
           }
         }
         $this->ranged = $isRanged;
@@ -142,9 +142,9 @@ class Equipment extends LocalDomain {
         foreach ($this->EquipmentWeaponProfiles as $EquipmentWeaponProfile) {
           $WeaponProfile = $EquipmentWeaponProfile->getWeaponProfile(__FILE__, __LINE__);
           if ($WeaponProfile->getMaxRange()==0) {
-          	$isMelee = true;
+            $isMelee = true;
           } else {
-          	$this->ranged = true;
+            $this->ranged = true;
           }
         }
         $this->melee = $isMelee;

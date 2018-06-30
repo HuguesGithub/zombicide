@@ -64,7 +64,7 @@ class MissionBean extends MainPageBean
         $Mission->getStrRules(),
         $Mission->getStrObjectives(),
         $Mission->getStrExpansions(),
-   );
+  );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/fragments/fragment-row-mission.php');
     return vsprintf($str, $args);
   }
@@ -85,7 +85,7 @@ class MissionBean extends MainPageBean
          $Mission->getStrNbJoueurs(),
          $Mission->getStrExpansions(),
          $Mission->getStrOrigine(),
-   );
+  );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-row-mission.php');
     return vsprintf($str, $args);
   }
@@ -223,7 +223,7 @@ class MissionBean extends MainPageBean
       foreach ($this->MissionRules as $MissionRule) {
         $Rule = $MissionRule->getRule();
         if ($Rule->getSetting()==1) {
-        	continue;
+          continue;
         }
         $displayMissionRules[$MissionRule->getId()] = $MissionRule;
       }
@@ -242,7 +242,7 @@ class MissionBean extends MainPageBean
       foreach ($this->MissionRules as $MissionRule) {
         $Rule = $MissionRule->getRule();
         if ($Rule->getSetting()==0) {
-        	continue;
+          continue;
         }
         $displayMissionRules[$MissionRule->getId()] = $MissionRule;
       }

@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe MissionExpansionServices
  * @author Hugues.
@@ -20,8 +20,8 @@ class MissionExpansionServices extends LocalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    $arrParams[] = (isset($arrFilters[self::CST_MISSIONID]) ? $arrFilters[self::CST_MISSIONID] : '%' );
-    $arrParams[] = (isset($arrFilters[self::CST_EXPANSIONID]) ? $arrFilters[self::CST_EXPANSIONID] : '%' );
+    $arrParams[] = (isset($arrFilters[self::CST_MISSIONID]) ? $arrFilters[self::CST_MISSIONID] : '%');
+    $arrParams[] = (isset($arrFilters[self::CST_EXPANSIONID]) ? $arrFilters[self::CST_EXPANSIONID] : '%');
     return $arrParams;
   }
   /**
@@ -50,13 +50,13 @@ class MissionExpansionServices extends LocalServices {
   public function getMissionExpansionsSelect($file, $line, $Mission, $prefix='', $classe=self::CST_FORMCONTROL, $multiple=FALSE, $defaultValue='') {
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters($file, $line);
     $arrSetLabels = array();
-    foreach ($Expansions as $Expansion ) {
+    foreach ($Expansions as $Expansion) {
       $arrSetLabels[$Expansion->getId()] = $Expansion->getName();
     }
     $MissionExpansions = $Mission->getMissionExpansions();
     $arrSelValues = array();
-    if (!empty($MissionExpansions) ) {
-      foreach ($MissionExpansions as $MissionExpansion ) {
+    if (!empty($MissionExpansions)) {
+      foreach ($MissionExpansions as $MissionExpansion) {
         array_push($arrSelValues, $MissionExpansion->getExpansionId());
       }
     }

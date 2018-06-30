@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe SpawnDeckPageBean
  * @author Hugues.
@@ -17,8 +17,8 @@ class SpawnDeckPageBean extends PagePageBean {
    */
   public static function getStaticSpawnCardActives($SpawnLiveDecks) {
     $strSpawns = '';
-    if (!empty($SpawnLiveDecks) ) {
-      foreach ($SpawnLiveDecks as $SpawnLiveDeck ) {
+    if (!empty($SpawnLiveDecks)) {
+      foreach ($SpawnLiveDecks as $SpawnLiveDeck) {
         $SpawnCard = $SpawnLiveDeck->getSpawnCard();
         $strSpawns .= '<div class="card spawn set"><img width="320" height="440" src="'.$SpawnCard->getImgUrl().'" alt="#'.$SpawnCard->getSpawnNumber().'"></div>';
       }
@@ -41,12 +41,12 @@ class SpawnDeckPageBean extends PagePageBean {
   $showSelection = '';
     $invasionSpanSelection = $this->initVar('invasionSpanSelection');
     $keyAccess = $this->initVar('keyAccess');
-  if ($keyAccess == '' && isset($_SESSION['wp_11_keyAccess']) && $_SESSION['wp_11_keyAccess']!='' ) { $keyAccess = $_SESSION['wp_11_keyAccess']; }
+  if ($keyAccess == '' && isset($_SESSION['wp_11_keyAccess']) && $_SESSION['wp_11_keyAccess']!='') { $keyAccess = $_SESSION['wp_11_keyAccess']; }
     // Si $keyAccess est défini  
-  if ($keyAccess!='' ) {
+  if ($keyAccess!='') {
     $LiveDecks = $this->LiveDeckServices->getLiveDecksWithFilters(__FILE__, __LINE__, array('deckKey'=>$keyAccess));
     // On a un LiveDeck qui correspond à $keyAccess, on va l'utiliser
-    if (!empty($LiveDecks) ) {
+    if (!empty($LiveDecks)) {
     $LiveDeck = array_shift($LiveDecks);
     $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array('liveDeckId'=>$LiveDeck->getId(), 'status'=>'A'), 'rank', 'ASC');
         $strSpawns = self::getStaticSpawnCardActives($SpawnLiveDecks);
@@ -55,12 +55,12 @@ class SpawnDeckPageBean extends PagePageBean {
     $pattern = "/([0-9]*-[0-9]*)/";
     preg_match_all($pattern, $invasionSpanSelection, $matches);
     // On a repérer un intervalle (ou plus) de cartes à insérer dans la pioche.
-    if (!empty($matches) && !empty($matches[0]) ) {
+    if (!empty($matches) && !empty($matches[0])) {
       $_SESSION['wp_11_keyAccess'] = $keyAccess;
       $args = array(
       'deckKey'=>$keyAccess,
       'dateUpdate'=>date('Y-m-d H:i:s', time()),
-      );
+     );
       $LiveDeck = new LiveDeck($args);
       $this->LiveDeckServices->insert(__FILE__, __LINE__, $LiveDeck);
       $idLiveDeck = MySQL::getLastInsertId();
@@ -68,9 +68,9 @@ class SpawnDeckPageBean extends PagePageBean {
       
       $arrToParse = array_shift($matches);
       $arrNumbers = array();
-      foreach ($arrToParse as $key=>$value ) {
+      foreach ($arrToParse as $key=>$value) {
       list($min, $max) = explode('-', $value);
-      for ($i=$min; $i<=$max; $i++ ) {
+      for ($i=$min; $i<=$max; $i++) {
         array_push($arrNumbers, $i);
       }
       }
@@ -98,8 +98,8 @@ class SpawnDeckPageBean extends PagePageBean {
       $str,
     $showSelection,
     $strSpawns
-    );
-    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-live-spawn-deck.php' );
+   );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-live-spawn-deck.php');
     return vsprintf($str, $args);
   }
   private function getDeckButtons($LiveDeck) {
@@ -122,12 +122,12 @@ class SpawnDeckPageBean extends PagePageBean {
   private function getExpansionsButtons() {
   $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), array('displayRank'), array('ASC'));
   $str = '';
-  if (!empty($Expansions) ) {
+  if (!empty($Expansions)) {
     $str .= '<div class="btn-group-vertical live-spawn-selection" role="group">';
-    foreach ($Expansions as $Expansion ) {
+    foreach ($Expansions as $Expansion) {
     $id = $Expansion->getId();
     $Spawns = $this->SpawnServices->getSpawnsWithFilters(__FILE__, __LINE__, array('expansionId'=>$id), 'spawnNumber', 'ASC');
-    if (empty($Spawns) ) { continue; }
+    if (empty($Spawns)) { continue; }
     $FirstSpawn = array_shift($Spawns);
     $LastSpawn = array_pop($Spawns);
     $spawnSpan = ' ['.$FirstSpawn->getSpawnNumber().'-'.$LastSpawn->getSpawnNumber().']';

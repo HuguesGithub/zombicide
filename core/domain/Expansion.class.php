@@ -115,10 +115,10 @@ class Expansion extends LocalDomain
         $Obj->setField($key, $row[$key]);
       }
       if ($row['officielle']=='on') {
-      	$Obj->setField('officielle', 1);
+        $Obj->setField('officielle', 1);
       }
       if ($row['active']=='on') {
-      	$Obj->setField('active', 1);
+        $Obj->setField('active', 1);
       }
     }
     return $Obj;

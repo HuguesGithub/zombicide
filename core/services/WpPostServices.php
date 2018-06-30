@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe WpPostServices
  * @author Hugues.
@@ -24,27 +24,27 @@ class WpPostServices extends GlobalServices {
       'order'=>'ASC',
       'posts_per_page'=>-1,
       'post_type'=>'post'
-    );
-    if (!empty($params) ) {
-      foreach ($params as $key=>$value ) {
+   );
+    if (!empty($params)) {
+      foreach ($params as $key=>$value) {
         $args[$key] = $value;
       }
     }
-    if ($viaWpQuery ) {
-      $wpQuery = new WP_Query($args );
+    if ($viaWpQuery) {
+      $wpQuery = new WP_Query($args);
       $posts_array = $wpQuery->posts;
     } else {
-      $posts_array = get_posts($args );
+      $posts_array = get_posts($args);
     }
     $WpPosts = array();
-    if (!empty($posts_array) ) {
-      foreach ($posts_array as $post ) {
+    if (!empty($posts_array)) {
+      foreach ($posts_array as $post) {
     $tags = wp_get_post_tags($post->ID);
-    if (!empty($tags) ) {
-      foreach ($tags as $WpTerm ) {
-      if ($WpTerm->slug == 'mission' ) { $wpPostType = 'WpPostMission'; }
-      elseif ($WpTerm->slug == 'news' ) { $wpPostType = 'WpPostNews'; }
-      elseif ($WpTerm->slug == 'survivant' ) { $wpPostType = 'WpPostSurvivor'; }
+    if (!empty($tags)) {
+      foreach ($tags as $WpTerm) {
+      if ($WpTerm->slug == 'mission') { $wpPostType = 'WpPostMission'; }
+      elseif ($WpTerm->slug == 'news') { $wpPostType = 'WpPostNews'; }
+      elseif ($WpTerm->slug == 'survivant') { $wpPostType = 'WpPostSurvivor'; }
       }
     }
         $WpPosts[] = WpPost::convertElement($post, $wpPostType);
@@ -66,9 +66,9 @@ class WpPostServices extends GlobalServices {
       'post_type' => 'page',
       'post_parent' => $pageId,
       'posts_per_page' => $limit
-    );
-    $the_query = new WP_Query($args );
-    while ($the_query->have_posts() ) {
+   );
+    $the_query = new WP_Query($args);
+    while ($the_query->have_posts()) {
       $the_query->the_post();
       $pages[] = WpPost::convertElement($post, 'WpPost');
     }

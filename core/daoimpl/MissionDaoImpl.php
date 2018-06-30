@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe MissionDaoImpl
  * @author Hugues.
@@ -58,13 +58,13 @@ class MissionDaoImpl extends LocalDaoImpl {
    */
   public function selectEntriesWithFiltersIn($file, $line, $arrParams, $filters) {
     $requete  = $this->selectRequest.$this->fromRequest;
-  if (isset($filters[CST_EXPANSIONID]) ) { $requete .= 'INNER JOIN wp_11_zombicide_mission_expansion me ON m.id=me.missionId '; }
+  if (isset($filters[CST_EXPANSIONID])) { $requete .= 'INNER JOIN wp_11_zombicide_mission_expansion me ON m.id=me.missionId '; }
   $requete .= $this->whereFilters;
-    if (isset($filters['levelId']) ) { $requete .= 'AND levelId IN ('.implode(',', $filters['levelId']).') '; }
-    if (isset($filters['durationId']) ) { $requete .= 'AND durationId IN ('.implode(',', $filters['durationId']).') '; }
-    if (isset($filters['playerId']) ) { $requete .= 'AND playerId IN ('.implode(',', $filters['playerId']).') '; }
-    if (isset($filters['origineId']) ) { $requete .= 'AND origineId IN ('.implode(',', $filters['origineId']).') '; }
-    if (isset($filters[CST_EXPANSIONID]) ) { $requete .= 'AND expansionId IN ('.implode(',', $filters[CST_EXPANSIONID]).') '; }
+    if (isset($filters['levelId'])) { $requete .= 'AND levelId IN ('.implode(',', $filters['levelId']).') '; }
+    if (isset($filters['durationId'])) { $requete .= 'AND durationId IN ('.implode(',', $filters['durationId']).') '; }
+    if (isset($filters['playerId'])) { $requete .= 'AND playerId IN ('.implode(',', $filters['playerId']).') '; }
+    if (isset($filters['origineId'])) { $requete .= 'AND origineId IN ('.implode(',', $filters['origineId']).') '; }
+    if (isset($filters[CST_EXPANSIONID])) { $requete .= 'AND expansionId IN ('.implode(',', $filters[CST_EXPANSIONID]).') '; }
     $requete .= $this->orderBy;
     return $this->convertToArray($this->selectEntriesAndLogQuery($file, $line, $requete, $arrParams));
   }

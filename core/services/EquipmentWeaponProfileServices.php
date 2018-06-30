@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe EquipmentWeaponProfileServices
  * @author Hugues.
@@ -20,8 +20,8 @@ class EquipmentWeaponProfileServices extends LocalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    $arrParams[] = (isset($arrFilters['equipmentCardId']) ? $arrFilters['equipmentCardId'] : '%' );
-    $arrParams[] = (isset($arrFilters['weaponProfileId']) ? $arrFilters['weaponProfileId'] : '%' );
+    $arrParams[] = (isset($arrFilters['equipmentCardId']) ? $arrFilters['equipmentCardId'] : '%');
+    $arrParams[] = (isset($arrFilters['weaponProfileId']) ? $arrFilters['weaponProfileId'] : '%');
     return $arrParams;
   }
   /**

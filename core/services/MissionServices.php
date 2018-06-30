@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe MissionServices
  * @author Hugues.
@@ -61,7 +61,7 @@ class MissionServices extends LocalServices {
     $arrDifficulties = array('TUTO'=>'Tutoriel', 'EASY'=>'Facile', 'MED'=>'Moyenne', 'HARD'=>'Difficile', 'VHARD'=>'Très Difficile', 'PVP'=>'Compétitive', 'BLUE'=>'Bleue', 'YELLOW'=>'Jaune', 'ORANGE'=>'Orange', 'RED'=>'Rouge');
     $arrSetValues = $this->getSetValues($file, $line, 'difficulty', FALSE);
     $arrSetLabels = array();
-    foreach ($arrSetValues as $setValue ) { $arrSetLabels[$setValue] = $arrDifficulties[$setValue]; }
+    foreach ($arrSetValues as $setValue) { $arrSetLabels[$setValue] = $arrDifficulties[$setValue]; }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'difficulty', $value, 'Difficultés');
   }
   /**
@@ -82,8 +82,8 @@ class MissionServices extends LocalServices {
   public function getNbPlayersSelect($file, $line, $value='', $prefix='') {
     $arrSetValues = $this->getSetValues($file, $line, 'nbPlayers', FALSE);
     $arrSetLabels = array();
-    foreach ($arrSetValues as $setValue ) { 
-      if (strpos($setValue, '+')!==FALSE ) { $arrSetLabels[$setValue] = $setValue[0].' Survivants et +'; }
+    foreach ($arrSetValues as $setValue) { 
+      if (strpos($setValue, '+')!==FALSE) { $arrSetLabels[$setValue] = $setValue[0].' Survivants et +'; }
       else {
         list($min, $max) = explode('-', $setValue);
         $arrSetLabels[$setValue] = $min.' à '.$max.' Survivants';
@@ -109,7 +109,7 @@ class MissionServices extends LocalServices {
     $arrParams = $this->buildOrderAndLimit(array('width', 'height'), array('ASC', 'ASC'));
     $arrSetValues = $this->Dao->selectDistinctDimensions($file, $line, $arrParams);
     $arrSetLabels = array();
-    foreach ($arrSetValues as $setValue ) { $arrSetLabels[$setValue->label] = $setValue->label; }
+    foreach ($arrSetValues as $setValue) { $arrSetLabels[$setValue->label] = $setValue->label; }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'dimension', $value, 'Dimensions');
   }
   /**
@@ -122,7 +122,7 @@ class MissionServices extends LocalServices {
   public function getDurationSelect($file, $line, $value='', $prefix='') {
     $arrSetValues = $this->getDistinctValues($file, $line, 'duration');
     $arrSetLabels = array();
-    foreach ($arrSetValues as $setValue ) { $arrSetLabels[$setValue] = $setValue.' minutes'; }
+    foreach ($arrSetValues as $setValue) { $arrSetLabels[$setValue] = $setValue.' minutes'; }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'duration', $value, 'Durées');
   }
   /**
@@ -132,7 +132,7 @@ class MissionServices extends LocalServices {
   public function getWidthSelect($width) {
     $widthSelect  = '<select name="width">';
     $widthSelect .= '<option value="0">0</option>';
-    for ($i=1; $i<=6; $i++ ) { $widthSelect .= '<option value="'.$i.'"'.($width==$i?' selected="selected"':'').'>'.$i.'</option>'; }
+    for ($i=1; $i<=6; $i++) { $widthSelect .= '<option value="'.$i.'"'.($width==$i?' selected="selected"':'').'>'.$i.'</option>'; }
     return $widthSelect.'</select>';
   }
   /**
@@ -141,7 +141,7 @@ class MissionServices extends LocalServices {
   public function getHeightSelect($height) {
     $heightSelect  = '<select name="height">';
     $heightSelect .= '<option value="0">0</option>';
-    for ($i=1; $i<=6; $i++ ) { $heightSelect .= '<option value="'.$i.'"'.($height==$i?' selected="selected"':'').'>'.$i.'</option>'; }
+    for ($i=1; $i<=6; $i++) { $heightSelect .= '<option value="'.$i.'"'.($height==$i?' selected="selected"':'').'>'.$i.'</option>'; }
     return $heightSelect.'</select>';
   }
 

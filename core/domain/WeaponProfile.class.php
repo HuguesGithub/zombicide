@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe WeaponProfile
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class WeaponProfile extends LocalDomain {
+class WeaponProfile extends LocalDomain
+{
   /**
    * Id technique de la donnée
    * @var int $id
@@ -40,68 +43,82 @@ class WeaponProfile extends LocalDomain {
   /**
    * @param array $attributes
    */
-  public function __construct($attributes=array()) {
+  public function __construct($attributes=array())
+  {
     parent::__construct($attributes);
   }
   /**
    * @return int
    */
-  public function getId() { return $this->id; }
+  public function getId()
+  { return $this->id; }
   /**
    * @return int
    */
-  public function getMinRange() { return $this->minRange; }
+  public function getMinRange()
+  { return $this->minRange; }
   /**
    * @return int
    */
-  public function getMaxRange() { return $this->maxRange; }
+  public function getMaxRange()
+  { return $this->maxRange; }
   /**
    * @return int
    */
-  public function getNbDice() { return $this->nbDice; }
+  public function getNbDice()
+  { return $this->nbDice; }
   /**
    * @return int
    */
-  public function getSuccessRate() { return $this->successRate; }
+  public function getSuccessRate()
+  { return $this->successRate; }
   /**
    * @return int
    */
-  public function getDamageLevel() { return $this->damageLevel; }
+  public function getDamageLevel()
+  { return $this->damageLevel; }
   /**
    * @param int $id
    */
-  public function setId($id) { $this->id = $id; }
+  public function setId($id)
+  { $this->id = $id; }
   /**
    * @param int $minRange
    */
-  public function setMinRange($minRange) { $this->minRange = $minRange; }
+  public function setMinRange($minRange)
+  { $this->minRange = $minRange; }
   /**
    * @param int $maxRange
    */
-  public function setMaxRange($maxRange) { $this->maxRange = $maxRange; }
+  public function setMaxRange($maxRange)
+  { $this->maxRange = $maxRange; }
   /**
    * @param int $nbDice
    */
-  public function setNbDice($nbDice) { $this->nbDice = $nbDice; }
+  public function setNbDice($nbDice)
+  { $this->nbDice = $nbDice; }
   /**
    * @param int $successRate
    */
-  public function setSuccessRate($successRate) { $this->successRate = $successRate; }
+  public function setSuccessRate($successRate)
+  { $this->successRate = $successRate; }
   /**
    * @param int $damageLevel
    */
-  public function setDamageLevel($damageLevel) { $this->damageLevel = $damageLevel; }
+  public function setDamageLevel($damageLevel)
+  { $this->damageLevel = $damageLevel; }
   /**
    * @return array
    */
-  public function getClassVars() { return get_class_vars('WeaponProfile'); }
+  public function getClassVars()
+  { return get_class_vars('WeaponProfile'); }
   /**
    * @param array $row
    * @param string $a
    * @param string $b
    * @return WeaponProfile
    */
-  public static function convertElement($row, $a='', $b='') { return parent::convertElement(new WeaponProfile(), self::getClassVars(), $row); }
+  public static function convertElement($row, $a='', $b='')
+  { return parent::convertElement(new WeaponProfile(), self::getClassVars(), $row); }
 
 }
-?>

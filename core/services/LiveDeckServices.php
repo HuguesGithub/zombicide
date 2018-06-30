@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe LiveDeckServices
  * @author Hugues.
@@ -17,8 +17,8 @@ class LiveDeckServices extends LocalServices {
 
   private function buildFilters($arrFilters) {
     $arrParams = array();
-    $arrParams[] = (isset($arrFilters['deckKey']) ? $arrFilters['deckKey'] : '%' );
-    $arrParams[] = (isset($arrFilters['dateUpdate']) ? $arrFilters['dateUpdate'] : '9999-99-99' );
+    $arrParams[] = (isset($arrFilters['deckKey']) ? $arrFilters['deckKey'] : '%');
+    $arrParams[] = (isset($arrFilters['dateUpdate']) ? $arrFilters['dateUpdate'] : '9999-99-99');
     return $arrParams;
   }
   /**

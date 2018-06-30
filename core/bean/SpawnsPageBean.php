@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe SpawnsPageBean
  * @author Hugues.
@@ -26,23 +26,23 @@ class SpawnsPageBean extends PagePageBean {
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), self::CST_DISPLAYRANK);
     $strFilters = '';
     $strSpawns = '';
-      if ( !empty($Expansions) ) {
-      foreach ( $Expansions as $Expansion ) {
+      if (!empty($Expansions)) {
+      foreach ($Expansions as $Expansion) {
         $id = $Expansion->getId();
         $SpawnCards = $this->SpawnServices->getSpawnsWithFilters(__FILE__, __LINE__, array(self::CST_EXPANSIONID=>$id), 'spawnNumber');
-        if ( empty($SpawnCards) ) { continue; }
+        if (empty($SpawnCards)) { continue; }
         $strFilters .= '<option value="set-'.$id.'">'.$Expansion->getName().'</option>';
-        foreach ( $SpawnCards as $SpawnCard ) {
+        foreach ($SpawnCards as $SpawnCard) {
           $strSpawns .= '<div class="card spawn set-'.$id.'"><img width="320" height="440" src="';
-		  $strSpawns .= $SpawnCard->getImgUrl().'" alt="#'.$SpawnCard->getSpawnNumber().'"></div>';
+      $strSpawns .= $SpawnCard->getImgUrl().'" alt="#'.$SpawnCard->getSpawnNumber().'"></div>';
         }
       }
     }
     $args = array(
       $strFilters,
       $strSpawns
-    );
-    $str = file_get_contents( PLUGIN_PATH.'web/pages/public/public-page-spawncards.php' );
+   );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-spawncards.php');
     return vsprintf($str, $args);
   }
 }

@@ -32,19 +32,19 @@ class AdminMissionPageBean extends AdminPageBean
     $Mission = $MissionServices->select(__FILE__, __LINE__, $urlParams['id']);
     switch ($urlParams[self::CST_POSTACTION]) {
       case 'add'   :
-      	$returned = $Bean->getAddPage($Mission);
+        $returned = $Bean->getAddPage($Mission);
       break;
       case 'edit'  :
-      	$returned = ($Mission->getId() == '' ? $Bean->getListingPage() : $Bean->getEditPage($Mission));
+        $returned = ($Mission->getId() == '' ? $Bean->getListingPage() : $Bean->getEditPage($Mission));
       break;
       case 'trash' :
-      	$returned = 'trash';
+        $returned = 'trash';
       break;
       case 'view'  :
-      	$returned = 'view';
+        $returned = 'view';
       break;
       case 'clone' :
-      	$returned = 'clone';
+        $returned = 'clone';
       break;
       default      :
         $returned = $Bean->getListingPage();
@@ -168,7 +168,7 @@ class AdminMissionPageBean extends AdminPageBean
         // 16
       $Bean->getMissionObjectivesBlock(),
       '','','','','','','','','','','','','','',
-   );
+  );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/missions-edit-board.php');
     return vsprintf($str, $args);
   }
@@ -214,7 +214,7 @@ class AdminMissionPageBean extends AdminPageBean
       $hrefNext,
       // URL Last Page
       $hrefLast,
-   );
+  );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-pagination.php');
     return vsprintf($str, $args);
   }
@@ -254,15 +254,15 @@ class AdminMissionPageBean extends AdminPageBean
     $WpPostsFuture = $this->WpPostServices->getArticles(__FILE__, __LINE__, array(self::CST_POSTSTATUS=>self::CST_FUTURE, self::CST_ORDERBY=>$orderby, self::CST_ORDER=>$order));
     switch ($post_status) {
       case self::CST_PUBLISH :
-      	$ToDisplayMissions = $WpPostsPublished;
+        $ToDisplayMissions = $WpPostsPublished;
       break;
       case self::CST_FUTURE  :
-      	$ToDisplayMissions = $WpPostsFuture;
+        $ToDisplayMissions = $WpPostsFuture;
       break;
       case self::CST_PENDING :
       case 'all'             :
       default                :
-      	$ToDisplayMissions = $FilteredMissions;
+        $ToDisplayMissions = $FilteredMissions;
       break;
     }
     $strRows = '';
@@ -285,13 +285,13 @@ class AdminMissionPageBean extends AdminPageBean
           $WpPostMissionBean = $WpPost->getBean();
           $Mission = $WpPostMissionBean->getMission();
           if (!empty($arrFilters[self::CST_LEVELID]) && $Mission->getLevelId()!=$arrFilters[self::CST_LEVELID]) {
-          	continue;
+            continue;
           }
           if (!empty($arrFilters[self::CST_DURATIONID]) && $Mission->getDurationId()!=$arrFilters[self::CST_DURATIONID]) {
-          	continue;
+            continue;
           }
           if (!empty($arrFilters[self::CST_PLAYERID]) && $Mission->getPlayerId()!=$arrFilters[self::CST_PLAYERID]) {
-          	continue;
+            continue;
           }
           if (!empty($arrFilters[self::CST_ORIGINEID]) && $Mission->getOrigineId()!=$arrFilters[self::CST_ORIGINEID]) {
             continue;
@@ -313,13 +313,13 @@ class AdminMissionPageBean extends AdminPageBean
     $queryArg = array(self::CST_ONGLET=>self::CST_MISSION,
       self::CST_ORDERBY=>$orderby,
       self::CST_ORDER=>$order
-    );
+   );
     // Subs
     $numbers = array('all'=>count($Missions),
       self::CST_PENDING=>count($NotPublishedMissions),
       self::CST_PUBLISH=>count($WpPostsPublished),
       self::CST_CURRENT=>count($WpPostsFuture)
-    );
+   );
     $subs = $this->getSubs($queryArg, $post_status, $numbers);
     // Pagination
     if ($filter_by_levelId!='') {
@@ -374,7 +374,7 @@ class AdminMissionPageBean extends AdminPageBean
       ($orderby==self::CST_TITLE?$order=='asc':'desc'),
       // url pour le tri sur title - 9
       $urlSortTitle,
-   );
+  );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/missions-admin-board.php');
     return vsprintf($str, $args);
   }

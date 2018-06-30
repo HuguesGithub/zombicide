@@ -1,6 +1,6 @@
 <?php
-if (!defined('ABSPATH') ) {
-  die('Forbidden' );
+if (!defined('ABSPATH')) {
+  die('Forbidden');
 }
 /**
  * MissionObjectiveActions
@@ -17,7 +17,7 @@ class MissionObjectiveActions extends LocalActions {
    * @return string
    */
   public static function staticInsert($post) {
-    if ($post['selId']=='' ) {
+    if ($post['selId']=='') {
       $args = array('description'=>stripslashes($post['description']), 'code'=>'CODE_TODO');
       $Objective = new Objective($args);
       $ObjectiveServices = new ObjectiveServices();

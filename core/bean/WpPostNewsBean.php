@@ -29,8 +29,8 @@ class WpPostNewsBean extends MainPageBean {
       $WpPost->getPostContent(),
       $WpPost->getPostTitle(),
     '','','','','','','',
-  );
-    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/article-news-extract.php' );
+ );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/article-news-extract.php');
     return vsprintf($str, $args);
   }
 

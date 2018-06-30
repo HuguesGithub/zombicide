@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe SurvivorBean
  * @author Hugues.
@@ -11,7 +11,7 @@ class SurvivorBean extends MainPageBean {
   public function __construct($Survivor='') {
     $services = array('Survivor', 'Expansion');
     parent::__construct($services);
-    if ($Survivor=='' ) { $Survivor = new Survivor(); }
+    if ($Survivor=='') { $Survivor = new Survivor(); }
     $this->Survivor = $Survivor;
   }
   
@@ -41,10 +41,10 @@ class SurvivorBean extends MainPageBean {
     $Survivor = $this->Survivor;
     $str  = '<ul>';
     $str .= $this->getSkillsBySurvivorType('skills-survivant', $Survivor->getUlSkills());
-    if ($Survivor->isZombivor() ) {
+    if ($Survivor->isZombivor()) {
       $str .= $this->getSkillsBySurvivorType('skills-zombivant', $Survivor->getUlSkills('z'));
     }
-    if ($Survivor->isUltimate() ) {
+    if ($Survivor->isUltimate()) {
       $str .= $this->getSkillsBySurvivorType('skills-ultimate skills-survivant', $Survivor->getUlSkills('u'));
       $str .= $this->getSkillsBySurvivorType('skills-ultimate skills-zombivant', $Survivor->getUlSkills('uz'));
     }
@@ -55,10 +55,10 @@ class SurvivorBean extends MainPageBean {
     $Survivor = $this->Survivor;
     $name = $Survivor->getName();
     $str  = $this->getStrImgPortrait($Survivor->getPortraitUrl(), 'Portrait Survivant - '.$name, 'portrait-survivant');
-    if ($Survivor->isZombivor() ) {
+    if ($Survivor->isZombivor()) {
       $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('z'), 'Portrait Zombivant - '.$name, 'portrait-zombivant');
     }
-    if ($Survivor->isUltimate() ) {
+    if ($Survivor->isUltimate()) {
       $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('u'), 'Portrait Ultimate - '.$name, 'portrait-survivant portrait-ultimate');
       $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('uz'), 'Portrait ZUltimate - '.$name, 'portrait-zombivant portrait-ultimate');
     }
@@ -77,8 +77,8 @@ class SurvivorBean extends MainPageBean {
       $name,
       $this->getSkillsBySurvivorType('skills-survivant', $Survivor->getUlSkills()),
       ($addClass==''?'':' '.$addClass),
-    );
-    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/article-survivor-cardvisit.php' );
+   );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/article-survivor-cardvisit.php');
     return vsprintf($str, $args);
   }
   

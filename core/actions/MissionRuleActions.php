@@ -1,6 +1,6 @@
 <?php
-if (!defined('ABSPATH') ) {
-  die('Forbidden' );
+if (!defined('ABSPATH')) {
+  die('Forbidden');
 }
 /**
  * MissionRuleActions
@@ -17,7 +17,7 @@ class MissionRuleActions extends LocalActions {
    * @return string
    */
   public static function staticInsert($post) {
-    if ($post['selId']=='' ) {
+    if ($post['selId']=='') {
       $args = array('description'=>stripslashes($post['description']), MISSIONID=>($post['type']==MISSIONID), 'code'=>'CODE_TODO');
       $Rule = new Rule($args);
       $RuleServices = new RuleServices();
@@ -33,7 +33,7 @@ class MissionRuleActions extends LocalActions {
     $MissionServices = new MissionServices();
     $Mission = $MissionServices->select(__FILE__, __LINE__, $post[MISSIONID]);
     $MissionBean = new MissionBean($Mission);
-    if ($post['type']==MISSIONID ) {
+    if ($post['type']==MISSIONID) {
       return $MissionBean->getMissionSettingsBlock();
     } else {
       return $MissionBean->getMissionRulesBlock();
@@ -50,7 +50,7 @@ class MissionRuleActions extends LocalActions {
     $MissionServices = new MissionServices();
     $Mission = $MissionServices->select(__FILE__, __LINE__, $MissionRule->getMissionId());
     $MissionBean = new MissionBean($Mission);
-    if ($post['type']==MISSIONID ) {
+    if ($post['type']==MISSIONID) {
       return $MissionBean->getMissionSettingsBlock();
     } else {
       return $MissionBean->getMissionRulesBlock();

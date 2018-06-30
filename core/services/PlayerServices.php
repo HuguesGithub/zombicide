@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe PlayerServices
  * @author Hugues.
@@ -40,7 +40,7 @@ class PlayerServices extends LocalServices {
   public function getNbPlayersSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=FALSE, $defaultValue='') {
     $Players = $this->getPlayersWithFilters($file, $line, array(), 'name', 'asc');
     $arrSetLabels = array();
-    foreach ($Players as $Player ) {
+    foreach ($Players as $Player) {
       $arrSetLabels[$Player->getId()] = $Player->getNbJoueurs();
     }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'playerId', $value, $defaultValue, $classe, $multiple);

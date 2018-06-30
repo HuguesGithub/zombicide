@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'ABSPATH') ) { die( 'Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe LiveMissionToken
  * @author Hugues.
@@ -49,7 +49,7 @@ class LiveMissionToken extends LocalDomain {
      * @return string
      */
     public function getStatus() { return $this->status; }
-		/**
+    /**
      * @param int $id
      */
     public function setId($id) { $this->id = $id; }

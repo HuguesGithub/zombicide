@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe SkillsPageBean
  * @author Hugues.
@@ -19,10 +19,10 @@ class SkillsPageBean extends PagePageBean {
   public static function staticGetSkillsSortedAndFiltered($post) {
     $Bean = new SkillsPageBean();
     $arrFilters = array();
-    if ($post['filters']!='' ) {
+    if ($post['filters']!='') {
       $arrParams = explode('&', $post['filters']);
-      if (!empty($arrParams) ) {
-        foreach ($arrParams as $arrParam ) {
+      if (!empty($arrParams)) {
+        foreach ($arrParams as $arrParam) {
           list($key, $value) = explode('=', $arrParam);
           $arrFilters[$key]= $value;
         }
@@ -48,14 +48,14 @@ class SkillsPageBean extends PagePageBean {
     $nbPages = ceil($nbElements/$nbPerPage);
     $displayedSkills = array_slice($Skills, $nbPerPage*($curPage-1), $nbPerPage);
     $strBody = '';
-    if (!empty($displayedSkills) ) {
-      foreach ($displayedSkills as $Skill ) {
+    if (!empty($displayedSkills)) {
+      foreach ($displayedSkills as $Skill) {
         $SkillBean = new SkillBean($Skill);
         $strBody .= $SkillBean->getRowForSkillsPage();
       }
     }
     $strPagination = '';
-    for ($i=1; $i<=$nbPages; $i++ ) {
+    for ($i=1; $i<=$nbPages; $i++) {
       $strPagination .= '<li class="page-item'.($i==$curPage?' disabled':'').'"><a class="page-link ';
       $strPagination .= 'ajaxAction" href="#" data-paged="'.$i.'" data-ajaxaction="paged">'.$i.'</a></li>';
     }
@@ -85,8 +85,8 @@ class SkillsPageBean extends PagePageBean {
       $nbPages,
     // Filtre sur la Description - 14
     $arrFilters['description'],
-    );
-    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-skills.php' );
+   );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-skills.php');
     return vsprintf($str, $args);
   }
   

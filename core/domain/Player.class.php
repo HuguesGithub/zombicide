@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH') ) { die('Forbidden' ); }
+if (!defined('ABSPATH')) { die('Forbidden'); }
 /**
  * Classe Player
  * @author Hugues.
@@ -55,9 +55,9 @@ class Player extends LocalDomain {
    */
   public function getNbJoueurs() {
     $pos = strpos($this->name, '+');
-    if ($pos!==FALSE ) { return substr($this->name, 0, $pos).' Survivants et +'; }
+    if ($pos!==FALSE) { return substr($this->name, 0, $pos).' Survivants et +'; }
     $pos = strpos($this->name, '-');
-    if ($pos!==FALSE ) {
+    if ($pos!==FALSE) {
       list($min, $max) = explode('-', $this->name);
       return $min.' à '.$max.' Survivants';
     }

@@ -49,8 +49,8 @@ class WpPostSurvivorBean extends MainPageBean {
       // Le Survivant a-t-il une version Ultimate ?  - 14
       $Survivor->isUltimate() ? 'Oui' : 'Non',
     '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''
-    );
-    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/article-survivor-extract.php' );
+   );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/article-survivor-extract.php');
     return vsprintf($str, $args);
   }
   /**

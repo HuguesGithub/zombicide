@@ -13,8 +13,9 @@ class ChatDaoImpl extends LocalDaoImpl
   /**
    * Class constructor
    */
-  public function __construct() {
-  	parent::__construct('Chat');
+  public function __construct()
+  {
+    parent::__construct('Chat');
   }
   /**
    * @param array $rows

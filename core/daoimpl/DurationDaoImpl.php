@@ -11,32 +11,12 @@ if (!defined('ABSPATH')) {
 class DurationDaoImpl extends LocalDaoImpl
 {
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT id, minDuration, maxDuration ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_duration ";
-  /**
-   * Recherche avec filtres
-   * @var string $whereFilters
-   */
-  protected $whereFilters = "WHERE minDuration LIKE '%s' AND maxDuration LIKE '%s' ";
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_duration (minDuration, maxDuration) VALUES ('%s', '%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_duration SET minDuration='%s', maxDuration='%s' ";
-
-  public function __construct() {}
+  public function __construct()
+  {
+    parent::__construct('Duration');
+  }
   /**
    * @param array $rows
    * @return array

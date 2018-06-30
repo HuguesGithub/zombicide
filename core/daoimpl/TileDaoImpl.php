@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe TileDaoImpl
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class TileDaoImpl extends LocalDaoImpl {
+class TileDaoImpl extends LocalDaoImpl
+{
   /**
    * Corps de la requête de sélection
    * @var string $selectRequest
@@ -53,17 +56,18 @@ class TileDaoImpl extends LocalDaoImpl {
    * @param array $rows
    * @return array
    */
-  protected function convertToArray($rows) { return $this->globalConvertToArray('Tile', $rows); }
+  protected function convertToArray($rows)
+  { return $this->globalConvertToArray('Tile', $rows); }
   /**
    * @param string $file
    * @param int $line
    * @param array $arrParams
    * @return array|Tile
    */
-  public function select($file, $line, $arrParams) {
+  public function select($file, $line, $arrParams)
+  {
     $Tiles = $this->selectEntry($file, $line, $arrParams);
     return (empty($Tiles) ? new Tile() : array_shift($Tiles));
   }
 
 }
-?>

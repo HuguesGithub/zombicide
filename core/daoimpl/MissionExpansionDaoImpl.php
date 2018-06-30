@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe MissionExpansionDaoImpl
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class MissionExpansionDaoImpl extends LocalDaoImpl {
+class MissionExpansionDaoImpl extends LocalDaoImpl
+{
   /**
    * Corps de la requête de sélection
    * @var string $selectRequest
@@ -38,17 +41,18 @@ class MissionExpansionDaoImpl extends LocalDaoImpl {
    * @param array $rows
    * @return array
    */
-  protected function convertToArray($rows) { return $this->globalConvertToArray('MissionExpansion', $rows); }
+  protected function convertToArray($rows)
+  { return $this->globalConvertToArray('MissionExpansion', $rows); }
   /**
    * @param string $file
    * @param int $line
    * @param array $arrParams
    * @return array|MissionExpansion
    */
-  public function select($file, $line, $arrParams) {
+  public function select($file, $line, $arrParams)
+  {
     $MissionExpansions = $this->selectEntry($file, $line, $arrParams);
     return (empty($MissionExpansions) ? new MissionExpansion() : array_shift($MissionExpansions));
   }
   
 }
-?>

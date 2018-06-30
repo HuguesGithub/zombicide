@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe MissionTokenDaoImpl
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class MissionTokenDaoImpl extends LocalDaoImpl {
+class MissionTokenDaoImpl extends LocalDaoImpl
+{
   /**
    * Corps de la requête de sélection
    * @var string $selectRequest
@@ -38,17 +41,18 @@ class MissionTokenDaoImpl extends LocalDaoImpl {
    * @param array $rows
    * @return array
    */
-  protected function convertToArray($rows) { return $this->globalConvertToArray('MissionToken', $rows); }
+  protected function convertToArray($rows)
+  { return $this->globalConvertToArray('MissionToken', $rows); }
   /**
    * @param string $file
    * @param int $line
    * @param array $arrParams
    * @return array|MissionToken
    */
-  public function select($file, $line, $arrParams) {
+  public function select($file, $line, $arrParams)
+  {
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new MissionToken() : array_shift($Objs));
   }
   
 }
-?>

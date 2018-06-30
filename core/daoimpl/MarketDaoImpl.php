@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe MarketDaoImpl
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class MarketDaoImpl extends LocalDaoImpl {
+class MarketDaoImpl extends LocalDaoImpl
+{
   /**
    * Corps de la requête de sélection
    * @var string $selectRequest
@@ -38,17 +41,18 @@ class MarketDaoImpl extends LocalDaoImpl {
    * @param array $rows
    * @return array
    */
-  protected function convertToArray($rows) { return $this->globalConvertToArray('Market', $rows); }
+  protected function convertToArray($rows)
+  { return $this->globalConvertToArray('Market', $rows); }
   /**
    * @param string $file
    * @param int $line
    * @param array $arrParams
    * @return array|Market
    */
-  public function select($file, $line, $arrParams) {
+  public function select($file, $line, $arrParams)
+  {
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new Market() : array_shift($Objs));
   }
   
 }
-?>

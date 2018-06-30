@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe EquipmentKeywordDaoImpl
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class EquipmentKeywordDaoImpl extends LocalDaoImpl {
+class EquipmentKeywordDaoImpl extends LocalDaoImpl
+{
   /**
    * Corps de la requête de sélection
    * @var string $selectRequest
@@ -38,17 +41,18 @@ class EquipmentKeywordDaoImpl extends LocalDaoImpl {
    * @param array $rows
    * @return array
    */
-  protected function convertToArray($rows) { return $this->globalConvertToArray('EquipmentKeyword', $rows); }
+  protected function convertToArray($rows)
+  { return $this->globalConvertToArray('EquipmentKeyword', $rows); }
   /**
    * @param string $file
    * @param int $line
    * @param array $arrParams
    * @return array|EquipmentKeyword
    */
-  public function select($file, $line, $arrParams) {
+  public function select($file, $line, $arrParams)
+  {
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new EquipmentKeyword() : array_shift($Objs));
   }
   
 }
-?>

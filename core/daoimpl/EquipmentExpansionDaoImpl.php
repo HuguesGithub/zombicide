@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe EquipmentExpansionDaoImpl
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class EquipmentExpansionDaoImpl extends LocalDaoImpl {
+class EquipmentExpansionDaoImpl extends LocalDaoImpl
+{
   /**
    * Corps de la requête de sélection
    * @var string $selectRequest
@@ -38,17 +41,18 @@ class EquipmentExpansionDaoImpl extends LocalDaoImpl {
    * @param array $rows
    * @return array
    */
-  protected function convertToArray($rows) { return $this->globalConvertToArray('EquipmentExpansion', $rows); }
+  protected function convertToArray($rows)
+  { return $this->globalConvertToArray('EquipmentExpansion', $rows); }
   /**
    * @param string $file
    * @param int $line
    * @param array $arrParams
    * @return array|EquipmentExpansion
    */
-  public function select($file, $line, $arrParams) {
+  public function select($file, $line, $arrParams)
+  {
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new EquipmentExpansion() : array_shift($Objs));
   }
   
 }
-?>

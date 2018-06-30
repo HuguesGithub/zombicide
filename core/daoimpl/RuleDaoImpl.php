@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe RuleDaoImpl
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class RuleDaoImpl extends LocalDaoImpl {
+class RuleDaoImpl extends LocalDaoImpl
+{
   /**
    * Corps de la requête de sélection
    * @var string $selectRequest
@@ -38,17 +41,18 @@ class RuleDaoImpl extends LocalDaoImpl {
    * @param array $rows
    * @return array
    */
-  protected function convertToArray($rows) { return $this->globalConvertToArray('Rule', $rows); }
+  protected function convertToArray($rows)
+  { return $this->globalConvertToArray('Rule', $rows); }
   /**
    * @param string $file
    * @param int $line
    * @param array $arrParams
    * @return array|Rule
    */
-  public function select($file, $line, $arrParams) {
+  public function select($file, $line, $arrParams)
+  {
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new Rule() : array_shift($Objs));
   }
 
 }
-?>

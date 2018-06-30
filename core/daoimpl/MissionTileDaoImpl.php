@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe MissionTileDaoImpl
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class MissionTileDaoImpl extends LocalDaoImpl {
+class MissionTileDaoImpl extends LocalDaoImpl
+{
   /**
    * Corps de la requête de sélection
    * @var string $selectRequest
@@ -53,17 +56,18 @@ class MissionTileDaoImpl extends LocalDaoImpl {
    * @param array $rows
    * @return array
    */
-  protected function convertToArray($rows) { return $this->globalConvertToArray('MissionTile', $rows); }
+  protected function convertToArray($rows)
+  { return $this->globalConvertToArray('MissionTile', $rows); }
   /**
    * @param string $file
    * @param int $line
    * @param array $arrParams
    * @return array|MissionTile
    */
-  public function select($file, $line, $arrParams) {
+  public function select($file, $line, $arrParams)
+  {
     $MissionTiles = $this->selectEntry($file, $line, $arrParams);
     return (empty($MissionTiles) ? new MissionTile() : array_shift($MissionTiles));
   }
   
 }
-?>

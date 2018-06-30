@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe ChatDaoImpl
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class ChatDaoImpl extends LocalDaoImpl {
+class ChatDaoImpl extends LocalDaoImpl
+{
   /**
    * Corps de la requête de sélection
    * @var string $selectRequest
@@ -38,17 +41,18 @@ class ChatDaoImpl extends LocalDaoImpl {
    * @param array $rows
    * @return array
    */
-  protected function convertToArray($rows) { return $this->globalConvertToArray('Chat', $rows); }
+  protected function convertToArray($rows)
+  { return $this->globalConvertToArray('Chat', $rows); }
   /**
    * @param string $file
    * @param int $line
    * @param array $arrParams
    * @return array|Chat
    */
-  public function select($file, $line, $arrParams) {
+  public function select($file, $line, $arrParams)
+  {
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new Chat() : array_shift($Objs));
   }
 
 }
-?>

@@ -33,5 +33,5 @@ class EquipmentDaoImpl extends LocalDaoImpl
   {
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new Equipment() : array_shift($Objs));
-  } 
+  }
 }

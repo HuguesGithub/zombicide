@@ -1,14 +1,21 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe EquipmentsPageBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class EquipmentsPageBean extends PagePageBean {
-
-  public function __construct($WpPage='') {
+class EquipmentsPageBean extends PagePageBean
+{
+  /**
+   * Class Constructor
+   * @param WpPage $WpPage
+   */
+  public function __construct($WpPage='')
+  {
     $services = array('Equipment', 'EquipmentExpansion', 'Expansion');
     parent::__construct($WpPage, $services);
   }
@@ -16,7 +23,8 @@ class EquipmentsPageBean extends PagePageBean {
    * @param WpPage $WpPage
    * @return string
    */
-  public function getStaticEquipmentsContent($WpPage) {
+  public function getStaticEquipmentsContent($WpPage)
+  {
     $Bean = new EquipmentsPageBean($WpPage);
     return $Bean->getEquipmentsContent();
   }
@@ -24,7 +32,8 @@ class EquipmentsPageBean extends PagePageBean {
    * Retourne la page des cartes Equipement
    * @return string
    */
-  public function getEquipmentsContent() {
+  public function getEquipmentsContent()
+  {
     // On récupère toutes les extensions
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), self::CST_DISPLAYRANK);
     $strFilters = '';

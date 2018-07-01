@@ -1,24 +1,33 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe MarketBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class MarketBean extends MainPageBean {
-
-  public function __construct($Market='') {
+class MarketBean extends MainPageBean
+{
+  /**
+   * Class Constructor
+   * @param Market $Market
+   */
+  public function __construct($Market='')
+  {
     $services = array('Market');
     parent::__construct($services);
-    if ($Market=='') { $Market = new Market(); }
+    if ($Market=='') {
+      $Market = new Market();
+    }
     $this->Market = $Market;
   }
-  
   /**
    * @return string
    */  
-    public function getVisitCard() {
+  public function getVisitCard()
+  {
     $Market = $this->Market;
     $args = array(
       $Market->getImgProduct(),
@@ -26,10 +35,9 @@ class MarketBean extends MainPageBean {
       $Market->getQuantity(),
       $Market->getPrice(),
       $Market->getDescription(),
-   );
+    );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/article-market-cardvisit.php');
     return vsprintf($str, $args);
   }
   
 }
-?>

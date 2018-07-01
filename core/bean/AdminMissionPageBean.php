@@ -114,7 +114,7 @@ class AdminMissionPageBean extends AdminPageBean
         $this->MissionExpansionServices->delete(__FILE__, __LINE__, $MissionExpansion);
       }
     }
-    // Si des extensions cochées n'ont pas été traitées, on les ajoute.    
+    // Si des extensions cochées n'ont pas été traitées, on les ajoute.
     $args = array(self::CST_MISSIONID=>$Mission->getId());
     foreach ($arrExpansions as $key => $value) {
       $args[self::CST_EXPANSIONID] = $value;
@@ -240,7 +240,7 @@ class AdminMissionPageBean extends AdminPageBean
     if ($filter_by_origineId!='') {
       $arrFilters[self::CST_ORIGINEID] = $filter_by_origineId;
     }
-    $orderby = $this->initVar(self::CST_ORDERBY,self:: CST_TITLE);
+    $orderby = $this->initVar(self::CST_ORDERBY, self::CST_TITLE);
     $order = $this->initVar(self::CST_ORDER, 'ASC');
     $curPage = $this->initVar(self::CST_CURPAGE, 1);
     $post_status = $this->initVar(self::CST_POSTSTATUS, 'all');
@@ -250,8 +250,10 @@ class AdminMissionPageBean extends AdminPageBean
     $Missions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, array(), $orderby, $order);
     $NotPublishedMissions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, array('published'=>0));
     $FilteredMissions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, $arrFilters, $orderby, $order);
-    $WpPostsPublished = $this->WpPostServices->getArticles(__FILE__, __LINE__, array(self::CST_POSTSTATUS=>self::CST_PUBLISH, self::CST_ORDERBY=>$orderby, self::CST_ORDER=>$order));
-    $WpPostsFuture = $this->WpPostServices->getArticles(__FILE__, __LINE__, array(self::CST_POSTSTATUS=>self::CST_FUTURE, self::CST_ORDERBY=>$orderby, self::CST_ORDER=>$order));
+    $argsPublished = array(self::CST_POSTSTATUS=>self::CST_PUBLISH, self::CST_ORDERBY=>$orderby, self::CST_ORDER=>$order);
+    $WpPostsPublished = $this->WpPostServices->getArticles(__FILE__, __LINE__, $argsPublished);
+    $argsFuture = array(self::CST_POSTSTATUS=>self::CST_FUTURE, self::CST_ORDERBY=>$orderby, self::CST_ORDER=>$order);
+    $WpPostsFuture = $this->WpPostServices->getArticles(__FILE__, __LINE__, $argsFuture);
     switch ($post_status) {
       case self::CST_PUBLISH :
         $ToDisplayMissions = $WpPostsPublished;

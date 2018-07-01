@@ -1,20 +1,25 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe AdminPageBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class AdminPageBean extends MainPageBean {
-  const WP_DB_BACKUP_CRON = 'wp_db_backup_cron';
-  
+class AdminPageBean extends MainPageBean
+{
   /**
-   * 
+   * @var string WP_DB_BACKUP_CRON
+   */
+  const WP_DB_BACKUP_CRON = 'wp_db_backup_cron';
+  /**
    * @param string $tag
    * @param array $services
    */
-  public function __construct($tag='', $services=array()) {
+  public function __construct($tag='', $services=array())
+  {
     parent::__construct($services);
     $this->analyzeUri();
     $this->tableName = 'wp_11_zombicide_'.$tag;
@@ -24,7 +29,8 @@ class AdminPageBean extends MainPageBean {
   /**
    * @return string
    */
-  public function analyzeUri() {
+  public function analyzeUri()
+  {
     $uri = $_SERVER['REQUEST_URI'];
     $pos = strpos($uri, '?');
     if ($pos!==false) {
@@ -39,19 +45,32 @@ class AdminPageBean extends MainPageBean {
     }
     $pos = strpos($uri, '#');
     if ($pos!==false) { $this->anchor = substr($uri, $pos+1, strlen($uri)); }
-    if (isset($_POST)) { foreach ($_POST as $key=>$value) { $this->urlParams[$key] = $value; } }
+    if (isset($_POST)) {
+      foreach ($_POST as $key => $value) {
+        $this->urlParams[$key] = $value;
+      }
+    }
     return $uri;
   }
   /**
    * @return string
    */
-  public function getContentPage() {
+  public function getContentPage()
+  {
     if (self::isAdmin()) {
       switch ($this->urlParams['onglet']) {
-        case 'mission'    : $returned = AdminMissionPageBean::getStaticContentPage($this->urlParams); break;
-        case 'parametre'  : $returned = AdminParametrePageBean::getStaticContentPage($this->urlParams); break;
-        case ''       : $returned = $this->getHomeContentPage(); break;
-        default       : $returned = "Need to add <b>".$this->urlParams['onglet']."</b> to AdminPageBean > getContentPage()."; break;
+        case 'mission'    :
+          $returned = AdminMissionPageBean::getStaticContentPage($this->urlParams);
+        break;
+        case 'parametre'  :
+          $returned = AdminParametrePageBean::getStaticContentPage($this->urlParams);
+        break;
+        case ''       :
+          $returned = $this->getHomeContentPage();
+        break;
+        default       :
+          $returned = "Need to add <b>".$this->urlParams['onglet']."</b> to AdminPageBean > getContentPage().";
+        break;
       }
     }
     return $returned;
@@ -59,7 +78,8 @@ class AdminPageBean extends MainPageBean {
   /**
    * @return string
    */
-  public function getHomeContentPage() {
+  public function getHomeContentPage()
+  {
     $reset = $this->initVar('reset', '');
     $doReset = !empty($reset);
     if ($doReset) {
@@ -72,7 +92,7 @@ class AdminPageBean extends MainPageBean {
     $row = MySQL::wpdbSelect($request);
     $Obj = array_shift($row);
     $arrOptions = unserialize($Obj->option_value);
-    foreach ($arrOptions as $key=>$value) {
+    foreach ($arrOptions as $key => $value) {
       if (isset($value[WP_DB_BACKUP_CRON])) {
         $nextTs = $key;
         $arrOptions[$resetTs][WP_DB_BACKUP_CRON] = $value[WP_DB_BACKUP_CRON];
@@ -92,4 +112,3 @@ class AdminPageBean extends MainPageBean {
   }
   
 }
-?>

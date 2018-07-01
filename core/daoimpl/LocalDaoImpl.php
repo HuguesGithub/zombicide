@@ -27,13 +27,35 @@ class LocalDaoImpl extends GlobalDaoImpl implements iConstants
    * @var string $delete
    */
   protected $delete = "DELETE ";
-
+  /**
+   * Requête de sélection en base
+   * @var string $selectRequest
+   */
   protected $selectRequest;
+  /**
+   * Table concernée
+   * @var string $fromRequest
+   */
   protected $fromRequest;
+  /**
+   * Requête de recherche en base avec Filtres
+   * @var string $whereFilters
+   */
   protected $whereFilters;
+  /**
+   * Requête d'insertion en base
+   * @var string $insert
+   */
   protected $insert;
+  /**
+   * Requête d'update en base
+   * @var string $update
+   */
   protected $update;
-
+  /**
+   * Class Constructor
+   * @param string $strDao
+   */
   public function __construct($strDao='')
   {
     $urlIni = '/wp-content/plugins/zombicide/core/daoimpl/requests.ini';
@@ -42,7 +64,7 @@ class LocalDaoImpl extends GlobalDaoImpl implements iConstants
     
     $this->selectRequest = $arrConfigs[$strDao]['select'];
     $this->fromRequest = $arrConfigs[$strDao]['from'];
-    $this->whereFilters = isset($arrConfigs[$strDao]['where']) ? $arrConfigs[$strDao]['where'] : "WHERE 1=1 ";
+    $this->whereFilters = isset($arrConfigs[$strDao][SQL_PARAMS_WHERE]) ? $arrConfigs[$strDao][SQL_PARAMS_WHERE] : "WHERE 1=1 ";
     $this->insert = $arrConfigs[$strDao]['insert'];
     $this->update = $arrConfigs[$strDao]['update'];
   }

@@ -33,5 +33,5 @@ class WeaponProfileDaoImpl extends LocalDaoImpl
   {
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new WeaponProfile() : array_shift($Objs));
-  }  
+  }
 }

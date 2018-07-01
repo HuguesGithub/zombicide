@@ -1,14 +1,21 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe EquipmentBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class EquipmentBean extends MainPageBean {
-
-  public function __construct($EquipmentCard) {
+class EquipmentBean extends MainPageBean
+{
+  /**
+   * Class Constructor
+   * @param Equipment $EquipmentCard
+   */
+  public function __construct($EquipmentCard)
+  {
     $this->EquipmentCard = $EquipmentCard;
     parent::__construct();
   }
@@ -16,15 +23,20 @@ class EquipmentBean extends MainPageBean {
    * @param int $expansionId
    * @return string
    */
-  public function displayCard($expansionId='') {
+  public function displayCard($expansionId='')
+  {
     $EquipmentCard = $this->EquipmentCard;
     if ($expansionId=='') {
       $expansionId = $EquipmentCard->getExpansionId();
     }
     $arrKeyWords = array();
     $strClasse = '';
-    if ($EquipmentCard->isRanged()) { $strClasse .= ' ranged weapon'; }
-    if ($EquipmentCard->isMelee()) { $strClasse .= ' melee weapon'; }
+    if ($EquipmentCard->isRanged()) {
+      $strClasse .= ' ranged weapon';
+    }
+    if ($EquipmentCard->isMelee()) {
+      $strClasse .= ' melee weapon';
+    }
     if ($EquipmentCard->isPimp()) {
       $strClasse .= ' pimp';
       array_push($arrKeyWords, 'Pimp');
@@ -40,7 +52,7 @@ class EquipmentBean extends MainPageBean {
     $arrKeyWordsToCheck = array(
         'Embuscade', '9mm', 'Pistolet', 'Précision', 'Vivres', '12mm', 'Recharge', 'Effraction', 'Katana',
         'Munitions', 'Composite'
-   );
+    );
     foreach ($arrKeyWordsToCheck as $keyWord) {
       if ($EquipmentCard->hasKeyword($keyWord)) {
         array_push($arrKeyWords, $keyWord);
@@ -57,9 +69,8 @@ class EquipmentBean extends MainPageBean {
       implode(', ', $arrKeyWords),
       // URL de l'image
       $EquipmentCard->getImgUrl($expansionId),
-   );
+    );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-equipment-card.php');
     return vsprintf($str, $args);
   }
 }
-?>

@@ -11,32 +11,12 @@ if (!defined('ABSPATH')) {
 class SpawnDaoImpl extends LocalDaoImpl
 {
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT id, expansionId, spawnNumber, spawnTypeId, zombieCategoryId, blueZombieTypeId, blueQuantity, yellowZombieTypeId, yellowQuantity, orangeZombieTypeId, orangeQuantity, redZombieTypeId, redQuantity ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_spawncards ";
-  /**
-   * Recherche avec filtres
-   * @var string $whereFilters
-   */
-  protected $whereFilters = "WHERE expansionId LIKE '%s' AND spawnNumber LIKE '%s' ";
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_spawncards (expansionId, spawnNumber, spawnTypeId, zombieCategoryId, blueZombieTypeId, blueQuantity, yellowZombieTypeId, yellowQuantity, orangeZombieTypeId, orangeQuantity, redZombieTypeId, redQuantity) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_spawncards SET expansionId='%s', spawnNumber='%s', spawnTypeId='%s', zombieCategoryId='%s', blueZombieTypeId='%s', blueQuantity='%s', yellowZombieTypeId='%s', yellowQuantity='%s', orangeZombieTypeId='%s', orangeQuantity='%s', redZombieTypeId='%s', redQuantity='%s' ";
-
-  public function __construct() {}
+  public function __construct()
+  {
+    parent::__construct('Spawn');
+  }
   /**
    * @param array $rows
    * @return array
@@ -54,5 +34,4 @@ class SpawnDaoImpl extends LocalDaoImpl
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new Spawn() : array_shift($Objs));
   }
-  
 }

@@ -11,32 +11,12 @@ if (!defined('ABSPATH')) {
 class SpawnLiveDeckDaoImpl extends LocalDaoImpl
 {
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT id, liveDeckId, spawnCardId, rank, status ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_spawnlivedeck ";
-  /**
-   * Recherche avec filtres
-   * @var string $whereFilters
-   */
-  protected $whereFilters = "WHERE liveDeckId LIKE '%s' AND spawnCardId LIKE '%s' AND status LIKE '%s' ";
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_spawnlivedeck (liveDeckId, spawnCardId, rank, status) VALUES ('%s', '%s', '%s', '%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_spawnlivedeck SET liveDeckId='%s', spawnCardId='%s', rank='%s', status='%s' ";
-
-  public function __construct() {}
+  public function __construct()
+  {
+    parent::__construct('SpawnLive');
+  }
   /**
    * @param array $rows
    * @return array

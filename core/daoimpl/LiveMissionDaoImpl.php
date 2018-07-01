@@ -11,32 +11,12 @@ if (!defined('ABSPATH')) {
 class LiveMissionDaoImpl extends LocalDaoImpl
 {
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT id, liveId, missionId ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_live_mission ";
-  /**
-   * Recherche avec filtres
-   * @var string $whereFilters
-   */
-  protected $whereFilters = "WHERE liveId LIKE '%s' AND missionId LIKE '%s' ";
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_live_mission (liveId, missionId) VALUES ('%s', '%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_live_mission SET liveId='%s', missionId='%s' ";
-  
-  public function __construct() {}
+  public function __construct()
+  {
+    parent::__construct('LiveDeck');
+  }
   /**
    * @param array $rows
    * @return array
@@ -54,5 +34,4 @@ class LiveMissionDaoImpl extends LocalDaoImpl
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new LiveMission() : array_shift($Objs));
   }
-  
 }

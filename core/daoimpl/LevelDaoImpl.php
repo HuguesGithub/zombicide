@@ -15,7 +15,7 @@ class LevelDaoImpl extends LocalDaoImpl
    */
   public function __construct()
   {
-  	parent::__construct('Level');
+    parent::__construct('Level');
   }
   /**
    * @param array $rows

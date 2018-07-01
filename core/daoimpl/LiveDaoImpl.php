@@ -15,7 +15,7 @@ class LiveDaoImpl extends LocalDaoImpl
    */
   public function __construct()
   {
-  	parent::__construct('Live');
+    parent::__construct('Live');
   }
   /**
    * @param array $rows

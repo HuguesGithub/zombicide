@@ -11,32 +11,12 @@ if (!defined('ABSPATH')) {
 class LiveTokenDaoImpl extends LocalDaoImpl
 {
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT id, liveId, tokenId, coordX, coordY, color, status, orientation ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_live_token ";
-  /**
-   * Recherche avec filtres
-   * @var string $whereFilters
-   */
-  protected $whereFilters = "WHERE liveId LIKE '%s' AND tokenId LIKE '%s' ";
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_live_token (liveId, tokenId, coordX, coordY, color, status, orientation) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_live_token SET liveId='%s', tokenId='%s', coordX='%s', coordY='%s', color='%s', status='%s', orientation='%s' ";
-
-  public function __construct() {}
+  public function __construct()
+  {
+    parent::__construct('LiveToken');
+  }
   /**
    * @param array $rows
    * @return array
@@ -53,6 +33,5 @@ class LiveTokenDaoImpl extends LocalDaoImpl
   {
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new LiveToken() : array_shift($Objs));
-  }
-  
+  }  
 }

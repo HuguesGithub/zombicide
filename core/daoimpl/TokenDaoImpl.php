@@ -11,32 +11,12 @@ if (!defined('ABSPATH')) {
 class TokenDaoImpl extends LocalDaoImpl
 {
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT id, code, width, height ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_token ";
-  /**
-   * Recherche avec filtres
-   * @var string $whereFilters
-   */
-  protected $whereFilters = "WHERE code LIKE '%s' ";
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_token (code, width, height) VALUES ('%s', '%s', '%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_token SET code='%s', width='%s', height='%s' ";
-  
-  public function __construct() {}
+  public function __construct()
+  {
+    parent::__construct('Token');
+  }
   /**
    * @param array $rows
    * @return array
@@ -54,5 +34,4 @@ class TokenDaoImpl extends LocalDaoImpl
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new Token() : array_shift($Objs));
   }
-
 }

@@ -11,47 +11,12 @@ if (!defined('ABSPATH')) {
 class TileDaoImpl extends LocalDaoImpl
 {
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT id, expansionId, code, coordPoly, zoneType, zoneAcces, activeTile ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_tile ";
-  /**
-   * Recherche unitaire
-   * @var string $whereId
-   */
-  protected $whereId = "WHERE id='%s' ";
-  /**
-   * Recherche avec filtres
-   * @var string $whereFilters
-   */
-  protected $whereFilters = "WHERE code LIKE '%s' AND expansionId LIKE '%s' AND activeTile LIKE '%s' ";
-  /**
-   * Règle de tri
-   * @var string $orderBy
-   */
-  protected $orderBy = SQL_PARAMS_ORDERBY;
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_tile (expansionId, code, coordPoly, zoneType, zoneAcces, activeTile) VALUES ('%s', '%s', '%s', '%s', '%s', '%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_tile SET expansionId='%s', code='%s', coordPoly='%s', zoneType='%s', zoneAcces='%s', activeTile='%s' ";
-  /**
-   * Requête de suppression en base
-   * @var string $delete
-   */
-  protected $delete = "DELETE ";
-  
-  public function __construct() {}
+  public function __construct()
+  {
+    parent::__construct('Tile');
+  }
   /**
    * @param array $rows
    * @return array
@@ -66,8 +31,7 @@ class TileDaoImpl extends LocalDaoImpl
    */
   public function select($file, $line, $arrParams)
   {
-    $Tiles = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Tiles) ? new Tile() : array_shift($Tiles));
+    $Objs = $this->selectEntry($file, $line, $arrParams);
+    return (empty($Objs) ? new Tile() : array_shift($Objs));
   }
-
 }

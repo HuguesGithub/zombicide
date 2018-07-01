@@ -11,32 +11,12 @@ if (!defined('ABSPATH')) {
 class WeaponProfileDaoImpl extends LocalDaoImpl
 {
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT id, minRange, maxRange, nbDice, successRate, damageLevel ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_weaponprofile ";
-  /**
-   * Recherche avec filtres
-   * @var string $whereFilters
-   */
-  protected $whereFilters = "WHERE 1=1 ";
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_weaponprofile (minRange, maxRange, nbDice, successRate, damageLevel) VALUES ('%s', '%s', '%s', '%s', '%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_weaponprofile SET minRange='%s', maxRange='%s', nbDice='%s', successRate='%s', damageLevel='%s' ";
-
-  public function __construct() {}
+  public function __construct()
+  {
+    parent::__construct('WeaponProfile');
+  }
   /**
    * @param array $rows
    * @return array
@@ -53,6 +33,5 @@ class WeaponProfileDaoImpl extends LocalDaoImpl
   {
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new WeaponProfile() : array_shift($Objs));
-  }
-  
+  }  
 }

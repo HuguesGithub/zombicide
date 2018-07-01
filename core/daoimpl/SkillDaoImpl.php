@@ -11,32 +11,12 @@ if (!defined('ABSPATH')) {
 class SkillDaoImpl extends LocalDaoImpl
 {
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT id, code, name, description ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_skill ";
-  /**
-   * Recherche avec filtres
-   * @var string $whereFilters
-   */
-  protected $whereFilters = "WHERE code LIKE '%s' AND name LIKE '%s' AND description LIKE '%s' ";
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_skill (code, name, description) VALUES ('%s', '%s', '%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_skill SET code='%s', name='%s', description='%s' ";
-
-  public function __construct() {}
+  public function __construct()
+  {
+    parent::__construct('Skill');
+  }
   /**
    * @param array $rows
    * @return array

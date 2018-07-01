@@ -9,29 +9,14 @@ if (!defined('ABSPATH')) {
  * @since 1.0.00
  */
 class PlayerDaoImpl extends LocalDaoImpl
-{  
+{
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT id, name ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_player ";
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_player (name) VALUES ('%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_player SET name='%s' ";
-  
-  public function __construct() {}
+  public function __construct()
+  {
+    parent::__construct('Player');
+  }
   /**
    * @param array $rows
    * @return array

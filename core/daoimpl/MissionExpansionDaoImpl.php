@@ -15,7 +15,7 @@ class MissionExpansionDaoImpl extends LocalDaoImpl
    */
   public function __construct()
   {
-  	parent::__construct('MissionExpansion');
+    parent::__construct('MissionExpansion');
   }
   /**
    * @param array $rows

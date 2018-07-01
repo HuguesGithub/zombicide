@@ -11,47 +11,12 @@ if (!defined('ABSPATH')) {
 class MissionTileDaoImpl extends LocalDaoImpl
 {
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT id, missionId, tileId, orientation, coordX, coordY ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_mission_tile ";
-  /**
-   * Recherche unitaire
-   * @var string $whereId
-   */
-  protected $whereId = "WHERE id='%s' ";
-  /**
-   * Recherche avec filtres
-   * @var string $whereFilters
-   */
-  protected $whereFilters = "WHERE missionId LIKE '%s' AND coordX LIKE '%s' AND coordY LIKE '%s' ";
-  /**
-   * Règle de tri
-   * @var string $orderBy
-   */
-  protected $orderBy = SQL_PARAMS_ORDERBY;
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_mission_tile (missionId, tileId, orientation, coordX, coordY) VALUES ('%s', '%s', '%s', '%s', '%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_mission_tile SET missionId='%s', tileId='%s', orientation='%s', coordX='%s', coordY='%s' ";
-  /**
-   * Requête de suppression en base
-   * @var string $delete
-   */
-  protected $delete = "DELETE ";
-  
-  public function __construct() {}
+  public function __construct()
+  {
+    parent::__construct('MissionObjective');
+  }
   /**
    * @param array $rows
    * @return array
@@ -66,8 +31,8 @@ class MissionTileDaoImpl extends LocalDaoImpl
    */
   public function select($file, $line, $arrParams)
   {
-    $MissionTiles = $this->selectEntry($file, $line, $arrParams);
-    return (empty($MissionTiles) ? new MissionTile() : array_shift($MissionTiles));
+    $Objs = $this->selectEntry($file, $line, $arrParams);
+    return (empty($Objs) ? new MissionTile() : array_shift($Objs));
   }
   
 }

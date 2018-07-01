@@ -1,14 +1,21 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe MarketPageBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class MarketPageBean extends PagePageBean {
-
-  public function __construct($WpPage='') {
+class MarketPageBean extends PagePageBean
+{
+  /**
+   * Class Constructor
+   * @param WpPage $WpPage
+   */
+  public function __construct($WpPage='')
+  {
     $services = array('Market');
     parent::__construct($WpPage, $services);
   }
@@ -16,7 +23,8 @@ class MarketPageBean extends PagePageBean {
    * @param WpPost $WpPage
    * @return string
    */
-  public function getStaticPageContent($WpPage) {
+  public function getStaticPageContent($WpPage)
+  {
     $Bean = new MarketPageBean($WpPage);
     return $Bean->getContentPage();
   }
@@ -24,9 +32,11 @@ class MarketPageBean extends PagePageBean {
    * {@inheritDoc}
    * @see PagePageBean::getContentPage()
    */
-  public function getContentPage() {
+  public function getContentPage()
+  {
     $strBody = '';
-    $WpPosts = $this->WpPostServices->getArticles(__FILE__, __LINE__, array('orderby'=> 'rand', 'posts_per_page'=>-1, 'post_status'=>'private'));
+    $argsSearch = array('orderby'=> 'rand', 'posts_per_page'=>-1, 'post_status'=>'private');
+    $WpPosts = $this->WpPostServices->getArticles(__FILE__, __LINE__, $argsSearch);
     if (!empty($WpPosts)) {
       foreach ($WpPosts as $WpPost) {
         $Market = Market::convertWpPost($WpPost);
@@ -42,4 +52,3 @@ class MarketPageBean extends PagePageBean {
   }
   
 }
-?>

@@ -1,14 +1,21 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe MissionsPageBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class MissionsPageBean extends PagePageBean {
-
-  public function __construct($WpPage='') {
+class MissionsPageBean extends PagePageBean
+{
+  /**
+   * Class Constructor
+   * @param WpPage $WpPage
+   */
+  public function __construct($WpPage='')
+  {
     $services = array('Duration', 'Expansion', 'Level', 'Mission', 'Origine', 'Player');
     parent::__construct($WpPage, $services);
   }
@@ -16,7 +23,8 @@ class MissionsPageBean extends PagePageBean {
    * @param array $post
    * @return string
    */
-  public static function staticGetMissionsSortedAndFiltered($post) {
+  public static function staticGetMissionsSortedAndFiltered($post)
+  {
     $Bean = new MissionsPageBean();
     $arrFilters = array();
     if ($post['filters']!='') {
@@ -28,13 +36,15 @@ class MissionsPageBean extends PagePageBean {
         }
       }
     }
-    return '{"page-missions":'.json_encode($Bean->getContentPage($post['colsort'], $post['colorder'], $post['nbperpage'], $post['paged'], $arrFilters)).'}';
+    $jsonStr = $Bean->getContentPage($post['colsort'], $post['colorder'], $post['nbperpage'], $post['paged'], $arrFilters);
+    return '{"page-missions":'.json_encode($jsonStr).'}';
   }
   /**
    * @param WpPost $WpPage
    * @return string
    */
-  public function getStaticPageContent($WpPage) {
+  public function getStaticPageContent($WpPage)
+  {
     $Bean = new MissionsPageBean($WpPage);
     return $Bean->getContentPage();
   }
@@ -42,7 +52,8 @@ class MissionsPageBean extends PagePageBean {
    * {@inheritDoc}
    * @see PagePageBean::getContentPage()
    */
-  public function getContentPage($sort_col='title', $sort_order='asc', $nbPerPage=10, $curPage=1, $arrFilters=array()) {
+  public function getContentPage($sort_col='title', $sort_order='asc', $nbPerPage=10, $curPage=1, $arrFilters=array())
+  {
     $strBody = '';
     $Missions = $this->MissionServices->getMissionsWithFiltersIn(__FILE__, __LINE__, $arrFilters, $sort_col, $sort_order);
     $nbElements = count($Missions);
@@ -50,7 +61,7 @@ class MissionsPageBean extends PagePageBean {
     $displayedMissions = array_slice($Missions, $nbPerPage*($curPage-1), $nbPerPage);
     if (!empty($displayedMissions)) {
       foreach ($displayedMissions as $Mission) {
-    $MissionBean = new MissionBean($Mission);
+        $MissionBean = new MissionBean($Mission);
         $strBody .= $MissionBean->getRowForMissionsPage();
       }
     }
@@ -62,54 +73,54 @@ class MissionsPageBean extends PagePageBean {
     $hasFilters = false;
     $arrLevelIds = '';
     $Levels = $this->LevelServices->getLevelsWithFilters(__FILE__, __LINE__);
-    if (isset($arrFilters[CST_LEVELID]) && !empty($arrFilters[CST_LEVELID])) {
-        $arrLevelIds = $arrFilters[CST_LEVELID];
-        foreach ($arrFilters[CST_LEVELID] as $id) {
+    if (isset($arrFilters[self::CST_LEVELID]) && !empty($arrFilters[self::CST_LEVELID])) {
+      $arrLevelIds = $arrFilters[self::CST_LEVELID];
+      foreach ($arrFilters[self::CST_LEVELID] as $id) {
         $name = $this->getNameById($Levels, $id);
         $hasFilters = true;
-        }
+      }
     }
     $arrPlayerIds = '';
     $Players = $this->PlayerServices->getPlayersWithFilters(__FILE__, __LINE__);
-    if (isset($arrFilters[CST_PLAYERID]) && !empty($arrFilters[CST_PLAYERID])) {
-      $arrPlayerIds = $arrFilters[CST_PLAYERID];
-        foreach ($arrFilters[CST_PLAYERID] as $id) {
+    if (isset($arrFilters[self::CST_PLAYERID]) && !empty($arrFilters[self::CST_PLAYERID])) {
+      $arrPlayerIds = $arrFilters[self::CST_PLAYERID];
+      foreach ($arrFilters[self::CST_PLAYERID] as $id) {
         $name = $this->getNameById($Players, $id);
         $hasFilters = true;
-        }
+      }
     }
     $arrDurationIds = '';
     $Durations = $this->DurationServices->getDurationsWithFilters(__FILE__, __LINE__);
-    if (isset($arrFilters[CST_DURATIONID]) && !empty($arrFilters[CST_DURATIONID])) {
-        $arrDurationIds = $arrFilters[CST_DURATIONID];
-        foreach ($arrFilters[CST_DURATIONID] as $id) {
+    if (isset($arrFilters[self::CST_DURATIONID]) && !empty($arrFilters[self::CST_DURATIONID])) {
+      $arrDurationIds = $arrFilters[self::CST_DURATIONID];
+      foreach ($arrFilters[self::CST_DURATIONID] as $id) {
         $name = $this->getNameById($Durations, $id);
         $hasFilters = true;
-        }
+      }
     }
     $arrOrigineIds = '';
     $Origines = $this->OrigineServices->getOriginesWithFilters(__FILE__, __LINE__);
-    if (isset($arrFilters[CST_ORIGINEID]) && !empty($arrFilters[CST_ORIGINEID])) {
-        $arrOrigineIds = $arrFilters[CST_ORIGINEID];
-        foreach ($arrFilters[CST_ORIGINEID] as $id) {
+    if (isset($arrFilters[self::CST_ORIGINEID]) && !empty($arrFilters[self::CST_ORIGINEID])) {
+      $arrOrigineIds = $arrFilters[self::CST_ORIGINEID];
+      foreach ($arrFilters[self::CST_ORIGINEID] as $id) {
         $name = $this->getNameById($Origines, $id);
         $hasFilters = true;
-        }
+      }
     }
     $arrExpansionIds = '';
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array('nbMissions'=>1));
-    if (isset($arrFilters[CST_EXPANSIONID]) && !empty($arrFilters[CST_EXPANSIONID])) {
-        $arrExpansionIds = $arrFilters[CST_EXPANSIONID];
-        foreach ($arrFilters[CST_EXPANSIONID] as $id) {
+    if (isset($arrFilters[self::CST_EXPANSIONID]) && !empty($arrFilters[self::CST_EXPANSIONID])) {
+      $arrExpansionIds = $arrFilters[self::CST_EXPANSIONID];
+      foreach ($arrFilters[self::CST_EXPANSIONID] as $id) {
         $name = $this->getNameById($Expansions, $id);
         $hasFilters = true;
-        }
+      }
     }
     $selectClasses = 'custom-select custom-select-sm filters';
     $args = array(
-      ($nbPerPage==10 ? CST_SELECTED:''),
-      ($nbPerPage==25 ? CST_SELECTED:''),
-      ($nbPerPage==50 ? CST_SELECTED:''),
+      ($nbPerPage==10 ? self::CST_SELECTED:''),
+      ($nbPerPage==25 ? self::CST_SELECTED:''),
+      ($nbPerPage==50 ? self::CST_SELECTED:''),
       // Tri sur le Code - 4
       ($sort_col=='code' ? '_'.$sort_order:''),
       // Tri sue le Titre - 5
@@ -123,7 +134,7 @@ class MissionsPageBean extends PagePageBean {
       // N° du premier élément - 9
       $nbPerPage*($curPage-1)+1,
       // Nb par page - 10
-      min($nbPerPage*$curPage,$nbElements),
+      min($nbPerPage*$curPage, $nbElements),
       // Nb Total - 11
       $nbElements,
       // Liste des éléments de la Pagination - 12
@@ -147,22 +158,23 @@ class MissionsPageBean extends PagePageBean {
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-missions.php');
     return vsprintf($str, $args);
   }
-  private function getNameById($Objs, $id) {
-  if (!empty($Objs)) {
-    foreach ($Objs as $Obj) {
-    if ($Obj->getId() == $id) {
-      if ($Obj instanceof Level || $Obj instanceof Origine) {
-        return $Obj->getName();
-      } elseif ($Obj instanceof Player) {
-        return $Obj->getNbJoueurs();
-      } elseif ($Obj instanceof Duration) {
-        return $Obj->getStrDuree();
+  private function getNameById($Objs, $id)
+  {
+    $returned = '';
+    if (!empty($Objs)) {
+      foreach ($Objs as $Obj) {
+        if ($Obj->getId() == $id) {
+          if ($Obj instanceof Level || $Obj instanceof Origine) {
+            $returned = $Obj->getName();
+          } elseif ($Obj instanceof Player) {
+            $returned = $Obj->getNbJoueurs();
+          } elseif ($Obj instanceof Duration) {
+            $returned = $Obj->getStrDuree();
+          }
+        }
       }
     }
-    }
-  }
-  return '';
+    return $returned;
   }
   
 }
-?>

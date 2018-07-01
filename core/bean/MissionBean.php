@@ -20,7 +20,9 @@ class MissionBean extends MainPageBean
   {
     $services = array('Expansion', 'Mission', 'Objective', 'Rule', 'Tile');
     parent::__construct($services);
-    if ($Mission=='') { $Mission = new Mission(); }
+    if ($Mission=='') {
+      $Mission = new Mission();
+    }
     $this->Mission = $Mission;
     $this->tplRow = 'web/pages/admin/mission/row.php';
     $this->tplEdit = 'web/pages/admin/mission/edit.php';
@@ -173,10 +175,18 @@ class MissionBean extends MainPageBean
         $name = 'tile_'.$j.'_'.($i+1).'-';
         $orientation = $Mission->getTileOrientation($j, $i+1);
         switch ($orientation) {
-          case 'N' : $classImg = ' north'; break;
-          case 'E' : $classImg = ' east'; break;
-          case 'S' : $classImg = ' south'; break;
-          case 'O' : $classImg = ' west'; break;
+          case 'N' :
+            $classImg = ' north';
+          break;
+          case 'E' :
+            $classImg = ' east';
+          break;
+          case 'S' :
+            $classImg = ' south';
+          break;
+          case 'O' :
+            $classImg = ' west';
+          break;
           default : break;
         }
         $innerRows[$i] .= vsprintf($openDivTile, array($j, ''));

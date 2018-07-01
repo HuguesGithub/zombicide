@@ -25,7 +25,7 @@ class MarketBean extends MainPageBean
   }
   /**
    * @return string
-   */  
+   */
   public function getVisitCard()
   {
     $Market = $this->Market;

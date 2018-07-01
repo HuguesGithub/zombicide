@@ -1,14 +1,21 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe OnlinePageBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class OnlinePageBean extends PagePageBean {
-
-  public function __construct($WpPage='') {
+class OnlinePageBean extends PagePageBean
+{
+  /**
+   * Class Constructor
+   * @param WpPage $WpPage
+   */
+  public function __construct($WpPage='')
+  {
     $services = array('Live', 'Mission');
     parent::__construct($WpPage, $services);
   }
@@ -16,14 +23,16 @@ class OnlinePageBean extends PagePageBean {
    * @param WpPost $WpPage
    * @return string
    */
-  public function getStaticPageContent($WpPage) {
+  public function getStaticPageContent($WpPage)
+  {
     $Bean = new OnlinePageBean($WpPage);
     return $Bean->getContentPage();
   }
   /**
    * @return string
    */
-  public function getContentNotLogged() {
+  public function getContentNotLogged()
+  {
     $time = time();
     $args = array();
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-online-identification.php');
@@ -35,14 +44,15 @@ class OnlinePageBean extends PagePageBean {
       $strCanvas,
       'hidden',
       '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>',
-   );
+    );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php');
     return vsprintf($str, $args);
   }
   /**
    * @return string
    */
-  public function getContentLoggedNotLive() {
+  public function getContentLoggedNotLive()
+  {
     $time = time();
     $args = array(
       'Buttons',
@@ -51,18 +61,19 @@ class OnlinePageBean extends PagePageBean {
       '',
       '',
       '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>',
-   );
+    );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php');
     return vsprintf($str, $args);
   }
   /**
    * @return string
    */
-  public function getContentLoggedAndLive() {
-    $deckKey = $_SESSION[CST_DECKKEY];
+  public function getContentLoggedAndLive()
+  {
+    $deckKey = $_SESSION[self::CST_DECKKEY];
     $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, array(self::CST_DECKKEY=>$deckKey));
     if (empty($Lives)) {
-      unset($_SESSION[CST_DECKKEY]);
+      unset($_SESSION[self::CST_DECKKEY]);
       return $this->getContentLoggedNotLive();
     }
     $time = time();
@@ -85,8 +96,9 @@ class OnlinePageBean extends PagePageBean {
    * {@inheritDoc}
    * @see PagePageBean::getContentPage()
    */
-  public function getContentPage() {
-    if (isset($_SESSION[CST_DECKKEY])) {
+  public function getContentPage()
+  {
+    if (isset($_SESSION[self::CST_DECKKEY])) {
       return $this->getContentLoggedAndLive();
     } elseif (is_user_logged_in()) {
       return $this->getContentLoggedNotLive();
@@ -97,4 +109,3 @@ class OnlinePageBean extends PagePageBean {
   
   
 }
-?>

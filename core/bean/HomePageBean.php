@@ -61,5 +61,5 @@ class HomePageBean extends MainPageBean
       $strContent .= '<div class="clearfix"></div>';
     }
     return ($isAjax ?  '{"homeSectionArticles":'.json_encode($strContent).'}' : $strContent);
-  }  
+  }
 }

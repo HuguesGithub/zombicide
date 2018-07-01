@@ -38,7 +38,7 @@ class AdminParametrePageBean extends AdminPageBean
     $arrTabs = array('level'=>'Difficultés', 'duration'=>'Durées', 'player'=>'Joueurs', 'rule'=>'Règles',
       'objective'=>'Objectifs', 'expansion'=>'Expansions', 'tile'=>'Dalles');
     $strTabs = '';
-    foreach ($arrTabs as $key=>$value) {
+    foreach ($arrTabs as $key => $value) {
       $strTabs .= '<a href="'.$this->getQueryArg(array('onglet'=>'parametre', 'table'=>$key)).'" class="list-group-item list-group-item-action';
       $strTabs .= ($key==$table ? ' active' : '').'">'.$value.'</a>';
     }

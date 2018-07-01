@@ -11,32 +11,12 @@ if (!defined('ABSPATH')) {
 class MissionExpansionDaoImpl extends LocalDaoImpl
 {
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT id, missionId, expansionId ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_mission_expansion ";
-  /**
-   * Recherche avec filtres
-   * @var string $whereFilters
-   */
-  protected $whereFilters = "WHERE missionId LIKE '%s' AND expansionId LIKE '%s' ";
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_mission_expansion (missionId, expansionId) VALUES ('%s', '%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_mission_expansion SET missionId='%s', expansionId='%s' ";
-  
-  public function __construct() {}
+  public function __construct()
+  {
+  	parent::__construct('MissionExpansion');
+  }
   /**
    * @param array $rows
    * @return array
@@ -51,8 +31,8 @@ class MissionExpansionDaoImpl extends LocalDaoImpl
    */
   public function select($file, $line, $arrParams)
   {
-    $MissionExpansions = $this->selectEntry($file, $line, $arrParams);
-    return (empty($MissionExpansions) ? new MissionExpansion() : array_shift($MissionExpansions));
+    $Objs = $this->selectEntry($file, $line, $arrParams);
+    return (empty($Objs) ? new MissionExpansion() : array_shift($Objs));
   }
   
 }

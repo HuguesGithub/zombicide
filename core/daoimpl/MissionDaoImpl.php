@@ -11,32 +11,12 @@ if (!defined('ABSPATH')) {
 class MissionDaoImpl extends LocalDaoImpl
 {
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT m.id AS id, title, m.code AS code, levelId, playerId, durationId, origineId, width, height, published ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_mission AS m ";
-  /**
-   * Recherche avec filtres
-   * @var string $whereFilters
-   */
-  protected $whereFilters = "WHERE levelId LIKE '%s' AND durationId LIKE '%s' AND playerId LIKE '%s' AND origineId LIKE '%s' AND published LIKE '%s' ";
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_mission (title, code, levelId, playerId, durationId, origineId, width, height, published) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_mission SET title='%s', code='%s', levelId='%s', playerId='%s', durationId='%s', origineId='%s', width='%s', height='%s', published='%s' ";
-
-  public function __construct() {}
+  public function __construct()
+  {
+    parent::__construct('Mission');
+  }
   /**
    * @param array $rows
    * @return array
@@ -86,5 +66,4 @@ class MissionDaoImpl extends LocalDaoImpl
     $requete .= $this->orderBy;
     return $this->convertToArray($this->selectEntriesAndLogQuery($file, $line, $requete, $arrParams));
   }
-  
 }

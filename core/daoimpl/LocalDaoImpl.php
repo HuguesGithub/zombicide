@@ -34,7 +34,8 @@ class LocalDaoImpl extends GlobalDaoImpl implements iConstants
   protected $insert;
   protected $update;
 
-  public function __construct($strDao='') {
+  public function __construct($strDao='')
+  {
     $urlIni = '/wp-content/plugins/zombicide/core/daoimpl/requests.ini';
     $adminUrl = getcwd().$urlIni;
     $arrConfigs = parse_ini_file($adminUrl, true);

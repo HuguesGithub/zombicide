@@ -33,5 +33,5 @@ class LiveTokenDaoImpl extends LocalDaoImpl
   {
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new LiveToken() : array_shift($Objs));
-  }  
+  }
 }

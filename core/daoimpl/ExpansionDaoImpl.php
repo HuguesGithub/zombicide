@@ -34,11 +34,10 @@ class ExpansionDaoImpl extends LocalDaoImpl
     $Expansions = $this->selectEntry($file, $line, $arrParams);
     return (empty($Expansions) ? new Expansion() : array_shift($Expansions));
   }
-
-  private function updateNbMissions($file, $line)
+  protected function updateNbMissions($file, $line)
   {
     $subRequest = 'SELECT COUNT(*) FROM wp_11_zombicide_mission_expansion me WHERE me.expansionId=e.id';
     $requete = 'UPDATE wp_11_zombicide_expansion e SET nbMissions = ('.$subRequest.');';
+    $this->createEditDeleteEntry($file, $line, $requete);
   }
-  
 }

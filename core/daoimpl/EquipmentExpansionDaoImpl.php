@@ -34,5 +34,4 @@ class EquipmentExpansionDaoImpl extends LocalDaoImpl
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new EquipmentExpansion() : array_shift($Objs));
   }
-  
 }

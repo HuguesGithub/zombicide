@@ -11,27 +11,12 @@ if (!defined('ABSPATH')) {
 class LevelDaoImpl extends LocalDaoImpl
 {
   /**
-   * Corps de la requête de sélection
-   * @var string $selectRequest
+   * Class constructor
    */
-  protected $selectRequest = "SELECT id, name ";
-  /**
-   * Table concernée
-   * @var string $fromRequest
-   */
-  protected $fromRequest = "FROM wp_11_zombicide_level ";
-  /**
-   * Requête d'insertion en base
-   * @var string $insert
-   */
-  protected $insert = "INSERT INTO wp_11_zombicide_level (name) VALUES ('%s');";
-  /**
-   * Requête de mise à jour en base
-   * @var string $update
-   */
-  protected $update = "UPDATE wp_11_zombicide_level SET name='%s' ";
-  
-  public function __construct() {}
+  public function __construct()
+  {
+  	parent::__construct('Level');
+  }
   /**
    * @param array $rows
    * @return array

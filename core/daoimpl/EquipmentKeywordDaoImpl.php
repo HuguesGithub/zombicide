@@ -34,5 +34,4 @@ class EquipmentKeywordDaoImpl extends LocalDaoImpl
     $Objs = $this->selectEntry($file, $line, $arrParams);
     return (empty($Objs) ? new EquipmentKeyword() : array_shift($Objs));
   }
-  
 }

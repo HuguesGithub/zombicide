@@ -194,57 +194,51 @@ class Survivor extends LocalDomain
           continue;
         }
         switch ($SurvivorSkill->getTagLevelId()) {
-          case 10 :
-          case 11 :
-            $strTmp .= '<li><span';
-            if ($withLink) {
-              $strTmp .= '><a class="badge badge-blue-skill" href="/page-competences/?skillId='.$SurvivorSkill->getSkillId().'">'.$SurvivorSkill->getSkillName().'</a>';
-            } else {
-              $strTmp .= ' class="badge badge-blue-skill">'.$SurvivorSkill->getSkillName();
-            }
-            $strTmp .= '</span></li>';
-          break;
           case 20 :
-            $str .= '<ul class="">'.$strTmp.'</ul>';
-            $strTmp = '';
-            $strTmp .= '<li><span';
-            if ($withLink) {
-              $strTmp .= '><a class="badge badge-yellow-skill" href="/page-competences/?skillId='.$SurvivorSkill->getSkillId().'">'.$SurvivorSkill->getSkillName().'</a>';
-            } else {
-              $strTmp .= ' class="badge badge-yellow-skill">'.$SurvivorSkill->getSkillName();
-            }
-            $strTmp .= '</span></li>';
-          break;
           case 30 :
-            $str .= '<ul class="">'.$strTmp.'</ul>';
-            $strTmp = '';
-          case 31 :
-            $strTmp .= '<li><span';
-            if ($withLink) {
-              $strTmp .= '><a class="badge badge-orange-skill" href="/page-competences/?skillId='.$SurvivorSkill->getSkillId().'">'.$SurvivorSkill->getSkillName().'</a>';
-            } else {
-              $strTmp .= ' class="badge badge-orange-skill">'.$SurvivorSkill->getSkillName();
-            }
-            $strTmp .= '</span></li>';
-          break;
           case 40 :
-            $str .= '<ul class="">'.$strTmp.'</ul>';
+          	$str .= '<ul class="">'.$strTmp.'</ul>';
             $strTmp = '';
-          case 41 :
-          case 42 :
-            $strTmp .= '<li><span';
-            if ($withLink) {
-              $strTmp .= '><a class="badge badge-red-skill" href="/page-competences/?skillId='.$SurvivorSkill->getSkillId().'">'.$SurvivorSkill->getSkillName().'</a>';
-            } else {
-              $strTmp .= ' class="badge badge-red-skill">'.$SurvivorSkill->getSkillName();
-            }
-            $strTmp .= '</span></li>';
           break;
-          default : break;
+          default :
+          break;
         }
+        $strTmp .= $this->getSkillLi($SurvivorSkill, $withLink);
       }
       $str .= '<ul class="">'.$strTmp.'</ul>';
     }
+    return $str;
+  }
+  private function getSkillLi($SurvivorSkill, $withLink)
+  {
+    switch ($SurvivorSkill->getTagLevelId()) {
+      case 10 :
+      case 11 :
+        $strColor = 'blue';
+      break;
+      case 20 :
+        $strColor = 'yellow';
+      break;
+      case 30 :
+      case 31 :
+        $strColor = 'orange';
+      break;
+      case 40 :
+      case 41 :
+      case 42 :
+        $strColor = 'red';
+      break;
+      default :
+        $strColor = '';
+      break;
+    }
+    $str = '<li><span';
+    if ($withLink) {
+      $str .= '><a class="badge badge-'.$strColor.'-skill" href="/page-competences/?skillId='.$SurvivorSkill->getSkillId().'">'.$SurvivorSkill->getSkillName().'</a>';
+    } else {
+      $str .= ' class="badge badge-'.$strColor.'-skill">'.$SurvivorSkill->getSkillName();
+    }
+    $str .= '</span></li>';
     return $str;
   }
 }

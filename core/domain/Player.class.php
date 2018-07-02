@@ -59,7 +59,9 @@ class Player extends LocalDomain
   public function getNbJoueurs()
   {
     $pos = strpos($this->name, '+');
-    if ($pos!==false) { return substr($this->name, 0, $pos).' Survivants et +'; }
+    if ($pos!==false) {
+      return substr($this->name, 0, $pos).' Survivants et +';
+    }
     $pos = strpos($this->name, '-');
     if ($pos!==false) {
       list($min, $max) = explode('-', $this->name);

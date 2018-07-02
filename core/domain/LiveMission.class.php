@@ -30,7 +30,7 @@ class LiveMission extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-  	$services = array('LiveMission');
+    $services = array('LiveMission');
     parent::__construct($attributes, $services);
   }
   /**

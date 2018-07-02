@@ -110,7 +110,7 @@ class SurvivorSkill extends LocalDomain
   { return parent::convertElement(new SurvivorSkill(), self::getClassVars(), $row); }
   /**
    * @return string
-   */  
+   */
   public function getSkillName()
   { return $this->getSkill()->getName(); }
 

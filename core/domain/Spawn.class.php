@@ -8,7 +8,8 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class Spawn extends LocalDomain {
+class Spawn extends LocalDomain
+{
   /**
    * Id technique de la donnée
    * @var int $id
@@ -77,7 +78,8 @@ class Spawn extends LocalDomain {
   /**
    * @param array $attributes
    */
-  public function __construct($attributes=array()) {
+  public function __construct($attributes=array())
+  {
     $services = array('Expansion');
     parent::__construct($attributes, $services);
   }

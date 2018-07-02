@@ -30,18 +30,8 @@ class Skill extends LocalDomain
    * @var string $description
    */
   protected $description;
-  
   /**
-   * 
-   * @param array $attributes
-   */
-  public function __construct($attributes=array())
-  {
-    parent::__construct($attributes);
-  }
-
-  /**
-   * @return int 
+   * @return int
    */
   public function getId()
   { return $this->id; }

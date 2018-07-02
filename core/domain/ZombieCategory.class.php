@@ -26,15 +26,7 @@ class ZombieCategory extends LocalDomain
    */
   protected $description;
   /**
-   * 
-   * @param array $attributes
-   */
-  public function __construct($attributes=array())
-  {
-    parent::__construct($attributes);
-  }
-  /**
-   * @return int 
+   * @return int
    */
   public function getId()
   { return $this->id; }
@@ -76,5 +68,4 @@ class ZombieCategory extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new ZombieCategory(), self::getClassVars(), $row); }
-  
 }

@@ -8,7 +8,8 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class ZombieType extends LocalDomain {
+class ZombieType extends LocalDomain
+{
   /**
    * Id technique de la donnée
    * @var int $id
@@ -39,12 +40,6 @@ class ZombieType extends LocalDomain {
    * @var string $zoneDeplacement
    */
   protected $zoneDeplacement;
-  /**
-   * @param array $attributes
-   */
-  public function __construct($attributes=array()) {
-    parent::__construct($attributes);
-  }
   /**
    * @return int
    */

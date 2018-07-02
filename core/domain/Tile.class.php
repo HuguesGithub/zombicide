@@ -156,5 +156,5 @@ class Tile extends LocalDomain
       }
     }
     return $Obj;
-  }  
+  }
 }

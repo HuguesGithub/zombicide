@@ -16,7 +16,7 @@ class Live extends LocalDomain
    */
   protected $id;
   /**
-   * Code alphanumérique 
+   * Code alphanumérique
    * @var string $deckKey
    */
   protected $deckKey;

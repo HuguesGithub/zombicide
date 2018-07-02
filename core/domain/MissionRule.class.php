@@ -41,7 +41,8 @@ class MissionRule extends LocalDomain
   /**
    * @return int
    */
-  public function getId(){ return $this->id; }
+  public function getId() 
+  { return $this->id; }
   /**
    * @return int
    */

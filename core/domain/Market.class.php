@@ -51,12 +51,6 @@ class Market extends LocalDomain
    */
   protected $lang;
   /**
-   * @param array $attributes
-   */
-  public function __construct($attributes=array()) {
-    parent::__construct($attributes);
-  }
-  /**
    * @return int
    */
   public function getId()
@@ -147,13 +141,14 @@ class Market extends LocalDomain
    * @param string $b
    * @return Market
    */
-  public static function convertElement($row, $a='', $b='') 
+  public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new Market(), self::getClassVars(), $row); }
 
   /**
    * @param unknown $WpPost
    */
-  public static function convertWpPost($WpPost) {
+  public static function convertWpPost($WpPost)
+  {
     $Market = new Market();
     print_r($WpPost);
     return $Market;

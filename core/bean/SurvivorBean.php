@@ -49,13 +49,13 @@ class SurvivorBean extends MainPageBean
   {
     $Survivor = $this->Survivor;
     $str  = '<ul>';
-    $str .= $this->getSkillsBySurvivorType('skills-survivant', $Survivor->getUlSkills());
+    $str .= $this->getSkillsBySurvivorType('skills-survivant', $Survivor->getUlSkills('', true));
     if ($Survivor->isZombivor()) {
-      $str .= $this->getSkillsBySurvivorType('skills-zombivant', $Survivor->getUlSkills('z'));
+      $str .= $this->getSkillsBySurvivorType('skills-zombivant', $Survivor->getUlSkills('z', true));
     }
     if ($Survivor->isUltimate()) {
-      $str .= $this->getSkillsBySurvivorType('skills-ultimate skills-survivant', $Survivor->getUlSkills('u'));
-      $str .= $this->getSkillsBySurvivorType('skills-ultimate skills-zombivant', $Survivor->getUlSkills('uz'));
+      $str .= $this->getSkillsBySurvivorType('skills-ultimate skills-survivant', $Survivor->getUlSkills('u', true));
+      $str .= $this->getSkillsBySurvivorType('skills-ultimate skills-zombivant', $Survivor->getUlSkills('uz', true));
     }
     return $str.'</ul>';
   }

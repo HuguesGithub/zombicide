@@ -147,8 +147,13 @@ class Survivor extends LocalDomain
    * @param string $str
    * @return string
    */
-  public function getNiceName($str)
-  { return str_replace(array(' ', '#'), '', strtolower($str)); }
+  public function getNiceName($str='')
+  {
+    if ($str=='') {
+      $str = $this->name;
+    }
+    return str_replace(array(' ', '#'), '', strtolower($str));
+  }
   /**
    * @param string $type
    * @return string
@@ -169,7 +174,7 @@ class Survivor extends LocalDomain
    * @param string $type
    * @return string
    */
-  public function getUlSkills($type='')
+  public function getUlSkills($type='', $withLink=false)
   {
     $SurvivorSkills = $this->getSurvivorSkills();
     $str = '';
@@ -191,25 +196,49 @@ class Survivor extends LocalDomain
         switch ($SurvivorSkill->getTagLevelId()) {
           case 10 :
           case 11 :
-            $strTmp .= '<li><span class="badge badge-blue-skill">'.$SurvivorSkill->getSkillName().'</span></li>';
+            $strTmp .= '<li><span';
+            if ( $withLink ) {
+              $strTmp .= '><a class="badge badge-blue-skill" href="/page-competences/?skillId='.$SurvivorSkill->getSkillId().'">'.$SurvivorSkill->getSkillName().'</a>';
+            } else {
+              $strTmp .= ' class="badge badge-blue-skill">'.$SurvivorSkill->getSkillName();
+            }
+            $strTmp .= '</span></li>';
           break;
           case 20 :
             $str .= '<ul class="">'.$strTmp.'</ul>';
             $strTmp = '';
-            $strTmp .= '<li><span class="badge badge-yellow-skill">'.$SurvivorSkill->getSkillName().'</span></li>';
+            $strTmp .= '<li><span';
+            if ( $withLink ) {
+              $strTmp .= '><a class="badge badge-yellow-skill" href="/page-competences/?skillId='.$SurvivorSkill->getSkillId().'">'.$SurvivorSkill->getSkillName().'</a>';
+            } else {
+              $strTmp .= ' class="badge badge-yellow-skill">'.$SurvivorSkill->getSkillName();
+            }
+            $strTmp .= '</span></li>';
           break;
           case 30 :
             $str .= '<ul class="">'.$strTmp.'</ul>';
             $strTmp = '';
           case 31 :
-            $strTmp .= '<li><span class="badge badge-orange-skill">'.$SurvivorSkill->getSkillName().'</span></li>';
+            $strTmp .= '<li><span';
+            if ( $withLink ) {
+              $strTmp .= '><a class="badge badge-orange-skill" href="/page-competences/?skillId='.$SurvivorSkill->getSkillId().'">'.$SurvivorSkill->getSkillName().'</a>';
+            } else {
+              $strTmp .= ' class="badge badge-orange-skill">'.$SurvivorSkill->getSkillName();
+            }
+            $strTmp .= '</span></li>';
           break;
           case 40 :
             $str .= '<ul class="">'.$strTmp.'</ul>';
             $strTmp = '';
           case 41 :
           case 42 :
-            $strTmp .= '<li><span class="badge badge-red-skill">'.$SurvivorSkill->getSkillName().'</span></li>';
+            $strTmp .= '<li><span';
+            if ( $withLink ) {
+              $strTmp .= '><a class="badge badge-red-skill" href="/page-competences/?skillId='.$SurvivorSkill->getSkillId().'">'.$SurvivorSkill->getSkillName().'</a>';
+            } else {
+              $strTmp .= ' class="badge badge-red-skill">'.$SurvivorSkill->getSkillName();
+            }
+            $strTmp .= '</span></li>';
           break;
           default : break;
         }

@@ -61,7 +61,6 @@ class LocalDaoImpl extends GlobalDaoImpl implements iConstants
     $urlIni = '/wp-content/plugins/zombicide/core/daoimpl/requests.ini';
     $adminUrl = getcwd().$urlIni;
     $arrConfigs = parse_ini_file($adminUrl, true);
-    
     $this->selectRequest = $arrConfigs[$strDao]['select'];
     $this->fromRequest = $arrConfigs[$strDao]['from'];
     $this->whereFilters = isset($arrConfigs[$strDao][SQL_PARAMS_WHERE]) ? $arrConfigs[$strDao][SQL_PARAMS_WHERE] : "WHERE 1=1 ";

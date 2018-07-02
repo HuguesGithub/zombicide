@@ -7,23 +7,27 @@ if (!defined('ABSPATH')) {
  * @since 1.0.00
  * @author Hugues
  */
-class SpawnDeckActions extends LocalActions {  
+class SpawnDeckActions extends LocalActions
+{
   /**
    * Constructeur
    */
-  public function __construct() {}
+  public function __construct()
+  {}
   /**
    * @param LiveDeckServices $LiveDeckServices
    * @param string $deckKey
    */
-  public static function getLiveDeck($LiveDeckServices, $deckKey) {
+  public static function getLiveDeck($LiveDeckServices, $deckKey)
+  {
     $LiveDecks = $LiveDeckServices->getLiveDecksWithFilters(__FILE__, __LINE__, array('deckKey'=>$deckKey));
     return array_shift($LiveDecks);
   }
   /**
    * @param array $post
    */
-  public static function staticDeleteSpawnDeck($post) {
+  public static function staticDeleteSpawnDeck($post)
+  {
     $LiveDeckServices = new LiveDeckServices();
     $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[self::CST_KEYACCESS]);
     $LiveDeckServices->delete(__FILE__, __LINE__, $LiveDeck);
@@ -32,7 +36,8 @@ class SpawnDeckActions extends LocalActions {
   /**
    * @param array $post
    */
-  public static function staticShuffleSpawnDiscard($post) {
+  public static function staticShuffleSpawnDiscard($post)
+  {
     $LiveDeckServices = new LiveDeckServices();
     $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[self::CST_KEYACCESS]);
     $SpawnLiveDeckServices = new SpawnLiveDeckServices();
@@ -42,7 +47,9 @@ class SpawnDeckActions extends LocalActions {
       shuffle($SpawnLiveDecks);
       $cpt = 1;
       foreach ($SpawnLiveDecks as $SpawnLiveDeck) {
-        if ($SpawnLiveDeck->getStatus()=='R' || $SpawnLiveDeck->getStatus()=='A') { continue; }
+        if ($SpawnLiveDeck->getStatus()=='R' || $SpawnLiveDeck->getStatus()=='A') {
+          continue;
+        }
         $SpawnLiveDeck->setStatus('P');
         $SpawnLiveDeck->setRank($cpt);
         $SpawnLiveDeckServices->update(__FILE__, __LINE__, $SpawnLiveDeck);
@@ -56,7 +63,8 @@ class SpawnDeckActions extends LocalActions {
   /**
    * @param array $post
    */
-  public static function staticShowSpawnDiscard($post) {
+  public static function staticShowSpawnDiscard($post)
+  {
     $LiveDeckServices = new LiveDeckServices();
     $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[self::CST_KEYACCESS]);
     $SpawnLiveDeckServices = new SpawnLiveDeckServices();
@@ -68,9 +76,10 @@ class SpawnDeckActions extends LocalActions {
   /**
    * @param array $post
    */
-  public static function staticDiscardSpawnCard($post) {
+  public static function staticDiscardSpawnCard($post)
+  {
     $LiveDeckServices = new LiveDeckServices();
-    $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[KEYACCESS]);
+    $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[self::CST_KEYACCESS]);
     $SpawnLiveDeckServices = new SpawnLiveDeckServices();
     $arrFilters = array(self::CST_LIVEDECKID=>$LiveDeck->getId(), self::CST_STATUS=>'A');
     $SpawnLiveDecks = $SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
@@ -79,7 +88,7 @@ class SpawnDeckActions extends LocalActions {
         $SpawnLiveDeck->setStatus('D');
         $SpawnLiveDeckServices->update(__FILE__, __LINE__, $SpawnLiveDeck);
       }
-      $LiveDeck->setDateUpdate(date(FORMATDATE, time()));
+      $LiveDeck->setDateUpdate(date(self::CST_FORMATDATE, time()));
       $LiveDeckServices->update(__FILE__, __LINE__, $LiveDeck);
     }
     $arrFilters = array(self::CST_LIVEDECKID=>$LiveDeck->getId(), self::CST_STATUS=>'D');
@@ -90,7 +99,8 @@ class SpawnDeckActions extends LocalActions {
   /**
    * @param array $post
    */
-  public static function staticDrawSpawnCard($post) {
+  public static function staticDrawSpawnCard($post)
+  {
     $LiveDeckServices = new LiveDeckServices();
     $LiveDeck = self::getLiveDeck($LiveDeckServices, $post[self::CST_KEYACCESS]);
     $SpawnLiveDeckServices = new SpawnLiveDeckServices();
@@ -109,5 +119,4 @@ class SpawnDeckActions extends LocalActions {
     $pageSelectionResult = (!empty($SpawnLiveDecks) ? json_encode(SpawnDeckPageBean::getStaticSpawnCardActives($SpawnLiveDecks)) : '');
      return $json.(!empty($SpawnLiveDecks) ? ',"page-selection-result":'.$pageSelectionResult : '').'}';
   }
-  
 }

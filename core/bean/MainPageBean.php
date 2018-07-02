@@ -117,6 +117,9 @@ class MainPageBean implements iConstants
           case 'Survivor'          :
             $this->SurvivorServices = FactoryServices::getSurvivorServices();
           break;
+          case 'SurvivorSkill'          :
+            $this->SurvivorSkillServices = FactoryServices::getSurvivorSkillServices();
+          break;
           case 'Tile'            :
             $this->TileServices = FactoryServices::getTileServices();
           break;

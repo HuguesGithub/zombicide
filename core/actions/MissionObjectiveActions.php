@@ -7,16 +7,19 @@ if (!defined('ABSPATH')) {
  * @since 1.0.00
  * @author Hugues
  */
-class MissionObjectiveActions extends LocalActions {
+class MissionObjectiveActions extends LocalActions
+{
   /**
    * Constructeur
    */
-  public function __construct() {}
+  public function __construct()
+  {}
   /**
    * @param array $post
    * @return string
    */
-  public static function staticInsert($post) {
+  public static function staticInsert($post)
+  {
     if ($post['selId']=='') {
       $args = array('description'=>stripslashes($post['description']), 'code'=>'CODE_TODO');
       $Objective = new Objective($args);
@@ -26,12 +29,12 @@ class MissionObjectiveActions extends LocalActions {
     } else {
       $objectiveId = $post['selId'];
     }
-    $args = array(MISSIONID=>$post[MISSIONID], 'objectiveId'=>$objectiveId, 'title'=>stripslashes($post['title']));
+    $args = array(self::CST_MISSIONID=>$post[self::CST_MISSIONID], 'objectiveId'=>$objectiveId, 'title'=>stripslashes($post['title']));
     $MissionObjective = new MissionObjective($args);
     $MissionObjectiveServices = new MissionObjectiveServices();
     $MissionObjectiveServices->insert(__FILE__, __LINE__, $MissionObjective);
     $MissionServices = new MissionServices();
-    $Mission = $MissionServices->select(__FILE__, __LINE__, $post[MISSIONID]);
+    $Mission = $MissionServices->select(__FILE__, __LINE__, $post[self::CST_MISSIONID]);
     $MissionBean = new MissionBean($Mission);
     return $MissionBean->getMissionObjectivesBlock();
   }
@@ -39,7 +42,8 @@ class MissionObjectiveActions extends LocalActions {
    * @param array $post
    * @return string
    */
-  public static function staticDelete($post) {
+  public static function staticDelete($post)
+  {
     $MissionObjectiveServices = new MissionObjectiveServices();
     $MissionObjective = $MissionObjectiveServices->select(__FILE__, __LINE__, $post['id']);
     $MissionObjectiveServices->delete(__FILE__, __LINE__, $MissionObjective);
@@ -50,4 +54,3 @@ class MissionObjectiveActions extends LocalActions {
   }
   
 }
-?>

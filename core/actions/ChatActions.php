@@ -7,11 +7,13 @@ if (!defined('ABSPATH')) {
  * @since 1.0.00
  * @author Hugues
  */
-class ChatActions extends LocalActions {
+class ChatActions extends LocalActions
+{
   /**
    * Constructeur
    */
-  public function __construct($post) {
+  public function __construct($post)
+  {
     $this->User = wp_get_current_user();
     $Data = $this->User->data;
     $this->userId = $Data->ID;
@@ -22,29 +24,40 @@ class ChatActions extends LocalActions {
     }
     $services = array('Chat', 'Live');
     parent::__construct($services);
-  }  
+  }
   /**
-   * 
    * @param unknown $post
    * @return string
    */
-  public static function staticPostChat($post) {
+  public static function staticPostChat($post)
+  {
     $ChatActions = new ChatActions($post);
     return $ChatActions->dealWithPostChat();
   }
   /**
    * @return string
    */
-  public function dealWithPostChat() {
+  public function dealWithPostChat()
+  {
     $text = trim($this->text);
     if ($text!='') {
       $arrCmds = explode(' ', $text);
       switch ($arrCmds[0]) {
-        case '/join'   : $returned = $this->joinNewLive($arrCmds[1]); break;
-        case '/exit'   : $returned = $this->exitLive(); break;
-        case '/help'   : $returned = $this->helpLive(); break;
-        case '/invite' : $returned = $this->inviteUser($arrCmds[1]); break;
-        case '/clean'  : $returned = $this->cleanChat(); break;
+        case '/join'   :
+          $returned = $this->joinNewLive($arrCmds[1]);
+        break;
+        case '/exit'   :
+          $returned = $this->exitLive();
+        break;
+        case '/help'   :
+          $returned = $this->helpLive();
+        break;
+        case '/invite' :
+          $returned = $this->inviteUser($arrCmds[1]);
+        break;
+        case '/clean'  :
+          $returned = $this->cleanChat();
+        break;
         default :
           $arr = array(
             self::CST_LIVEID=>$this->liveId,
@@ -52,7 +65,7 @@ class ChatActions extends LocalActions {
             self::CST_TEXTE=>stripslashes($text),
             self::CST_TIMESTAMP=>date(self::CST_FORMATDATE));
           $this->postChat($arr);
-          $returned = $this->getChatContent(); 
+          $returned = $this->getChatContent();
         break;
       }
     } else {
@@ -60,15 +73,17 @@ class ChatActions extends LocalActions {
     }
     return $returned;
   }
-  private function cleanChat() {
+  private function cleanChat()
+  {
     $arr = array(
       self::CST_SENDTOID=>$this->userId,
-      self::CST_TEXTE=>'Vous avez vidé l\'interface.', 
+      self::CST_TEXTE=>'Vous avez vidé l\'interface.',
       self::CST_TIMESTAMP=>date(FORMATDATE));
     $this->postChat($arr);
     return $this->getChatContent();
   }
-  private function inviteUser($displayName='') {
+  private function inviteUser($displayName='')
+  {
     $WpUser = WpUser::getWpUserBy('user_login', $displayName);
     if ($WpUser->getID()=='') {
       $arr = array(
@@ -96,7 +111,8 @@ class ChatActions extends LocalActions {
     $this->postChat($arr);
     return $this->getChatContent();
   }
-  private function helpLive() {
+  private function helpLive()
+  {
     $text = '';
     $text .= '<b>/clean</b> Vide l\'interface de discussion.';
     $text .= '<br><b>/exit</b> Rejoindre l\'espace général.';
@@ -107,7 +123,8 @@ class ChatActions extends LocalActions {
     $this->postChat($arr);
     return $this->getChatContent();
   }
-  private function exitLive() {
+  private function exitLive()
+  {
     $arr = array(
       self::CST_LIVEID=>$this->liveId,
       self::CST_TEXTE=>$this->displayName.' a quitté l\'espace de conversation.',
@@ -126,10 +143,13 @@ class ChatActions extends LocalActions {
     $returned = '{'.$this->getChatContent(false).', "header-ul-chat-saisie":';
     return $returned.json_encode('<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>').'}';
   }
-  private function joinNewLive($deckKey='') {
+  private function joinNewLive($deckKey='')
+  {
     $LiveServices = FactoryServices::getLiveServices();
     $Lives = $LiveServices->getLivesWithFilters(__FILE__, __LINE__, array(self::CST_DECKKEY=>$deckKey));
-    if (empty($Lives)) { return $this->getChatContent(); }
+    if (empty($Lives)) {
+      return $this->getChatContent();
+    }
     $Live = array_shift($Lives);
     $this->liveId = $Live->getId();
     $arr = array(
@@ -143,16 +163,17 @@ class ChatActions extends LocalActions {
     $strJson = '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$this->liveId.'">'.$deckKey.'</a></li>';
     return $returned.json_encode($strJson).'}';
   }
-  private function postChat($arr) {
+  private function postChat($arr)
+  {
     $Chat = new Chat($arr);
     $this->ChatServices->insert(__FILE__, __LINE__, $Chat);
   }
   /**
-   * 
    * @param unknown $post
    * @return string
    */
-  public static function staticChatContent($post) {
+  public static function staticChatContent($post)
+  {
     $ChatActions = new ChatActions($post);
     return $ChatActions->getChatContent();
   }
@@ -160,7 +181,8 @@ class ChatActions extends LocalActions {
    * @param boolean $directReturn
    * @return string
    */
-  public function getChatContent($directReturn=true) {
+  public function getChatContent($directReturn=true)
+  {
     $arr = array(self::CST_LIVEID=>$this->liveId, self::CST_SENDTOID=>$this->userId, self::CST_TIMESTAMP=>$this->timestamp);
     $Chats = $this->ChatServices->getChatsWithFilters(__FILE__, __LINE__, $arr);
     $strChats = '';
@@ -170,6 +192,5 @@ class ChatActions extends LocalActions {
       }
     }
     return ($directReturn ? '{"online-chat-content":'.json_encode($strChats).'}' : '"online-chat-content":'.json_encode($strChats));
-  }  
+  }
 }
-?>

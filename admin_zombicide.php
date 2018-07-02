@@ -11,7 +11,9 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 global $Zombicide;
-if (empty($Zombicide)) { $Zombicide = new Zombicide(); }
+if (empty($Zombicide)) {
+  $Zombicide = new Zombicide();
+}
 $AdminPageBean = new AdminPageBean();
 echo $AdminPageBean->getContentPage();
 ?>

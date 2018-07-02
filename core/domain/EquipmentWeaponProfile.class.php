@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe EquipmentWeaponProfile
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class EquipmentWeaponProfile extends LocalDomain {
+class EquipmentWeaponProfile extends LocalDomain
+{
   /**
    * Id technique de la jointure
    * @var int $id
@@ -30,53 +33,62 @@ class EquipmentWeaponProfile extends LocalDomain {
   /**
    * @param array $attributes
    */
-  public function __construct($attributes=array()) {
-  $services = array('WeaponProfile');
+  public function __construct($attributes=array())
+  {
+    $services = array('WeaponProfile');
     parent::__construct($attributes, $services);
   }
   /**
    * @return int
    */
-  public function getId() {return $this->id; }
+  public function getId()
+  { return $this->id; }
   /**
    * @ return int
    */
-  public function getEquipmentCardId() { return $this->equipmentCardId; }
+  public function getEquipmentCardId()
+  { return $this->equipmentCardId; }
   /**
    * @ return int
    */
-  public function getWeaponProfileId() { return $this->weaponProfileId; }
+  public function getWeaponProfileId()
+  { return $this->weaponProfileId; }
   /**
    * @return int
    */
-  public function isNoisy() { return $this->noisy; }
+  public function isNoisy()
+  { return $this->noisy; }
   /**
    * @param int $id
    */
-  public function setId($id) { $this->id=$id; }
+  public function setId($id)
+  { $this->id=$id; }
   /**
    * @param int $equipmentCardId
    */
-  public function setEquipmentCardId($equipmentCardId) { $this->equipmentCardId = $equipmentCardId; }
+  public function setEquipmentCardId($equipmentCardId)
+  { $this->equipmentCardId = $equipmentCardId; }
   /**
    * @param int $weaponProfileId
    */
-  public function setWeaponProfileId($weaponProfileId) { $this->weaponProfileId = $weaponProfileId; }
+  public function setWeaponProfileId($weaponProfileId)
+  { $this->weaponProfileId = $weaponProfileId; }
   /**
    * @param int $noisy
    */
-  public function setNoisy($noisy) { $this->noisy = $noisy; }
+  public function setNoisy($noisy)
+  { $this->noisy = $noisy; }
   /**
    * @return array
    */
-  public function getClassVars() { return get_class_vars('EquipmentWeaponProfile'); }
+  public function getClassVars()
+  { return get_class_vars('EquipmentWeaponProfile'); }
   /**
    * @param array $row
    * @param string $a
    * @param string $b
    * @return EquipmentWeaponProfile
    */
-  public static function convertElement($row, $a='', $b='') { return parent::convertElement(new EquipmentWeaponProfile(), self::getClassVars(), $row); }
-
+  public static function convertElement($row, $a='', $b='')
+  { return parent::convertElement(new EquipmentWeaponProfile(), self::getClassVars(), $row); }
 }
-?>

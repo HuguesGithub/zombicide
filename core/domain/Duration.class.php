@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe Duration
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class Duration extends LocalDomain {
+class Duration extends LocalDomain
+{
   /**
    * Id technique de la donnée
    * @var int $id
@@ -23,49 +26,51 @@ class Duration extends LocalDomain {
    */
   protected $maxDuration;
   /**
-   * @param array $attributes
+   * @return int
    */
-  public function __construct($attributes=array()) {
-    parent::__construct($attributes);
-  }
+  public function getId()
+  { return $this->id; }
   /**
    * @return int
    */
-  public function getId() { return $this->id; }
+  public function getMinDuration()
+  { return $this->minDuration; }
   /**
    * @return int
    */
-  public function getMinDuration() { return $this->minDuration; }
-  /**
-   * @return int
-   */
-  public function getMaxDuration() { return $this->maxDuration; }
+  public function getMaxDuration()
+  { return $this->maxDuration; }
   /**
    * @param int $id
    */
-  public function setId($id) { $this->id = $id; }
+  public function setId($id)
+  { $this->id = $id; }
   /**
    * @param int $minDuration
    */
-  public function setMinDuration($minDuration) { $this->minDuration = $minDuration; }
+  public function setMinDuration($minDuration)
+  { $this->minDuration = $minDuration; }
   /**
    * @param int $maxDuration
    */
-  public function setMaxDuration($maxDuration) { $this->maxDuration = $maxDuration; }
+  public function setMaxDuration($maxDuration)
+  { $this->maxDuration = $maxDuration; }
   /**
    * @return array
    */
-  public function getClassVars() { return get_class_vars('Duration'); }
+  public function getClassVars()
+  { return get_class_vars('Duration'); }
   /**
    * @param array $row
    * @param string $a
    * @param string $b
    * @return Duration
    */
-  public static function convertElement($row, $a='', $b='') { return parent::convertElement(new Duration(), self::getClassVars(), $row); }
+  public static function convertElement($row, $a='', $b='')
+  { return parent::convertElement(new Duration(), self::getClassVars(), $row); }
   /**
    * @return string
    */
-  public function getStrDuree() { return $this->minDuration.($this->maxDuration == 0 ? '' : ' à '.$this->maxDuration).' minutes'; }
+  public function getStrDuree()
+  { return $this->minDuration.($this->maxDuration == 0 ? '' : ' à '.$this->maxDuration).' minutes'; }
 }
-?>

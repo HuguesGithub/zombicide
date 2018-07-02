@@ -30,16 +30,6 @@ class Expansion extends LocalDomain
    * @var int $displayRank
    */
   protected $displayRank;
-
-  /**
-   * 
-   * @param array $attributes
-   */
-  public function __construct($attributes=array())
-  {
-    parent::__construct($attributes);
-  }
-
   /**
    * Getter Id
    * @return int
@@ -65,25 +55,21 @@ class Expansion extends LocalDomain
   public function getDisplayRank()
   { return $this->displayRank; }
   /**
-   * 
    * @param int $id
    */
   public function setId($id)
   { $this->id=$id; }
   /**
-   * 
    * @param string $code
    */
   public function setCode($code)
   { $this->code=$code; }
   /**
-   * 
    * @param string $name
    */
   public function setName($name)
   { $this->name=$name; }
   /**
-   * 
    * @param int $displayRank
    */
   public function setDisplayRank($displayRank)
@@ -95,7 +81,6 @@ class Expansion extends LocalDomain
   public function getClassVars()
   { return get_class_vars('Expansion'); }
   /**
-   * 
    * @param array $row
    * @param string $a
    * @param string $b
@@ -103,7 +88,6 @@ class Expansion extends LocalDomain
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new Expansion(), self::getClassVars(), $row); }
   /**
-   * 
    * @param array $row
    */
   public static function convertElementFromPost($row)

@@ -16,7 +16,7 @@ class LiveDeck extends LocalDomain
    */
   protected $id;
   /**
-   * Code alphanumérique 
+   * Code alphanumérique
    * @var string $deckKey
    */
   protected $deckKey;
@@ -113,5 +113,4 @@ class LiveDeck extends LocalDomain
    */
   public function setSpawnLiveDecks($SpawnLiveDecks)
   { $this->SpawnLiveDecks = $SpawnLiveDecks; }
-  
 }

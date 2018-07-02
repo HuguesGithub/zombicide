@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe Level
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class Level extends LocalDomain {
+class Level extends LocalDomain
+{
   /**
    * Id technique de la donnée
    * @var int $id
@@ -18,38 +21,36 @@ class Level extends LocalDomain {
    */
   protected $name;
   /**
-   * @param array $attributes
-   */
-  public function __construct($attributes=array()) {
-    parent::__construct($attributes);
-  }
-  /**
    * @return int
    */
-  public function getId() { return $this->id; }
+  public function getId()
+  { return $this->id; }
   /**
    * @return string
    */
-  public function getName() { return $this->name; }
+  public function getName()
+  { return $this->name; }
   /**
    * @param int $id
    */
-  public function setId($id) { $this->id = $id; }
+  public function setId($id)
+  { $this->id = $id; }
   /**
    * @param string $name
    */
-  public function setName($name) { $this->name = $name; }
+  public function setName($name)
+  { $this->name = $name; }
   /**
    * @return array
    */
-  public function getClassVars() { return get_class_vars('Level'); }
+  public function getClassVars()
+  { return get_class_vars('Level'); }
   /**
    * @param array $row
    * @param string $a
    * @param string $b
    * @return Level
    */
-  public static function convertElement($row, $a='', $b='') { return parent::convertElement(new Level(), self::getClassVars(), $row); }
-
+  public static function convertElement($row, $a='', $b='')
+  { return parent::convertElement(new Level(), self::getClassVars(), $row); }
 }
-?>

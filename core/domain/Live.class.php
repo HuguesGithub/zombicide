@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe Live
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class Live extends LocalDomain {
+class Live extends LocalDomain
+{
   /**
    * Id technique de la donnée
    * @var int $id
@@ -23,46 +26,46 @@ class Live extends LocalDomain {
    */
   protected $dateUpdate;
   /**
-   * @param array $attributes
-   */
-  public function __construct($attributes=array()) {
-    parent::__construct($attributes);
-  }
-  /**
    * @return int
    */
-  public function getId() { return $this->id; }
+  public function getId()
+  { return $this->id; }
   /**
    * @return string
    */
-  public function getDeckKey() { return $this->deckKey; }
+  public function getDeckKey()
+  { return $this->deckKey; }
   /**
    * @return string
    */
-  public function getDateUpdate() { return $this->dateUpdate; }
+  public function getDateUpdate()
+  { return $this->dateUpdate; }
   /**
    * @param int $id
    */
-  public function setId($id) { $this->id = $id; }
+  public function setId($id)
+  { $this->id = $id; }
   /**
    * @param string $deckKey
    */
-  public function setDeckKey($deckKey) { $this->deckKey = $deckKey; }
+  public function setDeckKey($deckKey)
+  { $this->deckKey = $deckKey; }
   /**
    * @param string $dateUpdate
    */
-  public function setDateUpdate($dateUpdate) { $this->dateUpdate = $dateUpdate; }
+  public function setDateUpdate($dateUpdate)
+  { $this->dateUpdate = $dateUpdate; }
   /**
    * @return array
    */
-  public function getClassVars() { return get_class_vars('Live'); }
+  public function getClassVars()
+  { return get_class_vars('Live'); }
   /**
    * @param array $row
    * @param string $a
    * @param string $b
    * @return LiveDeck
    */
-  public static function convertElement($row, $a='', $b='') { return parent::convertElement(new Live(), self::getClassVars(), $row); }
-  
+  public static function convertElement($row, $a='', $b='')
+  { return parent::convertElement(new Live(), self::getClassVars(), $row); }
 }
-?>

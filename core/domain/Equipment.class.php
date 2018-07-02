@@ -8,7 +8,8 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class Equipment extends LocalDomain {
+class Equipment extends LocalDomain
+{
   /**
    * Id technique de la donnée
    * @var int $id
@@ -105,7 +106,8 @@ class Equipment extends LocalDomain {
   /**
    * @return boolean
    */
-  public function isRanged() {
+  public function isRanged()
+  {
     if ($this->ranged == null) {
       if ($this->EquipmentWeaponProfiles == null) {
         $this->EquipmentWeaponProfiles = $this->getEquipmentWeaponProfiles(__FILE__, __LINE__);
@@ -130,7 +132,8 @@ class Equipment extends LocalDomain {
   /**
    * @return boolean
    */
-  public function isMelee() {
+  public function isMelee()
+  {
     if ($this->melee==null) {
       if ($this->EquipmentWeaponProfiles == null) {
         $this->EquipmentWeaponProfiles = $this->getEquipmentWeaponProfiles(__FILE__, __LINE__);

@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe Keyword
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class Keyword extends LocalDomain {
+class Keyword extends LocalDomain
+{
   /**
    * Id technique de la donnée
    * @var int $id
@@ -23,46 +26,46 @@ class Keyword extends LocalDomain {
    */
   protected $description;
   /**
-   * @param array $attributes
-   */
-  public function __construct($attributes=array()) {
-    parent::__construct($attributes);
-  }
-  /**
    * @return int
    */
-  public function getId() {return $this->id; }
+  public function getId()
+  {return $this->id; }
   /**
    * @return string
    */
-  public function getName() { return $this->name; }
+  public function getName()
+  { return $this->name; }
   /**
    * @return string
    */
-  public function getDescription() { return $this->description; }
+  public function getDescription()
+  { return $this->description; }
   /**
    * @param int $id
    */
-  public function setId($id) { $this->id=$id; }
+  public function setId($id)
+  { $this->id=$id; }
   /**
    * @param string $name
    */
-  public function setName($name) { $this->name=$name; }
+  public function setName($name)
+  { $this->name=$name; }
   /**
    * @param string $description
    */
-  public function setDescription($description) { $this->description=$description; }
+  public function setDescription($description)
+  { $this->description=$description; }
   /**
    * @return array
    */
-  public function getClassVars() { return get_class_vars('Keyword'); }
+  public function getClassVars()
+  { return get_class_vars('Keyword'); }
   /**
    * @param array $row
    * @param string $a
    * @param string $b
    * @return Keyword
    */
-  public static function convertElement($row, $a='', $b='') { return parent::convertElement(new Keyword(), self::getClassVars(), $row); }
-
+  public static function convertElement($row, $a='', $b='')
+  { return parent::convertElement(new Keyword(), self::getClassVars(), $row); }
 }
-?>

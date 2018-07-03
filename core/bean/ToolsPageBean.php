@@ -48,7 +48,9 @@ class ToolsPageBean extends PagePageBean
         $score = rand(1, 6);
         if ($score == 6 || ($score == 5 && $hasPlusUnAuDe)) {
           $strClasse = "primary";
-          if ($hasSurUn6) { $nbDeDes++; }
+          if ($hasSurUn6) {
+            $nbDeDes++;
+          }
         } elseif ($score==1) {
           $strClasse = "danger";
         } elseif ($score >= ($seuilReussite - ($hasPlusUnAuDe ? 1 : 0))) {

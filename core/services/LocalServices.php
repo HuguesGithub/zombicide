@@ -43,7 +43,9 @@ class LocalServices extends GlobalServices implements iConstants
   {
     $strSelect = '';
     $selName = $name;
-    if ($labelDefault!='') { $strSelect .= '<label class="screen-reader-text" for="'.$name.'">'.$labelDefault.'</label>'; }
+    if ($labelDefault!='') {
+      $strSelect .= '<label class="screen-reader-text" for="'.$name.'">'.$labelDefault.'</label>';
+    }
     $strSelect .= '<select id="'.$name.'" name="'.$selName.'" class="'.$classe.'"'.($multiple?' multiple':'').'>';
     if (!$multiple && $labelDefault!='') {
       $strSelect .= '<option value="">'.$labelDefault.'</option>';

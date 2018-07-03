@@ -1,19 +1,25 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe EquipmentServices
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class EquipmentServices extends LocalServices {
+class EquipmentServices extends LocalServices
+{
   /**
    * L'objet Dao pour faire les requêtes
    * @var EquipmentDaoImpl $Dao
    */
   protected $Dao;
-  
-  public function __construct() {  $this->Dao = new EquipmentDaoImpl(); }
+  /**
+   * Class Constructor
+   */
+  public function __construct()
+  {  $this->Dao = new EquipmentDaoImpl(); }
 
   /**
    * @param string $file
@@ -23,7 +29,8 @@ class EquipmentServices extends LocalServices {
    * @param string $order
    * @return array
    */
-  public function getEquipmentsWithFilters($file, $line, $arrFilters=array(), $orderby='name', $order='asc') {
+  public function getEquipmentsWithFilters($file, $line, $arrFilters=array(), $orderby='name', $order='asc')
+  {
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }

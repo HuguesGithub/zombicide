@@ -17,8 +17,11 @@ class PostPageBean extends MainPageBean
    * @param string $post
    * @param array $services
    */
-  public function __construct($post='', $services=array()) {
-    if ($post=='') { $post = get_post(); }
+  public function __construct($post='', $services=array())
+  {
+    if ($post=='') {
+      $post = get_post();
+    }
     if (get_class($post) == 'WpPost') {
       $this->WpPost = $post;
     } else {

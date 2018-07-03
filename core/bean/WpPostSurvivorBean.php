@@ -21,9 +21,11 @@ class WpPostSurvivorBean extends MainPageBean
     $WpBean = new SurvivorBean($Survivor);
     $strType  = '';
     if ($Survivor->isZombivor()) {
-      $strType .= '<div data-id="'.$Survivor->getId().'" data-type="zombivant" class="changeProfile"><i class="far fa-square pointer"></i> Zombivant</div>';
+      $strType .= '<div data-id="'.$Survivor->getId().'" data-type="zombivant" class="changeProfile">';
+      $strType .= '<i class="far fa-square pointer"></i> Zombivant</div>';
       if ($Survivor->isUltimate()) {
-        $strType .= '&nbsp;<div data-id="'.$Survivor->getId().'" data-type="ultimate" class="changeProfile"><i class="far fa-square pointer"></i> Ultimate</div>';
+        $strType .= '&nbsp;<div data-id="'.$Survivor->getId().'" data-type="ultimate" class="changeProfile">';
+        $strType .= '<i class="far fa-square pointer"></i> Ultimate</div>';
       }
     }
     $args = array(

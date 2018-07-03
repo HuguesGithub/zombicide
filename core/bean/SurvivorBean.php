@@ -38,8 +38,10 @@ class SurvivorBean extends MainPageBean
     $strRow  = '<tr class="survivant">';
     $strRow .= '<td rowspan="3">'.$this->getAllPortraits().'</td>';
     $strRow .= '<td><a href="'.$urlWpPost.'">'.$Survivor->getName().'</a></td>';
-    $strRow .= '<td data-id="'.$Survivor->getId().'" data-type="zombivant" class="'.($Survivor->isZombivor()?'changeProfile':'').'"><i class="far fa-'.($Survivor->isZombivor()?'square pointer':'window-close').'"></i></td>';
-    $strRow .= '<td data-id="'.$Survivor->getId().'" data-type="ultimate" class="'.($Survivor->isUltimate()?'changeProfile':'').'"><i class="far fa-'.($Survivor->isUltimate()?'square pointer':'window-close').'"></i></td>';
+    $strRow .= '<td data-id="'.$Survivor->getId().'" data-type="zombivant" class="'.($Survivor->isZombivor()?'changeProfile':'');
+    $strRow .= '"><i class="far fa-'.($Survivor->isZombivor()?'square pointer':'window-close').'"></i></td>';
+    $strRow .= '<td data-id="'.$Survivor->getId().'" data-type="ultimate" class="'.($Survivor->isUltimate()?'changeProfile':'');
+    $strRow .= '"><i class="far fa-'.($Survivor->isUltimate()?'square pointer':'window-close').'"></i></td>';
     $strRow .= '<td>'.$Survivor->getExpansionName().'</td>';
     $strRow .= '<td>'.$this->getAllSkills().'</td>';
     $strRow .= '</tr>';
@@ -103,9 +105,11 @@ class SurvivorBean extends MainPageBean
     $Survivor = $this->Survivor;
     $strType  = '';
     if ($Survivor->isZombivor()) {
-      $strType .= '<div data-id="'.$Survivor->getId().'" data-type="zombivant" class="changeProfile"><i class="far fa-square pointer"></i> Zombivant</div>';
+      $strType .= '<div data-id="'.$Survivor->getId().'" data-type="zombivant" class="changeProfile">';
+      $strType .= '<i class="far fa-square pointer"></i> Zombivant</div>';
       if ($Survivor->isUltimate()) {
-        $strType .= '&nbsp;<div data-id="'.$Survivor->getId().'" data-type="ultimate" class="changeProfile"><i class="far fa-square pointer"></i> Ultimate</div>';
+        $strType .= '&nbsp;<div data-id="'.$Survivor->getId().'" data-type="ultimate" class="changeProfile">';
+        $strType .= '<i class="far fa-square pointer"></i> Ultimate</div>';
       }
     }
     $args = array(

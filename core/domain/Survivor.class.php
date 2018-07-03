@@ -234,7 +234,8 @@ class Survivor extends LocalDomain
     }
     $str = '<li><span';
     if ($withLink) {
-      $str .= '><a class="badge badge-'.$strColor.'-skill" href="/page-competences/?skillId='.$SurvivorSkill->getSkillId().'">'.$SurvivorSkill->getSkillName().'</a>';
+      $str .= '><a class="badge badge-'.$strColor.'-skill" href="/page-competences/?skillId=';
+      $str .= $SurvivorSkill->getSkillId().'">'.$SurvivorSkill->getSkillName().'</a>';
     } else {
       $str .= ' class="badge badge-'.$strColor.'-skill">'.$SurvivorSkill->getSkillName();
     }

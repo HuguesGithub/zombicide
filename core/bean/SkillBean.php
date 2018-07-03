@@ -37,21 +37,29 @@ class SkillBean extends MainPageBean
   public function getRowForSkillsPage()
   {
     $Skill = $this->Skill;
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, array('skillId'=>$Skill->getId(), 'tagLevelId'=>10));
+    $arrFilters = array('skillId'=>$Skill->getId(), 'tagLevelId'=>10);
+    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
     $nbBlues = count($SurvivorSkills);
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, array('skillId'=>$Skill->getId(), 'tagLevelId'=>11));
+    $arrFilters['tagLevelId'] = 11;
+    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
     $nbBlues += count($SurvivorSkills);
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, array('skillId'=>$Skill->getId(), 'tagLevelId'=>20));
+    $arrFilters['tagLevelId'] = 20;
+    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
     $nbYellows = count($SurvivorSkills);
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, array('skillId'=>$Skill->getId(), 'tagLevelId'=>30));
+    $arrFilters['tagLevelId'] = 30;
+    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
     $nbOranges = count($SurvivorSkills);
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, array('skillId'=>$Skill->getId(), 'tagLevelId'=>31));
+    $arrFilters['tagLevelId'] = 31;
+    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
     $nbOranges += count($SurvivorSkills);
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, array('skillId'=>$Skill->getId(), 'tagLevelId'=>40));
+    $arrFilters['tagLevelId'] = 40;
+    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
     $nbReds = count($SurvivorSkills);
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, array('skillId'=>$Skill->getId(), 'tagLevelId'=>41));
+    $arrFilters['tagLevelId'] = 41;
+    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
     $nbReds += count($SurvivorSkills);
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, array('skillId'=>$Skill->getId(), 'tagLevelId'=>42));
+    $arrFilters['tagLevelId'] = 42;
+    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
     $nbReds += count($SurvivorSkills);
     $strRow  = '<tr>';
     $strRow .= '<td style="white-space: nowrap;"><a href="/page-competences/?skillId='.$Skill->getId().'">'.$Skill->getName().'</a><br>';

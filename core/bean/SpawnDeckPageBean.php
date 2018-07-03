@@ -27,7 +27,8 @@ class SpawnDeckPageBean extends PagePageBean
     if (!empty($SpawnLiveDecks)) {
       foreach ($SpawnLiveDecks as $SpawnLiveDeck) {
         $SpawnCard = $SpawnLiveDeck->getSpawnCard();
-        $strSpawns .= '<div class="card spawn set"><img width="320" height="440" src="'.$SpawnCard->getImgUrl().'" alt="#'.$SpawnCard->getSpawnNumber().'"></div>';
+        $strSpawns .= '<div class="card spawn set"><img width="320" height="440" src="'.$SpawnCard->getImgUrl();
+        $strSpawns .= '" alt="#'.$SpawnCard->getSpawnNumber().'"></div>';
       }
     }
     return $strSpawns;
@@ -59,7 +60,8 @@ class SpawnDeckPageBean extends PagePageBean
       // On a un LiveDeck qui correspond à $keyAccess, on va l'utiliser
       if (!empty($LiveDecks)) {
         $LiveDeck = array_shift($LiveDecks);
-        $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, array('liveDeckId'=>$LiveDeck->getId(), 'status'=>'A'), 'rank', 'ASC');
+        $arrF = array('liveDeckId'=>$LiveDeck->getId(), 'status'=>'A');
+        $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrF, 'rank', 'ASC');
         $strSpawns = self::getStaticSpawnCardActives($SpawnLiveDecks);
       } else {
         // Sinon, on va devoir créer la pioche complète

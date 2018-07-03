@@ -15,15 +15,15 @@
       <tr role="row">
         <th class="sorting%4$s ajaxAction" data-colsort="code" data-colorder="%4$s" data-ajaxaction="sort">Code</th>
         <th class="sorting%5$s ajaxAction" data-colsort="title" data-colorder="%5$s" data-ajaxaction="sort">Nom</th>
-        <th class="filter ajaxAction" data-filter="level" data-ajaxaction="filter">Difficulté 
+        <th class="filter ajaxAction" data-filter="level" data-ajaxaction="filter">Difficulté
           <i class="fas fa-filter float-right" style="margin-top:3px;"></i></th>
-        <th class="filter ajaxAction" data-filter="duration" data-ajaxaction="filter">Durée 
+        <th class="filter ajaxAction" data-filter="duration" data-ajaxaction="filter">Durée
           <i class="fas fa-filter float-right" style="margin-top:3px;"></i></th>
-        <th class="filter ajaxAction" data-filter="player" data-ajaxaction="filter">Joueurs 
+        <th class="filter ajaxAction" data-filter="player" data-ajaxaction="filter">Joueurs
           <i class="fas fa-filter float-right" style="margin-top:3px;"></i></th>
-        <th class="filter ajaxAction" data-filter="expansion" data-ajaxaction="filter">Extensions 
+        <th class="filter ajaxAction" data-filter="expansion" data-ajaxaction="filter">Extensions
           <i class="fas fa-filter float-right" style="margin-top:3px;"></i></th>
-        <th class="filter ajaxAction" data-filter="origine" data-ajaxaction="filter">Origine 
+        <th class="filter ajaxAction" data-filter="origine" data-ajaxaction="filter">Origine
           <i class="fas fa-filter float-right" style="margin-top:3px;"></i></th>
         <!--
         <th>Dalles</th>

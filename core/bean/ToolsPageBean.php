@@ -100,13 +100,16 @@ class ToolsPageBean extends PagePageBean
         if (empty($Survivors)) {
           continue;
         }
-        $str .= '<div type="button" class="btn btn-dark btn-expansion" data-expansion-id="'.$id.'"><span><i class="far fa-square"></i></span> '.$Expansion->getName().'</div>';
+        $str .= '<div type="button" class="btn btn-dark btn-expansion" data-expansion-id="'.$id.'"><span>';
+        $str .= '<i class="far fa-square"></i></span> '.$Expansion->getName().'</div>';
         foreach ($Survivors as $Survivor) {
           $survivorId = $Survivor->getId();
-          $str .= '<button type="button" class="btn btn-secondary btn-survivor hidden" data-expansion-id="'.$id.'" data-survivor-id="'.$survivorId.'"><i class="far fa-square"></i> '.$Survivor->getName().'</button>';
+          $str .= '<button type="button" class="btn btn-secondary btn-survivor hidden" data-expansion-id="';
+          $str .= $id.'" data-survivor-id="'.$survivorId.'"><i class="far fa-square"></i> '.$Survivor->getName().'</button>';
         }
       }
-      $str .= '<div type="button" class="btn btn-primary btn-expansion" id="proceedBuildTeam"><span><i class="far fa-check-circle"></i></span> Générer</div>';
+      $str .= '<div type="button" class="btn btn-primary btn-expansion" id="proceedBuildTeam"><span>';
+      $str .= '<i class="far fa-check-circle"></i></span> Générer</div>';
       $str .= '</div>';
     }
     $args = array(

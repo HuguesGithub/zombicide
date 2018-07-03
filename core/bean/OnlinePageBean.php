@@ -33,14 +33,14 @@ class OnlinePageBean extends PagePageBean
    */
   public function getContentNotLogged()
   {
-    $time = time();
-    $args = array();
+    $ts = date('Y-m-d H:i:s', time());
+  	$args = array();
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-online-identification.php');
     $strCanvas = vsprintf($str, $args);
     $args = array(
       'Buttons',
       'Options',
-      '<li class="msg-technique" data-timestamp="'.date('Y-m-d H:i:s', $time).'"><div><span class="timestamp">'.date('d/m H:i', $time).'</span></div>Bienvenue sur cette interface. Inscrivez-vous et identifiez-vous pour rejoindre la discussion.</li>',
+      '<li class="msg-technique" data-timestamp="'.$ts.'"><div><span class="timestamp">'.$ts.'</span></div>Bienvenue sur cette interface. Inscrivez-vous et identifiez-vous pour rejoindre la discussion.</li>',
       $strCanvas,
       'hidden',
       '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>',
@@ -53,11 +53,11 @@ class OnlinePageBean extends PagePageBean
    */
   public function getContentLoggedNotLive()
   {
-    $time = time();
+    $ts = date('Y-m-d H:i:s', time());
     $args = array(
       'Buttons',
       'Options',
-      '<li class="msg-technique" data-timestamp="'.date('Y-m-d H:i:s', $time).'"><div><span class="timestamp">'.date('d/m H:i', $time).'</span></div>Bienvenue sur cette interface.</li>',
+      '<li class="msg-technique" data-timestamp="'.$ts.'"><div><span class="timestamp">'.$ts.'</span></div>Bienvenue sur cette interface.</li>',
       '',
       '',
       '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>',
@@ -76,7 +76,7 @@ class OnlinePageBean extends PagePageBean
       unset($_SESSION[self::CST_DECKKEY]);
       return $this->getContentLoggedNotLive();
     }
-    $time = time();
+    $ts = date('Y-m-d H:i:s', time());
     $Live = array_shift($Lives);
     $missionId = 1;
     $Mission = $this->MissionServices->select(__FILE__, __LINE__, $missionId);
@@ -84,7 +84,7 @@ class OnlinePageBean extends PagePageBean
     $args = array(
       'Buttons',
       'Options',
-      '<li class="msg-technique" data-timestamp="'.date('Y-m-d H:i:s', $time).'"><div><span class="timestamp">'.date('d/m H:i', $time).'</span></div>Bienvenue dans l\'espace de discussion '.$Live->getDeckKey().'.</li>',
+      '<li class="msg-technique" data-timestamp="'.$ts.'"><div><span class="timestamp">'.$ts.'</span></div>Bienvenue dans l\'espace de discussion '.$Live->getDeckKey().'.</li>',
       $MissionBean->displayCanvas(),
       '',
       '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$Live->getId().'">'.$Live->getDeckKey().'</a></li>',

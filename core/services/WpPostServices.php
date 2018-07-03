@@ -11,7 +11,8 @@ if (!defined('ABSPATH')) {
 class WpPostServices extends GlobalServices
 {
   
-  public function __construct() {}
+  public function __construct()
+  {}
 
   /**
    * @param string $file

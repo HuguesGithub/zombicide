@@ -23,7 +23,8 @@ class WpPostMissionBean extends MainPageBean
    */
   public function getMissionPageContent($Mission)
   {
-    $WpPosts = $this->WpPostServices->getArticles(__FILE__, __LINE__, array('orderby'=> 'rand', 'posts_per_page'=>6, 'post_status'=>'publish'), 'WpPostMission');
+    $arrF = array('orderby'=> 'rand', 'posts_per_page'=>6, 'post_status'=>'publish');
+    $WpPosts = $this->WpPostServices->getArticles(__FILE__, __LINE__, $arrF, 'WpPostMission');
     $strContent = '';
     if (!empty($WpPosts)) {
       foreach ($WpPosts as $WpPost) {

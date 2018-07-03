@@ -141,7 +141,8 @@ class MissionTile extends LocalDomain
     $strTileTable .= '<th>'.$this->getYCoord().'</th>';
     $strTileTable .= '<th>'.$this->getTileCode().'</th>';
     $strTileTable .= '<th>'.$this->getOrientation().'</th>';
-    $strTileTable .= '<th><span data-missiontileid="'.$this->getId().'" class="btn btn-default btn-xs rmvTileRowBtn"><i class="glyphicon glyphicon-minus-sign"></i></span></th>';
+    $strTileTable .= '<th><span data-missiontileid="'.$this->getId().'" class="btn btn-default btn-xs rmvTileRowBtn">';
+    $strTileTable .= '<i class="glyphicon glyphicon-minus-sign"></i></span></th>';
     return $strTileTable.'</tr>';
   }
 }

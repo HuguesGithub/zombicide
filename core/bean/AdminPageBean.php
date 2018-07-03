@@ -23,7 +23,8 @@ class AdminPageBean extends MainPageBean
     parent::__construct($services);
     $this->analyzeUri();
     $this->tableName = 'wp_11_zombicide_'.$tag;
-    $this->tplAdminerUrl = 'http://zombicide.jhugues.fr/wp-content/plugins/adminer/inc/adminer/loader.php?username=dbo507551204&db=db507551204&table='.$this->tableName;
+    $this->tplAdminerUrl  = 'http://zombicide.jhugues.fr/wp-content/plugins/adminer/inc/adminer/loader.php';
+    $this->tplAdminerUrl .= '?username=dbo507551204&db=db507551204&table='.$this->tableName;
   }
 
   /**

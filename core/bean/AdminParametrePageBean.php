@@ -39,12 +39,15 @@ class AdminParametrePageBean extends AdminPageBean
       'objective'=>'Objectifs', 'expansion'=>'Expansions', 'tile'=>'Dalles');
     $strTabs = '';
     foreach ($arrTabs as $key => $value) {
-      $strTabs .= '<a href="'.$this->getQueryArg(array('onglet'=>'parametre', 'table'=>$key)).'" class="list-group-item list-group-item-action';
+      $strTabs .= '<a href="'.$this->getQueryArg(array('onglet'=>'parametre', 'table'=>$key));
+      $strTabs .= '" class="list-group-item list-group-item-action';
       $strTabs .= ($key==$table ? ' active' : '').'">'.$value.'</a>';
     }
     $tBody = '';
-    $tBodyButtons  = '<td><button class="btn btn-xs btn-success editParam" data-type="%2$s" data-id="%3$s"><i class="fas fa-pencil-alt"></i></button>';
-    $tBodyButtons .= '<button class="btn btn-xs btn-danger rmvParam" data-type="%2$s" data-id="%3$s"><i class="fas fa-trash-alt"></i></button></td><td>%1$s</td>';
+    $tBodyButtons  = '<td><button class="btn btn-xs btn-success editParam" data-type="%2$s" data-id="%3$s">';
+    $tBodyButtons .= '<i class="fas fa-pencil-alt"></i></button>';
+    $tBodyButtons .= '<button class="btn btn-xs btn-danger rmvParam" data-type="%2$s" data-id="%3$s">';
+    $tBodyButtons .= '<i class="fas fa-trash-alt"></i></button></td><td>%1$s</td>';
     switch ($table) {
       case 'level' :
         $Level = new Level();
@@ -98,9 +101,11 @@ class AdminParametrePageBean extends AdminPageBean
         if (!empty($Expansions)) {
           foreach ($Expansions as $Expansion) {
             $id = $Expansion->getId();
-            $MissionExpansions = $this->MissionExpansionServices->getMissionExpansionsWithFilters(__FILE__, __LINE__, array('expansionId'=>$id));
+            $arrF = array('expansionId'=>$id);
+            $MissionExpansions = $this->MissionExpansionServices->getMissionExpansionsWithFilters(__FILE__, __LINE__, $arrF);
             $nb = count($MissionExpansions);
-            $tBody .= '<tr><td>'.$id.'</td><td>'.$Expansion->getCode().'</td><td>'.$Expansion->getName().'</td><td>'.$Expansion->getDisplayRank().'</td>';
+            $tBody .= '<tr><td>'.$id.'</td><td>'.$Expansion->getCode().'</td><td>'.$Expansion->getName();
+            $tBody .= '</td><td>'.$Expansion->getDisplayRank().'</td>';
             $args = array($nb.' Mission'.($nb>1?'s':''), $table, $id);
             $tBody .= vsprintf($tBodyButtons, $args).'</tr>';
           }
@@ -115,7 +120,8 @@ class AdminParametrePageBean extends AdminPageBean
             $id = $Rule->getId();
             $MissionRules = $this->MissionRuleServices->getMissionRulesWithFilters(__FILE__, __LINE__, array('ruleId'=>$id));
             $nb = count($MissionRules);
-            $tBody .= '<tr><td>'.$id.'</td><td>'.$Rule->getSetting().'</td><td>'.$Rule->getCode().'</td><td>'.$Rule->getDescription().'</td>';
+            $tBody .= '<tr><td>'.$id.'</td><td>'.$Rule->getSetting().'</td><td>'.$Rule->getCode().'</td><td>';
+            $tBody .= $Rule->getDescription().'</td>';
             $args = array($nb.' Mission'.($nb>1?'s':''), $table, $id);
             $tBody .= vsprintf($tBodyButtons, $args).'</tr>';
           }
@@ -128,7 +134,8 @@ class AdminParametrePageBean extends AdminPageBean
         if (!empty($Objectives)) {
           foreach ($Objectives as $Objective) {
             $id = $Objective->getId();
-            $MissionObjectives = $this->MissionObjectiveServices->getMissionObjectivesWithFilters(__FILE__, __LINE__, array('objectiveId'=>$id));
+            $arrF = array('objectiveId'=>$id);
+            $MissionObjectives = $this->MissionObjectiveServices->getMissionObjectivesWithFilters(__FILE__, __LINE__, $arrF);
             $nb = count($MissionObjectives);
             $tBody .= '<tr><td>'.$id.'</td><td>'.$Objective->getCode().'</td><td>'.$Objective->getDescription().'</td>';
             $args = array($nb.' Mission'.($nb>1?'s':''), $table, $id);
@@ -146,7 +153,8 @@ class AdminParametrePageBean extends AdminPageBean
       $tFooter .= '<td><input type="text" class="form-control" id="'.$table.'-'.$key.'"'.($key=='id'?' disabled':'').'/></td>';
     }
     $tHeader .= '<td>&nbsp;</td><td>Utilisations</td></tr>';
-    $tFooter .= '<td><button class="btn btn-xs btn-success addParam" data-type="'.$table.'"><i class="fas fa-plus-circle"></i><i class="fas fa-pencil-alt"></i></button>';
+    $tFooter .= '<td><button class="btn btn-xs btn-success addParam" data-type="'.$table;
+    $tFooter .= '"><i class="fas fa-plus-circle"></i><i class="fas fa-pencil-alt"></i></button>';
     $tFooter .= '<button class="btn btn-xs btn-danger cleanParam"><i class="fas fa-times-circle"></i></button></td><td>&nbsp;</td></tr>';
     $args = array(
       $strTabs,

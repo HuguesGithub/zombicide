@@ -21,7 +21,11 @@ class MissionRuleActions extends LocalActions
   public static function staticInsert($post)
   {
     if ($post['selId']=='') {
-      $args = array('description'=>stripslashes($post['description']), self::CST_MISSIONID=>($post['type']==self::CST_MISSIONID), 'code'=>'CODE_TODO');
+      $args = array(
+        'description'=>stripslashes($post['description']),
+        self::CST_MISSIONID=>($post['type']==self::CST_MISSIONID),
+        'code'=>'CODE_TODO'
+      );
       $Rule = new Rule($args);
       $RuleServices = new RuleServices();
       $RuleServices->insert(__FILE__, __LINE__, $Rule);

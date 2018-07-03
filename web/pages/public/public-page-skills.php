@@ -22,7 +22,7 @@
     <thead>
       <tr role="row">
         <th class="sorting%5$s ajaxAction" data-colsort="name" data-colorder="%5$s" data-ajaxaction="sort">Nom</th>
-        <th class="filter ajaxAction" data-filter="description" data-ajaxaction="filter" >Description 
+        <th class="filter ajaxAction" data-filter="description" data-ajaxaction="filter" >Description
           <i class="fas fa-filter float-right" style="margin-top:3px;"></i></th>
       </tr>
     </thead>

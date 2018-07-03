@@ -49,7 +49,11 @@ class MissionTileServices extends LocalServices
   public static function staticRotate($post)
   {
     $MissionTileServices = new MissionTileServices();
-    $args = array(self::CST_MISSIONID=>$post[self::CST_MISSIONID], self::CST_COORDX=>$post[self::CST_COORDX], self::CST_COORDY=>$post[self::CST_COORDY]);
+    $args = array(
+      self::CST_MISSIONID=>$post[self::CST_MISSIONID],
+      self::CST_COORDX=>$post[self::CST_COORDX],
+      self::CST_COORDY=>$post[self::CST_COORDY]
+    );
     $MissionTiles = $MissionTileServices->getMissionTilesWithFilters(__FILE__, __LINE__, $args);
     if (!empty($MissionTiles)) {
       $MissionTile = array_shift($MissionTiles);
@@ -67,7 +71,11 @@ class MissionTileServices extends LocalServices
   public static function staticUpdate($post)
   {
     $MissionTileServices = new MissionTileServices();
-    $args = array(self::CST_MISSIONID=>$post[self::CST_MISSIONID], self::CST_COORDX=>$post[self::CST_COORDX], self::CST_COORDY=>$post[self::CST_COORDY]);
+    $args = array(
+      self::CST_MISSIONID=>$post[self::CST_MISSIONID],
+      self::CST_COORDX=>$post[self::CST_COORDX],
+      self::CST_COORDY=>$post[self::CST_COORDY]
+    );
     $MissionTiles = $MissionTileServices->getMissionTilesWithFilters(__FILE__, __LINE__, $args);
     if (empty($MissionTiles)) {
       $args['orientation'] = 'N';

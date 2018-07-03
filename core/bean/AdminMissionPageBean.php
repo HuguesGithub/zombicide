@@ -324,26 +324,26 @@ class AdminMissionPageBean extends AdminPageBean
    );
     $subs = $this->getSubs($queryArg, $post_status, $numbers);
     // Pagination
-    if ($filter_by_levelId!='') {
-      $queryArg['filter-by-levelId'] = $filter_by_levelId;
+    if ($fby_levelId!='') {
+      $queryArg['filter-by-levelId'] = $fby_levelId;
     }
-    if ($filter_by_playerId!='') {
-      $queryArg['filter-by-playerId'] = $filter_by_playerId;
+    if ($fby_playerId!='') {
+      $queryArg['filter-by-playerId'] = $fby_playerId;
     }
-    if ($filter_by_durationId!='') {
-      $queryArg['filter-by-durationId'] = $filter_by_durationId;
+    if ($fby_durationId!='') {
+      $queryArg['filter-by-durationId'] = $fby_durationId;
     }
-    if ($filter_by_origineId!='') {
-      $queryArg['filter-by-origineId'] = $filter_by_origineId;
+    if ($fby_origineId!='') {
+      $queryArg['filter-by-origineId'] = $fby_origineId;
     }
     $strPagination = $this->getPagination($queryArg, $post_status, $curPage, $nbPages, $nbElements);
     // Filtre de la Difficulté
     $prefix = 'filter-by-';
     $classe = 'custom-select custom-select-sm filters';
-    $filters  = $this->LevelServices->getLevelsSelect(__FILE__, __LINE__, $filter_by_levelId, $prefix, $classe, false, 'Toutes difficultés');
-    $filters .= $this->DurationServices->getDurationsSelect(__FILE__, __LINE__, $filter_by_durationId, $prefix, $classe, false, 'Toutes durées');
-    $filters .= $this->PlayerServices->getNbPlayersSelect(__FILE__, __LINE__, $filter_by_playerId, $prefix, $classe, false, 'Tous joueurs');
-    $filters .= $this->OrigineServices->getOriginesSelect(__FILE__, __LINE__, $filter_by_origineId, $prefix, $classe, false, 'Toutes origines');
+    $filters  = $this->LevelServices->getLevelsSelect(__FILE__, __LINE__, $fby_levelId, $prefix, $classe, false, 'Toutes difficultés');
+    $filters .= $this->DurationServices->getDurationsSelect(__FILE__, __LINE__, $fby_durationId, $prefix, $classe, false, 'Toutes durées');
+    $filters .= $this->PlayerServices->getNbPlayersSelect(__FILE__, __LINE__, $fby_playerId, $prefix, $classe, false, 'Tous joueurs');
+    $filters .= $this->OrigineServices->getOriginesSelect(__FILE__, __LINE__, $fby_origineId, $prefix, $classe, false, 'Toutes origines');
     // Sorts
     $queryArg[self::CST_POSTSTATUS] = 'all';
     $queryArg[self::CST_ORDERBY] = 'code';

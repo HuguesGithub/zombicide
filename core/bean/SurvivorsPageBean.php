@@ -62,7 +62,8 @@ class SurvivorsPageBean extends PagePageBean
         }
       }
     }
-    return '{"page-survivants":'.json_encode($Bean->getListingContentPage($post['colsort'], $post['colorder'], $post['nbperpage'], $post['paged'], $arrFilters)).'}';
+    $strJson = $Bean->getListingContentPage($post['colsort'], $post['colorder'], $post['nbperpage'], $post['paged'], $arrFilters);
+    return '{"page-survivants":'.json_encode($strJson).'}';
   }
   /**
    * @param WpPost $WpPage

@@ -162,7 +162,8 @@ class MissionBean extends MainPageBean
     $lastRow  =  $colBreaker.'<div class="col tile prependBefore firstRow" data-rkcol="0">'.sprintf($addButton, 'addRow').$closeDivTile;
     $innerRows = array();
     for ($i=0; $i<$height; $i++) {
-      $innerRows[$i] = $colBreaker.vsprintf($openDivTile, array(0, '')).vsprintf($rmvButton, array(self::CST_RMVROW, 'row', $i+1)).$closeDivTile;
+      $innerRows[$i]  = $colBreaker.vsprintf($openDivTile, array(0, ''));
+      $innerRows[$i] .= vsprintf($rmvButton, array(self::CST_RMVROW, 'row', $i+1)).$closeDivTile;
     }
     for ($i=1; $i<=$width; $i++) {
       $firstRow  .= vsprintf($openDivTile, array($i, ' firstRow')).vsprintf($rmvButton, array(self::CST_RMVCOL, 'col', $i)).$closeDivTile;
@@ -203,7 +204,8 @@ class MissionBean extends MainPageBean
     }
     $firstRow .= vsprintf($openDivTile, array($width+1, ' firstRow')).sprintf($addButton, 'addCol').$closeDivTile;
     $lastRow .= vsprintf($openDivTile, array($width+1, ' firstRow')).$disabledButton.$closeDivTile;
-    return '<div class="row tileRow" data-width="'.$Mission->getWidth().'" data-height="'.$Mission->getHeight().'">'.$firstRow.implode('', $innerRows).$lastRow.'</div>'; //
+    $returned = '<div class="row tileRow" data-width="'.$Mission->getWidth().'" data-height="';
+    return $returned.$Mission->getHeight().'">'.$firstRow.implode('', $innerRows).$lastRow.'</div>';
   }
   private function getMissionObjAndRuleGenericBlock($Objs, $none, $type, $select)
   {
@@ -213,12 +215,15 @@ class MissionBean extends MainPageBean
       $str .= '<li>'.$none.'</li>';
     } else {
       foreach ($Objs as $id => $Obj) {
-        $str .= '<li class="showTooltip"><span class="tooltip"><header>'.$Obj->getTitle().' <button class="btn btn-xs btn-danger float-right" data-type="'.$type;
-        $str .= '" data-id="'.$id.'"><i class="fas fa-times-circle"></i></button></header><content>'.$Obj->getDescription().'</content></span></li>';
+        $str .= '<li class="showTooltip"><span class="tooltip"><header>'.$Obj->getTitle();
+        $str .= ' <button class="btn btn-xs btn-danger float-right" data-type="'.$type;
+        $str .= '" data-id="'.$id.'"><i class="fas fa-times-circle"></i></button></header><content>';
+        $str .= $Obj->getDescription().'</content></span></li>';
       }
     }
     $str .= '<li class="showTooltip"><span class="tooltip"><header><div class="input-group"><input type="text" id="'.$type;
-    $str .= '-title" name="'.$type.'-title" class="form-control"><div class="input-group-append"><button class="btn btn-success float-right" data-type="'.$type;
+    $str .= '-title" name="'.$type.'-title" class="form-control"><div class="input-group-append">';
+    $str .= '<button class="btn btn-success float-right" data-type="'.$type;
     $str .= '" data-missionid="'.$Mission->getId().'"><i class="fas fa-plus-circle"></i></button></div></div></header><content>';
     $str .= $select;
     return $str.'<textarea id="'.$type.'-description" name="'.$type.'-description" class="form-control"></textarea></content></span></li>';

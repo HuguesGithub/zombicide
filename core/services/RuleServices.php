@@ -99,5 +99,5 @@ class RuleServices extends LocalServices
       $arrSetLabels[$Rule->getId()] = $Rule->getCode();
     }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'settingId', $value, $defaultLabel, $classe, $multiple);
-  }  
+  }
 }

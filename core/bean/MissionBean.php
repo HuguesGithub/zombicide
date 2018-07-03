@@ -27,7 +27,6 @@ class MissionBean extends MainPageBean
     $this->tplRow = 'web/pages/admin/mission/row.php';
     $this->tplEdit = 'web/pages/admin/mission/edit.php';
   }
-  
   /**
    * @return string
    */
@@ -80,14 +79,14 @@ class MissionBean extends MainPageBean
     $args = array(
       $urlWpPost,
       $urlWpPost=='#' ? 'disabled' : '',
-         $Mission->getCode(),
-         $Mission->getTitle(),
-         $Mission->getStrDifficulty(),
-         $Mission->getStrDuree(),
-         $Mission->getStrNbJoueurs(),
-         $Mission->getStrExpansions(),
-         $Mission->getStrOrigine(),
-  );
+      $Mission->getCode(),
+      $Mission->getTitle(),
+      $Mission->getStrDifficulty(),
+      $Mission->getStrDuree(),
+      $Mission->getStrNbJoueurs(),
+      $Mission->getStrExpansions(),
+      $Mission->getStrOrigine(),
+    );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-row-mission.php');
     return vsprintf($str, $args);
   }
@@ -170,6 +169,7 @@ class MissionBean extends MainPageBean
       $lastRow  .= vsprintf($openDivTile, array($i, ' firstRow')).$disabledButton.$closeDivTile;
     }
     $classe = 'custom-select custom-select-sm filters';
+    $arrOrientations = array('N'=>'north', 'E'=>'east', 'S'=>'south', 'O'=>'west');
     for ($i=0; $i<$height; $i++) {
       for ($j=1; $j<=$width; $j++) {
         $name = 'tile_'.$j.'_'.($i+1).'-';
@@ -190,12 +190,13 @@ class MissionBean extends MainPageBean
           default : break;
         }
         $innerRows[$i] .= vsprintf($openDivTile, array($j, ''));
-        $innerRows[$i] .= '<img class="thumbTile'.$classImg.'" src="/wp-content/plugins/zombicide/web/rsc/images/tiles/'.$Mission->getTileCode($j, $i+1).'-500px.png" alt="'.$Mission->getTileCode($j, $i+1).'">';
+        $innerRows[$i] .= '<img class="thumbTile'.$classImg.'" src="/wp-content/plugins/zombicide/web/rsc/images/tiles/';
+        $innerRows[$i] .= $Mission->getTileCode($j, $i+1).'-500px.png" alt="'.$Mission->getTileCode($j, $i+1).'">';
         $innerRows[$i] .= $this->TileServices->getTilesSelect(__FILE__, __LINE__, $Mission->getTileId($j, $i+1), $name, $classe, false, '--');
-        $innerRows[$i] .= '<button type="button" class="rdv north'.($orientation=='N' ? ' active' : '').'" data-action="N" data-col="'.$j.'" data-row="'.($i+1).'"></button>';
-        $innerRows[$i] .= '<button type="button" class="rdv east'.($orientation=='E' ? ' active' : '').'" data-action="E" data-col="'.$j.'" data-row="'.($i+1).'"></button>';
-        $innerRows[$i] .= '<button type="button" class="rdv south'.($orientation=='S' ? ' active' : '').'" data-action="S" data-col="'.$j.'" data-row="'.($i+1).'"></button>';
-        $innerRows[$i] .= '<button type="button" class="rdv west'.($orientation=='O' ? ' active' : '').'" data-action="O" data-col="'.$j.'" data-row="'.($i+1).'"></button>';
+        foreach ($arrOrientations as $key => $value) {
+          $innerRows[$i] .= '<button type="button" class="rdv '.$value.($orientation==$key ? ' active' : '');
+          $innerRows[$i] .= '" data-action="'.$key.'" data-col="'.$j.'" data-row="'.($i+1).'"></button>';
+        }
         $innerRows[$i] .= $closeDivTile;
       }
       $innerRows[$i] .= vsprintf($openDivTile, array($width+1, '')).$disabledButton.$closeDivTile;
@@ -292,4 +293,6 @@ class MissionBean extends MainPageBean
     $strCanvas .= "var yStart ='".($Mission->getHeight()*250)."';\r\n";
     return $strCanvas.'</script>';
   }
+  
+  
 }

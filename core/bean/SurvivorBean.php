@@ -23,29 +23,30 @@ class SurvivorBean extends MainPageBean
   
   /**
    * @return string
-   */  
+   */
   public function getRowForAdminPage()
   {
     return '';
   }
   /**
    * @return string
-   */  
+   */
   public function getRowForSurvivorsPage()
   {
     $Survivor = $this->Survivor;
+    $urlWpPost = $Survivor->getWpPostUrl();
     $strRow  = '<tr class="survivant">';
     $strRow .= '<td rowspan="3">'.$this->getAllPortraits().'</td>';
-    $strRow .= '<td>'.$Survivor->getName().'</td>';
-    $strRow .= '<td data-id="'.$Survivor->getId().'" data-type="zombivant" class="'.($Survivor->isZombivor()?'changeProfile':'').'"><i class="far fa-'.($Survivor->isZombivor()?'square pointer':'window-close').'"></td>';
-    $strRow .= '<td data-id="'.$Survivor->getId().'" data-type="ultimate" class="'.($Survivor->isUltimate()?'changeProfile':'').'"><i class="far fa-'.($Survivor->isUltimate()?'square pointer':'window-close').'"></td>';
+    $strRow .= '<td><a href="'.$urlWpPost.'">'.$Survivor->getName().'</a></td>';
+    $strRow .= '<td data-id="'.$Survivor->getId().'" data-type="zombivant" class="'.($Survivor->isZombivor()?'changeProfile':'').'"><i class="far fa-'.($Survivor->isZombivor()?'square pointer':'window-close').'"></i></td>';
+    $strRow .= '<td data-id="'.$Survivor->getId().'" data-type="ultimate" class="'.($Survivor->isUltimate()?'changeProfile':'').'"><i class="far fa-'.($Survivor->isUltimate()?'square pointer':'window-close').'"></i></td>';
     $strRow .= '<td>'.$Survivor->getExpansionName().'</td>';
     $strRow .= '<td>'.$this->getAllSkills().'</td>';
     $strRow .= '</tr>';
     $strRow .= '<tr><td colspan="5" style="height:0;line-height:0;padding:0;border:0 none;">&nbsp;</td></tr>';
     return $strRow.'<tr><td colspan="5">'.$Survivor->getBackground().'</td></tr>';
   }
-  private function getAllSkills()
+  public function getAllSkills()
   {
     $Survivor = $this->Survivor;
     $str  = '<ul>';
@@ -59,9 +60,9 @@ class SurvivorBean extends MainPageBean
     }
     return $str.'</ul>';
   }
-  private function getSkillsBySurvivorType($addClass, $content)
+  public function getSkillsBySurvivorType($addClass, $content)
   { return '<li class="'.$addClass.'">'.$content.'</li>'; }
-  private function getAllPortraits()
+  public function getAllPortraits()
   {
     $Survivor = $this->Survivor;
     $name = $Survivor->getName();
@@ -75,7 +76,7 @@ class SurvivorBean extends MainPageBean
     }
     return $str;
   }
-  private function getStrImgPortrait($src, $alt, $addClass)
+  public function getStrImgPortrait($src, $alt, $addClass)
   { return '<img src="'.$src.'" alt="'.$alt.'" class="thumb '.$addClass.'"/>'; }
   /**
    * @param string $addClass
@@ -92,6 +93,28 @@ class SurvivorBean extends MainPageBean
       ($addClass==''?'':' '.$addClass),
    );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/article-survivor-cardvisit.php');
+    return vsprintf($str, $args);
+  }
+  /**
+   * @return string
+   */
+  public function getSurvivorPage() {
+    $Survivor = $this->Survivor;
+    $strSType  = '';
+    if ($Survivor->isZombivor()) {
+      $strType .= '<div data-id="'.$Survivor->getId().'" data-type="zombivant" class="changeProfile"><i class="far fa-square pointer"></i> Zombivant</div>';
+      if ($Survivor->isUltimate()) {
+        $strType .= '&nbsp;<div data-id="'.$Survivor->getId().'" data-type="ultimate" class="changeProfile"><i class="far fa-square pointer"></i> Ultimate</div>';
+      }
+    }
+    $args = array(
+      $this->getAllPortraits(),
+      $Survivor->getName(),
+      $Survivor->getBackground(),
+      $strType,
+      $this->getAllSkills(),
+    );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-survivor.php');
     return vsprintf($str, $args);
   }
   

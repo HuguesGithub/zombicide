@@ -59,7 +59,11 @@ class LocalDaoImpl extends GlobalDaoImpl implements iConstants
   public function __construct($strDao='')
   {
     $urlIni = '/wp-content/plugins/zombicide/core/daoimpl/requests.ini';
-    $adminUrl = getcwd().$urlIni;
+    $strGetCwd = getcwd();
+    if (strpos($strGetCwd, 'wp-admin')!==false) {
+      $strGetCwd = substr($strGetCwd, 0, -9);
+    }
+    $adminUrl = $strGetCwd.$urlIni;
     $arrConfigs = parse_ini_file($adminUrl, true);
     $this->selectRequest = $arrConfigs[$strDao]['select'];
     $this->fromRequest = $arrConfigs[$strDao]['from'];

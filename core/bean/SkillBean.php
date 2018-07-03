@@ -1,30 +1,41 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe SkillBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class SkillBean extends MainPageBean {
-
-  public function __construct($Skill='') {
+class SkillBean extends MainPageBean
+{
+  /**
+   * Class Constructor
+   * @param Skill $Skill
+   */
+  public function __construct($Skill='')
+  {
     $services = array('Skill', 'SurvivorSkill');
     parent::__construct($services);
-    if ($Skill=='') { $Skill = new Skill(); }
+    if ($Skill=='') {
+      $Skill = new Skill();
+    }
     $this->Skill = $Skill;
   }
   
   /**
    * @return string
-   */  
-  public function getRowForAdminPage() {
+   */
+  public function getRowForAdminPage()
+  {
     return '';
   }
   /**
    * @return string
-   */  
-  public function getRowForSkillsPage() {
+   */
+  public function getRowForSkillsPage()
+  {
     $Skill = $this->Skill;
     $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, array('skillId'=>$Skill->getId(), 'tagLevelId'=>10));
     $nbBlues = count($SurvivorSkills);
@@ -51,4 +62,3 @@ class SkillBean extends MainPageBean {
   }
   
 }
-?>

@@ -28,7 +28,7 @@
         <div class="form-field term-code-wrap half-column">
           <label for="expansions">Extensions</label>%12$s
         </div>
-        <!-- 
+        <!--
       <div class="form-field term-description-wrap">
         <label for="description">Description</label>
         <textarea id="description" name="description">%5$s</textarea>
@@ -57,13 +57,13 @@
       </div>
       <div class="row col-8">
         <div class="col-4">
-          <div class="objectivesAndRules"><h5>Règles</h5><ul id="ulAdminRules">%14$s</ul></div>        
+          <div class="objectivesAndRules"><h5>Règles</h5><ul id="ulAdminRules">%14$s</ul></div>
         </div>
         <div class="col-4">
-          <div class="objectivesAndRules"><h5>Mise en place</h5><ul id="ulAdminSettings">%15$s</ul></div>        
+          <div class="objectivesAndRules"><h5>Mise en place</h5><ul id="ulAdminSettings">%15$s</ul></div>
         </div>
         <div class="col-4">
-          <div class="objectivesAndRules"><h5>Objectifs</h5><ul id="ulAdminObjectives">%16$s</ul></div>        
+          <div class="objectivesAndRules"><h5>Objectifs</h5><ul id="ulAdminObjectives">%16$s</ul></div>
         </div>
       </div>
       <div class="col-4">

@@ -1,7 +1,11 @@
-<?php wp_head(); ?>
-<link rel="stylesheet" href="http://zombicide.jhugues.fr/wp-content/plugins/mycommon/web/rsc/css/jquery-ui.min.css" type="text/css" media="all" />
-<link rel="stylesheet" href="http://zombicide.jhugues.fr/wp-content/plugins/mycommon/web/rsc/css/bootstrap-4.min.css" type="text/css" media="all" />
-<link rel="stylesheet" href="http://zombicide.jhugues.fr/wp-content/plugins/zombicide/web/rsc/zombicide.css" type="text/css" media="all" />
+<?php
+wp_head();
+$commonUrl = 'http://zombicide.jhugues.fr/wp-content/plugins/mycommon/';
+$pluginUrl = 'http://zombicide.jhugues.fr/wp-content/plugins/zombicide/';
+?>
+<link rel="stylesheet" href="<?php echo $commonUrl; ?>web/rsc/css/jquery-ui.min.css" type="text/css" media="all" />
+<link rel="stylesheet" href="<?php echo $commonUrl; ?>web/rsc/css/bootstrap-4.min.css" type="text/css" media="all" />
+<link rel="stylesheet" href="<?php echo $pluginUrl; ?>web/rsc/zombicide.css" type="text/css" media="all" />
 <?php
   $PageBean = MainPageBean::getPageBean();
 ?>
@@ -12,10 +16,6 @@
   echo $PageBean->displayPublicFooter();
 ?>
 </div>
-<script type='text/javascript' src='http://zombicide.jhugues.fr/wp-content/plugins/mycommon/web/rsc/js/jquery-ui-min.js'></script>
-<script type='text/javascript' src='http://zombicide.jhugues.fr/wp-content/plugins/zombicide/web/rsc/zombicide.js'></script>
-<!--
-<script type='text/javascript' src='http://zombicide.jhugues.fr/wp-content/plugins/zombicide/web/rsc/buttonActions.js'></script>
-<script type='text/javascript' src='http://zombicide.jhugues.fr/wp-content/plugins/zombicide/web/rsc/canvas.js'></script>
--->
+<script type='text/javascript' src='<?php echo $commonUrl; ?>web/rsc/js/jquery-ui-min.js'></script>
+<script type='text/javascript' src='<?php echo $pluginUrl; ?>web/rsc/zombicide.js'></script>
 <?php wp_footer(); ?>

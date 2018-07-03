@@ -1,21 +1,28 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe SpawnDeckPageBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class SpawnDeckPageBean extends PagePageBean {
-
-  public function __construct($WpPage='') {
+class SpawnDeckPageBean extends PagePageBean
+{
+  /**
+   * Class Constructor
+   */
+  public function __construct($WpPage='')
+  {
     $services = array('Expansion', 'LiveDeck', 'Spawn', 'SpawnLiveDeck');
     parent::__construct($WpPage, $services);
   }
   /**
    * @param array $SpawnLiveDecks
    */
-  public static function getStaticSpawnCardActives($SpawnLiveDecks) {
+  public static function getStaticSpawnCardActives($SpawnLiveDecks)
+  {
     $strSpawns = '';
     if (!empty($SpawnLiveDecks)) {
       foreach ($SpawnLiveDecks as $SpawnLiveDeck) {
@@ -29,7 +36,8 @@ class SpawnDeckPageBean extends PagePageBean {
    * @param WpPage $WpPage
    * @return string
    */
-  public static function getStaticSpawnDeckContent($WpPage='') {
+  public static function getStaticSpawnDeckContent($WpPage='')
+  {
     $Bean = new SpawnDeckPageBean($WpPage);
     return $Bean->getSpawnDeckContent();
   }
@@ -45,7 +53,7 @@ class SpawnDeckPageBean extends PagePageBean {
     if ($keyAccess == '' && isset($_SESSION['wp_11_keyAccess']) && $_SESSION['wp_11_keyAccess']!='') {
       $keyAccess = $_SESSION['wp_11_keyAccess'];
     }
-    // Si $keyAccess est défini  
+    // Si $keyAccess est défini
     if ($keyAccess!='') {
       $LiveDecks = $this->LiveDeckServices->getLiveDecksWithFilters(__FILE__, __LINE__, array('deckKey'=>$keyAccess));
       // On a un LiveDeck qui correspond à $keyAccess, on va l'utiliser

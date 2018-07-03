@@ -276,6 +276,10 @@ ul.skills li.empty { border: none; box-shadow: 0 0; }
 .badge-yellow-skill { background-color: #ffe207; color: #000000; }
 .badge-orange-skill { background-color: #ff9307; color: #000000; }
 .badge-red-skill { background-color: #dc3545; color: #ffffff; }
+a.badge-blue-skill:hover,
+a.badge-red-skill:hover { color:#ffffff; }
+a.badge-yellow-skill:hover,
+a.badge-orange-skill:hover { color:#000000; }
 
 .team-selection .btn,
 .live-spawn-selection .btn { text-align: left; }

@@ -31,7 +31,9 @@ class SkillsPageBean extends PagePageBean
       if (!empty($arrParams)) {
         foreach ($arrParams as $arrParam) {
           list($key, $value) = explode('=', $arrParam);
-          $arrFilters[$key]= $value;
+          if ($value!='') {
+            $arrFilters[$key]= $value;
+          }
         }
       }
     }
@@ -60,7 +62,12 @@ class SkillsPageBean extends PagePageBean
       return $this->getSkillContentPage($skillId);
     }
   }
-  public function getSkillContentPage($skillId) {
+  /**
+   * @param int $skillId
+   * @return string
+   */
+  public function getSkillContentPage($skillId)
+  {
     $Skill = $this->SkillServices->select(__FILE__, __LINE__, $skillId);
     $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, array('skillId'=>$skillId));
     if (!empty($SurvivorSkills)) {
@@ -88,40 +95,27 @@ class SkillsPageBean extends PagePageBean
         }
       }
     }
-    $strBlueLis = '';
-    if (!empty($blueSkills)) {
-	    ksort($blueSkills);
-      foreach ($blueSkills as $key => $Survivor ) {
-        $strBlueLis .= '<li><span class="badge badge-blue-skill">'.$Survivor->getName().'</span></li>';
-      }
-    }
-    $strYellowLis = '';
-    if (!empty($yellowSkills)) {
-	    ksort($yellowSkills);
-      foreach ($yellowSkills as $key => $Survivor ) {
-        $strYellowLis .= '<li><span class="badge badge-yellow-skill">'.$Survivor->getName().'</span></li>';
-      }
-    }
-    $strOrangeLis = '';
-    if (!empty($orangeSkills)) {
-	    ksort($orangeSkills);
-      foreach ($orangeSkills as $key => $Survivor ) {
-        $strOrangeLis .= '<li><span class="badge badge-orange-skill">'.$Survivor->getName().'</span></li>';
-      }
-    }
-    $strRedLis = '';
-    if (!empty($redSkills)) {
-	    ksort($redSkills);
-      foreach ($redSkills as $key => $Survivor ) {
-        $strRedLis .= '<li><span class="badge badge-red-skill">'.$Survivor->getName().'</span></li>';
-      }
-    }
     $args = array(
       $Skill->getName(),
-      $Skill->getDescription(), $strBlueLis, $strYellowLis, $strOrangeLis, $strRedLis,
+      $Skill->getDescription(),
+      $this->buildSkillLis($blueSkills, $Survivor, 'blue'),
+      $this->buildSkillLis($yellowSkills, $Survivor, 'yellow'),
+      $this->buildSkillLis($orangeSkills, $Survivor, 'orange'),
+      $this->buildSkillLis($redSkills, $Survivor, 'red'),
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-skill.php');
     return vsprintf($str, $args);
+  }
+  public function buildSkillLis($Skills, $Survivor, $color) {
+    $strLis = '';
+    if (!empty($Skills)) {
+      ksort($Skills);
+      foreach ($Skills as $key => $Survivor) {
+        $strLis .= '<li><a class="badge badge-'.$color.'-skill" href="/page-survivants/?survivorId=';
+        $strLis .= $Survivor->getId().'">'.$Survivor->getName().'</a></li>';
+      }
+    }
+    return $strLis;
   }
   public function getListContentPage($sort_col='name', $sort_order='asc', $nbPerPage=10, $curPage=1, $arrFilters=array())
   {
@@ -165,11 +159,10 @@ class SkillsPageBean extends PagePageBean
       ($curPage==$nbPages?' disabled':''),
       // Nombre de pages - 13
       $nbPages,
-    // Filtre sur la Description - 14
-    $arrFilters['description'],
-   );
+      // Filtre sur la Description - 14
+      $arrFilters['description'],
+    );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-skills.php');
     return vsprintf($str, $args);
   }
 }
-

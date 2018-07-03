@@ -1,4 +1,4 @@
-<link href="https://fonts.googleapis.com/css?family=Acme|Bungee|Pacifico" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Acme|Bungee|Pacifico" rel="stylesheet">
 <div class="row justify-content-center" style="margin-left: 0; margin-right: 0;">
   <div id="mission-page" class="row col-11">
     <section class="section-panel mission">

@@ -26,7 +26,7 @@
       -->
       <div class="tablenav-pages" style="height: 34px;">%5$s</div>
       <br class="clear">
-    </div>  
+    </div>
     <table class="table table-striped table-bordered table-hover table-sm">
       <thead>
         <tr>

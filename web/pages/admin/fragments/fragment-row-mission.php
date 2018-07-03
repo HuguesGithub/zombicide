@@ -1,7 +1,7 @@
 <tr>
   <td><input id="cb-select-%1$s" name="post[]" value="-%1$s" type="checkbox"></td>
     <td>%2$s</td>
-    <td><strong><a class="row-title" href="%3$s">%4$s</strong>
+    <td><strong><a class="row-title" href="%3$s">%4$s</a></strong>
       <div class="row-actions">
         <span class="edit"><a href="%3$s">Modifier</a></span>
         <span class="trash"> | <a href="%5$s">Corbeille</a></span>

@@ -1,22 +1,46 @@
 <?php
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * WpPostSurvivorBean
  */
-class WpPostSurvivorBean extends MainPageBean {
-
+class WpPostSurvivorBean extends MainPageBean
+{
   /**
    * Constructeur
    */
-  public function __construct($WpPost='') {
+  public function __construct($WpPost='')
+  {
     $services = array('Survivor');
     parent::__construct($services);
     $this->WpPost = $WpPost;
+  }
+  public function getSurvivorPageContent($Survivor) {
+    $WpBean = new SurvivorBean($Survivor);
+    $strSType  = '';
+    if ($Survivor->isZombivor()) {
+      $strType .= '<div data-id="'.$Survivor->getId().'" data-type="zombivant" class="changeProfile"><i class="far fa-square pointer"></i> Zombivant</div>';
+      if ($Survivor->isUltimate()) {
+        $strType .= '&nbsp;<div data-id="'.$Survivor->getId().'" data-type="ultimate" class="changeProfile"><i class="far fa-square pointer"></i> Ultimate</div>';
+      }
+    }
+    $args = array(
+      $WpBean->getAllPortraits(),
+      $Survivor->getName(),
+      $Survivor->getBackground(),
+      $strType,
+      $WpBean->getAllSkills(),
+    );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-survivor.php');
+    return vsprintf($str, $args);
   }
   /**
    * @param string $isHome
    * @return string
    */
-  public function displayWpPost($isHome=false) {
+  public function displayWpPost($isHome=false)
+  {
     $WpPost = $this->WpPost;
     $Survivor = $this->getSurvivor();
     $args = array(
@@ -56,11 +80,10 @@ class WpPostSurvivorBean extends MainPageBean {
   /**
    * @return Survivor
    */
-  public function getSurvivor() {
+  public function getSurvivor()
+  {
     $WpPost = $this->WpPost;
     $idSurvivor = $WpPost->getPostMeta('survivorId');
     return $this->SurvivorServices->select(__FILE__, __LINE__, $idSurvivor);
   }
-
 }
-?>

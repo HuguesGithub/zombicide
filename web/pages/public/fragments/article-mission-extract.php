@@ -20,8 +20,8 @@
       <div class="flex-attitude col-12">
         <hr>
         <div class="mission_params clearfix col-6">
-          <span class="mission_diff_label">%8$s</span> 
-          <span class="mission_surv_label">%9$s</span> 
+          <span class="mission_diff_label">%8$s</span>
+          <span class="mission_surv_label">%9$s</span>
           <span class="mission_time_label">%10$s</span>
         </div>
         <div class="mission_material col-6">

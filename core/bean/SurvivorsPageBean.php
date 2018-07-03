@@ -1,28 +1,36 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe SurvivorsPageBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class SurvivorsPageBean extends PagePageBean {
-
-  public function __construct($WpPage='') {
+class SurvivorsPageBean extends PagePageBean
+{
+  /**
+   * Class Constructor
+   */
+  public function __construct($WpPage='')
+  {
     $services = array('Survivor');
     parent::__construct($WpPage, $services);
   }
   /**
    * @param array $post
    */
-  public static function staticGetRandomTeam($post) {
+  public static function staticGetRandomTeam($post)
+  {
     $Bean = new SurvivorsPageBean();
     return '{"page-selection-result":'.json_encode($Bean->getSelectionTeam($post)).'}';
   }
   /**
    * @param array $post
    */
-  public function getSelectionTeam($post) {
+  public function getSelectionTeam($post)
+  {
     $nbMax = $post['nbSurvSel'];
     $arrValues = explode(',', $post['value']);
     shuffle($arrValues);
@@ -41,7 +49,8 @@ class SurvivorsPageBean extends PagePageBean {
    * @param array $post
    * @return string
    */
-  public static function staticGetSurvivorsSortedAndFiltered($post) {
+  public static function staticGetSurvivorsSortedAndFiltered($post)
+  {
     $Bean = new SurvivorsPageBean();
     $arrFilters = array();
     if ($post['filters']!='') {
@@ -53,21 +62,21 @@ class SurvivorsPageBean extends PagePageBean {
         }
       }
     }
-    return '{"page-survivants":'.json_encode($Bean->getContentPage($post['colsort'], $post['colorder'], $post['nbperpage'], $post['paged'], $arrFilters)).'}';
+    return '{"page-survivants":'.json_encode($Bean->getListingContentPage($post['colsort'], $post['colorder'], $post['nbperpage'], $post['paged'], $arrFilters)).'}';
   }
   /**
    * @param WpPost $WpPage
    * @return string
    */
-  public function getStaticPageContent($WpPage) {
+  public static function getStaticPageContent($WpPage)
+  {
     $Bean = new SurvivorsPageBean($WpPage);
-    return $Bean->getContentPage();
+    return $Bean->getListingContentPage();
   }
   /**
-   * {@inheritDoc}
-   * @see PagePageBean::getContentPage()
    */
-  public function getContentPage($sort_col='name', $sort_order='asc', $nbPerPage=10, $curPage=1, $arrFilters=array()) {
+  public function getListingContentPage($sort_col='name', $sort_order='asc', $nbPerPage=10, $curPage=1, $arrFilters=array())
+  {
     $Survivors = $this->SurvivorServices->getSurvivorsWithFilters(__FILE__, __LINE__, $arrFilters, $sort_col, $sort_order);
     $nbElements = count($Survivors);
     $nbPages = ceil($nbElements/$nbPerPage);
@@ -85,9 +94,9 @@ class SurvivorsPageBean extends PagePageBean {
       $strPagination .= 'ajaxAction" href="#" data-paged="'.$i.'" data-ajaxaction="paged">'.$i.'</a></li>';
     }
     $args = array(
-      ($nbPerPage==10 ? CST_SELECTED:''),
-      ($nbPerPage==25 ? CST_SELECTED:''),
-      ($nbPerPage==50 ? CST_SELECTED:''),
+      ($nbPerPage==10 ? self::CST_SELECTED:''),
+      ($nbPerPage==25 ? self::CST_SELECTED:''),
+      ($nbPerPage==50 ? self::CST_SELECTED:''),
       // Tri sur le Nom - 4
       ($sort_col=='name' ? '_'.$sort_order:''),
       // Les lignes du tableau - 5
@@ -95,7 +104,7 @@ class SurvivorsPageBean extends PagePageBean {
       // N° du premier élément - 6
       $nbPerPage*($curPage-1)+1,
       // Nb par page - 7
-      min($nbPerPage*$curPage,$nbElements),
+      min($nbPerPage*$curPage, $nbElements),
       // Nb Total - 8
       $nbElements,
       // Liste des éléments de la Pagination - 9
@@ -106,10 +115,8 @@ class SurvivorsPageBean extends PagePageBean {
       ($curPage==$nbPages?' disabled':''),
       // Nombre de pages - 12
       $nbPages,
-   );
+    );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-survivors.php');
     return vsprintf($str, $args);
   }
-  
 }
-?>

@@ -1,22 +1,105 @@
 <?php
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * WpPostMissionBean
  */
-class WpPostMissionBean extends MainPageBean {
-
+class WpPostMissionBean extends MainPageBean
+{
   /**
    * Constructeur
    */
-  public function __construct($WpPost='') {
+  public function __construct($WpPost='')
+  {
     $services = array('Mission');
     parent::__construct($services);
     $this->WpPost = $WpPost;
+  }
+  
+  /**
+   * @param Mission $Mission
+   * @return string
+   */
+  public function getMissionPageContent($Mission)
+  {
+    $WpPosts = $this->WpPostServices->getArticles(__FILE__, __LINE__, array('orderby'=> 'rand', 'posts_per_page'=>6, 'post_status'=>'publish'), 'WpPostMission');
+    $strContent = '';
+    if (!empty($WpPosts)) {
+      foreach ($WpPosts as $WpPost) {
+        $WpBean = new WpPostMissionBean($WpPost);
+        $strContent .= $WpBean->displayThumbWpPost(true);
+      }
+    }
+    $strModel = '<li class="objRule">%1$s <span class="tooltip"><header>%1$s</header><content>%2$s</content></span></li>';
+    $contentRules = '';
+    $MissionObjectives = $Mission->getMissionObjectives();
+    if (!empty($MissionObjectives)) {
+      $strObj = '';
+      foreach ($MissionObjectives as $MissionObjective) {
+        $strObj .= vsprintf($strModel, array($MissionObjective->getTitle(), $MissionObjective->getObjectiveDescription()));
+      }
+      if ($strObj!='') {
+        $contentRules .= '<h5>Objectifs</h5>';
+        $contentRules .= '<ul>'.$strObj.'</ul>';
+      }
+    }
+    $MissionRules = $Mission->getMissionRules();
+    if (!empty($MissionRules)) {
+      $strMep = '';
+      $strRs = '';
+      foreach ($MissionRules as $MissionRule) {
+        if ($MissionRule->getRuleSetting()==1) {
+          $strMep .= vsprintf($strModel, array($MissionRule->getTitle(), $MissionRule->getRuleDescription()));
+        } else {
+          $strRs .= vsprintf($strModel, array($MissionRule->getTitle(), $MissionRule->getRuleDescription()));
+        }
+      }
+      if ($strMep!='') {
+        $contentRules .= '<h5>Mise en place</h5>';
+        $contentRules .= '<ul>'.$strMep.'</ul>';
+      }
+      if ($strRs!='') {
+        $contentRules .= '<h5>Regles speciales</h5>';
+        $contentRules .= '<ul>'.$strRs.'</ul>';
+      }
+    }
+    $media = get_attached_media('image');
+    if (!empty($media)) {
+      $WpPostMedia = WpPost::convertElement(array_shift($media));
+    } else {
+      $WpPostMedia = new WpPost();
+    }
+    $navigationMissions = '';
+    $prevPost = get_previous_post();
+    if (!empty($prevPost)) {
+      $navigationMissions .= '<a href="'.$prevPost->guid.'" class="mission-adjacent-link float-left">'.$prevPost->post_title.'</a>';
+    }
+    $nextPost = get_next_post();
+    if (!empty($nextPost)) {
+      $navigationMissions .= '<a href="'.$nextPost->guid.'" class="mission-adjacent-link float-right">'.$nextPost->post_title.'</a>';
+    }
+    $args = array(
+      $Mission->getCode(),
+      $Mission->getTitle(),
+      $Mission->getStrDifPlaDur(),
+      $this->WpPost->getPostContent(),
+      $Mission->getStrExpansions(),
+      $Mission->getStrTiles(),
+      $contentRules,
+      $strContent,
+      '<img src="'.$WpPostMedia->getGuid().'" alt="'.$Mission->getTitle().'">',
+    $navigationMissions,
+   );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/article-mission-page.php');
+    return vsprintf($str, $args);
   }
   /**
    * @param string $isHome
    * @return string
    */
-  public function displayThumbWpPost($isHome=false) {
+  public function displayThumbWpPost($isHome=false)
+  {
     $WpPost = $this->WpPost;
     $Mission = $this->getMission();
     $args = array(
@@ -40,7 +123,8 @@ class WpPostMissionBean extends MainPageBean {
    * @param string $isHome
    * @return string
    */
-  public function displayWpPost($isHome=false) {
+  public function displayWpPost($isHome=false)
+  {
     $WpPost = $this->WpPost;
     $Mission = $this->getMission();
     $missionImg = 'http://zombicide.jhugues.fr/wp-content/uploads/sites/11'.$WpPost->getPostMeta('missionImg');
@@ -80,11 +164,10 @@ class WpPostMissionBean extends MainPageBean {
   /**
    * @return Mission
    */
-  public function getMission() {
+  public function getMission()
+  {
     $WpPost = $this->WpPost;
     $idMission = $WpPost->getPostMeta('missionId');
     return $this->MissionServices->select(__FILE__, __LINE__, $idMission);
   }
-
 }
-?>

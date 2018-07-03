@@ -1,14 +1,20 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe ToolsPageBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class ToolsPageBean extends PagePageBean {
-
-  public function __construct($WpPage='') {
+class ToolsPageBean extends PagePageBean
+{
+  /**
+   * Class Constructor
+   */
+  public function __construct($WpPage='')
+  {
     $services = array('Equipment', 'EquipmentExpansion', 'Expansion', 'Spawn', 'SpawnLiveDeck', 'Survivor');
     parent::__construct($WpPage, $services);
   }
@@ -16,14 +22,16 @@ class ToolsPageBean extends PagePageBean {
    * @param WpPost $WpPage
    * @return string
    */
-  public function getStaticPisteContent($WpPage) {
+  public function getStaticPisteContent($WpPage)
+  {
     $Bean = new ToolsPageBean($WpPage);
     return $Bean->getPisteContent();
   }
   /**
    * @return string
    */
-  public function getPisteContent() {
+  public function getPisteContent()
+  {
   // Nombre de dés à lancer
     $nbDeDes = $this->initVar('nbDeDes');
   // Seuil de réussite
@@ -63,15 +71,17 @@ class ToolsPageBean extends PagePageBean {
   /**
    * @param WpPost $WpPage
    * @return string
-   */  
-  public function getStaticSurvivorsContent($WpPage) {
+   */
+  public function getStaticSurvivorsContent($WpPage)
+  {
     $Bean = new ToolsPageBean($WpPage);
     return $Bean->getSurvivorsContent();
   }
   /**
    * @return string
    */
-  public function getSurvivorsContent() {
+  public function getSurvivorsContent()
+  {
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), array(self::CST_DISPLAYRANK), array('ASC'));
     if (!empty($Expansions)) {
       $str .= '<div class="btn-group-vertical team-selection" role="group">';
@@ -81,11 +91,13 @@ class ToolsPageBean extends PagePageBean {
         $str .= '  <button type="button" class="btn btn-dark'.($i==6?' active':'').'" data-nb="'.$i.'">'.$i.'</button>';
       }
       $str .= '  </div>';
-      $str .= '</div>';    
+      $str .= '</div>';
       foreach ($Expansions as $Expansion) {
         $id = $Expansion->getId();
         $Survivors = $this->SurvivorServices->getSurvivorsWithFilters(__FILE__, __LINE__, array(self::CST_EXPANSIONID=>$id), 'name', 'ASC');
-        if (empty($Survivors)) { continue; }
+        if (empty($Survivors)) {
+          continue;
+        }
         $str .= '<div type="button" class="btn btn-dark btn-expansion" data-expansion-id="'.$id.'"><span><i class="far fa-square"></i></span> '.$Expansion->getName().'</div>';
         foreach ($Survivors as $Survivor) {
           $survivorId = $Survivor->getId();
@@ -102,4 +114,3 @@ class ToolsPageBean extends PagePageBean {
     return vsprintf($str, $args);
   }
 }
-?>

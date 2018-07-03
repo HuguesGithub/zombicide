@@ -51,7 +51,7 @@ class Survivor extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    $services = array('Expansion', 'Skill', 'SurvivorSkill');
+    $services = array('Expansion', 'Skill', 'SurvivorSkill', 'WpPost');
     parent::__construct($attributes, $services);
   }
 
@@ -197,7 +197,7 @@ class Survivor extends LocalDomain
           case 20 :
           case 30 :
           case 40 :
-          	$str .= '<ul class="">'.$strTmp.'</ul>';
+            $str .= '<ul class="">'.$strTmp.'</ul>';
             $strTmp = '';
           break;
           default :
@@ -238,7 +238,23 @@ class Survivor extends LocalDomain
     } else {
       $str .= ' class="badge badge-'.$strColor.'-skill">'.$SurvivorSkill->getSkillName();
     }
-    $str .= '</span></li>';
-    return $str;
+    return $str.'</span></li>';
+  }
+  /**
+   * @return string
+   */
+  public function getWpPostUrl()
+  {
+    $url = '#';
+    $args = array('meta_key'=>'survivorId', 'meta_value'=>$this->id);
+    if (MainPageBean::isAdmin()) {
+      $args['post_status'] = 'publish, future';
+    }
+    $WpPosts = $this->WpPostServices->getArticles(__FILE__, __LINE__, $args);
+    if (!empty($WpPosts)) {
+      $WpPost = array_shift($WpPosts);
+      $url = $WpPost->getGuid();
+    }
+    return $url;
   }
 }

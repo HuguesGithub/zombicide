@@ -6,7 +6,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="label-nbDeDes">Nombre de dés</span>
         </div>
-        <input id="nbDeDes" name="nbDeDes" class="form-control" placeholder="Saisir un nombre" aria-label="Nombre de dés" aria-describedby="label-nbDeDes" type="text">
+        <input id="nbDeDes" name="nbDeDes" class="form-control" placeholder="Saisir un nombre" type="text">
       </div>
     </div>
     <div class="col-12 col-md-6 col-xl-3">
@@ -22,7 +22,7 @@
           <option value="2">2</option>
           <option value="1">1</option>
         </select>
-      </div>      
+      </div>
     </div>
     <div class="col-12 col-md-6 col-xl-3">
       <div class="input-group mb-3">
@@ -33,7 +33,7 @@
           <option value="0">Non</option>
           <option value="1">Oui</option>
         </select>
-      </div>      
+      </div>
     </div>
     <div class="col-12 col-md-6 col-xl-3">
       <div class="input-group mb-3">
@@ -44,7 +44,7 @@
           <option value="0">Non</option>
           <option value="1">Oui</option>
         </select>
-      </div>      
+      </div>
     </div>
     <div class="col-12">
       <button class="btn btn-primary" type="submit">Lancer</button>

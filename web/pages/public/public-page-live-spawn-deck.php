@@ -6,14 +6,14 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="labelInvasionSpanSelection">Sélection des cartes Invasion</span>
         </div>
-        <input class="form-control" placeholder="[1-42]..." aria-describedby="labelInvasionSpanSelection" type="text" id="invasionSpanSelection" name="invasionSpanSelection">
+        <input class="form-control" placeholder="[1-42]..." type="text" id="invasionSpanSelection" name="invasionSpanSelection">
       </div>
         
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text" id="labelKeyAccess">Clé personnelle</span>
         </div>
-        <input class="form-control" placeholder="Clé personnelle" aria-describedby="labelKeyAccess" type="text" id="keyAccess" name="keyAccess">
+        <input class="form-control" placeholder="Clé personnelle" type="text" id="keyAccess" name="keyAccess">
         <div class="input-group-append">
           <button id="genKey" class="btn btn-lg btn-outline-secondary" type="button"><i class="far fa-sun"></i></button>
         </div>

@@ -36,37 +36,37 @@ class PagePageBean extends MainPageBean
   {
     switch ($this->WpPage->getPostName()) {
       case 'page-competences'          :
-      	$strReturned = SkillsPageBean::getStaticPageContent($this->WpPage);
+        $strReturned = WpPageSkillsBean::getStaticPageContent($this->WpPage);
       break;
       case 'page-live-pioche-invasion' :
-      	$strReturned = SpawnDeckPageBean::getStaticSpawnDeckContent($this->WpPage);
+        $strReturned = SpawnDeckPageBean::getStaticSpawnDeckContent($this->WpPage);
       break;
       case 'page-market'               :
-      	$strReturned = MarketPageBean::getStaticPageContent($this->WpPage);
+        $strReturned = MarketPageBean::getStaticPageContent($this->WpPage);
       break;
       case 'page-missions'             :
-      	$strReturned = MissionsPageBean::getStaticPageContent($this->WpPage);
+        $strReturned = MissionsPageBean::getStaticPageContent($this->WpPage);
       break;
       case 'page-partie-online'        :
-      	$strReturned = OnlinePageBean::getStaticPageContent($this->WpPage);
+        $strReturned = OnlinePageBean::getStaticPageContent($this->WpPage);
       break;
       case 'page-piste-de-des'         :
-      	$strReturned = ToolsPageBean::getStaticPisteContent($this->WpPage);
+        $strReturned = ToolsPageBean::getStaticPisteContent($this->WpPage);
       break;
       case 'page-selection-survivants' :
-      	$strReturned = ToolsPageBean::getStaticSurvivorsContent($this->WpPage);
+        $strReturned = ToolsPageBean::getStaticSurvivorsContent($this->WpPage);
       break;
       case 'page-equipmentcards'       :
-      	$strReturned = EquipmentsPageBean::getStaticEquipmentsContent($this->WpPage);
+        $strReturned = EquipmentsPageBean::getStaticEquipmentsContent($this->WpPage);
       break;
       case 'page-spawncards'           :
-      	$strReturned = SpawnsPageBean::getStaticInvasionsContent($this->WpPage);
+        $strReturned = SpawnsPageBean::getStaticInvasionsContent($this->WpPage);
       break;
       case 'page-survivants'           :
-      	$strReturned = SurvivorsPageBean::getStaticPageContent($this->WpPage);
+        $strReturned = SurvivorsPageBean::getStaticPageContent($this->WpPage);
       break;
       default                          :
-      	$strReturned = new Error404PageBean();
+        $strReturned = new Error404PageBean();
       break;
     }
     return $strReturned;

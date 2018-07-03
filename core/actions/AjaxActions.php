@@ -44,7 +44,7 @@ class AjaxActions extends LocalActions
         $returned = SpawnDeckActions::staticDrawSpawnCard($_POST);
       break;
       case 'getCompetences'      :
-        $returned = SkillsPageBean::staticGetSkillsSortedAndFiltered($_POST);
+        $returned = WpPageSkillsBean::staticGetSkillsSortedAndFiltered($_POST);
       break;
       case 'getMissions'         :
         $returned = MissionsPageBean::staticGetMissionsSortedAndFiltered($_POST);

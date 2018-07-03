@@ -1,21 +1,26 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe MissionObjectiveServices
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class MissionObjectiveServices extends LocalServices {
+class MissionObjectiveServices extends LocalServices
+{
   /**
    * L'objet Dao pour faire les requêtes
    * @var MissionRuleDaoImpl $Dao
    */
   protected $Dao;
   
-  public function __construct() { $this->Dao = new MissionObjectiveDaoImpl(); }
+  public function __construct()
+  { $this->Dao = new MissionObjectiveDaoImpl(); }
 
-  private function buildFilters($arrFilters) {
+  private function buildFilters($arrFilters)
+  {
     $arrParams = array();
     array_push($arrParams, !empty($arrFilters['missionId']) ? $arrFilters['missionId'] : '%');
     array_push($arrParams, $arrFilters['objectiveId']!='' ? $arrFilters['objectiveId'] : '%');
@@ -30,11 +35,11 @@ class MissionObjectiveServices extends LocalServices {
    * @param string $order
    * @return array
    */
-  public function getMissionObjectivesWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc') {
+  public function getMissionObjectivesWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc')
+  {
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
     $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
 
 }
-?>

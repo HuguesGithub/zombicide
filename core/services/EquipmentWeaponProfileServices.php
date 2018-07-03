@@ -45,6 +45,4 @@ class EquipmentWeaponProfileServices extends LocalServices
     $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
-  
 }
-?>

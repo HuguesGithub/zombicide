@@ -43,7 +43,6 @@ class ExpansionServices extends LocalServices
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
   /**
-   * 
    * @param string $file
    * @param string $line
    * @param string $value
@@ -59,7 +58,6 @@ class ExpansionServices extends LocalServices
   return $this->getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value, $prefix, $classe, $multiple, $defaultLabel);
   }
   /**
-   * 
    * @param string $file
    * @param string $line
    * @param array $Expansions

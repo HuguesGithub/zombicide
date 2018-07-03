@@ -1,24 +1,30 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe MissionExpansionServices
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class MissionExpansionServices extends LocalServices {
+class MissionExpansionServices extends LocalServices
+{
   /**
    * L'objet Dao pour faire les requêtes
    * @var MissionExpansionDaoImpl $Dao
    */
   protected $Dao;
-  
+  /**
+   * Class Constructor
+   */
   public function __construct() {
     $this->Dao = new MissionExpansionDaoImpl();
     parent::__construct(array('Expansion'));
   }
 
-  private function buildFilters($arrFilters) {
+  private function buildFilters($arrFilters)
+  {
     $arrParams = array();
     $arrParams[] = (isset($arrFilters[self::CST_MISSIONID]) ? $arrFilters[self::CST_MISSIONID] : '%');
     $arrParams[] = (isset($arrFilters[self::CST_EXPANSIONID]) ? $arrFilters[self::CST_EXPANSIONID] : '%');
@@ -32,7 +38,8 @@ class MissionExpansionServices extends LocalServices {
    * @param string $order
    * @return array
    */
-  public function getMissionExpansionsWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc') {
+  public function getMissionExpansionsWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc')
+  {
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
     $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
@@ -47,7 +54,8 @@ class MissionExpansionServices extends LocalServices {
    * @param string $defaultValue
    * @return string
    */
-  public function getMissionExpansionsSelect($file, $line, $Mission, $prefix='', $classe=self::CST_FORMCONTROL, $multiple=false, $defaultValue='') {
+  public function getMissionExpansionsSelect($file, $line, $Mission, $prefix='', $classe=self::CST_FORMCONTROL, $multiple=false, $defaultValue='')
+  {
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters($file, $line);
     $arrSetLabels = array();
     foreach ($Expansions as $Expansion) {
@@ -62,6 +70,4 @@ class MissionExpansionServices extends LocalServices {
     }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.self::CST_EXPANSIONID, $arrSelValues, $defaultValue, $classe, $multiple);
   }
-  
 }
-?>

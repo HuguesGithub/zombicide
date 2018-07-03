@@ -106,7 +106,8 @@ class SkillsPageBean extends PagePageBean
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-skill.php');
     return vsprintf($str, $args);
   }
-  public function buildSkillLis($Skills, $Survivor, $color) {
+  public function buildSkillLis($Skills, $Survivor, $color)
+  {
     $strLis = '';
     if (!empty($Skills)) {
       ksort($Skills);

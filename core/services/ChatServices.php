@@ -43,4 +43,3 @@ class ChatServices extends LocalServices
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
 }
-?>

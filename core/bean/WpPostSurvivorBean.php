@@ -16,9 +16,10 @@ class WpPostSurvivorBean extends MainPageBean
     parent::__construct($services);
     $this->WpPost = $WpPost;
   }
-  public function getSurvivorPageContent($Survivor) {
+  public function getSurvivorPageContent($Survivor)
+  {
     $WpBean = new SurvivorBean($Survivor);
-    $strSType  = '';
+    $strType  = '';
     if ($Survivor->isZombivor()) {
       $strType .= '<div data-id="'.$Survivor->getId().'" data-type="zombivant" class="changeProfile"><i class="far fa-square pointer"></i> Zombivant</div>';
       if ($Survivor->isUltimate()) {

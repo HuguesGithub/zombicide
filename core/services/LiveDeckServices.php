@@ -17,7 +17,7 @@ class LiveDeckServices extends LocalServices
   protected $Dao;
   /**
    * Class Constructor
-   */  
+   */
   public function __construct()
   { $this->Dao = new LiveDeckDaoImpl(); }
 
@@ -44,4 +44,3 @@ class LiveDeckServices extends LocalServices
   }
   
 }
-?>

@@ -98,9 +98,10 @@ class SurvivorBean extends MainPageBean
   /**
    * @return string
    */
-  public function getSurvivorPage() {
+  public function getSurvivorPage()
+  {
     $Survivor = $this->Survivor;
-    $strSType  = '';
+    $strType  = '';
     if ($Survivor->isZombivor()) {
       $strType .= '<div data-id="'.$Survivor->getId().'" data-type="zombivant" class="changeProfile"><i class="far fa-square pointer"></i> Zombivant</div>';
       if ($Survivor->isUltimate()) {

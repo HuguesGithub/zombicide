@@ -17,7 +17,7 @@ class WpPostSkillBean extends PostPageBean
   {
     $services = array('Skill', 'SurvivorSkill', 'Survivor');
     parent::__construct('', $services);
-	$this->Skill = $this->SkillServices->select(__FILE__, __LINE__, $skillId);
+  $this->Skill = $this->SkillServices->select(__FILE__, __LINE__, $skillId);
   }
   /**
    * On arrive rarement en mode direct pour afficher la Page. On passe par une méthode static.
@@ -78,14 +78,15 @@ class WpPostSkillBean extends PostPageBean
    * @param string $color Permet de colorer le cartouche
    * @return string
    */
-  public function buildSkillLis($Survivors, $color) {
+  public function buildSkillLis($Survivors, $color)
+  {
     $strLis = '';
     if (!empty($Survivors)) {
       ksort($Survivors);
-	  while (!empty($Survivors)) {
-	    $Survivor = array_shift($Survivors);
+    while (!empty($Survivors)) {
+      $Survivor = array_shift($Survivors);
         $strLis .= '<li><a class="badge badge-'.$color.'-skill" href="';
-		$strLis .= $Survivor->getWpPostUrl().'">'.$Survivor->getName().'</a></li>';
+    $strLis .= $Survivor->getWpPostUrl().'">'.$Survivor->getName().'</a></li>';
       }
     }
     return $strLis;

@@ -62,7 +62,8 @@ class LocalServices extends GlobalServices implements iConstants
     }
     return $strSelect.'</select>';
   }
-  private function isKeySelected($key, $values) {
+  private function isKeySelected($key, $values)
+  {
     if (!is_array($values)) {
       return $key==$values;
     }

@@ -17,7 +17,7 @@ class LevelServices extends LocalServices
   protected $Dao;
   /**
    * Class Constructor
-   */  
+   */
   public function __construct()
   { $this->Dao = new LevelDaoImpl(); }
 
@@ -50,7 +50,6 @@ class LevelServices extends LocalServices
     return $this->getLevelsSelectAlreadyRequested($file, $line, $Levels, $value, $prefix, $classe, $multiple, $defaultLabel);
   }
   /**
-   * 
    * @param string $file
    * @param string $line
    * @param array $Levels
@@ -70,4 +69,3 @@ class LevelServices extends LocalServices
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'levelId', $value, $defaultLabel, $classe, $multiple);
   }
 }
-?>

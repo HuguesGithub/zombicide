@@ -1,21 +1,28 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe ObjectiveServices
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class ObjectiveServices extends LocalServices {
+class ObjectiveServices extends LocalServices
+{
   /**
    * L'objet Dao pour faire les requêtes
    * @var RuleDaoImpl $Dao
    */
   protected $Dao;
-  
-  public function __construct() { $this->Dao = new ObjectiveDaoImpl(); }
+  /**
+   * Class Constructor
+   */
+  public function __construct()
+  { $this->Dao = new ObjectiveDaoImpl(); }
 
-  private function buildFilters($arrFilters) {
+  private function buildFilters($arrFilters)
+  {
     $arrParams = array();
     $arrParams[] = (isset($arrFilters['code']) ? $arrFilters['code'] : '%');
     $arrParams[] = (isset($arrFilters['description']) ? $arrFilters['description'] : '%');
@@ -29,7 +36,8 @@ class ObjectiveServices extends LocalServices {
    * @param string $order
    * @return array
    */
-  public function getObjectivesWithFilters($file, $line, $arrFilters=array(), $orderby='code', $order='asc') {
+  public function getObjectivesWithFilters($file, $line, $arrFilters=array(), $orderby='code', $order='asc')
+  {
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
     $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
@@ -44,7 +52,8 @@ class ObjectiveServices extends LocalServices {
    * @param string $defaultLabel
    * @return string
    */
-  public function getObjectiveSelect($file, $line, $value='', $prefix='id', $classe='form-control', $multiple=false, $defaultLabel='---') {
+  public function getObjectiveSelect($file, $line, $value='', $prefix='id', $classe='form-control', $multiple=false, $defaultLabel='---')
+  {
     $Objectives = $this->getObjectivesWithFilters($file, $line);
     $arrSetLabels = array();
     foreach ($Objectives as $Objective) {
@@ -52,6 +61,4 @@ class ObjectiveServices extends LocalServices {
     }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'objectiveId', $value, $defaultLabel, $classe, $multiple);
   }
-  
 }
-?>

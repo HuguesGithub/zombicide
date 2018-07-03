@@ -1,19 +1,25 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe PlayerServices
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class PlayerServices extends LocalServices {
+class PlayerServices extends LocalServices
+{
   /**
    * L'objet Dao pour faire les requêtes
    * @var PlayerDaoImpl $Dao
    */
   protected $Dao;
-  
-  public function __construct() { $this->Dao = new PlayerDaoImpl(); }
+  /**
+   * Class Constructor
+   */
+  public function __construct()
+  { $this->Dao = new PlayerDaoImpl(); }
 
   /**
    * @param string $file
@@ -23,7 +29,8 @@ class PlayerServices extends LocalServices {
    * @param string $order
    * @return array
    */
-  public function getPlayersWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc') {
+  public function getPlayersWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc')
+  {
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
@@ -37,7 +44,8 @@ class PlayerServices extends LocalServices {
    * @param string $defaultValue
    * @return string
    */
-  public function getNbPlayersSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=false, $defaultValue='') {
+  public function getNbPlayersSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=false, $defaultValue='')
+  {
     $Players = $this->getPlayersWithFilters($file, $line, array(), 'name', 'asc');
     $arrSetLabels = array();
     foreach ($Players as $Player) {
@@ -45,7 +53,4 @@ class PlayerServices extends LocalServices {
     }
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'playerId', $value, $defaultValue, $classe, $multiple);
   }
-
-  
 }
-?>

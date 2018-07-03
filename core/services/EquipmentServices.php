@@ -34,7 +34,4 @@ class EquipmentServices extends LocalServices
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
-
-  
 }
-?>

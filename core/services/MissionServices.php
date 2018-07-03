@@ -15,8 +15,11 @@ class MissionServices extends LocalServices
    * @var MissionDaoImpl $Dao
    */
   protected $Dao;
-  
-  public function __construct() {
+  /**
+   * Class Constructor
+   */
+  public function __construct()
+  {
     $this->Dao = new MissionDaoImpl();
   }
 

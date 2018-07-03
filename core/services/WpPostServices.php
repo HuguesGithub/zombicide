@@ -1,12 +1,15 @@
 <?php
-if (!defined('ABSPATH')) { die('Forbidden'); }
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
  * Classe WpPostServices
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class WpPostServices extends GlobalServices {
+class WpPostServices extends GlobalServices
+{
   
   public function __construct() {}
 
@@ -18,15 +21,16 @@ class WpPostServices extends GlobalServices {
    * @param string $wpPostType
    * @return array
    */
-  public function getArticles($file, $line, $params=array(), $viaWpQuery=false, $wpPostType='WpPostMission') {
+  public function getArticles($file, $line, $params=array(), $viaWpQuery=false, $wpPostType='WpPostMission')
+  {
     $args = array(
       'orderby'=> 'name',
       'order'=>'ASC',
       'posts_per_page'=>-1,
       'post_type'=>'post'
-   );
+    );
     if (!empty($params)) {
-      foreach ($params as $key=>$value) {
+      foreach ($params as $key => $value) {
         $args[$key] = $value;
       }
     }
@@ -39,14 +43,18 @@ class WpPostServices extends GlobalServices {
     $WpPosts = array();
     if (!empty($posts_array)) {
       foreach ($posts_array as $post) {
-    $tags = wp_get_post_tags($post->ID);
-    if (!empty($tags)) {
-      foreach ($tags as $WpTerm) {
-      if ($WpTerm->slug == 'mission') { $wpPostType = 'WpPostMission'; }
-      elseif ($WpTerm->slug == 'news') { $wpPostType = 'WpPostNews'; }
-      elseif ($WpTerm->slug == 'survivant') { $wpPostType = 'WpPostSurvivor'; }
-      }
-    }
+        $tags = wp_get_post_tags($post->ID);
+        if (!empty($tags)) {
+          foreach ($tags as $WpTerm) {
+            if ($WpTerm->slug == 'mission') {
+              $wpPostType = 'WpPostMission';
+            } elseif ($WpTerm->slug == 'news') {
+              $wpPostType = 'WpPostNews';
+            } elseif ($WpTerm->slug == 'survivant') {
+              $wpPostType = 'WpPostSurvivor';
+            }
+          }
+        }
         $WpPosts[] = WpPost::convertElement($post, $wpPostType);
       }
     }
@@ -57,7 +65,8 @@ class WpPostServices extends GlobalServices {
    * @param int $limit
    * @return array
    */
-  public function getChildPagesByParentId($pageId, $limit = -1) {
+  public function getChildPagesByParentId($pageId, $limit = -1)
+  {
     global $post;
     $pages = array();
     $args = array(
@@ -75,6 +84,4 @@ class WpPostServices extends GlobalServices {
     wp_reset_postdata();
     return $pages;
   }
-  
 }
-?>

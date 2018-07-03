@@ -45,21 +45,7 @@ class ToolsPageBean extends PagePageBean
       $str = 'Résultat de ce lancer <strong>'.$nbDeDes.'D</strong> à <strong>'.$seuilReussite.'+</strong> : ';
       $strJets = '';
       for ($i=1; $i<=$nbDeDes; $i++) {
-        $score = rand(1, 6);
-        if ($score == 6 || ($score == 5 && $hasPlusUnAuDe)) {
-          $strClasse = "primary";
-          if ($hasSurUn6) {
-            $nbDeDes++;
-          }
-        } elseif ($score==1) {
-          $strClasse = "danger";
-        } elseif ($score >= ($seuilReussite - ($hasPlusUnAuDe ? 1 : 0))) {
-          $strClasse = "info";
-        } else {
-          $strClasse = "warning";
-        }
-        $strBadge = '<span class="badge badge-'.$strClasse.'">'.$score.'</span>';
-        $strJets .= $strBadge.' ';
+        $strJets .= $this->getStrJets($nbDeDes, $hasPlusUnAuDe, $hasSurUn6, $seuilReussite);
       }
       $str .= $strJets.'<br><br>';
     }
@@ -69,6 +55,23 @@ class ToolsPageBean extends PagePageBean
    );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-piste-de-des.php');
     return vsprintf($str, $args);
+  }
+  private function getStrJets(&$nbDeDes, $hasPlusUnAuDe, $hasSurUn6, $seuilReussite)
+  {
+  	$score = rand(1, 6);
+  	if ($score == 6 || ($score == 5 && $hasPlusUnAuDe)) {
+  	  $strClasse = "primary";
+  	  if ($hasSurUn6) {
+  	    $nbDeDes++;
+  	  }
+  	} elseif ($score==1) {
+  		$strClasse = "danger";
+  	} elseif ($score >= ($seuilReussite - ($hasPlusUnAuDe ? 1 : 0))) {
+  		$strClasse = "info";
+  	} else {
+  		$strClasse = "warning";
+  	}
+  	return '<span class="badge badge-'.$strClasse.'">'.$score.'</span> ';
   }
   /**
    * @param WpPost $WpPage

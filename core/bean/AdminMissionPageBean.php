@@ -109,11 +109,7 @@ class AdminMissionPageBean extends AdminPageBean
       }
     }
     // Si des extensions rattachées n'ont pas été validées, on les supprime
-    if (!empty($DelMissionExpansions)) {
-      foreach ($DelMissionExpansions as $MissionExpansion) {
-        $this->MissionExpansionServices->delete(__FILE__, __LINE__, $MissionExpansion);
-      }
-    }
+    $this->deleteUncheckedMissionExpansions($DelMissionExpansions);
     // Si des extensions cochées n'ont pas été traitées, on les ajoute.
     $args = array(self::CST_MISSIONID=>$Mission->getId());
     foreach ($arrExpansions as $key => $value) {
@@ -122,6 +118,14 @@ class AdminMissionPageBean extends AdminPageBean
       $this->MissionExpansionServices->insert(__FILE__, __LINE__, $MissionExpansion);
     }
     $Mission->setMissionExpansions($GetMissionExpansions);
+  }
+  private function deleteUncheckedMissionExpansions($DelMissionExpansions)
+  {
+    if (!empty($DelMissionExpansions)) {
+      foreach ($DelMissionExpansions as $MissionExpansion) {
+        $this->MissionExpansionServices->delete(__FILE__, __LINE__, $MissionExpansion);
+      }
+    }
   }
   
   /**
@@ -224,21 +228,21 @@ class AdminMissionPageBean extends AdminPageBean
   public function getListingPage()
   {
     $arrFilters = array();
-    $filter_by_levelId = $this->initVar('filter-by-levelId', '');
-    $filter_by_playerId = $this->initVar('filter-by-playerId', '');
-    $filter_by_durationId = $this->initVar('filter-by-durationId', '');
-    $filter_by_origineId = $this->initVar('filter-by-origineId', '');
-    if ($filter_by_levelId!='') {
-      $arrFilters[self::CST_LEVELID] = $filter_by_levelId;
+    $fby_levelId = $this->initVar('filter-by-levelId', '');
+    $fby_playerId = $this->initVar('filter-by-playerId', '');
+    $fby_durationId = $this->initVar('filter-by-durationId', '');
+    $fby_origineId = $this->initVar('filter-by-origineId', '');
+    if ($fby_levelId!='') {
+      $arrFilters[self::CST_LEVELID] = $fby_levelId;
     }
-    if ($filter_by_playerId!='') {
-      $arrFilters[self::CST_PLAYERID] = $filter_by_playerId;
+    if ($fby_playerId!='') {
+      $arrFilters[self::CST_PLAYERID] = $fby_playerId;
     }
-    if ($filter_by_durationId!='') {
-      $arrFilters[self::CST_DURATIONID] = $filter_by_durationId;
+    if ($fby_durationId!='') {
+      $arrFilters[self::CST_DURATIONID] = $fby_durationId;
     }
-    if ($filter_by_origineId!='') {
-      $arrFilters[self::CST_ORIGINEID] = $filter_by_origineId;
+    if ($fby_origineId!='') {
+      $arrFilters[self::CST_ORIGINEID] = $fby_origineId;
     }
     $orderby = $this->initVar(self::CST_ORDERBY, self::CST_TITLE);
     $order = $this->initVar(self::CST_ORDER, 'ASC');

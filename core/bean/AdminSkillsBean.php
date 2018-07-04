@@ -117,7 +117,7 @@ class AdminSkillsBean extends AdminPageBean
       $urlSortTitle,
   );
     */
-	  $args = array(
+    $args = array(
       // Liste des compétences affichées - 1
       $strRows,
       // Filtres - 2

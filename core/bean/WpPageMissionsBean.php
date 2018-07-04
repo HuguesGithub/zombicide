@@ -40,7 +40,7 @@ class WpPageMissionsBean extends PagePageBean
    * @param string $sort_order Dans quel sens on trie ? Par défaut : 'asc'.
    * @param int $nbPerPage Combien de missions affichées par page ? Par défaut : 10.
    * @param int $curPage Quelle page est affichée ? Par défaut : 1.
-   * @param array $arrFilters 
+   * @param array $arrFilters
    * @return string
    */
   public function getContentPage($sort_col='title', $sort_order='asc', $nbPerPage=10, $curPage=1, $arrFilters=array())
@@ -66,20 +66,20 @@ class WpPageMissionsBean extends PagePageBean
      * On les met tous. Réfléchir à faire des intervalles si beaucoup trop de pages.
      */
     $strPagination = $this->getPaginateLis($curPage, $nbPages);
-	/**
-	 * Gestion des différents filtres
-	 */
+  /**
+   * Gestion des différents filtres
+   */
     $hasFilters = false;
     $Levels = $this->LevelServices->getLevelsWithFilters(__FILE__, __LINE__);
-	  $arrLevelIds = $this->dealWithFilters($hasFilters, $Levels, $arrFilters, self::CST_LEVELID);
+    $arrLevelIds = $this->dealWithFilters($hasFilters, $Levels, $arrFilters, self::CST_LEVELID);
     $Players = $this->PlayerServices->getPlayersWithFilters(__FILE__, __LINE__);
-	  $arrPlayerIds = $this->dealWithFilters($hasFilters, $Players, $arrFilters, self::CST_PLAYERID);
+    $arrPlayerIds = $this->dealWithFilters($hasFilters, $Players, $arrFilters, self::CST_PLAYERID);
     $Durations = $this->DurationServices->getDurationsWithFilters(__FILE__, __LINE__);
-	  $arrDurationIds = $this->dealWithFilters($hasFilters, $Durations, $arrFilters, self::CST_DURATIONID);
+    $arrDurationIds = $this->dealWithFilters($hasFilters, $Durations, $arrFilters, self::CST_DURATIONID);
     $Origines = $this->OrigineServices->getOriginesWithFilters(__FILE__, __LINE__);
-	  $arrOrigineIds = $this->dealWithFilters($hasFilters, $Origines, $arrFilters, self::CST_ORIGINEID);
+    $arrOrigineIds = $this->dealWithFilters($hasFilters, $Origines, $arrFilters, self::CST_ORIGINEID);
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array('nbMissions'=>1));
-	  $arrExpansionIds = $this->dealWithFilters($hasFilters, $Expansions, $arrFilters, self::CST_EXPANSIONID);
+    $arrExpansionIds = $this->dealWithFilters($hasFilters, $Expansions, $arrFilters, self::CST_EXPANSIONID);
     /**
      * Tableau de données pour l'affichage de la page.
      */
@@ -131,17 +131,18 @@ class WpPageMissionsBean extends PagePageBean
    * @param string $tag
    * @return array
    */
-  private function dealWithFilters(&$hasFilters, $Objs, $arrFilters, $tag) {
+  private function dealWithFilters(&$hasFilters, $Objs, $arrFilters, $tag)
+  {
     $arrIds = '';
     if (isset($arrFilters[$tag]) && !empty($arrFilters[$tag])) {
       $arrIds = $arrFilters[$tag];
       foreach ($arrFilters[$tag] as $id) {
-		if ($this->getNameById($Objs, $id)!='') {
+    if ($this->getNameById($Objs, $id)!='') {
           $hasFilters = true;
-		}
+    }
       }
     }
-	return $arrIds;
+  return $arrIds;
   }
   /**
    * @param array $post

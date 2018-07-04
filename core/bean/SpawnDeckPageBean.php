@@ -119,10 +119,12 @@ class SpawnDeckPageBean extends PagePageBean
     $str .= '<div class="btn-group-vertical live-spawn-selection" role="group">';
     $keyAccess = $LiveDeck->getDeckKey();
     $str .= $this->getButtonDiv('btnDisabled1', $keyAccess, 'Actions disponibles :', 'btn-dark disabled');
-    $str .= $this->getButtonDiv('btnDrawSpawnCard', $keyAccess, 'Piocher une carte (<span id="nbCardInDeck">'.$LiveDeck->getNbCardsInDeck().'</span>)');
+    $label = 'Piocher une carte (<span id="nbCardInDeck">'.$LiveDeck->getNbCardsInDeck().'</span>)';
+    $str .= $this->getButtonDiv('btnDrawSpawnCard', $keyAccess, $label);
     $str .= $this->getButtonDiv('btnDiscardSpawnActive', $keyAccess, 'Défausser les cartes piochées');
     $str .= $this->getButtonDiv('btnShowDiscardSpawn', $keyAccess, 'Afficher la défausse');
-    $str .= $this->getButtonDiv('btnShuffleDiscardSpawn', $keyAccess, 'Remélanger la défausse (<span id="nbCardInDiscard">'.$LiveDeck->getNbCardsInDiscard().'</span>)');
+    $label = 'Remélanger la défausse (<span id="nbCardInDiscard">'.$LiveDeck->getNbCardsInDiscard().'</span>)';
+    $str .= $this->getButtonDiv('btnShuffleDiscardSpawn', $keyAccess, $label);
     $str .= $this->getButtonDiv('btnLeaveSpawnDeck', $keyAccess, 'Quitter cette pioche');
     $str .= $this->getButtonDiv('btnDisabled2', $keyAccess, 'Attention, action irréversible :', 'btn-dark disabled');
     $str .= $this->getButtonDiv('btnDeleteSpawnDeck', $keyAccess, 'Supprimer cette pioche', 'btn-danger');

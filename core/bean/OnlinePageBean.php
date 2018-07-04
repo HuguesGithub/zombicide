@@ -33,14 +33,16 @@ class OnlinePageBean extends PagePageBean
    */
   public function getContentNotLogged()
   {
-    $ts = date('Y-m-d H:i:s', time());
-  	$args = array();
+    $ts = date(self::CST_FORMATDATE, time());
+    $args = array();
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-online-identification.php');
     $strCanvas = vsprintf($str, $args);
+    $strMsg  = '<li class="msg-technique" data-timestamp="'.$ts.'"><div><span class="timestamp">'.$ts;
+    $strMsg .= '</span></div>Bienvenue sur cette interface. Inscrivez-vous et identifiez-vous pour rejoindre la discussion.</li>';
     $args = array(
       'Buttons',
       'Options',
-      '<li class="msg-technique" data-timestamp="'.$ts.'"><div><span class="timestamp">'.$ts.'</span></div>Bienvenue sur cette interface. Inscrivez-vous et identifiez-vous pour rejoindre la discussion.</li>',
+      $strMsg,
       $strCanvas,
       'hidden',
       '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>',
@@ -53,11 +55,13 @@ class OnlinePageBean extends PagePageBean
    */
   public function getContentLoggedNotLive()
   {
-    $ts = date('Y-m-d H:i:s', time());
+    $ts = date(self::CST_FORMATDATE, time());
+    $strMsg  = '<li class="msg-technique" data-timestamp="'.$ts.'"><div><span class="timestamp">'.$ts;
+    $strMsg .= '</span></div>Bienvenue sur cette interface.</li>';
     $args = array(
       'Buttons',
       'Options',
-      '<li class="msg-technique" data-timestamp="'.$ts.'"><div><span class="timestamp">'.$ts.'</span></div>Bienvenue sur cette interface.</li>',
+      $strMsg,
       '',
       '',
       '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>',
@@ -76,15 +80,17 @@ class OnlinePageBean extends PagePageBean
       unset($_SESSION[self::CST_DECKKEY]);
       return $this->getContentLoggedNotLive();
     }
-    $ts = date('Y-m-d H:i:s', time());
+    $ts = date(self::CST_FORMATDATE, time());
     $Live = array_shift($Lives);
     $missionId = 1;
     $Mission = $this->MissionServices->select(__FILE__, __LINE__, $missionId);
     $MissionBean = new MissionBean($Mission);
+    $strMsg  = '<li class="msg-technique" data-timestamp="'.$ts.'"><div><span class="timestamp">'.$ts;
+    $strMsg .= '</span></div>Bienvenue dans l\'espace de discussion '.$Live->getDeckKey().'.</li>';
     $args = array(
       'Buttons',
       'Options',
-      '<li class="msg-technique" data-timestamp="'.$ts.'"><div><span class="timestamp">'.$ts.'</span></div>Bienvenue dans l\'espace de discussion '.$Live->getDeckKey().'.</li>',
+      $strMsg,
       $MissionBean->displayCanvas(),
       '',
       '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$Live->getId().'">'.$Live->getDeckKey().'</a></li>',

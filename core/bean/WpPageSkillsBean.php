@@ -12,11 +12,12 @@ class WpPageSkillsBean extends PagePageBean
 {
   /**
    * Class Constructor
+   * @param WpPage $WpPage
    */
   public function __construct($WpPage='')
   {
-    $services = array('Skill');
-    parent::__construct($WpPage, $services);
+    parent::__construct($WpPage);
+    $this->SkillServices = FactoryServices::getSkillServices();
   }
   /**
    * On arrive rarement en mode direct pour afficher la Page. On passe par une méthode static.
@@ -36,11 +37,7 @@ class WpPageSkillsBean extends PagePageBean
   public function getContentPage()
   {
     $skillId = $this->initVar('skillId', -1);
-    if ($skillId==-1) {
-      return $this->getListContentPage();
-    } else {
-      return WpPostSkillBean::getStaticPageContent($skillId);
-    }
+    return ($skillId==-1 ? $this->getListContentPage() : WpPostSkillBean::getStaticPageContent($skillId));
   }
   /**
    * Retourne une liste partielle des compétences
@@ -54,10 +51,10 @@ class WpPageSkillsBean extends PagePageBean
   public function getListContentPage($sort_col='name', $sort_order='asc', $nbPerPage=10, $curPage=1, $arrFilters=array())
   {
     /**
-   * On récupère toutes les compétences répondant aux différents critères.
-   * On ne prend que la page recherchée pour l'affichage. La totalité de la requête permet la pagination.
-   * On construit chaque ligne du tableau
-   */
+    * On récupère toutes les compétences répondant aux différents critères.
+    * On ne prend que la page recherchée pour l'affichage. La totalité de la requête permet la pagination.
+    * On construit chaque ligne du tableau
+    */
     $Skills = $this->SkillServices->getSkillsWithFilters(__FILE__, __LINE__, $arrFilters, $sort_col, $sort_order);
     $nbElements = count($Skills);
     $nbPages = ceil($nbElements/$nbPerPage);
@@ -69,18 +66,14 @@ class WpPageSkillsBean extends PagePageBean
         $strBody .= $SkillBean->getRowForSkillsPage();
       }
     }
-  /**
-   * Construction de la liste des liens vers les différentes pages de la recherche.
-   * On les met tous. Réfléchir à faire des intervalles si beaucoup trop de pages.
-   */
-    $strPagination = '';
-    for ($i=1; $i<=$nbPages; $i++) {
-      $strPagination .= '<li class="page-item'.($i==$curPage?' disabled':'').'"><a class="page-link ';
-      $strPagination .= 'ajaxAction" href="#" data-paged="'.$i.'" data-ajaxaction="paged">'.$i.'</a></li>';
-    }
-  /**
-   * Tableau de données pour l'affichage de la page.
-   */
+    /**
+     * Construction de la liste des liens vers les différentes pages de la recherche.
+     * On les met tous. Réfléchir à faire des intervalles si beaucoup trop de pages.
+     */
+    $strPagination = $this->getPaginateLis($curPage, $nbPages);
+    /**
+     * Tableau de données pour l'affichage de la page.
+     */
     $args = array(
       ($nbPerPage==10 ? self::CST_SELECTED:''),
       ($nbPerPage==25 ? self::CST_SELECTED:''),

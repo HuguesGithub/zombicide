@@ -3,20 +3,22 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * WpPostMissionBean
+ * Classe WpPostMissionBean
+ * @author Hugues.
+ * @version 1.0.00
+ * @since 1.0.00
  */
-class WpPostMissionBean extends MainPageBean
+class WpPostMissionBean extends PostPageBean
 {
   /**
    * Constructeur
    */
   public function __construct($WpPost='')
   {
-    $services = array('Mission');
-    parent::__construct($services);
+    parent::__construct();
+    $this->MissionServices = FactoryServices::getMissionServices();
     $this->WpPost = $WpPost;
   }
-  
   /**
    * @param Mission $Mission
    * @return string

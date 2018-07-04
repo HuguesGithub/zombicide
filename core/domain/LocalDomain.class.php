@@ -10,7 +10,6 @@ if (!defined('ABSPATH')) {
  */
 class LocalDomain extends GlobalDomain implements iConstants
 {
-
   /**
    * @param array $attributes
    * @param array $services

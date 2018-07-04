@@ -41,8 +41,9 @@ class SurvivorSkill extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    $services = array('Skill');
-    parent::__construct($attributes, $services);
+    parent::__construct($attributes);
+    $this->SkillServices = FactoryServices::getSkillServices();
+    $this->SurvivorServices = FactoryServices::getSurvivorServices();
   }
   
   /**

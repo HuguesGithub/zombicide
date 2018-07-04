@@ -39,6 +39,7 @@ interface iConstants
   const CST_MINDURATION   = 'minDuration';
   const CST_MISSION     = 'mission';
   const CST_MISSIONID     = 'missionId';
+  const CST_NAME     = 'name';
   const CST_NBMISSIONS    = 'nbMissions';
   const CST_OBJECTIVE = 'objective';
   const CST_ONGLET      = 'onglet';
@@ -56,6 +57,7 @@ interface iConstants
   const CST_SELECTED    = 'selected';
   const CST_SENDTOID = 'sendToId';
   const CST_SETTING     = 'setting';
+  const CST_SKILL     = 'skill';
   const CST_SPAWNNUMBER   = 'spawnNumber';
   const CST_STATUS = 'status';
   const CST_SURVIVORTYPEID  = 'survivorTypeId';

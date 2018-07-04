@@ -16,14 +16,11 @@ class SkillBean extends MainPageBean
    */
   public function __construct($Skill='')
   {
-    $services = array('Skill', 'SurvivorSkill');
-    parent::__construct($services);
-    if ($Skill=='') {
-      $Skill = new Skill();
-    }
-    $this->Skill = $Skill;
+    parent::__construct();
+    $this->SkillServices = FactoryServices::getSkillServices();
+    $this->SurvivorSkillServices = FactoryServices::getSurvivorSkillServices();
+    $this->Skill = ($Skill=='' ? new Skill() : $Skill);
   }
-  
   /**
    * @return string
    */
@@ -37,36 +34,39 @@ class SkillBean extends MainPageBean
   public function getRowForSkillsPage()
   {
     $Skill = $this->Skill;
-    $arrFilters = array('skillId'=>$Skill->getId(), 'tagLevelId'=>10);
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
-    $nbBlues = count($SurvivorSkills);
-    $arrFilters['tagLevelId'] = 11;
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
-    $nbBlues += count($SurvivorSkills);
-    $arrFilters['tagLevelId'] = 20;
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
-    $nbYellows = count($SurvivorSkills);
-    $arrFilters['tagLevelId'] = 30;
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
-    $nbOranges = count($SurvivorSkills);
-    $arrFilters['tagLevelId'] = 31;
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
-    $nbOranges += count($SurvivorSkills);
-    $arrFilters['tagLevelId'] = 40;
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
-    $nbReds = count($SurvivorSkills);
-    $arrFilters['tagLevelId'] = 41;
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
-    $nbReds += count($SurvivorSkills);
-    $arrFilters['tagLevelId'] = 42;
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
-    $nbReds += count($SurvivorSkills);
-    $strRow  = '<tr>';
-    $strRow .= '<td style="white-space: nowrap;"><a href="/page-competences/?skillId='.$Skill->getId().'">'.$Skill->getName().'</a><br>';
-    $strRow .= '<span class="badge badge-blue-skill">'.$nbBlues.'</span> <span class="badge badge-yellow-skill">'.$nbYellows.'</span> ';
-    $strRow .= '<span class="badge badge-orange-skill">'.$nbOranges.'</span> <span class="badge badge-red-skill">'.$nbReds.'</span></td>';
-    $strRow .= '<td>'.$Skill->getDescription().'</td>';
-    return $strRow.'</tr>';
+    $args = array(
+      // Id de la Compétence - 1
+      $Skill->getId(),
+      // Nom de la Compétence - 2
+      $Skill->getName(),
+      // Nombre de Compétences possédées par un Survivant en Bleu (y compris Zombivant et Ultimate) - 3
+      $this->getNbSkillsByTag(array(10, 11)),
+      // Nombre de Compétences possédées par un Survivant en Jaune (y compris Zombivant et Ultimate) - 4
+      $this->getNbSkillsByTag(array(20)),
+      // Nombre de Compétences possédées par un Survivant en Orange (y compris Zombivant et Ultimate) - 5
+      $this->getNbSkillsByTag(array(30, 31)),
+      // Nombre de Compétences possédées par un Survivant en Rouge (y compris Zombivant et Ultimate) - 6
+      $this->getNbSkillsByTag(array(40, 41, 42)),
+      // Description de la Compétence - 7
+      $Skill->getDescription(),
+    );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/skill-row-public.php');
+    return vsprintf($str, $args);
   }
-  
+  /**
+   * @param array $arrTags Liste des tags dont on veut le nombre de couples SurvivorSkill
+   * @return int
+   */
+  private function getNbSkillsByTag($arrTags)
+  {
+    $arrFilters = array('skillId'=>$this->Skill->getId());
+    $nb = 0;
+    // Pour chaque tag, on fait une recherche en base et on cumule le nombre que l'on renvoie.
+    while (!empty($arrTags)) {
+      $arrFilters['tagLevelId'] = array_shift($arrTags);
+      $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
+      $nb += count($SurvivorSkills);
+    }
+    return $nb;
+  }
 }

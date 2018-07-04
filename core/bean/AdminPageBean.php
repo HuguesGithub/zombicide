@@ -68,6 +68,9 @@ class AdminPageBean extends MainPageBean
         case 'parametre'  :
           $returned = AdminParametrePageBean::getStaticContentPage($this->urlParams);
         break;
+        case 'skill'  :
+          $returned = AdminSkillsBean::getStaticContentPage($this->urlParams);
+        break;
         case ''       :
           $returned = $this->getHomeContentPage();
         break;

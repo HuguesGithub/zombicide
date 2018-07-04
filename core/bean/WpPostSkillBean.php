@@ -15,9 +15,11 @@ class WpPostSkillBean extends PostPageBean
    */
   public function __construct($skillId)
   {
-    $services = array('Skill', 'SurvivorSkill', 'Survivor');
-    parent::__construct('', $services);
-  $this->Skill = $this->SkillServices->select(__FILE__, __LINE__, $skillId);
+    parent::__construct();
+    $this->SkillServices = FactoryServices::getSkillServices();
+    $this->SurvivorServices = FactoryServices::getSurvivorServices();
+    $this->SurvivorSkillServices = FactoryServices::getSurvivorSkillServices();
+    $this->Skill = $this->SkillServices->select(__FILE__, __LINE__, $skillId);
   }
   /**
    * On arrive rarement en mode direct pour afficher la Page. On passe par une méthode static.
@@ -38,7 +40,7 @@ class WpPostSkillBean extends PostPageBean
     $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, array('skillId'=>$Skill->getId()));
     if (!empty($SurvivorSkills)) {
       foreach ($SurvivorSkills as $SurvivorSkill) {
-        $Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $SurvivorSkill->getSurvivorId());
+        $Survivor = $SurvivorSkill->getSurvivor();
         switch ($SurvivorSkill->getTagLevelId()) {
           case 10 :
           case 11 :
@@ -62,11 +64,17 @@ class WpPostSkillBean extends PostPageBean
       }
     }
     $args = array(
+      // Nom de la Compétence - 1
       $Skill->getName(),
+      // Description de la Compétence - 2
       $Skill->getDescription(),
+      // Liste des Survivants ayant la compétence en Bleu (Zombivant et Ultimate compris) - 3
       $this->buildSkillLis($blueSkills, 'blue'),
+      // Liste des Survivants ayant la compétence en Jaune (Zombivant et Ultimate compris) - 4
       $this->buildSkillLis($yellowSkills, 'yellow'),
+      // Liste des Survivants ayant la compétence en Orange (Zombivant et Ultimate compris) - 5
       $this->buildSkillLis($orangeSkills, 'orange'),
+      // Liste des Survivants ayant la compétence en Rouge (Zombivant et Ultimate compris) - 6
       $this->buildSkillLis($redSkills, 'red'),
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-skill.php');
@@ -80,13 +88,13 @@ class WpPostSkillBean extends PostPageBean
    */
   public function buildSkillLis($Survivors, $color)
   {
+    $tplLi = '<li><a class="badge badge-%1$s-skill" href="%2$s">%3$s</a></li>';
     $strLis = '';
     if (!empty($Survivors)) {
       ksort($Survivors);
-    while (!empty($Survivors)) {
-      $Survivor = array_shift($Survivors);
-        $strLis .= '<li><a class="badge badge-'.$color.'-skill" href="';
-    $strLis .= $Survivor->getWpPostUrl().'">'.$Survivor->getName().'</a></li>';
+      while (!empty($Survivors)) {
+        $Survivor = array_shift($Survivors);
+        $strLis .= vsprintf($tplLi, array($color, $Survivor->getWpPostUrl(), $Survivor->getName()));
       }
     }
     return $strLis;

@@ -47,7 +47,7 @@ class AjaxActions extends LocalActions
         $returned = WpPageSkillsBean::staticGetSkillsSortedAndFiltered($_POST);
       break;
       case 'getMissions'         :
-        $returned = MissionsPageBean::staticGetMissionsSortedAndFiltered($_POST);
+        $returned = WpPageMissionsBean::staticGetMissionsSortedAndFiltered($_POST);
       break;
       case 'getRandomTeam'       :
         $returned = SurvivorsPageBean::staticGetRandomTeam($_POST);

@@ -88,6 +88,8 @@ function zombicide_menu()
       add_submenu_page($urlRoot, 'Missions', 'Missions', $uploadFiles, $urlSubMenu, 'missions');
       $urlSubMenu = $urlRoot.'&amp;onglet=parametre';
       add_submenu_page($urlRoot, 'Paramètres', 'Paramètres', $uploadFiles, $urlSubMenu, 'parametres');
+      $urlSubMenu = $urlRoot.'&amp;onglet=skill';
+      add_submenu_page($urlRoot, 'Compétences', 'Compétences', $uploadFiles, $urlSubMenu, 'parametres');
     }
   }
 }

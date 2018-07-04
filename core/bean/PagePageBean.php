@@ -45,7 +45,7 @@ class PagePageBean extends MainPageBean
         $strReturned = MarketPageBean::getStaticPageContent($this->WpPage);
       break;
       case 'page-missions'             :
-        $strReturned = MissionsPageBean::getStaticPageContent($this->WpPage);
+        $strReturned = WpPageMissionsBean::getStaticPageContent($this->WpPage);
       break;
       case 'page-partie-online'        :
         $strReturned = OnlinePageBean::getStaticPageContent($this->WpPage);
@@ -77,4 +77,20 @@ class PagePageBean extends MainPageBean
    */
   public function getShellClass()
   { return ''; }
+
+  /**
+   * Retourne la liste des liens numérotés d'une pagination
+   * @param int $curPage Page courante
+   * @param int $nbPages Nombre de pages
+   * @return string
+   */
+  protected function getPaginateLis($curPage, $nbPages)
+  {
+    $strPagination = '';
+    for ($i=1; $i<=$nbPages; $i++) {
+      $strPagination .= '<li class="page-item'.($i==$curPage?' disabled':'').'"><a class="page-link ';
+      $strPagination .= 'ajaxAction" href="#" data-paged="'.$i.'" data-ajaxaction="paged">'.$i.'</a></li>';
+    }
+    return $strPagination;
+  }
 }

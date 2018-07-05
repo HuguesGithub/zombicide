@@ -116,5 +116,40 @@ class AdminPageBean extends MainPageBean
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/home-admin-board.php');
     return vsprintf($str, $args);
   }
+
+  protected function getPagination($queryArg, $post_status, $curPage, $nbPages, $nbElements)
+  {
+    $queryArg[self::CST_POSTSTATUS] = $post_status;
+    $queryArg[self::CST_CURPAGE] = 1;
+    $hrefFirst = $this->getQueryArg($queryArg);
+    $queryArg[self::CST_CURPAGE] = max(1, $curPage-1);
+    $hrefPrev = $this->getQueryArg($queryArg);
+    $queryArg[self::CST_CURPAGE] = min($nbPages, $curPage+1);
+    $hrefNext = $this->getQueryArg($queryArg);
+    $queryArg[self::CST_CURPAGE] = $nbPages;
+    $hrefLast = $this->getQueryArg($queryArg);
+    $args = array(
+      // Nombre d'éléments
+         $nbElements,
+      // Disable First/Prev Page
+      $curPage==1 ? ' disabled' : '',
+      // URL First Page
+      $hrefFirst,
+      // URL Prev Page
+      $hrefPrev,
+      // Page courante
+      $curPage,
+      // Nombre de pages
+      $nbPages,
+      // Disable Next/Last Page
+      $curPage==$nbPages ? ' disabled' : '',
+      // URL Next Page
+      $hrefNext,
+      // URL Last Page
+      $hrefLast,
+  );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-pagination.php');
+    return vsprintf($str, $args);
+  }
   
 }

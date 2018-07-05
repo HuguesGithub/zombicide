@@ -153,11 +153,22 @@ class AjaxActions extends LocalActions
    */
   public static function dealWithGetParameter($post)
   {
-    if ($post['type'] == self::CST_LEVEL) {
-      $LevelServices = new LevelServices();
-      $Level = $LevelServices->select(__FILE__, __LINE__, $post['id']);
-      return $Level->toJson();
+    switch ($post['type']) {
+      case 'duration' :
+        $DurationServices = FactoryServices::getDurationServices();
+        $Duration = $DurationServices->select(__FILE__, __LINE__, $post['id']);
+        $returned = $Duration->toJson();
+      break;
+      case self::CST_LEVEL :
+        $LevelServices = FactoryServices::getLevelServices();
+        $Level = $LevelServices->select(__FILE__, __LINE__, $post['id']);
+        $returned = $Level->toJson();
+      break;
+      default :
+        $returned = '{"msg-error": '.json_encode($post['type'].' non défini dans dealWithGetParameter de AjaxActions.').'}';
+      break;
     }
+    return $returned;
   }
   /**
    * @param array $post

@@ -83,5 +83,27 @@ class Skill extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new Skill(), self::getClassVars(), $row); }
-  
+  /**
+   * @return string
+   */
+  public function getWpPostUrl()
+  { return '/page-competences/?skillId='.$this->id; }  
+  /**
+   * @param array $post
+   * @return bool
+   */
+  public function updateWithPost($post)
+  {
+    $doUpdate = false;
+    $arr = array('code', 'name', 'description');
+    while (!empty($arr)) {
+      $key = array_shift($arr);
+      $value = stripslashes($post[$key]);
+      if ($this->{$key} != $value) {
+        $doUpdate = true;
+        $this->{$key} = $value;
+      }
+    }
+    return $doUpdate;
+  }
 }

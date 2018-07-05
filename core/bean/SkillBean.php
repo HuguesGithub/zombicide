@@ -26,7 +26,35 @@ class SkillBean extends MainPageBean
    */
   public function getRowForAdminPage()
   {
-    return '';
+    $Skill = $this->Skill;
+    $queryArgs = array('onglet'=>'skill', self::CST_POSTACTION=>'edit', 'id'=>$Skill->getId());
+    $hrefEdit = $this->getQueryArg($queryArgs);
+    $queryArgs[self::CST_POSTACTION] = 'trash';
+    $hrefTrash = $this->getQueryArg($queryArgs);
+    $queryArgs[self::CST_POSTACTION] = 'clone';
+    $hrefClone = $this->getQueryArg($queryArgs);
+    $urlWpPost = $Skill->getWpPostUrl();
+    $args = array(
+      // Identifiant de la Competence
+      $Skill->getId(),
+      // Code de la Compétence
+      $Skill->getCode(),
+      // Url d'édition
+      $hrefEdit,
+      // Nom de la Compétence
+      $Skill->getName(),
+      // Url de suppression
+      $hrefTrash,
+      // Url de Duplication
+      $hrefClone,
+      // Article publié ?
+      '#',
+      // Url Article
+      $urlWpPost,
+      $Skill->getDescription(),
+    );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/fragments/skill-row.php');
+    return vsprintf($str, $args);
   }
   /**
    * @return string

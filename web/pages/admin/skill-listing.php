@@ -8,19 +8,17 @@
   
   <form action="#" method="post" id="post-filters">
     <div class="tablenav top">
-      <div class="alignleft actions bulkactions">
-      <!--
-        <label for="bulk-action-selector-top" class="screen-reader-text">Sélectionnez l’action groupée</label>
-        <select name="action" id="bulk-action-selector-top">
+      <div class="alignleft actions bulkactions" style="display: inline; float: none;">
+        <select name="action" id="bulk-action-selector-top" class="custom-select custom-select-sm filters">
           <option value="-1">Actions groupées</option>
-          <option value="edit" class="hide-if-no-js">Modifier</option>
           <option value="trash">Déplacer dans la corbeille</option>
+      <!--
+          <option value="edit" class="hide-if-no-js">Modifier</option>
           <option value="duplicate_post_clone">Dupliquer</option>
-        </select>
-        <input id="doaction" class="button action" value="Appliquer" type="submit">
       -->
+        </select>
+        <input id="doaction" class="button action" value="Appliquer" type="submit" name="postAction">
       </div>
-      <div class="alignleft actions" style="display: inline; float: none;">%2$s<input name="filter_action" id="post-query-submit" class="button" value="Filtrer" type="submit"></div>
       <div class="tablenav-pages" style="height: 34px;">%5$s</div>
       <br class="clear">
     </div>

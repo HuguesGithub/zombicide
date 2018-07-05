@@ -10,7 +10,6 @@
       <table id="list-table" class="table table-striped table-bordered table-hover table-sm">
         <thead>%2$s</thead>
         <tbody>%3$s</tbody>
-        <tfoot>%4$s</tfoot>
       </table>
     </div>
   </div>

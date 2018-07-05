@@ -24,44 +24,47 @@ function ajaxCall(data) {
   );
 }
 function addActionToParamEditorButtons() {
-  $hj('#list-table button').unbind().click(function(){
+  $hj('#list-table button.editParam').unbind().click(function(){
     var type = $hj(this).data('type');
+    var id = $hj(this).data('id');
+    var data = {'action': 'dealWithAjax', 'ajaxAction': 'getParameter', 'type': type, 'id': id};
+    $hj.post(
+      ajaxurl,
+      data,
+      function(response) {
+        try {
+          var obj = JSON.parse(response);
+          for (var p in obj ) {
+            $hj('#'+type+'-'+p).val(obj[p]);
+          }
+          $hj('#list-table tfoot button.btn-success').removeClass('addParam').addClass('editParam');
+        } catch (e) {
+          console.log("error: "+e);
+          console.log(response);
+        }
+      }
+    );
+  });
+  /*
+  $hj('#list-table button').unbind().click(function(){
     if ($hj(this).hasClass('editParam') ) {
-      var id = $hj(this).data('id');
       if (id == undefined ) {
         // On a un nouvel objet, il faut l'envoyer en base via Ajax.
         // Puis on doit mettre à jour la table...
         $hj('#list-table tfoot button.btn-success').addClass('addParam').removeClass('editParam');
         $hj('#list-table tfoot input').each(function(){ $hj(this).val(''); });
       } else {
-        //***************/
+        //***************
         // Edition d'un Paramètre
-        //***************/
-        var data = {'action': 'dealWithAjax', 'ajaxAction': 'getParameter', 'type': type, 'id': id};
-        $hj.post(
-          ajaxurl,
-          data,
-          function(response) {
-            try {
-              var obj = JSON.parse(response);
-              for (var p in obj ) {
-                $hj('#'+type+'-'+p).val(obj[p]);
-              }
-              $hj('#list-table tfoot button.btn-success').removeClass('addParam').addClass('editParam');
-            } catch (e) {
-              console.log("error: "+e);
-              console.log(response);
-            }
-          }
-        );
+        //***************
       }
     } else if ($hj(this).hasClass('cleanParam') ) {
       $hj('#list-table tfoot button.btn-success').addClass('addParam').removeClass('editParam');
       $hj('#list-table tfoot input').each(function(){ $hj(this).val(''); });
     } else if ($hj(this).hasClass('addParam') ) {
-        //***************/
+        //***************
         // Création d'un Paramètre
-        //***************/
+        //***************
         var inputs = '';
         $hj('#list-table tfoot input').each(function(){
           if (inputs != '' ) { inputs += '|'; }
@@ -88,6 +91,7 @@ function addActionToParamEditorButtons() {
     }
     return false;
   });
+  */
 }
 function addActionToMapEditorButtons() {
   var width = $hj('.tileRow .tile').width();

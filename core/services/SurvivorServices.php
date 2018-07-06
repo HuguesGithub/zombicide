@@ -29,10 +29,10 @@ class SurvivorServices extends LocalServices
   {
     $arrParams = array();
     array_push($arrParams, (!empty($arrFilters['name']) && !is_array($arrFilters['name'])) ? '%'.$arrFilters['name'].'%' : '%');
-    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_ZOMBIVOR]) ? $arrFilters[self::CST_ZOMBIVOR] : '%');
-    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_ULTIMATE]) ? '%'.$arrFilters[self::CST_ULTIMATE].'%' : '%');
-    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_EXPANSIONID]) ? $arrFilters[self::CST_EXPANSIONID] : '%');
-    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_BACKGROUND]) ? $arrFilters[self::CST_BACKGROUND] : '%');
+    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_ZOMBIVOR) ? $arrFilters[self::CST_ZOMBIVOR] : '%'));
+    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_ULTIMATE) ? '%'.$arrFilters[self::CST_ULTIMATE].'%' : '%'));
+    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_EXPANSIONID) ? $arrFilters[self::CST_EXPANSIONID] : '%'));
+    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_BACKGROUND) ? $arrFilters[self::CST_BACKGROUND] : '%'));
     return $arrParams;
   }
   /**

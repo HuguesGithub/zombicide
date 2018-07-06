@@ -73,4 +73,6 @@ class Duration extends LocalDomain
    */
   public function getStrDuree()
   { return $this->minDuration.($this->maxDuration == 0 ? '' : ' à '.$this->maxDuration).' minutes'; }
+  public function getBean()
+  { return new DurationBean($this); }
 }

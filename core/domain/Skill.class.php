@@ -87,7 +87,7 @@ class Skill extends LocalDomain
    * @return string
    */
   public function getWpPostUrl()
-  { return '/page-competences/?skillId='.$this->id; }  
+  { return '/page-competences/?skillId='.$this->id; }
   /**
    * @param array $post
    * @return bool

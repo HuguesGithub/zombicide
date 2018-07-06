@@ -611,4 +611,22 @@ class LocalDomain extends GlobalDomain implements iConstants
     }
     return '{'.$str.'}';
   }
+  /**
+   * @param array $post
+   * @return bool
+   */
+  public function updateWithPost($post)
+  {
+    $classVars = $this->getClassVars();
+    unset($classVars['id']);
+    $doUpdate = false;
+    foreach ($classVars as $key=>$value) {
+      $value = stripslashes($post[$key]);
+      if ($this->{$key} != $value) {
+        $doUpdate = true;
+        $this->{$key} = $value;
+      }
+    }
+    return $doUpdate;
+  }
 }

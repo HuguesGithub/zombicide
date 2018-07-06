@@ -20,7 +20,9 @@
         <input id="doaction" class="button action" value="Appliquer" type="submit">
       -->
       </div>
-      <div class="alignleft actions" style="display: inline; float: none;">%2$s<input name="filter_action" id="post-query-submit" class="button" value="Filtrer" type="submit"></div>
+      <div class="alignleft actions" style="display: inline; float: none;">
+        %2$s<input name="filter_action" id="post-query-submit" class="button" value="Filtrer" type="submit">
+      </div>
       <!--
       <h2 class="screen-reader-text">Navigation de la liste des articles</h2>
       -->
@@ -31,8 +33,12 @@
       <thead>
         <tr>
           <td id="cb" class="manage-column column-cb check-column"><input id="cb-select-all-1" type="checkbox"></td>
-          <th scope="col" id="code" class="manage-column sortable %6$s"><a href="%7$s" style="padding: 0;"><span>Code</span><span class="sorting-indicator"></span></a></th>
-          <th scope="col" id="title" class="manage-column column-primary sortable %8$s"><a href="%9$s" style="padding: 0;"><span>Titre</span><span class="sorting-indicator"></span></a></th>
+          <th scope="col" id="code" class="manage-column sortable %6$s">
+            <a href="%7$s" style="padding: 0;"><span>Code</span><span class="sorting-indicator"></span></a>
+          </th>
+          <th scope="col" id="title" class="manage-column column-primary sortable %8$s">
+            <a href="%9$s" style="padding: 0;"><span>Titre</span><span class="sorting-indicator"></span></a>
+          </th>
           <th scope="col" id="levelId" class="manage-column">Difficulté</th>
           <th scope="col" id="durationId" class="manage-column">Durée</th>
           <th scope="col" id="playerId" class="manage-column">Joueurs</th>
@@ -47,8 +53,12 @@
       <tfoot>
         <tr>
           <td class="manage-column column-cb check-column"><input id="cb-select-all-2" type="checkbox"></td>
-          <th scope="col" class="manage-column sortable %6$s"><a href="%7$s" style="padding: 0;"><span>Code</span><span class="sorting-indicator"></span></a></th>
-          <th scope="col" class="manage-column column-primary sortable %8$s"><a href="%9$s" style="padding: 0;"><span>Titre</span><span class="sorting-indicator"></span></a></th>
+          <th scope="col" class="manage-column sortable %6$s">
+            <a href="%7$s" style="padding: 0;"><span>Code</span><span class="sorting-indicator"></span></a>
+          </th>
+          <th scope="col" class="manage-column column-primary sortable %8$s">
+            <a href="%9$s" style="padding: 0;"><span>Titre</span><span class="sorting-indicator"></span></a>
+          </th>
           <th scope="col" class="manage-column">Difficulté</th>
           <th scope="col" class="manage-column">Durée</th>
           <th scope="col" class="manage-column">Joueurs</th>

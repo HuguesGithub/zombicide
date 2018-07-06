@@ -40,12 +40,12 @@ class ExpansionBean extends MainPageBean
     $queryArg[self::CST_POSTACTION] = 'trash';
     $urlTrash = $this->getQueryArg($queryArg);
     $args = array(
-      $nb.' Mission'.($nb>1?'s':''), 
+      $nb.' Mission'.($nb>1?'s':''),
       $urlEdit,
       $urlTrash
     );
     $tBody  = '<tr><td>'.$Expansion->getId().'</td><td>'.$Expansion->getCode().'</td><td>'.$Expansion->getName();
     $tBody .= '</td><td>'.$Expansion->getDisplayRank().'</td>';
-	return $tBody.vsprintf($tBodyButtons, $args).'</tr>';
+  return $tBody.vsprintf($tBodyButtons, $args).'</tr>';
   }
 }

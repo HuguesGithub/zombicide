@@ -18,12 +18,14 @@ class AdminParametrePageBean extends AdminPageBean
     parent::__construct($tag);
     $this->DurationServices = FactoryServices::getDurationServices();
     $this->ExpansionServices = FactoryServices::getExpansionServices();
+    $this->KeywordServices = FactoryServices::getKeywordServices();
     $this->LevelServices = FactoryServices::getLevelServices();
     $this->MissionServices = FactoryServices::getMissionServices();
     $this->MissionExpansionServices = FactoryServices::getMissionExpansionServices();
     $this->MissionObjectiveServices = FactoryServices::getMissionObjectiveServices();
     $this->MissionRuleServices = FactoryServices::getMissionRuleServices();
     $this->ObjectiveServices = FactoryServices::getObjectiveServices();
+    $this->OrigineServices = FactoryServices::getOrigineServices();
     $this->PlayerServices = FactoryServices::getPlayerServices();
     $this->RuleServices = FactoryServices::getRuleServices();
     $this->title = 'Paramètres';
@@ -37,12 +39,59 @@ class AdminParametrePageBean extends AdminPageBean
     $Bean = new AdminParametrePageBean();
     $tBodyButtons  = '<td><a class="btn btn-xs btn-success editParam" href="%2$s"><i class="fas fa-pencil-alt"></i></a> ';
     $tBodyButtons .= '<a class="btn btn-xs btn-danger rmvParam" href="%3$s"><i class="fas fa-trash-alt"></i></a></td><td>%1$s</td>';
-    switch ($Bean->initVar('table')) {
+    /**
+     * On initialise le Service qui va être utilisé pour les traitements de la page.
+     * On traite éventuellement une action formulaure
+     * On affiche la page dédiée à l'onglet
+     */
+    switch ($urlParams['table']) {
       case 'duration' :
-        $returned = $Bean->getDurationContent($urlParams, $tBodyButtons);
+        $Services = $Bean->DurationServices;
+        $Bean->dealWithPostAction($Services, $urlParams);
+        $Durations = $Services->getDurationsWithFilters(__FILE__, __LINE__);
+        $returned = $Bean->getMutualizedContent($Services, $Durations, $urlParams, $tBodyButtons);
       break;
       case 'expansion' :
-        $returned = $Bean->getExpansionContent($urlParams, $tBodyButtons);
+        $Services = $Bean->ExpansionServices;
+        $Bean->dealWithPostAction($Services, $urlParams);
+        $Expansions = $Services->getExpansionsWithFilters(__FILE__, __LINE__);
+        $returned = $Bean->getMutualizedContent($Services, $Expansions, $urlParams, $tBodyButtons);
+      break;
+      case 'keyword' :
+        $Services = $Bean->KeywordServices;
+        $Bean->dealWithPostAction($Services, $urlParams);
+        $Keywords = $Services->getKeywordsWithFilters(__FILE__, __LINE__);
+        $returned = $Bean->getMutualizedContent($Services, $Keywords, $urlParams, $tBodyButtons);
+      break;
+      case 'level' :
+        $Services = $Bean->LevelServices;
+        $Bean->dealWithPostAction($Services, $urlParams);
+        $Levels = $Services->getLevelsWithFilters(__FILE__, __LINE__);
+        $returned = $Bean->getMutualizedContent($Services, $Levels, $urlParams, $tBodyButtons);
+      break;
+      case 'objective' :
+        $Services = $Bean->ObjectiveServices;
+        $Bean->dealWithPostAction($Services, $urlParams);
+        $Objectives = $Services->getObjectivesWithFilters(__FILE__, __LINE__);
+        $returned = $Bean->getMutualizedContent($Services, $Objectives, $urlParams, $tBodyButtons);
+      break;
+      case 'origine' :
+        $Services = $Bean->OrigineServices;
+        $Bean->dealWithPostAction($Services, $urlParams);
+        $Origines = $Services->getOriginesWithFilters(__FILE__, __LINE__);
+        $returned = $Bean->getMutualizedContent($Services, $Origines, $urlParams, $tBodyButtons);
+      break;
+      case 'player' :
+        $Services = $Bean->PlayerServices;
+        $Bean->dealWithPostAction($Services, $urlParams);
+        $Players = $Services->getPlayersWithFilters(__FILE__, __LINE__);
+        $returned = $Bean->getMutualizedContent($Services, $Players, $urlParams, $tBodyButtons);
+      break;
+      case 'rule' :
+        $Services = $Bean->RuleServices;
+        $Bean->dealWithPostAction($Services, $urlParams);
+        $Rules = $Services->getRulesWithFilters(__FILE__, __LINE__);
+        $returned = $Bean->getMutualizedContent($Services, $Rules, $urlParams, $tBodyButtons);
       break;
       default :
         $returned = $Bean->buildWithHeaderAndFooter();
@@ -51,36 +100,21 @@ class AdminParametrePageBean extends AdminPageBean
     return $returned;
   }
   /**
-   * Prépare les lignes du tableau et retourne le contenu de l'interface Durée
+   * Prépare les lignes du tableau et retourne le contenu de l'interface Joueurs
    * @param string $tBodyButtons Template d'affichage des boutons en fin de ligne
    * @return string
    */
-  public function getDurationContent($urlParams, $tBodyButtons) {
-    $Durations = $this->DurationServices->getDurationsWithFilters(__FILE__, __LINE__);
+  public function getMutualizedContent($Services, $Objs, $urlParams, $tBodyButtons)
+  {
     $tBody = '';
-    if (!empty($Durations)) {
-      foreach ($Durations as $Duration) {
-        $Bean = new DurationBean($Duration);
+    if (!empty($Objs)) {
+      foreach ($Objs as $Obj) {
+        $Bean = $Obj->getBean();
         $tBody .= $Bean->getRowForAdminPage($tBodyButtons);
       }
     }
-    return $this->buildWithHeaderAndFooter(new Duration(), 'duration', $urlParams, $tBody);
-  }
-  /**
-   * Prépare les lignes du tableau et retourne le contenu de l'interface Extension
-   * @param string $tBodyButtons Template d'affichage des boutons en fin de ligne
-   * @return string
-   */
-  public function getExpansionContent($urlParams, $tBodyButtons) {
-    $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__);
-    $tBody = '';
-    if (!empty($Expansions)) {
-      foreach ($Expansions as $Expansion) {
-        $Bean = new ExpansionBean($Expansion);
-        $tBody .= $Bean->getRowForAdminPage($tBodyButtons);
-      }
-    }
-    return $this->buildWithHeaderAndFooter(new Expansion(), 'expansion', $urlParams, $tBody);
+    $Obj = $Services->select(__FILE__, __LINE__, $urlParams['id']);
+    return $this->buildWithHeaderAndFooter($Obj, $urlParams, $tBody);
   }
   /**
    * Retourne les onglets disponibles pour affichage.
@@ -90,12 +124,14 @@ class AdminParametrePageBean extends AdminPageBean
   public function buildTabs($table='')
   {
     $arrTabs = array(
-      //'level'=>'Difficultés',
+      'level'=>'Difficultés',
       'duration'=>'Durées',
-      //'player'=>'Joueurs',
-      //'rule'=>'Règles',
-      //'objective'=>'Objectifs',
       'expansion'=>'Expansions',
+      'player'=>'Joueurs',
+      'keyword'=>'Mots-clés',
+      'objective'=>'Objectifs',
+      'origine'=>'Origines',
+      'rule'=>'Règles',
       //'tile'=>'Dalles'
     );
     $strTabs = '';
@@ -113,32 +149,19 @@ class AdminParametrePageBean extends AdminPageBean
    * @param string $tBody Contenu du body du tableau
    * @return string
    */
-  public function buildWithHeaderAndFooter($Obj='', $table='', $urlParams='', $tBody='')
+  public function buildWithHeaderAndFooter($Obj='', $urlParams='', $tBody='')
   {
+    $table = $urlParams['table'];
     $tHeader = '';
     if ($table!='') {
-      switch ($table) {
-        case 'duration' :
-          $Obj = $this->DurationServices->select(__FILE__, __LINE__, $urlParams['id']);
-        break;
-        case 'expansion' :
-          $Obj = $this->ExpansionServices->select(__FILE__, __LINE__, $urlParams['id']);
-        break;
-        default :
-      }
       $tHeader .= '<tr>';
-      switch ($urlParams[self::CST_POSTACTION]) {
-        case 'trash' :
-    	 	  $prefixTBody  = '<form method="post" action="#"><tr class="table-danger">';
-        break;
-        default :
-    	 	  $prefixTBody  = '<form method="post" action="#"><tr class="table-success">';
-        break;
-      }
+      $prefixTBody  = '<form method="post" action="#"><tr class="table-';
+      $prefixTBody .= ($urlParams[self::CST_POSTACTION]=='trash' ? 'danger' : 'success').'">';
       $classVars = $Obj->getClassVars();
       foreach ($classVars as $key => $value) {
         $tHeader .= '<td>'.$key.'</td>';
-        $prefixTBody .= '<td><input type="text" class="form-control" id="'.$table.'-'.$key.'"'.($key=='id'?' disabled':'').' value="'.$Obj->getField($key).'"/></td>';
+        $prefixTBody .= '<td><input type="text" class="form-control" name="'.$key.'" ';
+        $prefixTBody .= ($key=='id' || $urlParams[self::CST_POSTACTION]=='trash'?' disabled':'').' value="'.$Obj->getField($key).'"/></td>';
       }
       $tHeader .= '<td>&nbsp;</td><td>Utilisations</td></tr>';
       $queryArg = array(
@@ -148,20 +171,29 @@ class AdminParametrePageBean extends AdminPageBean
       $urlCancel = $this->getQueryArg($queryArg);
       switch ($urlParams[self::CST_POSTACTION]) {
         case 'trash' :
-          $prefixTBody .= '<td><input type="hidden" value="'.$table.'" name="table"><input type="hidden" value="edit" name="'.self::CST_POSTACTION.'"><input type="submit" class="btn btn-xs btn-danger" value="Supprimer"/>';
-          $prefixTBody .= '<a class="btn btn-xs btn-success" href="'.$urlCancel.'"><i class="fas fa-times-circle"></i></a></td><td>&nbsp;</td></tr></form>';
+          $inpValue = 'trashConfirm';
+          $mainClass = 'danger';
+          $label = 'Supprimer';
+          $secClass = 'success';
         break;
         case 'edit' :
-          $prefixTBody .= '<td><input type="hidden" value="'.$table.'" name="table"><input type="hidden" value="edit" name="'.self::CST_POSTACTION.'"><input type="submit" class="btn btn-xs btn-success" value="Modifier"/>';
-          $prefixTBody .= '<a class="btn btn-xs btn-danger" href="'.$urlCancel.'"><i class="fas fa-times-circle"></i></a></td><td>&nbsp;</td></tr></form>';
+          $inpValue = 'editConfirm';
+          $mainClass = 'success';
+          $label = 'Modifier';
+          $secClass = 'danger';
         break;
         case 'add' :
         default :
-          $prefixTBody .= '<td><input type="hidden" value="'.$table.'" name="table"><input type="hidden" value="add" name="'.self::CST_POSTACTION.'"><input type="submit" class="btn btn-xs btn-success" value="Créer"/>';
-          $prefixTBody .= '<a class="btn btn-xs btn-danger" href="'.$urlCancel.'"><i class="fas fa-times-circle"></i></a></td><td>&nbsp;</td></tr></form>';
+          $inpValue = 'add';
+          $mainClass = 'success';
+          $label = 'Créer';
+          $secClass = 'danger';
         break;
       }
     }
+    $prefixTBody .= '<td><input type="hidden" value="'.$table.'" name="table"><input type="hidden" value="'.$inpValue.'" name="'.self::CST_POSTACTION;
+    $prefixTBody .= '"><input type="submit" class="btn btn-xs btn-'.$mainClass.'" value="'.$label.'"/>';
+    $prefixTBody .= '<a class="btn btn-xs btn-'.$secClass.'" href="'.$urlCancel.'"><i class="fas fa-times-circle"></i></a></td><td>&nbsp;</td></tr></form>';
     $args = array(
       $this->buildTabs($table),
       $tHeader,
@@ -170,117 +202,69 @@ class AdminParametrePageBean extends AdminPageBean
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/parametres-admin-board.php');
     return vsprintf($str, $args);
   }
-  
-  
   /**
-   * @return string
+   * Vérifie si on a une action provenant d'un formulaire. Réoriente le cas échéant.
+   * @param $Services Services à utiliser pour l'opération
+   * @param array $urlParams Contient les différents éléments de l'objet
    */
-  public function getContentPage()
+  private function dealWithPostAction($Services, &$urlParams)
   {
-    $table = $this->initVar('table');
-    $arrTabs = array('level'=>'Difficultés', 'duration'=>'Durées', 'player'=>'Joueurs', 'rule'=>'Règles',
-      'objective'=>'Objectifs', 'expansion'=>'Expansions', 'tile'=>'Dalles');
-    $strTabs = '';
-    foreach ($arrTabs as $key => $value) {
-      $strTabs .= '<a href="'.$this->getQueryArg(array('onglet'=>'parametre', 'table'=>$key));
-      $strTabs .= '" class="list-group-item list-group-item-action';
-      $strTabs .= ($key==$table ? ' active' : '').'">'.$value.'</a>';
-    }
-    $tBody = '';
-    $tBodyButtons  = '<td><button class="btn btn-xs btn-success editParam" data-type="%2$s" data-id="%3$s">';
-    $tBodyButtons .= '<i class="fas fa-pencil-alt"></i></button>';
-    $tBodyButtons .= '<button class="btn btn-xs btn-danger rmvParam" data-type="%2$s" data-id="%3$s">';
-    $tBodyButtons .= '<i class="fas fa-trash-alt"></i></button></td><td>%1$s</td>';
-    switch ($table) {
-      case 'level' :
-        $Level = new Level();
-        $classVars = $Level->getClassVars();
-        $Levels = $this->LevelServices->getLevelsWithFilters(__FILE__, __LINE__);
-        if (!empty($Levels)) {
-          foreach ($Levels as $Level) {
-            $id = $Level->getId();
-            $Missions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, array('levelId'=>$id));
-            $nb = count($Missions);
-            $tBody .= '<tr><td>'.$id.'</td><td>'.$Level->getName().'</td>';
-            $args = array($nb.' Mission'.($nb>1?'s':''), $table, $id);
-            $tBody .= vsprintf($tBodyButtons, $args).'</tr>';
-          }
-        }
+    /**
+     * Si on a une action par formulaire, elle doit être traitée en priorité.
+     */
+    switch ($urlParams[self::CST_POSTACTION]) {
+      case 'add' :
+        $this->addElement($Services, $urlParams);
       break;
-      case 'player' :
-        $Player = new Player();
-        $classVars = $Player->getClassVars();
-        $Players = $this->PlayerServices->getPlayersWithFilters(__FILE__, __LINE__);
-        if (!empty($Players)) {
-          foreach ($Players as $Player) {
-            $id = $Player->getId();
-            $Missions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, array('playerId'=>$id));
-            $nb = count($Missions);
-            $tBody .= '<tr><td>'.$id.'</td><td>'.$Player->getName().'</td>';
-            $args = array($nb.' Mission'.($nb>1?'s':''), $table, $id);
-            $tBody .= vsprintf($tBodyButtons, $args).'</tr>';
-          }
-        }
+      case 'editConfirm' :
+        $this->editElement($Services, $urlParams);
       break;
-      case 'rule' :
-        $Rule = new Rule();
-        $classVars = $Rule->getClassVars();
-        $Rules = $this->RuleServices->getRulesWithFilters(__FILE__, __LINE__);
-        if (!empty($Rules)) {
-          foreach ($Rules as $Rule) {
-            $id = $Rule->getId();
-            $MissionRules = $this->MissionRuleServices->getMissionRulesWithFilters(__FILE__, __LINE__, array('ruleId'=>$id));
-            $nb = count($MissionRules);
-            $tBody .= '<tr><td>'.$id.'</td><td>'.$Rule->getSetting().'</td><td>'.$Rule->getCode().'</td><td>';
-            $tBody .= $Rule->getDescription().'</td>';
-            $args = array($nb.' Mission'.($nb>1?'s':''), $table, $id);
-            $tBody .= vsprintf($tBodyButtons, $args).'</tr>';
-          }
-        }
-      break;
-      case 'objective' :
-        $Objective = new Objective();
-        $classVars = $Objective->getClassVars();
-        $Objectives = $this->ObjectiveServices->getObjectivesWithFilters(__FILE__, __LINE__);
-        if (!empty($Objectives)) {
-          foreach ($Objectives as $Objective) {
-            $id = $Objective->getId();
-            $arrF = array('objectiveId'=>$id);
-            $MissionObjectives = $this->MissionObjectiveServices->getMissionObjectivesWithFilters(__FILE__, __LINE__, $arrF);
-            $nb = count($MissionObjectives);
-            $tBody .= '<tr><td>'.$id.'</td><td>'.$Objective->getCode().'</td><td>'.$Objective->getDescription().'</td>';
-            $args = array($nb.' Mission'.($nb>1?'s':''), $table, $id);
-            $tBody .= vsprintf($tBodyButtons, $args).'</tr>';
-          }
-        }
+      case 'trashConfirm' :
+        $this->trashElement($Services, $urlParams);
+        $urlParams[self::CST_POSTACTION] = 'add';
       break;
       default :
       break;
     }
-    $tHeader  = '<tr>';
-    $tFooter  = '<tr>';
-    foreach ($classVars as $key => $value) {
-      $tHeader .= '<td>'.$key.'</td>';
-      $tFooter .= '<td><input type="text" class="form-control" id="'.$table.'-'.$key.'"'.($key=='id'?' disabled':'').'/></td>';
-    }
-    $tHeader .= '<td>&nbsp;</td><td>Utilisations</td></tr>';
-    $tFooter .= '<td><button class="btn btn-xs btn-success addParam" data-type="'.$table;
-    $tFooter .= '"><i class="fas fa-plus-circle"></i><i class="fas fa-pencil-alt"></i></button>';
-    $tFooter .= '<button class="btn btn-xs btn-danger cleanParam"><i class="fas fa-times-circle"></i></button></td><td>&nbsp;</td></tr>';
-    $args = array(
-      $strTabs,
-      $tHeader,
-      $tBody,
-      $tFooter,
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-   );
-    $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/parametres-admin-board.php');
-    return vsprintf($str, $args);
   }
-
+  /**
+   * Supprime un élément
+   * @param $Services Services à utiliser pour la suppression
+   * @param array $urlParams Contient les différents éléments de l'objet dont l'identifiant
+   */
+  private function trashElement($Services, $urlParams)
+  {
+    if ($Services!=null) {
+      $Obj = $Services->select(__FILE__, __LINE__, $urlParams['id']);
+      $Services->delete(__FILE__, __LINE__, $Obj);
+    }
+  }
+  /**
+   * Modifie un élément
+   * @param $Services Services à utiliser pour la modification
+   * @param array $urlParams Contient les différents éléments de l'objet
+   */
+  private function editElement($Services, $urlParams)
+  {
+    if ($Services!=null) {
+      $Obj = $Services->select(__FILE__, __LINE__, $urlParams['id']);
+      $doUpdate = $Obj->updateWithPost($urlParams);
+      if ($doUpdate) {
+        $Services->update(__FILE__, __LINE__, $Obj);
+      }
+    }
+  }
+  /**
+   * Créé un élément
+   * @param $Services Services à utiliser pour la création
+   * @param array $urlParams Contient les différents éléments de l'objet
+   */
+  private function addElement($Services, $urlParams)
+  {
+    if ($Services!=null) {
+      $Obj = $Services->select(__FILE__, __LINE__, -1);
+      $Obj->updateWithPost($urlParams);
+      $Services->insert(__FILE__, __LINE__, $Obj);
+    }
+  }
 }

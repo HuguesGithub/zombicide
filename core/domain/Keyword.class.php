@@ -68,4 +68,6 @@ class Keyword extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new Keyword(), self::getClassVars(), $row); }
+  public function getBean()
+  { return new KeywordBean($this); }
 }

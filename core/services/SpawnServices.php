@@ -24,8 +24,8 @@ class SpawnServices extends LocalServices
   private function buildFilters($arrFilters)
   {
     $arrParams = array();
-    array_push($arrParams, (!empty($arrFilters[self::CST_EXPANSIONID]) && !is_array($arrFilters[self::CST_EXPANSIONID])) ? $arrFilters[self::CST_EXPANSIONID] : '%');
-    array_push($arrParams, (!empty($arrFilters[self::CST_SPAWNNUMBER]) && !is_array($arrFilters[self::CST_SPAWNNUMBER])) ? $arrFilters[self::CST_SPAWNNUMBER] : '%');
+    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_EXPANSIONID]) ? $arrFilters[self::CST_EXPANSIONID] : '%');
+    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_SPAWNNUMBER]) ? $arrFilters[self::CST_SPAWNNUMBER] : '%');
     return $arrParams;
   }
   /**

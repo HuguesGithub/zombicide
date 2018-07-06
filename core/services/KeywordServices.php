@@ -23,6 +23,13 @@ class KeywordServices extends LocalServices
     $this->Dao = new KeywordDaoImpl();
     parent::__construct();
   }
+  private function buildFilters($arrFilters)
+  {
+    $arrParams = array();
+    $arrParams[] = (isset($arrFilters[self::CST_NAME]) ? $arrFilters[self::CST_NAME] : '%');
+    $arrParams[] = (isset($arrFilters[self::CST_DESCRIPTION]) ? $arrFilters[self::CST_DESCRIPTION] : '%');
+    return $arrParams;
+  }
 
   /**
    * @param string $file
@@ -35,6 +42,7 @@ class KeywordServices extends LocalServices
   public function getKeywordsWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc')
   {
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
+    $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
   

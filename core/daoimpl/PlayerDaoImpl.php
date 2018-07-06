@@ -15,7 +15,7 @@ class PlayerDaoImpl extends LocalDaoImpl
    */
   public function __construct()
   {
-    parent::__construct('Player');
+    parent::__construct('PLayer');
   }
   /**
    * @param array $rows

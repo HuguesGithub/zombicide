@@ -15,7 +15,7 @@ class EquipmentKeywordDaoImpl extends LocalDaoImpl
    */
   public function __construct()
   {
-    parent::__construct('EquipementExpansion');
+    parent::__construct('EquipmentKeyword');
   }
   /**
    * @param array $rows

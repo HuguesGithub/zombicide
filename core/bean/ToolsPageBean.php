@@ -58,20 +58,20 @@ class ToolsPageBean extends PagePageBean
   }
   private function getStrJets(&$nbDeDes, $hasPlusUnAuDe, $hasSurUn6, $seuilReussite)
   {
-  	$score = rand(1, 6);
-  	if ($score == 6 || ($score == 5 && $hasPlusUnAuDe)) {
-  	  $strClasse = "primary";
-  	  if ($hasSurUn6) {
-  	    $nbDeDes++;
-  	  }
-  	} elseif ($score==1) {
-  		$strClasse = "danger";
-  	} elseif ($score >= ($seuilReussite - ($hasPlusUnAuDe ? 1 : 0))) {
-  		$strClasse = "info";
-  	} else {
-  		$strClasse = "warning";
-  	}
-  	return '<span class="badge badge-'.$strClasse.'">'.$score.'</span> ';
+    $score = rand(1, 6);
+    if ($score == 6 || ($score == 5 && $hasPlusUnAuDe)) {
+      $strClasse = "primary";
+      if ($hasSurUn6) {
+        $nbDeDes++;
+      }
+    } elseif ($score==1) {
+      $strClasse = "danger";
+    } elseif ($score >= ($seuilReussite - ($hasPlusUnAuDe ? 1 : 0))) {
+      $strClasse = "info";
+    } else {
+      $strClasse = "warning";
+    }
+    return '<span class="badge badge-'.$strClasse.'">'.$score.'</span> ';
   }
   /**
    * @param WpPost $WpPage

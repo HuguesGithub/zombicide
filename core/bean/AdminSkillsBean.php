@@ -199,14 +199,12 @@ class AdminSkillsBean extends AdminPageBean
   public function getTrashPage($skillId=null)
   {
     // Si on confirme la suppression, on le fait et on affiche la nouvelle liste
-    if (isset($_POST) && !empty($_POST)) {
-      if (!empty($_POST['skillIds'])) {
-        foreach ( $_POST['skillIds'] as $skillId ) {
-          $Skill = $this->SkillServices->select(__FILE__, __LINE__, $skillId);
-          $this->SkillServices->delete(__FILE__, __LINE__, $Skill);
-        }
-        return $this->getListingPage();
+    if (isset($_POST) && !empty($_POST) && !empty($_POST['skillIds'])) {
+      foreach ($_POST['skillIds'] as $skillId) {
+        $Skill = $this->SkillServices->select(__FILE__, __LINE__, $skillId);
+        $this->SkillServices->delete(__FILE__, __LINE__, $Skill);
       }
+      return $this->getListingPage();
     }
     // On affiche l'interface de confirmation de suppression avant de commettre l'irrémédiable.
     $Skill = $this->SkillServices->select(__FILE__, __LINE__, $skillId);
@@ -232,7 +230,7 @@ class AdminSkillsBean extends AdminPageBean
         $subTitle = 'les compétences suivantes';
         $urlCancel = $this->getQueryArg(array(self::CST_ONGLET=>self::CST_SKILL));
         $strLis  = '';
-        foreach ( $_POST['post'] as $value ) {
+        foreach ($_POST['post'] as $value) {
           $Skill = $this->SkillServices->select(__FILE__, __LINE__, $value);
           $strLis .= '<li><input type="hidden" name="skillIds[]" value="'.$value.'"/>'.$Skill->getName().'</li>';
         }

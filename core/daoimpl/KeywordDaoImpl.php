@@ -14,9 +14,7 @@ class KeywordDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('Keyword');
-  }
+  { parent::__construct('Keyword'); }
   /**
    * @param array $rows
    * @return array

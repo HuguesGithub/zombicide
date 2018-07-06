@@ -69,4 +69,6 @@ class Player extends LocalDomain
     }
     return $this->name.' Survivants';
   }
+  public function getBean()
+  { return new PlayerBean($this); }
 }

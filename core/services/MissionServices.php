@@ -26,10 +26,10 @@ class MissionServices extends LocalServices
   private function buildFilters($arrFilters)
   {
     $arrParams = array();
-    array_push($arrParams, (!empty($arrFilters[self::CST_LEVELID]) && !is_array($arrFilters[self::CST_LEVELID])) ? $arrFilters[self::CST_LEVELID] : '%');
+    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_LEVELID) ? $arrFilters[self::CST_LEVELID] : '%'));
     array_push($arrParams, ($arrFilters[self::CST_DURATIONID]!='' && !is_array($arrFilters[self::CST_DURATIONID])) ? $arrFilters[self::CST_DURATIONID] : '%');
-    array_push($arrParams, (!empty($arrFilters[self::CST_PLAYERID]) && !is_array($arrFilters[self::CST_PLAYERID])) ? $arrFilters[self::CST_PLAYERID] : '%');
-    array_push($arrParams, (!empty($arrFilters[self::CST_ORIGINEID]) && !is_array($arrFilters[self::CST_ORIGINEID])) ? $arrFilters[self::CST_ORIGINEID] : '%');
+    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_PLAYERID) ? $arrFilters[self::CST_PLAYERID] : '%'));
+    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_ORIGINEID) ? $arrFilters[self::CST_ORIGINEID] : '%'));
     $bPublished = isset($arrFilters[self::CST_PUBLISHED]) && !is_array($arrFilters[self::CST_PUBLISHED]);
     array_push($arrParams, $bPublished ? $arrFilters[self::CST_PUBLISHED] : '%');
     return $arrParams;

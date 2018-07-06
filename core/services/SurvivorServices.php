@@ -20,15 +20,19 @@ class SurvivorServices extends LocalServices
    */
   public function __construct()
   { $this->Dao = new SurvivorDaoImpl(); }
-
+  /**
+   * Construit le tableau des filtres pour la requête dédiée.
+   * @param array $arrFilters
+   * @return array
+   */
   private function buildFilters($arrFilters)
   {
     $arrParams = array();
     array_push($arrParams, (!empty($arrFilters['name']) && !is_array($arrFilters['name'])) ? '%'.$arrFilters['name'].'%' : '%');
-    array_push($arrParams, (!empty($arrFilters[self::CST_ZOMBIVOR]) && !is_array($arrFilters[self::CST_ZOMBIVOR])) ? $arrFilters[self::CST_ZOMBIVOR] : '%');
-    array_push($arrParams, (!empty($arrFilters[self::CST_ULTIMATE]) && !is_array($arrFilters[self::CST_ULTIMATE])) ? '%'.$arrFilters[self::CST_ULTIMATE].'%' : '%');
-    array_push($arrParams, (!empty($arrFilters[self::CST_EXPANSIONID]) && !is_array($arrFilters[self::CST_EXPANSIONID])) ? $arrFilters[self::CST_EXPANSIONID] : '%');
-    array_push($arrParams, (!empty($arrFilters[self::CST_BACKGROUND]) && !is_array($arrFilters[self::CST_BACKGROUND])) ? $arrFilters[self::CST_BACKGROUND] : '%');
+    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_ZOMBIVOR]) ? $arrFilters[self::CST_ZOMBIVOR] : '%');
+    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_ULTIMATE]) ? '%'.$arrFilters[self::CST_ULTIMATE].'%' : '%');
+    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_EXPANSIONID]) ? $arrFilters[self::CST_EXPANSIONID] : '%');
+    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_BACKGROUND]) ? $arrFilters[self::CST_BACKGROUND] : '%');
     return $arrParams;
   }
   /**

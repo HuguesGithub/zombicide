@@ -68,4 +68,6 @@ class Objective extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new Objective(), self::getClassVars(), $row); }
+  public function getBean()
+  { return new ObjectiveBean($this); }
 }

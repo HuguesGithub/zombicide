@@ -77,5 +77,13 @@ class LocalServices extends GlobalServices implements iConstants
     }
     return $isSelected;
   }
+  /**
+   * Vérifie qu'un élément du tableau n'est ni vide ni un tableau.
+   * @param array $arrFilters
+   * @param string $tag
+   * @return boolean
+   */
+  protected function isNonEmptyAndNoArray($arrFilters, $tag)
+  { return !empty($arrFilters[$tag]) && !is_array($arrFilters[$tag]); }
   
 }

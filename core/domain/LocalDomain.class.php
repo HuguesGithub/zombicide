@@ -620,7 +620,7 @@ class LocalDomain extends GlobalDomain implements iConstants
     $classVars = $this->getClassVars();
     unset($classVars['id']);
     $doUpdate = false;
-    foreach ($classVars as $key=>$value) {
+    foreach ($classVars as $key => $value) {
       $value = stripslashes($post[$key]);
       if ($this->{$key} != $value) {
         $doUpdate = true;

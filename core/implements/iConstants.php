@@ -60,6 +60,7 @@ interface iConstants
   const CST_SKILL     = 'skill';
   const CST_SPAWNNUMBER   = 'spawnNumber';
   const CST_STATUS = 'status';
+  const CST_SURVIVOR  = 'survivor';
   const CST_SURVIVORTYPEID  = 'survivorTypeId';
   const CST_TAGLEVELID    = 'tagLevelId';
   const CST_TEXTE = 'texte';

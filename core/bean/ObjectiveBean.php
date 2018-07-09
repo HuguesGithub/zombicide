@@ -27,7 +27,8 @@ class ObjectiveBean extends MainPageBean
   public function getRowForAdminPage($tBodyButtons)
   {
     $Objective = $this->Objective;
-    $Missions = $this->MissionObjectiveServices->getMissionObjectivesWithFilters(__FILE__, __LINE__, array('objectiveId'=>$Objective->getId()));
+    $arrF = array('objectiveId'=>$Objective->getId());
+    $Missions = $this->MissionObjectiveServices->getMissionObjectivesWithFilters(__FILE__, __LINE__, $arrF);
     $nb = count($Missions);
     $queryArg = array(
       self::CST_ONGLET=>'parametre',

@@ -87,7 +87,7 @@ class ToolsPageBean extends PagePageBean
    */
   public function getSurvivorsContent()
   {
-    $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), array(self::CST_DISPLAYRANK), array('ASC'));
+    $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), self::CST_DISPLAYRANK, 'ASC');
     if (!empty($Expansions)) {
       $str .= '<div class="btn-group-vertical team-selection" role="group">';
       $str .= '<div class="btn-toolbar" role="toolbar">';

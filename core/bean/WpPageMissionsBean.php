@@ -119,7 +119,7 @@ class WpPageMissionsBean extends PagePageBean
       // Doit-on afficher les filtres ? - 18
       (!$hasFilters ? 'hidden' : ''),
       // Filtre sur Extension - 19
-      ($this->isAdmin() ? $this->ExpansionServices->getExpansionsSelectAlreadyRequested(__FILE__, __LINE__, $Expansions, $arrExpansionIds, '', $selectClasses, true) : ''),
+      $this->ExpansionServices->getExpansionsSelectAlreadyRequested(__FILE__, __LINE__, $Expansions, $arrExpansionIds, '', $selectClasses, true),
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-missions.php');
     return vsprintf($str, $args);

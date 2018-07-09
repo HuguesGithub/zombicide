@@ -44,7 +44,7 @@ class RuleBean extends MainPageBean
       $urlTrash,
     );
     $tBody  = '<tr><td>'.$Rule->getId().'</td><td>'.$Rule->getSetting().'</td><td>'.$Rule->getCode().'</td>';
-	$tBody .= '<td>'.$Rule->getDescription().'</td>';
+  $tBody .= '<td>'.$Rule->getDescription().'</td>';
     return $tBody.vsprintf($tBodyButtons, $args).'</tr>';
   }
 }

@@ -190,10 +190,11 @@ class MissionBean extends MainPageBean
           break;
           default : break;
         }
+        $tileCode = $Mission->getTileCode($j, $i+1);
         $innerRows[$i] .= vsprintf($openDivTile, array($j, ''));
         $innerRows[$i] .= '<img class="thumbTile'.$classImg.'" src="/wp-content/plugins/zombicide/web/rsc/images/tiles/';
-        $innerRows[$i] .= $Mission->getTileCode($j, $i+1).'-500px.png" alt="'.$Mission->getTileCode($j, $i+1).'">';
-        $innerRows[$i] .= $this->TileServices->getTilesSelect(__FILE__, __LINE__, $Mission->getTileId($j, $i+1), $name, $classe, false, '--');
+        $innerRows[$i] .= $Mission->getTileCode($j, $i+1).'-500px.png" alt="'.$tileCode.'">';
+        $innerRows[$i] .= $this->TileServices->getTilesSelect(__FILE__, __LINE__, $tileCode, $name, $classe, false, '--');
         foreach ($arrOrientations as $key => $value) {
           $innerRows[$i] .= '<button type="button" class="rdv '.$value.($orientation==$key ? ' active' : '');
           $innerRows[$i] .= '" data-action="'.$key.'" data-col="'.$j.'" data-row="'.($i+1).'"></button>';

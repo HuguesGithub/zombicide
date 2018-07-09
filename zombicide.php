@@ -84,12 +84,14 @@ function zombicide_menu()
     $uploadFiles = 'upload_files';
     add_menu_page('Zombicide', 'Zombicide', $uploadFiles, $urlRoot, '', plugins_url('/zombicide/web/rsc/img/icons/icon_s1.png'));
     if (function_exists('add_submenu_page')) {
+      $urlSubMenu = $urlRoot.'&amp;onglet=skill';
+      add_submenu_page($urlRoot, 'Compétences', 'Compétences', $uploadFiles, $urlSubMenu, 'skills');
       $urlSubMenu = $urlRoot.'&amp;onglet=mission';
       add_submenu_page($urlRoot, 'Missions', 'Missions', $uploadFiles, $urlSubMenu, 'missions');
+      $urlSubMenu = $urlRoot.'&amp;onglet=survivor';
+      add_submenu_page($urlRoot, 'Survivants', 'Survivants', $uploadFiles, $urlSubMenu, 'survivors');
       $urlSubMenu = $urlRoot.'&amp;onglet=parametre';
       add_submenu_page($urlRoot, 'Paramètres', 'Paramètres', $uploadFiles, $urlSubMenu, 'parametres');
-      $urlSubMenu = $urlRoot.'&amp;onglet=skill';
-      add_submenu_page($urlRoot, 'Compétences', 'Compétences', $uploadFiles, $urlSubMenu, 'parametres');
     }
   }
 }

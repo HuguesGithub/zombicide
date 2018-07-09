@@ -73,8 +73,9 @@ class SurvivorBean extends MainPageBean
       $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('z'), 'Portrait Zombivant - '.$name, 'portrait-zombivant');
     }
     if ($Survivor->isUltimate()) {
-      $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('u'), 'Portrait Ultimate - '.$name, 'portrait-survivant portrait-ultimate');
-      $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('uz'), 'Portrait ZUltimate - '.$name, 'portrait-zombivant portrait-ultimate');
+      $extraClass = 'portrait-survivant portrait-ultimate';
+      $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('u'), 'Portrait Ultimate - '.$name, $extraClass);
+      $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('uz'), 'Portrait ZUltimate - '.$name, $extraClass);
     }
     return $str;
   }

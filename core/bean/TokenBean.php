@@ -3,22 +3,21 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * Classe PlayerBean
+ * Classe TokenBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class PlayerBean extends MainPageBean
+class TokenBean extends MainPageBean
 {
   /**
    * Class Constructor
-   * @param Player $Player
+   * @param Token $Token
    */
-  public function __construct($Player='')
+  public function __construct($Token='')
   {
     parent::__construct();
-    $this->MissionServices = FactoryServices::getMissionServices();
-    $this->Player = ($Player=='' ? new Player() : $Player);
+    $this->Token = ($Token=='' ? new Token() : $Token);
   }
   /**
    * @param string $tBodyButtons Template des Boutons de fin de ligne
@@ -26,24 +25,23 @@ class PlayerBean extends MainPageBean
    */
   public function getRowForAdminPage($tBodyButtons)
   {
-    $Player = $this->Player;
-    $Missions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, array('playerId'=>$Player->getId()));
-    $nb = count($Missions);
+    $Token = $this->Token;
     $queryArg = array(
       self::CST_ONGLET=>'parametre',
       self::CST_POSTACTION=>'edit',
-      'table'=>'player',
-      'id'=>$Player->getId()
+      'table'=>'token',
+      'id'=>$Token->getId()
     );
     $urlEdit = $this->getQueryArg($queryArg);
     $queryArg[self::CST_POSTACTION] = 'trash';
     $urlTrash = $this->getQueryArg($queryArg);
     $args = array(
-      $nb.' Mission'.($nb>1?'s':''),
+      '&nbsp;',
       $urlEdit,
       $urlTrash
     );
-    $tBody  = '<tr><td>'.$Player->getId().'</td><td>'.$Player->getName().'</td>';
+    $tBody  = '<tr><td>'.$Token->getId().'</td><td>'.$Token->getCode().'</td>';
+    $tBody .= '<td>'.$Token->getWidth().'</td><td>'.$Token->getHeight().'</td>';
     return $tBody.vsprintf($tBodyButtons, $args).'</tr>';
   }
 }

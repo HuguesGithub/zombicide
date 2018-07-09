@@ -27,7 +27,8 @@ class KeywordBean extends MainPageBean
   public function getRowForAdminPage($tBodyButtons)
   {
     $Keyword = $this->Keyword;
-    $Equipments = $this->EquipmentKeywordServices->getEquipmentKeywordsWithFilters(__FILE__, __LINE__, array('keywordId'=>$Keyword->getId()));
+    $arrF = array('keywordId'=>$Keyword->getId());
+    $Equipments = $this->EquipmentKeywordServices->getEquipmentKeywordsWithFilters(__FILE__, __LINE__, $arrF);
     $nb = count($Equipments);
     $queryArg = array(
       self::CST_ONGLET=>'parametre',

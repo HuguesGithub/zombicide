@@ -43,7 +43,7 @@ class OrigineBean extends MainPageBean
       $urlEdit,
       $urlTrash
     );
-    $tBody  = '<tr><td>'.$Origine->getId().'</td><td>'.$Origine->getName();
+    $tBody  = '<tr><td>'.$Origine->getId().'</td><td>'.$Origine->getName().'</td>';
     return $tBody.vsprintf($tBodyButtons, $args).'</tr>';
   }
 }

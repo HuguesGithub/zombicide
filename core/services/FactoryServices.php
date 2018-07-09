@@ -182,6 +182,11 @@ class FactoryServices
   public static function getSpawnLiveDeckServices()
   { return new SpawnLiveDeckServices(); }
   /**
+   * Retourne les Services relatifs à SpawnType
+   */
+  public static function getSpawnTypeServices()
+  { return new SpawnTypeServices(); }
+  /**
    * Retourne les Services relatifs à Survivor
    */
   public static function getSurvivorServices()

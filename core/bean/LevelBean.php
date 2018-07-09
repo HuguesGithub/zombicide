@@ -43,7 +43,7 @@ class LevelBean extends MainPageBean
       $urlEdit,
       $urlTrash
     );
-    $tBody  = '<tr><td>'.$Level->getId().'</td><td>'.$Level->getName();
+    $tBody  = '<tr><td>'.$Level->getId().'</td><td>'.$Level->getName().'</td>';
     return $tBody.vsprintf($tBodyButtons, $args).'</tr>';
   }
 }

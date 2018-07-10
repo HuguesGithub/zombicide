@@ -45,22 +45,28 @@ class WpPostServices extends GlobalServices
     if (!empty($posts_array)) {
       foreach ($posts_array as $post) {
         $tags = wp_get_post_tags($post->ID);
-        if (!empty($tags)) {
-          foreach ($tags as $WpTerm) {
-            if ($WpTerm->slug == 'mission') {
-              $wpPostType = 'WpPostMission';
-            } elseif ($WpTerm->slug == 'news') {
-              $wpPostType = 'WpPostNews';
-            } elseif ($WpTerm->slug == 'survivant') {
-              $wpPostType = 'WpPostSurvivor';
-            }
-          }
-        }
+        $wpPostType = $this->getPostTypeFromTags($tags);
         $WpPosts[] = WpPost::convertElement($post, $wpPostType);
       }
     }
     return $WpPosts;
   }
+  private function getPostTypeFromTags($tags) {
+    $wpPostType = '';
+    if (!empty($tags)) {
+      foreach ($tags as $WpTerm) {
+        if ($WpTerm->slug == 'mission') {
+          $wpPostType = 'WpPostMission';
+        } elseif ($WpTerm->slug == 'news') {
+          $wpPostType = 'WpPostNews';
+        } elseif ($WpTerm->slug == 'survivant') {
+          $wpPostType = 'WpPostSurvivor';
+        }
+      }
+    }
+    return $wpPostType;
+  }
+
   /**
    * @param int $pageId
    * @param int $limit

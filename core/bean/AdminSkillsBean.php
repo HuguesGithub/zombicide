@@ -37,7 +37,7 @@ class AdminSkillsBean extends AdminPageBean
       case 'edit'  :
         $returned = $Bean->getEditPage($urlParams['id']);
       break;
-      case 'trash' :
+      case self::CST_TRASH :
         $returned = $Bean->getTrashPage($urlParams['id']);
       break;
       case 'clone' :
@@ -45,7 +45,7 @@ class AdminSkillsBean extends AdminPageBean
       break;
       case 'Appliquer' :
         // On est dans le cas du bulkAction. On doit donc vérifier l'action.
-        if ($urlParams['action']=='trash') {
+        if ($urlParams['action']==self::CST_TRASH) {
           $returned = $Bean->getBulkTrashPage();
         } else {
           $returned = $Bean->getListingPage();
@@ -125,7 +125,7 @@ class AdminSkillsBean extends AdminPageBean
       if ($doInsert) {
         $this->SkillServices->insert(__FILE__, __LINE__, $Skill);
         $Skill->setId(MySQL::getLastInsertId());
-        return $this->getAddEditPage($Skill, 'Editer une Compétence', 'edit');
+        return $this->getAddEditPage($Skill);
       }
     }
     return $this->getAddEditPage($Skill, 'Ajouter une Compétence', 'add');
@@ -142,7 +142,7 @@ class AdminSkillsBean extends AdminPageBean
       if ($doUpdate) {
         $this->SkillServices->insert(__FILE__, __LINE__, $Skill);
         $Skill->setId(MySQL::getLastInsertId());
-        return $this->getAddEditPage($Skill, 'Editer une Compétence', 'edit');
+        return $this->getAddEditPage($Skill);
       }
     }
     return $this->getAddEditPage($Skill, 'Créer une Compétence', 'add');
@@ -159,7 +159,7 @@ class AdminSkillsBean extends AdminPageBean
         $this->SkillServices->update(__FILE__, __LINE__, $Skill);
       }
     }
-    return $this->getAddEditPage($Skill, 'Editer une Compétence', 'edit');
+    return $this->getAddEditPage($Skill);
   }
   /**
    * @param Skill $Skill
@@ -167,7 +167,7 @@ class AdminSkillsBean extends AdminPageBean
    * @param string $postAction
    * @return string
    */
-  public function getAddEditPage($Skill, $title, $postAction)
+  public function getAddEditPage($Skill, $title='Editer une Compétence', $postAction='edit')
   {
     $args = array(
       // Nom de l'interface - 1
@@ -263,7 +263,7 @@ class AdminSkillsBean extends AdminPageBean
       // Url pour Annuler - 5
       $urlCancel,
       // Postaction - 6
-      'trash',
+      self::CST_TRASH,
       '','','','','','','','','','','','','','',
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/delete-common-elements.php');

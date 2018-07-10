@@ -27,7 +27,7 @@ class ExpansionBean extends MainPageBean
   public function getRowForAdminPage($tBodyButtons)
   {
     $Expansion = $this->Expansion;
-    $arrF = array('expansionId'=>$Expansion->getId());
+    $arrF = array(self::CST_EXPANSIONID=>$Expansion->getId());
     $MissionExpansions = $this->MissionExpansionServices->getMissionExpansionsWithFilters(__FILE__, __LINE__, $arrF);
     $nb = count($MissionExpansions);
     $queryArg = array(
@@ -37,15 +37,15 @@ class ExpansionBean extends MainPageBean
       'id'=>$Expansion->getId()
     );
     $urlEdit = $this->getQueryArg($queryArg);
-    $queryArg[self::CST_POSTACTION] = 'trash';
+    $queryArg[self::CST_POSTACTION] = self::CST_TRASH;
     $urlTrash = $this->getQueryArg($queryArg);
     $args = array(
       $nb.' Mission'.($nb>1?'s':''),
       $urlEdit,
       $urlTrash
     );
-    $tBody  = '<tr><td>'.$Expansion->getId().'</td><td>'.$Expansion->getCode().'</td><td>'.$Expansion->getName();
-    $tBody .= '</td><td>'.$Expansion->getDisplayRank().'</td>';
+    $tBody  = '<tr><td>'.$Expansion->getId().self::CST_TD_SEP.$Expansion->getCode().self::CST_TD_SEP.$Expansion->getName();
+    $tBody .= self::CST_TD_SEP.$Expansion->getDisplayRank().'</td>';
   return $tBody.vsprintf($tBodyButtons, $args).'</tr>';
   }
 }

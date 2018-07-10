@@ -3,12 +3,12 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * Classe EquipmentsPageBean
+ * Classe WpPageEquipmentsBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class EquipmentsPageBean extends PagePageBean
+class WpPageEquipmentsBean extends PagePageBean
 {
   /**
    * Class Constructor
@@ -16,28 +16,34 @@ class EquipmentsPageBean extends PagePageBean
    */
   public function __construct($WpPage='')
   {
-    $services = array('Equipment', 'EquipmentExpansion', 'Expansion');
-    parent::__construct($WpPage, $services);
+    parent::__construct($WpPage);
+    $this->EquipmentServices = FactoryServices::getEquipmentServices();
+    $this->EquipmentExpansionServices = FactoryServices::getEquipmentExpansionServices();
+    $this->ExpansionServices = FactoryServices::getExpansionServices();
   }
   /**
-   * @param WpPage $WpPage
+   * On arrive rarement en mode direct pour afficher la Page. On passe par une méthode static.
+   * @param WpPost $WpPage
    * @return string
    */
-  public function getStaticEquipmentsContent($WpPage)
+  public function getStaticPageContent($WpPage)
   {
-    $Bean = new EquipmentsPageBean($WpPage);
-    return $Bean->getEquipmentsContent();
+    $Bean = new WpPageEquipmentsBean($WpPage);
+    return $Bean->getListingPage();
   }
   /**
-   * Retourne la page des cartes Equipement
+   * Retourne la liste complète des cartes Equipement
    * @return string
    */
-  public function getEquipmentsContent()
+  public function getListingPage()
   {
-    // On récupère toutes les extensions
+    /**
+    * On récupère toutes les cartes Equipement.
+    * On construit chaque ligne du tableau
+    */
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), self::CST_DISPLAYRANK);
     $strFilters = '';
-    $strEquipments = '';
+    $$strEquipments = '';
     $EquipmentCardsToDisplay = array();
     if (!empty($Expansions)) {
     // Pour chaque extension, on vérifie qu'il y a au moins une carte Equipement rattachée.
@@ -79,12 +85,15 @@ class EquipmentsPageBean extends PagePageBean
     foreach ($arr as $key => $value) {
       $strCategories .= '<option value="'.$key.'">'.$value.'</option>';
     }
+    /**
+     * Tableau de données pour l'affichage de la page.
+     */
     $args = array(
       $strFilters,
       $strEquipments,
       $strCategories,
       '','','','',
-   );
+    );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-equipmentcards.php');
     return vsprintf($str, $args);
   }

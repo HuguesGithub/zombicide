@@ -42,8 +42,8 @@ class AdminParametrePageBean extends AdminPageBean
     $Bean = new AdminParametrePageBean();
     $tBodyButtons  = '<td><a class="btn btn-xs btn-success editParam" href="%2$s"><i class="fas fa-pencil-alt"></i></a> ';
     $tBodyButtons .= '<a class="btn btn-xs btn-danger rmvParam" href="%3$s"><i class="fas fa-trash-alt"></i></a></td><td>%1$s</td>';
-    $orderby = $Bean->initVar('orderby', 'id');
-    $order = $Bean->initVar('order', 'asc');
+    $orderby = $Bean->initVar(self::CST_ORDERBY, 'id');
+    $order = $Bean->initVar(self::CST_ORDER, 'asc');
     /**
      * On initialise le Service qui va être utilisé pour les traitements de la page.
      * On traite éventuellement une action formulaure
@@ -68,7 +68,7 @@ class AdminParametrePageBean extends AdminPageBean
         $Keywords = $Services->getKeywordsWithFilters(__FILE__, __LINE__, array(), $orderby, $order);
         $returned = $Bean->getMutualizedContent($Services, $Keywords, $urlParams, $tBodyButtons);
       break;
-      case 'level' :
+      case self::CST_LEVEL :
         $Services = $Bean->LevelServices;
         $Bean->dealWithPostAction($Services, $urlParams);
         $Levels = $Services->getLevelsWithFilters(__FILE__, __LINE__, array(), $orderby, $order);
@@ -117,7 +117,7 @@ class AdminParametrePageBean extends AdminPageBean
         $returned = $Bean->getMutualizedContent($Services, $WeaponProfiles, $urlParams, $tBodyButtons);
       break;
       default :
-        $returned = $Bean->buildWithHeaderAndFooter();
+        $returned = $Bean->getMutualizedContent();
       break;
     }
     return $returned;
@@ -130,7 +130,7 @@ class AdminParametrePageBean extends AdminPageBean
   public function buildTabs($table='')
   {
     $arrTabs = array(
-      'level'=>'Difficultés',
+      self::CST_LEVEL=>'Difficultés',
       'duration'=>'Durées',
       'expansion'=>'Expansions',
       'player'=>'Joueurs',
@@ -158,12 +158,12 @@ class AdminParametrePageBean extends AdminPageBean
    * @param string $tBody Contenu du body du tableau
    * @return string
    */
-  public function getMutualizedContent($Services, $Objs, $urlParams, $tBodyButtons)
+  public function getMutualizedContent($Services=null, $Objs=array(), $urlParams=array(), $tBodyButtons='')
   {
     // Initialisation des variables
-    $curPage = $urlParams['cur_page'];
-    $orderby = $urlParams['orderby'];
-    $order = $urlParams['order'];
+    $curPage = $urlParams[self::CST_CURPAGE];
+    $orderby = $urlParams[self::CST_ORDERBY];
+    $order = $urlParams[self::CST_ORDER];
     $table = $urlParams['table'];
     $nbPerPage = 15;
     $tHeader = '';
@@ -184,7 +184,7 @@ class AdminParametrePageBean extends AdminPageBean
       $nbPages = ceil($nbElements/$nbPerPage);
       $curPage = max(1, min($curPage, $nbPages));
       $Objs = array_slice($Objs, ($curPage-1)*$nbPerPage, $nbPerPage);
-      $strPagination = $this->getPagination($queryArg, 'all', $curPage, $nbPages, $nbElements);    
+      $strPagination = $this->getPagination($queryArg, 'all', $curPage, $nbPages, $nbElements);
       if (!empty($Objs)) {
         foreach ($Objs as $Obj) {
           $Bean = $Obj->getBean();
@@ -197,7 +197,7 @@ class AdminParametrePageBean extends AdminPageBean
       $tHeader .= '<tr>';
       $tFooter .= '<tr>';
       $prefixTBody  = '<form method="post" action="#"><tr class="table-';
-      $prefixTBody .= ($urlParams[self::CST_POSTACTION]=='trash' ? 'danger' : 'success').'">';
+      $prefixTBody .= ($urlParams[self::CST_POSTACTION]==self::CST_TRASH ? self::CST_DANGER : self::CST_SUCCESS).'">';
       foreach ($classVars as $key => $value) {
         $queryArg[self::CST_ORDERBY] = $key;
         if ($orderby==$key) {
@@ -218,22 +218,22 @@ class AdminParametrePageBean extends AdminPageBean
       switch ($urlParams[self::CST_POSTACTION]) {
         case 'trash' :
           $inpValue = 'trashConfirm';
-          $mainClass = 'danger';
+          $mainClass = self::CST_DANGER;
           $label = 'Supprimer';
-          $secClass = 'success';
+          $secClass = self::CST_SUCCESS;
         break;
         case 'edit' :
           $inpValue = 'editConfirm';
-          $mainClass = 'success';
+          $mainClass = self::CST_SUCCESS;
           $label = 'Modifier';
-          $secClass = 'danger';
+          $secClass = self::CST_DANGER;
         break;
         case 'add' :
         default :
           $inpValue = 'add';
-          $mainClass = 'success';
+          $mainClass = self::CST_SUCCESS;
           $label = 'Créer';
-          $secClass = 'danger';
+          $secClass = self::CST_DANGER;
         break;
       }
       $prefixTBody .= '<td><input type="hidden" value="'.$table.'" name="table">';

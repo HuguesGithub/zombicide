@@ -39,7 +39,7 @@ class PagePageBean extends MainPageBean
         $strReturned = WpPageSkillsBean::getStaticPageContent($this->WpPage);
       break;
       case 'page-live-pioche-invasion' :
-        $strReturned = SpawnDeckPageBean::getStaticSpawnDeckContent($this->WpPage);
+        $strReturned = WpPageLiveSpawnBean::getStaticPageContent($this->WpPage);
       break;
       case 'page-market'               :
         $strReturned = MarketPageBean::getStaticPageContent($this->WpPage);
@@ -57,13 +57,13 @@ class PagePageBean extends MainPageBean
         $strReturned = ToolsPageBean::getStaticSurvivorsContent($this->WpPage);
       break;
       case 'page-equipmentcards'       :
-        $strReturned = EquipmentsPageBean::getStaticEquipmentsContent($this->WpPage);
+        $strReturned = WpPageEquipmentsBean::getStaticPageContent($this->WpPage);
       break;
       case 'page-spawncards'           :
-        $strReturned = SpawnsPageBean::getStaticInvasionsContent($this->WpPage);
+        $strReturned = WpPageSpawnsBean::getStaticPageContent($this->WpPage);
       break;
       case 'page-survivants'           :
-        $strReturned = SurvivorsPageBean::getStaticPageContent($this->WpPage);
+        $strReturned = WpPageSurvivorsBean::getStaticPageContent($this->WpPage);
       break;
       default                          :
         $strReturned = new Error404PageBean();

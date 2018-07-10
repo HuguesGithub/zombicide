@@ -3,35 +3,48 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * Classe SpawnsPageBean
+ * Classe WpPageSpawnsBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class SpawnsPageBean extends PagePageBean
+class WpPageSpawnsBean extends PagePageBean
 {
   /**
    * Class Constructor
+   * @param WpPage $WpPage
    */
   public function __construct($WpPage='')
   {
-    $services = array('Expansion', 'Spawn');
-    parent::__construct($WpPage, $services);
+    parent::__construct($WpPage);
+    $this->ExpansionServices = FactoryServices::getExpansionServices();
+    $this->SpawnServices = FactoryServices::getSpawnServices();
   }
   /**
-   * @param WpPage $WpPage
+   * On arrive rarement en mode direct pour afficher la Page. On passe par une méthode static.
+   * @param WpPost $WpPage
    * @return string
    */
-  public function getStaticInvasionsContent($WpPage)
+  public function getStaticPageContent($WpPage)
   {
-    $Bean = new SpawnsPageBean($WpPage);
-    return $Bean->getInvasionsContent();
+    $Bean = new WpPageSpawnsBean($WpPage);
+    return $Bean->getListingPage();
   }
   /**
+   * Retourne une liste partielle des cartes Invasions
+   * @param string $sort_col Selon quelle colonne on trie ? Par défaut : 'name'.
+   * @param string $sort_order Dans quel sens on trie ? Par défaut : 'asc'.
+   * @param int $nbPerPage Combien de survivants affichés par page ? Par défaut : 10.
+   * @param int $curPage Quelle page est affichée ? Par défaut : 1.
+   * @param array $arrFilters
    * @return string
    */
-  public function getInvasionsContent()
+  public function getListingPage()
   {
+    /**
+    * On récupère toutes les cartes Invasion.
+    * On construit chaque ligne du tableau
+    */
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), self::CST_DISPLAYRANK);
     $strFilters = '';
     $strSpawns = '';
@@ -49,6 +62,9 @@ class SpawnsPageBean extends PagePageBean
         }
       }
     }
+    /**
+     * Tableau de données pour l'affichage de la page.
+     */
     $args = array(
       $strFilters,
       $strSpawns

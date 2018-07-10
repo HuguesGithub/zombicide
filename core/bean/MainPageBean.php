@@ -180,12 +180,12 @@ class MainPageBean implements iConstants
       $strPages .= '<a href="http://zombicide.jhugues.fr/page-competences/"><span>Compétences</span></a>';
       $strPages .= '<a href="http://zombicide.jhugues.fr/page-missions/"><span>Missions</span></a>';
       $strPages .= '<a href="http://zombicide.jhugues.fr/page-survivants/"><span>Survivants</span></a>';
+      $strPages .= '<a href="http://zombicide.jhugues.fr/page-spawncards/"><span>Invasion</span></a>';
+      $strPages .= '<a href="http://zombicide.jhugues.fr/page-equipmentcards/"><span>Equipement</span></a>';
       $strPages .= '<span class="hasDropDown">';
       $strPages .= '<a href="#"><span>Outils</span></a>';
       $strPages .= '<ul>';
       $strPages .= '<li><a href="http://zombicide.jhugues.fr/page-piste-de-des/"><span>Piste de dés</span></a></li>';
-      $strPages .= '<li><a href="http://zombicide.jhugues.fr/page-spawncards/"><span>Cartes Invasion</span></a></li>';
-      $strPages .= '<li><a href="http://zombicide.jhugues.fr/page-equipmentcards/"><span>Cartes Equipement</span></a></li>';
       $strPages .= '<li><a href="http://zombicide.jhugues.fr/page-selection-survivants/"><span>Génération équipe</span></a></li>';
       $strPages .= '</ul>';
       $strPages .= '</span>';

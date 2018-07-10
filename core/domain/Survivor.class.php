@@ -171,7 +171,21 @@ class Survivor extends LocalDomain
   public function getStrClassFilters($isHome)
   { return ' col-12 col-sm-6 col-md-4'; }
   /**
+   * Retourne si le type de Survivant associé au SurvivorSkill est bien celui attendu.
+   * @param string $type Le type recherché
+   * @param SurvivorSkill $SurvivorSkill
+   * @return boolean
+   */
+  public function controlTypeAndSkill($type, $SurvivorSkill)
+  {
+    return ($type=='' && $SurvivorSkill->getSurvivorTypeId()!=1 ||
+        $type=='z' && $SurvivorSkill->getSurvivorTypeId()!=2 ||
+        $type=='u' && $SurvivorSkill->getSurvivorTypeId()!=3 ||
+        $type=='uz' && $SurvivorSkill->getSurvivorTypeId()!=4);
+  }
+  /**
    * @param string $type
+   * @param boolean $withLink
    * @return string
    */
   public function getUlSkills($type='', $withLink=false)
@@ -181,16 +195,7 @@ class Survivor extends LocalDomain
     $strTmp = '';
     if (!empty($SurvivorSkills)) {
       foreach ($SurvivorSkills as $SurvivorSkill) {
-        if ($type=='' && $SurvivorSkill->getSurvivorTypeId()!=1) {
-          continue;
-        }
-        if ($type=='z' && $SurvivorSkill->getSurvivorTypeId()!=2) {
-          continue;
-        }
-        if ($type=='u' && $SurvivorSkill->getSurvivorTypeId()!=3) {
-          continue;
-        }
-        if ($type=='uz' && $SurvivorSkill->getSurvivorTypeId()!=4) {
+        if ($this->controlTypeAndSkill($type, $SurvivorSkill)) {
           continue;
         }
         switch ($SurvivorSkill->getTagLevelId()) {

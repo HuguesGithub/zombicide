@@ -510,3 +510,33 @@ li.compRed::before { content: url("./img/icons/red.png"); padding-right: 5px; }
 }
 
 table.zone-list td, table.zone-list th { word-break: break-all; }
+
+.thumb.portrait-survivant, 
+.thumb.portrait-zombivant, 
+.thumb.portrait-ultimate { width:50px; }
+.portrait-survivant { display: none; }
+.portrait-zombivant { display: none; }
+.portrait-ultimate { display: none; }
+.survivant .portrait-survivant { display: inline-block; }
+.zombivant .portrait-zombivant { display: inline-block; }
+.survivant .portrait-ultimate { display: none; }
+.ultimate .portrait-survivant { display: none; }
+.zombivant .portrait-ultimate { display: none; }
+.ultimate .portrait-zombivant { display: none; }
+.survivant.ultimate .portrait-survivant.portrait-ultimate { display: inline-block; }
+.zombivant.ultimate .portrait-zombivant.portrait-ultimate { display: inline-block; }
+
+.skills-survivant { display: none; }
+.skills-zombivant { display: none; }
+.skills-ultimate { display: none; }
+.survivant .skills-survivant { display: block; }
+.zombivant .skills-zombivant { display: block; }
+.survivant .skills-ultimate { display: none; }
+.ultimate .skills-survivant { display: none; }
+.zombivant .skills-ultimate { display: none; }
+.ultimate .skills-zombivant { display: none; }
+.survivant.ultimate .skills-survivant.skills-ultimate { display: block; }
+.zombivant.ultimate .skills-zombivant.skills-ultimate { display: block; }
+.skills-survivant > ul,
+.skills-zombivant > ul,
+.skills-ultimate > ul { display: inline-block; width: 25%; vertical-align: top; }

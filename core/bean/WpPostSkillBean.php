@@ -37,45 +37,58 @@ class WpPostSkillBean extends PostPageBean
   public function getContentPage()
   {
     $Skill = $this->Skill;
-    $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, array('skillId'=>$Skill->getId()));
-    if (!empty($SurvivorSkills)) {
-      foreach ($SurvivorSkills as $SurvivorSkill) {
-        $Survivor = $SurvivorSkill->getSurvivor();
-        switch ($SurvivorSkill->getTagLevelId()) {
-          case 10 :
-          case 11 :
-            $blueSkills[$Survivor->getNiceName()] = $Survivor;
-          break;
-          case 20 :
-            $yellowSkills[$Survivor->getNiceName()] = $Survivor;
-          break;
-          case 30 :
-          case 31 :
-            $orangeSkills[$Survivor->getNiceName()] = $Survivor;
-          break;
-          case 40 :
-          case 41 :
-          case 42 :
-            $redSkills[$Survivor->getNiceName()] = $Survivor;
-          break;
-          default :
-          break;
+    $arrF = array('skillId'=>$Skill->getId());
+
+    $strTpl = '<span class="badge badge-%1$s-skill">%2$s : %3$s</span> ';
+    $arrTags = array(
+      'blue' => array(10, 11),
+      'yellow' => array(20),
+      'orange' => array(30, 31),
+      'red' => array(40, 41, 42),
+    );
+    $arrLvls = array(1=>'S', 2=>'Z', 3=>'U', 4=>'UZ');
+    foreach ($arrTags as $key => $value) {
+      while (!empty($value)) {
+        $val = array_shift($value);
+        $arrF['tagLevelId'] = $val;
+        foreach ($arrLvls as $k => $v) {
+          $arrF['survivorTypeId'] = $k;
+          $SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrF);
+          foreach ($SurvivorSkills as $SurvivorSkill) {
+            $Survivor = $SurvivorSkill->getSurvivor();
+            $skills[$key][$k][$Survivor->getNiceName()] = $Survivor;
+          }
+          if (!empty($skills[$key][$k])) {
+            ksort($skills[$key][$k]);
+          }
         }
       }
     }
+    $strBlue  = '<ul class="col-3"><li>S :</li>'.$this->buildSkillLis($skills['blue'][1], 'blue').'</ul>';
+    $strBlue .= '<ul class="col-3"><li>U :</li>'.$this->buildSkillLis($skills['blue'][3], 'blue').'</ul>';
+    $strYellow  = '<ul class="col-3"><li>S :</li>'.$this->buildSkillLis($skills['yellow'][1], 'yellow').'</ul>';
+    $strYellow .= '<ul class="col-3"><li>Z :</li>'.$this->buildSkillLis($skills['yellow'][2], 'yellow').'</ul>';
+    $strOrange  = '<ul class="col-3"><li>S :</li>'.$this->buildSkillLis($skills['orange'][1], 'orange').'</ul>';
+    $strOrange .= '<ul class="col-3"><li>Z :</li>'.$this->buildSkillLis($skills['orange'][2], 'orange').'</ul>';
+    $strOrange .= '<ul class="col-3"><li>U :</li>'.$this->buildSkillLis($skills['orange'][3], 'orange').'</ul>';
+    $strOrange .= '<ul class="col-3"><li>UZ :</li>'.$this->buildSkillLis($skills['orange'][4], 'orange').'</ul>';
+    $strRed  = '<ul class="col-3"><li>S :</li>'.$this->buildSkillLis($skills['red'][1], 'red').'</ul>';
+    $strRed .= '<ul class="col-3"><li>Z :</li>'.$this->buildSkillLis($skills['red'][2], 'red').'</ul>';
+    $strRed .= '<ul class="col-3"><li>U :</li>'.$this->buildSkillLis($skills['red'][3], 'red').'</ul>';
+    $strRed .= '<ul class="col-3"><li>UZ :</li>'.$this->buildSkillLis($skills['red'][4], 'red').'</ul>';
     $args = array(
       // Nom de la Compétence - 1
       $Skill->getName(),
       // Description de la Compétence - 2
       $Skill->getDescription(),
       // Liste des Survivants ayant la compétence en Bleu (Zombivant et Ultimate compris) - 3
-      $this->buildSkillLis($blueSkills, 'blue'),
+      $strBlue,
       // Liste des Survivants ayant la compétence en Jaune (Zombivant et Ultimate compris) - 4
-      $this->buildSkillLis($yellowSkills, 'yellow'),
+      $strYellow,
       // Liste des Survivants ayant la compétence en Orange (Zombivant et Ultimate compris) - 5
-      $this->buildSkillLis($orangeSkills, 'orange'),
+      $strOrange,
       // Liste des Survivants ayant la compétence en Rouge (Zombivant et Ultimate compris) - 6
-      $this->buildSkillLis($redSkills, 'red'),
+      $strRed,
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-skill.php');
     return vsprintf($str, $args);

@@ -26,7 +26,49 @@ class SurvivorBean extends MainPageBean
    */
   public function getRowForAdminPage()
   {
-    return '';
+    $Survivor = $this->Survivor;
+    $queryArgs = array('onglet'=>'suvivor', self::CST_POSTACTION=>'edit', 'id'=>$Survivor->getId());
+    $hrefEdit = $this->getQueryArg($queryArgs);
+    $queryArgs[self::CST_POSTACTION] = 'trash';
+    $hrefTrash = $this->getQueryArg($queryArgs);
+    $queryArgs[self::CST_POSTACTION] = 'clone';
+    $hrefClone = $this->getQueryArg($queryArgs);
+    $urlWpPost = $Survivor->getWpPostUrl();
+    $args = array(
+      // Identifiant du Survivant
+      $Survivor->getId(),
+      // Url d'édition
+      $hrefEdit,
+      // Nom du Survivant
+      $Survivor->getName(),
+      // Url de suppression
+      $hrefTrash,
+      // Url de Duplication
+      $hrefClone,
+      // Article publié ?
+      $urlWpPost!='#' ? '' : ' hidden',
+      // Url Article
+      $urlWpPost,
+      //
+      ($Survivor->isZombivor()?'changeProfile':''),
+      // Le Survivant a-t-il un profil Zombivant ?
+      '<i class="far fa-'.($Survivor->isZombivor()?'square pointer':'window-close').'"></i>',
+      //
+      ($Survivor->isUltimate()?'changeProfile':''),
+      // Le Survivant a-t-il un profil Ultimate ?
+      '<i class="far fa-'.($Survivor->isUltimate()?'square pointer':'window-close').'"></i>',
+      // Extension de provenance
+      $Survivor->getExpansionName(),
+      // Background du Survivant
+      $Survivor->getBackground(),
+      // Nom de l'image alternative, si défini.
+      $Survivor->getAltImgName(),
+      // Portraits
+      $this->getAllPortraits(),
+      '', '', '', '', '', '', '',
+    );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/fragments/survivor-row.php');
+    return vsprintf($str, $args);
   }
   /**
    * @return string
@@ -73,9 +115,9 @@ class SurvivorBean extends MainPageBean
       $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('z'), 'Portrait Zombivant - '.$name, 'portrait-zombivant');
     }
     if ($Survivor->isUltimate()) {
-      $extraClass = 'portrait-survivant portrait-ultimate';
-      $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('u'), 'Portrait Ultimate - '.$name, $extraClass);
-      $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('uz'), 'Portrait ZUltimate - '.$name, $extraClass);
+      $extraClass = ' portrait-ultimate';
+      $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('u'), 'Portrait Ultimate - '.$name, 'portrait-survivant'.$extraClass);
+      $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('uz'), 'Portrait ZUltimate - '.$name, 'portrait-zombivant'.$extraClass);
     }
     return $str;
   }

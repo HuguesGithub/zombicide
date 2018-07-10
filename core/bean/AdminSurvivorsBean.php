@@ -67,17 +67,17 @@ class AdminSurvivorsBean extends AdminPageBean
     $curPage = $this->initVar(self::CST_CURPAGE, 1);
     $orderby = $this->initVar(self::CST_ORDERBY, self::CST_NAME);
     $order = $this->initVar(self::CST_ORDER, 'ASC');
-//    $Skills = $this->SkillServices->getSkillsWithFilters(__FILE__, __LINE__, array(), $orderby, $order);
-//    $nbElements = count($Skills);
+    $Survivors = $this->SurvivorServices->getSurvivorsWithFilters(__FILE__, __LINE__, array(), $orderby, $order);
+    $nbElements = count($Survivors);
     $nbPages = ceil($nbElements/$nbPerPage);
     $curPage = max(1, min($curPage, $nbPages));
-//    $DisplayedSkills = array_slice($Skills, ($curPage-1)*$nbPerPage, $nbPerPage);
-//    if (!empty($DisplayedSkills)) {
-//      foreach ($DisplayedSkills as $Skill) {
-//        $SkillBean = new SkillBean($Skill);
-//        $strRows .= $SkillBean->getRowForAdminPage();
-//      }
-//    }
+    $DisplayedSurvivors = array_slice($Survivors, ($curPage-1)*$nbPerPage, $nbPerPage);
+    if (!empty($DisplayedSurvivors)) {
+      foreach ($DisplayedSurvivors as $Survivor) {
+        $SurvivorBean = new SurvivorBean($Survivor);
+        $strRows .= $SurvivorBean->getRowForAdminPage();
+      }
+    }
     $queryArg = array(self::CST_ONGLET=>self::CST_SURVIVOR,
       self::CST_ORDERBY=>$orderby,
       self::CST_ORDER=>$order
@@ -89,6 +89,8 @@ class AdminSurvivorsBean extends AdminPageBean
     $queryArg[self::CST_ORDER] = ($orderby==self::CST_NAME && $order=='asc' ? 'desc' : 'asc');
     $urlSortTitle = $this->getQueryArg($queryArg);
     $args = array(
+      // Liste des Survivants affichés - 1
+      $strRows,
 	/*
       // Liste des compétences affichées - 1
       $strRows,

@@ -6,7 +6,17 @@ $hj(document).ready(function(){
   if ($hj('#list-table button').length != 0) {
     addActionToParamEditorButtons();
   }
+  $hj('#the-list .changeProfile').unbind().click(function(){
+    addPageSurvivantLocalActions($hj(this));
+    return false;
+  });
 });
+function addPageSurvivantLocalActions(clicked) {
+  var type = clicked.data('type');
+  if (type=='zombivant' ) { clicked.parent().toggleClass('zombivant survivant'); }
+  if (type=='ultimate' ) { clicked.parent().toggleClass('ultimate'); }
+  clicked.find('svg').toggleClass('fa-square fa-check-square');
+}  
 function ajaxCall(data) {
   $hj.post(
     ajaxurl,

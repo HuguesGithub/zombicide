@@ -189,7 +189,7 @@ class Mission extends LocalDomain
    */
   public function getStrRules()
   {
-    $MissionRules = $this->getMissionRules('title');
+    $MissionRules = $this->getMissionRules(self::CST_TITLE);
     $strList = '';
     if (!empty($MissionRules)) {
       foreach ($MissionRules as $MissionRule) {
@@ -206,7 +206,7 @@ class Mission extends LocalDomain
    */
   public function getStrObjectives()
   {
-    $MissionObjectives = $this->getMissionObjectives('title');
+    $MissionObjectives = $this->getMissionObjectives(self::CST_TITLE);
     $strList = '';
     if (!empty($MissionObjectives)) {
       foreach ($MissionObjectives as $MissionObjective) {

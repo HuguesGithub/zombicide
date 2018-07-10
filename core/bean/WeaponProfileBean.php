@@ -36,16 +36,16 @@ class WeaponProfileBean extends MainPageBean
       'id'=>$WeaponProfile->getId()
     );
     $urlEdit = $this->getQueryArg($queryArg);
-    $queryArg[self::CST_POSTACTION] = 'trash';
+    $queryArg[self::CST_POSTACTION] = self::CST_TRASH;
     $urlTrash = $this->getQueryArg($queryArg);
     $args = array(
       $nb.' Equipement'.($nb>1?'s':''),
       $urlEdit,
       $urlTrash
     );
-    $tBody  = '<tr><td>'.$WeaponProfile->getId().'</td><td>'.$WeaponProfile->getMinRange().'</td>';
-    $tBody .= '<td>'.$WeaponProfile->getMaxRange().'</td><td>'.$WeaponProfile->getNbDice().'</td>';
-    $tBody .= '<td>'.$WeaponProfile->getSuccessRate().'</td><td>'.$WeaponProfile->getDamageLevel().'</td>';
+    $tBody  = '<tr><td>'.$WeaponProfile->getId().self::CST_TD_SEP.$WeaponProfile->getMinRange();
+    $tBody .= self::CST_TD_SEP.$WeaponProfile->getMaxRange().self::CST_TD_SEP.$WeaponProfile->getNbDice();
+    $tBody .= self::CST_TD_SEP.$WeaponProfile->getSuccessRate().self::CST_TD_SEP.$WeaponProfile->getDamageLevel().'</td>';
     return $tBody.vsprintf($tBodyButtons, $args).'</tr>';
   }
 }

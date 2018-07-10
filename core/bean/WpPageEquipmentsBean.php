@@ -43,7 +43,7 @@ class WpPageEquipmentsBean extends PagePageBean
     */
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), self::CST_DISPLAYRANK);
     $strFilters = '';
-    $$strEquipments = '';
+    $strEquipments = '';
     $EquipmentCardsToDisplay = array();
     if (!empty($Expansions)) {
     // Pour chaque extension, on vérifie qu'il y a au moins une carte Equipement rattachée.

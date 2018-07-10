@@ -39,7 +39,6 @@ class WpPostSkillBean extends PostPageBean
     $Skill = $this->Skill;
     $arrF = array('skillId'=>$Skill->getId());
 
-    $strTpl = '<span class="badge badge-%1$s-skill">%2$s : %3$s</span> ';
     $arrTags = array(
       'blue' => array(10, 11),
       'yellow' => array(20),

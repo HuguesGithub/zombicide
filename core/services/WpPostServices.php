@@ -51,7 +51,8 @@ class WpPostServices extends GlobalServices
     }
     return $WpPosts;
   }
-  private function getPostTypeFromTags($tags) {
+  private function getPostTypeFromTags($tags)
+  {
     $wpPostType = '';
     if (!empty($tags)) {
       foreach ($tags as $WpTerm) {

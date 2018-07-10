@@ -1,6 +1,6 @@
 <?php
 if (!defined('ABSPATH')) {
-  die('Forbidden');
+die('Forbidden');
 }
 /**
  * AdminSurvivorsBean
@@ -87,30 +87,28 @@ class AdminSurvivorsBean extends AdminPageBean
     // Sorts
     $queryArg[self::CST_ORDERBY] = self::CST_NAME;
     $queryArg[self::CST_ORDER] = ($orderby==self::CST_NAME && $order=='asc' ? 'desc' : 'asc');
-    $urlSortTitle = $this->getQueryArg($queryArg);
+    $urlSortName = $this->getQueryArg($queryArg);
     $args = array(
       // Liste des Survivants affichés - 1
       $strRows,
-	/*
-      // Liste des compétences affichées - 1
-      $strRows,
       // Filtres - 2
       '',
+      // - 3
+      '',
+      // - 4
+      '',
+      // Pagination - 5
+      $strPagination,
+      // class pour le tri sur title - 8
+      ($orderby==self::CST_NAME ? $order : 'desc'),
+      // url pour le tri sur title - 9
+      $urlSortName,
+    /*
       // Url pour créer une nouvelle Compétence - 3
       $this->getQueryArg(array(self::CST_ONGLET=>self::CST_SKILL, self::CST_POSTACTION=>'add')),
       // Subs - 4
       '',
-      // Pagination - 5
-      $strPagination,
-      // class pour le tri sur code - 6
-      ($orderby=='code' ? $order : 'desc'),
-      // url pour le tri sur code - 7
-      $urlSortCode,
-      // class pour le tri sur title - 8
-      ($orderby==self::CST_NAME ? $order : 'desc'),
-      // url pour le tri sur title - 9
-      $urlSortTitle,
-	  */
+    */
       '','','','','','','','','','','','','','','','','','','','','','','','','');
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/survivor-listing.php');
     return vsprintf($str, $args);
@@ -131,7 +129,7 @@ class AdminSurvivorsBean extends AdminPageBean
       }
     }
     return $this->getAddEditPage($Skill, 'Ajouter une Compétence', 'add');
-	*/
+  */
   }
   /**
    * @return string
@@ -150,7 +148,7 @@ class AdminSurvivorsBean extends AdminPageBean
       }
     }
     return $this->getAddEditPage($Skill, 'Créer une Compétence', 'add');
-	*/
+  */
   }
   /**
    * @return string
@@ -166,7 +164,7 @@ class AdminSurvivorsBean extends AdminPageBean
       }
     }
     return $this->getAddEditPage($Skill, 'Editer une Compétence', 'edit');
-	*/
+  */
   }
   /**
    * @param Survivor $Survivor
@@ -198,7 +196,7 @@ class AdminSurvivorsBean extends AdminPageBean
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/skill-edit.php');
     return vsprintf($str, $args);
-	*/
+  */
   }
   /**
    * Affiche l'interface de confirmation de suppression. Supprime le Survivant si suppression confirmée.
@@ -224,7 +222,7 @@ class AdminSurvivorsBean extends AdminPageBean
     $strLis  = '<li><input type="hidden" name="skillIds[]" value="'.$skillId.'"/>'.$Skill->getName().'</li>';
     $urlCancel = $this->getQueryArg(array(self::CST_ONGLET=>self::CST_SKILL));
     return $this->getConfirmDeletePage($title, $subTitle, $strLis, $urlCancel);
-	*/
+  */
   }
   /**
    * Affiche l'interface de confirmation de suppression. Supprime le Survivant si suppression confirmée.
@@ -251,7 +249,7 @@ class AdminSurvivorsBean extends AdminPageBean
     } else {
       return $this->getListingPage();
     }
-	*/
+  */
   }
   /**
    * Retourne l'interface commune de confirmation de suppression d'éléments
@@ -282,7 +280,7 @@ class AdminSurvivorsBean extends AdminPageBean
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/delete-common-elements.php');
     return vsprintf($str, $args);
-	*/
+  */
   }
 
 

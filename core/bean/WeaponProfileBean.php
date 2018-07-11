@@ -27,7 +27,8 @@ class WeaponProfileBean extends MainPageBean
   public function getRowForAdminPage($tBodyButtons)
   {
     $WeaponProfile = $this->WeaponProfile;
-    $EquipmentWeaponProfiles = $this->EquipmentWeaponProfileServices->getEquipmentWeaponProfilesWithFilters(__FILE__, __LINE__, array('weaponProfileId'=>$WeaponProfile->getId()));
+    $arrF = array('weaponProfileId'=>$WeaponProfile->getId());
+    $EquipmentWeaponProfiles = $this->EquipmentWeaponProfileServices->getEquipmentWeaponProfilesWithFilters(__FILE__, __LINE__, $arrF);
     $nb = count($EquipmentWeaponProfiles);
     $queryArg = array(
       self::CST_ONGLET=>'parametre',

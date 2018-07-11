@@ -46,9 +46,8 @@ class WpPageLiveSpawnBean extends PagePageBean
       $arrToParse = $matches[1];
       // On va devoir stocker les identifiants des cartes.
       $arrNumbers = array();
-      while(!empty($arrToParse)) {
+      while (!empty($arrToParse)) {
         list($min, $max) = explode('-', array_shift($arrToParse));
-        $strSpawns .= '['.$min.'-'.$max.']';
         for ($i=$min; $i<=$max; $i++) {
           array_push($arrNumbers, $i);
         }

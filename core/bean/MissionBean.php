@@ -94,6 +94,7 @@ class MissionBean extends MainPageBean
   {
     $MissionTiles = $Mission->getMissionTiles();
     if (!empty($MissionTiles)) {
+      $MissionTileServices = new MissionTileServices();
       foreach ($MissionTiles as $MissionTile) {
         if ($MissionTile->getCoordY()==$rkRow) {
           $MissionTileServices->delete(__FILE__, __LINE__, $MissionTile);
@@ -109,6 +110,7 @@ class MissionBean extends MainPageBean
   {
     $MissionTiles = $Mission->getMissionTiles();
     if (!empty($MissionTiles)) {
+      $MissionTileServices = new MissionTileServices();
       foreach ($MissionTiles as $MissionTile) {
         if ($MissionTile->getCoordX()==$rkCol) {
           $MissionTileServices->delete(__FILE__, __LINE__, $MissionTile);
@@ -131,7 +133,6 @@ class MissionBean extends MainPageBean
     $rkRow = ($action==self::CST_RMVROW ? $post['rkRow'] : 0);
     $missionId = $post['missionId'];
     $MissionServices = new MissionServices();
-    $MissionTileServices = new MissionTileServices();
     $Mission = $MissionServices->select(__FILE__, __LINE__, $missionId);
     $Bean = new MissionBean($Mission);
     switch ($action) {

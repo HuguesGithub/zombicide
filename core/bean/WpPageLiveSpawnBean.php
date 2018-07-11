@@ -64,7 +64,7 @@ class WpPageLiveSpawnBean extends PagePageBean
         $this->SpawnLiveDeckServices->insert(__FILE__, __LINE__, $SpawnLiveDeck);
       }
     } else {
-      $strSpawns = 'Impossible de créer quoi que ce soit, les cartes sélectionnées ne correspondent pas au format attendu ([1-46]...)';
+      return 'Impossible de créer quoi que ce soit, les cartes sélectionnées ne correspondent pas au format attendu ([1-46]...)';
     }
   }
   /**
@@ -90,7 +90,7 @@ class WpPageLiveSpawnBean extends PagePageBean
       $args = array('deckKey'=>$deckKey);
       $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, $args);
       if (empty($Lives)) {
-        $this->createSpawnLiveDeck($invasionSpanSelection, $matches);
+        $strSpawns = $this->createSpawnLiveDeck($invasionSpanSelection, $matches);
       } else {
         $strSpawns = 'à récupérer';
       }

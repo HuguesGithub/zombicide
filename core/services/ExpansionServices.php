@@ -53,10 +53,10 @@ class ExpansionServices extends LocalServices
    * @param string $defaultLabel
    * @return string
    */
-  public function getExpansionsSelect($file, $line, $value='', $prefix='', $classe=self::CST_FORMCONTROL, $multiple=false, $defaultLabel='')
+  public function getExpansionsSelect($file, $line, $value, $prefix, $classe, $multiple, $defaultLabel)
   {
     $Expansions = $this->getExpansionsWithFilters($file, $line);
-  return $this->getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value, $prefix, $classe, $multiple, $defaultLabel);
+    return $this->getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value, $prefix, $classe, $multiple, $defaultLabel);
   }
   /**
    * @param string $file
@@ -69,7 +69,7 @@ class ExpansionServices extends LocalServices
    * @param string $defaultLabel
    * @return string
    */
-  public function getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value='', $prefix='', $classe=self::CST_FORMCONTROL, $multiple=false, $defaultLabel='')
+  public function getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value, $prefix, $classe, $multiple, $defaultLabel)
   {
     $arrSetLabels = array();
     foreach ($Expansions as $Expansion) {

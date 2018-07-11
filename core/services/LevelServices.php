@@ -60,7 +60,7 @@ class LevelServices extends LocalServices
    * @param string $defaultLabel
    * @return string
    */
-  public function getLevelsSelectAlreadyRequested($file, $line, $Levels, $value='', $prefix='', $classe='form-control', $multiple=false, $defaultLabel='')
+  public function getLevelsSelectAlreadyRequested($file, $line, $Levels, $value, $prefix, $classe, $multiple, $defaultLabel)
   {
     $arrSetLabels = array();
     foreach ($Levels as $Level) {

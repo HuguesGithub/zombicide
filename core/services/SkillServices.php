@@ -21,12 +21,12 @@ class SkillServices extends LocalServices
   public function __construct()
   { $this->Dao = new SkillDaoImpl(); }
 
-  private function buildFilters($arrFilters)
+  private function buildFilters($arrF)
   {
     $arrParams = array();
-    array_push($arrParams, (!empty($arrFilters['code']) && !is_array($arrFilters['code'])) ? $arrFilters['code'] : '%');
-    array_push($arrParams, (!empty($arrFilters['name']) && !is_array($arrFilters['name'])) ? '%'.$arrFilters['name'].'%' : '%');
-    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_DESCRIPTION) ? '%'.$arrFilters[self::CST_DESCRIPTION].'%' : '%'));
+    array_push($arrParams, (!empty($arrF['code']) && !is_array($arrF['code'])) ? $arrF['code'] : '%');
+    array_push($arrParams, (!empty($arrF['name']) && !is_array($arrF['name'])) ? '%'.$arrF['name'].'%' : '%');
+    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrF, self::CST_DESCRIPTION) ? '%'.$arrF[self::CST_DESCRIPTION].'%' : '%'));
     return $arrParams;
   }
   /**

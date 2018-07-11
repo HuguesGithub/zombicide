@@ -38,8 +38,11 @@ class SurvivorSkillServices extends LocalServices
    * @param string $order
    * @return array
    */
-  public function getSurvivorSkillsWithFilters($file, $line, $arrFilters=array(), $orderby=array(self::CST_SURVIVORTYPEID, self::CST_TAGLEVELID), $order=array('ASC', 'ASC'))
+  public function getSurvivorSkillsWithFilters($file, $line, $arrFilters=array(), $orderby=null, $order=array('ASC', 'ASC'))
   {
+    if ($orderby==null) {
+      $orderby = array(self::CST_SURVIVORTYPEID, self::CST_TAGLEVELID);
+    }
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
     $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);

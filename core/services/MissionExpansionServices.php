@@ -55,7 +55,7 @@ class MissionExpansionServices extends LocalServices
    * @param string $defaultValue
    * @return string
    */
-  public function getMissionExpansionsSelect($file, $line, $Mission, $prefix='', $classe=self::CST_FORMCONTROL, $multiple=false, $defaultValue='')
+  public function getMissionExpansionsSelect($file, $line, $Mission, $prefix, $classe, $multiple, $defaultValue)
   {
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters($file, $line);
     $arrSetLabels = array();

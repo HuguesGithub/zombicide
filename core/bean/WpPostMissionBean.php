@@ -19,6 +19,45 @@ class WpPostMissionBean extends PostPageBean
     $this->MissionServices = FactoryServices::getMissionServices();
     $this->WpPost = $WpPost;
   }
+  private function getMissionContentObjectives($Mission, $strModel)
+  {
+    $contentObjs = '';
+    $MissionObjectives = $Mission->getMissionObjectives();
+    if (!empty($MissionObjectives)) {
+      $strObj = '';
+      foreach ($MissionObjectives as $MissionObjective) {
+        $strObj .= vsprintf($strModel, array($MissionObjective->getTitle(), $MissionObjective->getObjectiveDescription()));
+      }
+      if ($strObj!='') {
+        $contentObjs .= '<h5>Objectifs</h5>';
+        $contentObjs .= '<ul>'.$strObj.'</ul>';
+      }
+    }
+    return $contentObjs;
+  }
+  private function getMissionContentRules($Mission, $strModel)
+  {
+    $contentRules = '';
+    $MissionRules = $Mission->getMissionRules();
+    if (!empty($MissionRules)) {
+      $strMep = '';
+      $strRs = '';
+      foreach ($MissionRules as $MissionRule) {
+        if ($MissionRule->getRuleSetting()==1) {
+          $strMep .= vsprintf($strModel, array($MissionRule->getTitle(), $MissionRule->getRuleDescription()));
+        } else {
+          $strRs .= vsprintf($strModel, array($MissionRule->getTitle(), $MissionRule->getRuleDescription()));
+        }
+      }
+      if ($strMep!='') {
+        $contentRules .= '<h5>Mise en place</h5><ul>'.$strMep.'</ul>';
+      }
+      if ($strRs!='') {
+        $contentRules .= '<h5>Regles speciales</h5><ul>'.$strRs.'</ul>';
+      }
+    }
+    return $contentRules;
+  }
   /**
    * @param Mission $Mission
    * @return string
@@ -35,38 +74,8 @@ class WpPostMissionBean extends PostPageBean
       }
     }
     $strModel = '<li class="objRule">%1$s <span class="tooltip"><header>%1$s</header><content>%2$s</content></span></li>';
-    $contentRules = '';
-    $MissionObjectives = $Mission->getMissionObjectives();
-    if (!empty($MissionObjectives)) {
-      $strObj = '';
-      foreach ($MissionObjectives as $MissionObjective) {
-        $strObj .= vsprintf($strModel, array($MissionObjective->getTitle(), $MissionObjective->getObjectiveDescription()));
-      }
-      if ($strObj!='') {
-        $contentRules .= '<h5>Objectifs</h5>';
-        $contentRules .= '<ul>'.$strObj.'</ul>';
-      }
-    }
-    $MissionRules = $Mission->getMissionRules();
-    if (!empty($MissionRules)) {
-      $strMep = '';
-      $strRs = '';
-      foreach ($MissionRules as $MissionRule) {
-        if ($MissionRule->getRuleSetting()==1) {
-          $strMep .= vsprintf($strModel, array($MissionRule->getTitle(), $MissionRule->getRuleDescription()));
-        } else {
-          $strRs .= vsprintf($strModel, array($MissionRule->getTitle(), $MissionRule->getRuleDescription()));
-        }
-      }
-      if ($strMep!='') {
-        $contentRules .= '<h5>Mise en place</h5>';
-        $contentRules .= '<ul>'.$strMep.'</ul>';
-      }
-      if ($strRs!='') {
-        $contentRules .= '<h5>Regles speciales</h5>';
-        $contentRules .= '<ul>'.$strRs.'</ul>';
-      }
-    }
+    $contentRules  = $this->getMissionContentObjectives($Mission, $strModel);
+    $contentRules .= $this->getMissionContentRules($Mission, $strModel);
     $media = get_attached_media('image');
     if (!empty($media)) {
       $WpPostMedia = WpPost::convertElement(array_shift($media));

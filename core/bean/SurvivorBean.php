@@ -27,7 +27,7 @@ class SurvivorBean extends MainPageBean
   public function getRowForAdminPage()
   {
     $Survivor = $this->Survivor;
-    $queryArgs = array('onglet'=>'suvivor', self::CST_POSTACTION=>'edit', 'id'=>$Survivor->getId());
+    $queryArgs = array('onglet'=>self::CST_SURVIVOR, self::CST_POSTACTION=>'edit', 'id'=>$Survivor->getId());
     $hrefEdit = $this->getQueryArg($queryArgs);
     $queryArgs[self::CST_POSTACTION] = 'trash';
     $hrefTrash = $this->getQueryArg($queryArgs);

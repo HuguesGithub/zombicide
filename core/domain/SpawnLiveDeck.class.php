@@ -16,10 +16,10 @@ class SpawnLiveDeck extends LocalDomain
    */
   protected $id;
   /**
-   * Clé étrangère vers LiveDeck
-   * @var int $liveDeckId
+   * Clé étrangère vers Live
+   * @var int $liveId
    */
-  protected $liveDeckId;
+  protected $liveId; // TODO : Renommer le champ liveDeckId en liveId dans les requêtes associées à SpawnLiveDeck
   /**
    * Clé étrangère vers SpawnCard
    * @var int $spawnCardId
@@ -44,7 +44,7 @@ class SpawnLiveDeck extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    $services = array('LiveDeck', 'Spawn');
+    $services = array('Live', 'Spawn');
     parent::__construct($attributes, $services);
   }
   /**
@@ -55,8 +55,8 @@ class SpawnLiveDeck extends LocalDomain
   /**
    * @return int
    */
-  public function getLiveDeckId()
-  { return $this->liveDeckId; }
+  public function getLiveId()
+  { return $this->liveId; }
   /**
    * @return int
    */
@@ -80,8 +80,8 @@ class SpawnLiveDeck extends LocalDomain
   /**
    * @param int $liveDeckId
    */
-  public function setLiveDeckId($liveDeckId)
-  { $this->liveDeckId = $liveDeckId; }
+  public function setLiveId($liveId)
+  { $this->liveId = $liveId; }
   /**
    * @param int $spawnCardId
    */

@@ -170,78 +170,86 @@ class AdminParametrePageBean extends AdminPageBean
     $prefixTBody = '';
     $tBody = '';
     $tFooter = '';
-    // Si on a cliqué sur un onglet
-    if ($table!='') {
-      $queryArg = array(
-        self::CST_ONGLET=>'parametre',
-        'table'=>$table,
-        self::CST_ORDERBY=>$orderby,
-        self::CST_ORDER=>$order,
+    // Si on n'a pas cliqué sur un onglet
+    if ($table=='') {
+      $args = array(
+        $this->buildTabs(),
+        $tHeader,
+        $prefixTBody.$tBody,
+        $tFooter,
       );
-      // Gestion de la Pagination
-      // Et construction des lignes du tableau paginé
-      $nbElements = count($Objs);
-      $nbPages = ceil($nbElements/$nbPerPage);
-      $curPage = max(1, min($curPage, $nbPages));
-      $Objs = array_slice($Objs, ($curPage-1)*$nbPerPage, $nbPerPage);
-      $strPagination = $this->getPagination($queryArg, 'all', $curPage, $nbPages, $nbElements);
-      if (!empty($Objs)) {
-        foreach ($Objs as $Obj) {
-          $Bean = $Obj->getBean();
-          $tBody .= $Bean->getRowForAdminPage($tBodyButtons);
-        }
-      }
-      // Construction du Header
-      $Obj = $Services->select(__FILE__, __LINE__, $urlParams['id']);
-      $classVars = $Obj->getClassVars();
-      $tHeader .= '<tr>';
-      $tFooter .= '<tr>';
-      $prefixTBody  = '<form method="post" action="#"><tr class="table-';
-      $prefixTBody .= ($urlParams[self::CST_POSTACTION]==self::CST_TRASH ? self::CST_DANGER : self::CST_SUCCESS).'">';
-      foreach ($classVars as $key => $value) {
-        $queryArg[self::CST_ORDERBY] = $key;
-        if ($orderby==$key) {
-          $queryArg[self::CST_ORDER] = ($order=='asc'?'desc':'asc');
-        }
-        $urlSort = $this->getQueryArg($queryArg);
-        $tHeader .= '<th scope="col" id="'.$key.'" class="manage-column column-primary sortable "><a href="'.$urlSort.'"><span>'.$key;
-        $tHeader .= '</span><span class="sorting-indicator"></span></a></th>';
-        $prefixTBody .= '<td><input type="text" class="form-control" name="'.$key.'" ';
-        $prefixTBody .= ($key=='id' || $urlParams[self::CST_POSTACTION]=='trash'?' disabled':'').' value="'.$Obj->getField($key).'"/></td>';
-      }
-      $tHeader .= '<td>&nbsp;</td><td>Utilisations</td></tr>';
-      $tFooter .= '<tr><th colspan="'.(2+count($classVars)).'"><div class="tablenav-pages float-right">'.$strPagination.'</div></th></tr>';
-      unset($queryArg[self::CST_ORDERBY]);
-      unset($queryArg[self::CST_ORDER]);
-      $urlCancel = $this->getQueryArg($queryArg);
-      // Gestion des boutons en fin de ligne, pour la création, l'édition et la suppression ainsi que pour l'annulation.
-      switch ($urlParams[self::CST_POSTACTION]) {
-        case 'trash' :
-          $inpValue = 'trashConfirm';
-          $mainClass = self::CST_DANGER;
-          $label = 'Supprimer';
-          $secClass = self::CST_SUCCESS;
-        break;
-        case 'edit' :
-          $inpValue = 'editConfirm';
-          $mainClass = self::CST_SUCCESS;
-          $label = 'Modifier';
-          $secClass = self::CST_DANGER;
-        break;
-        case 'add' :
-        default :
-          $inpValue = 'add';
-          $mainClass = self::CST_SUCCESS;
-          $label = 'Créer';
-          $secClass = self::CST_DANGER;
-        break;
-      }
-      $prefixTBody .= '<td><input type="hidden" value="'.$table.'" name="table">';
-      $prefixTBody .= '<input type="hidden" value="'.$inpValue.'" name="'.self::CST_POSTACTION.'">';
-      $prefixTBody .= '<input type="submit" class="btn btn-xs btn-'.$mainClass.'" value="'.$label.'"/>&nbsp;';
-      $prefixTBody .= '<a class="btn btn-xs btn-'.$secClass.'" href="'.$urlCancel.'"><i class="fas fa-times-circle"></i></a>';
-      $prefixTBody .= '</td><td>&nbsp;</td></tr></form>';
+      $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/parametres-admin-board.php');
+      return vsprintf($str, $args);
     }
+    $queryArg = array(
+      self::CST_ONGLET=>'parametre',
+      'table'=>$table,
+      self::CST_ORDERBY=>$orderby,
+      self::CST_ORDER=>$order,
+    );
+    // Gestion de la Pagination
+    // Et construction des lignes du tableau paginé
+    $nbElements = count($Objs);
+    $nbPages = ceil($nbElements/$nbPerPage);
+    $curPage = max(1, min($curPage, $nbPages));
+    $Objs = array_slice($Objs, ($curPage-1)*$nbPerPage, $nbPerPage);
+    $strPagination = $this->getPagination($queryArg, 'all', $curPage, $nbPages, $nbElements);
+    if (!empty($Objs)) {
+      foreach ($Objs as $Obj) {
+        $Bean = $Obj->getBean();
+        $tBody .= $Bean->getRowForAdminPage($tBodyButtons);
+      }
+    }
+    // Construction du Header
+    $Obj = $Services->select(__FILE__, __LINE__, $urlParams['id']);
+    $classVars = $Obj->getClassVars();
+    $tHeader .= '<tr>';
+    $tFooter .= '<tr>';
+    $prefixTBody  = '<form method="post" action="#"><tr class="table-';
+    $prefixTBody .= ($urlParams[self::CST_POSTACTION]==self::CST_TRASH ? self::CST_DANGER : self::CST_SUCCESS).'">';
+    foreach ($classVars as $key => $value) {
+      $queryArg[self::CST_ORDERBY] = $key;
+      if ($orderby==$key) {
+        $queryArg[self::CST_ORDER] = ($order=='asc'?'desc':'asc');
+      }
+      $urlSort = $this->getQueryArg($queryArg);
+      $tHeader .= '<th scope="col" id="'.$key.'" class="manage-column column-primary sortable "><a href="'.$urlSort.'"><span>'.$key;
+      $tHeader .= '</span><span class="sorting-indicator"></span></a></th>';
+      $prefixTBody .= '<td><input type="text" class="form-control" name="'.$key.'" ';
+      $prefixTBody .= ($key=='id' || $urlParams[self::CST_POSTACTION]=='trash'?' disabled':'').' value="'.$Obj->getField($key).'"/></td>';
+    }
+    $tHeader .= '<td>&nbsp;</td><td>Utilisations</td></tr>';
+    $tFooter .= '<tr><th colspan="'.(2+count($classVars)).'"><div class="tablenav-pages float-right">'.$strPagination.'</div></th></tr>';
+    unset($queryArg[self::CST_ORDERBY]);
+    unset($queryArg[self::CST_ORDER]);
+    $urlCancel = $this->getQueryArg($queryArg);
+    // Gestion des boutons en fin de ligne, pour la création, l'édition et la suppression ainsi que pour l'annulation.
+    switch ($urlParams[self::CST_POSTACTION]) {
+      case 'trash' :
+        $inpValue = 'trashConfirm';
+        $mainClass = self::CST_DANGER;
+        $label = 'Supprimer';
+        $secClass = self::CST_SUCCESS;
+        break;
+      case 'edit' :
+        $inpValue = 'editConfirm';
+        $mainClass = self::CST_SUCCESS;
+        $label = 'Modifier';
+        $secClass = self::CST_DANGER;
+        break;
+      case 'add' :
+      default :
+        $inpValue = 'add';
+        $mainClass = self::CST_SUCCESS;
+        $label = 'Créer';
+        $secClass = self::CST_DANGER;
+        break;
+    }
+    $prefixTBody .= '<td><input type="hidden" value="'.$table.'" name="table">';
+    $prefixTBody .= '<input type="hidden" value="'.$inpValue.'" name="'.self::CST_POSTACTION.'">';
+    $prefixTBody .= '<input type="submit" class="btn btn-xs btn-'.$mainClass.'" value="'.$label.'"/>&nbsp;';
+    $prefixTBody .= '<a class="btn btn-xs btn-'.$secClass.'" href="'.$urlCancel.'"><i class="fas fa-times-circle"></i></a>';
+    $prefixTBody .= '</td><td>&nbsp;</td></tr></form>';
     $args = array(
       $this->buildTabs($table),
       $tHeader,

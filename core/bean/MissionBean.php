@@ -90,6 +90,36 @@ class MissionBean extends MainPageBean
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-row-mission.php');
     return vsprintf($str, $args);
   }
+  public static function removeRow($Mission, $rkRow)
+  {
+    $MissionTiles = $Mission->getMissionTiles();
+    if (!empty($MissionTiles)) {
+      foreach ($MissionTiles as $MissionTile) {
+        if ($MissionTile->getCoordY()==$rkRow) {
+          $MissionTileServices->delete(__FILE__, __LINE__, $MissionTile);
+        } elseif ($MissionTile->getCoordY()>$rkRow) {
+          $MissionTile->setCoordY($MissionTile->getCoordY()-1);
+          $MissionTileServices->update(__FILE__, __LINE__, $MissionTile);
+        }
+      }
+    }
+    $Mission->setHeight($Mission->getHeight()-1);
+  }
+  public static function removeCol($Mission, $rkCol)
+  {
+    $MissionTiles = $Mission->getMissionTiles();
+    if (!empty($MissionTiles)) {
+      foreach ($MissionTiles as $MissionTile) {
+        if ($MissionTile->getCoordX()==$rkCol) {
+          $MissionTileServices->delete(__FILE__, __LINE__, $MissionTile);
+        } elseif ($MissionTile->getCoordX()>$rkCol) {
+          $MissionTile->setCoordX($MissionTile->getCoordX()-1);
+          $MissionTileServices->update(__FILE__, __LINE__, $MissionTile);
+        }
+      }
+    }
+    $Mission->setWidth($Mission->getWidth()-1);
+  }
   /**
    * @param array $post
    * @return string
@@ -106,32 +136,10 @@ class MissionBean extends MainPageBean
     $Bean = new MissionBean($Mission);
     switch ($action) {
       case self::CST_RMVROW :
-        $MissionTiles = $Mission->getMissionTiles();
-        if (!empty($MissionTiles)) {
-          foreach ($MissionTiles as $MissionTile) {
-            if ($MissionTile->getCoordY()==$rkRow) {
-              $MissionTileServices->delete(__FILE__, __LINE__, $MissionTile);
-            } elseif ($MissionTile->getCoordY()>$rkRow) {
-              $MissionTile->setCoordY($MissionTile->getCoordY()-1);
-              $MissionTileServices->update(__FILE__, __LINE__, $MissionTile);
-            }
-          }
-        }
-        $Mission->setHeight($Mission->getHeight()-1);
+        self::removeRow($Mission, $rkRow);
       break;
       case self::CST_RMVCOL  :
-        $MissionTiles = $Mission->getMissionTiles();
-        if (!empty($MissionTiles)) {
-          foreach ($MissionTiles as $MissionTile) {
-            if ($MissionTile->getCoordX()==$rkCol) {
-              $MissionTileServices->delete(__FILE__, __LINE__, $MissionTile);
-            } elseif ($MissionTile->getCoordX()>$rkCol) {
-              $MissionTile->setCoordX($MissionTile->getCoordX()-1);
-              $MissionTileServices->update(__FILE__, __LINE__, $MissionTile);
-            }
-          }
-        }
-        $Mission->setWidth($Mission->getWidth()-1);
+        self::removeCol($Mission, $rkCol);
       break;
       case 'addRow' :
         $Mission->setHeight($Mission->getHeight()+1);

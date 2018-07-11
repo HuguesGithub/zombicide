@@ -93,9 +93,9 @@ class AdminSurvivorsBean extends AdminPageBean
       $strRows,
       // Filtres - 2
       '',
-      // - 3
-      '',
-      // - 4
+      // Url pour créer un nouveau Survivant - 3
+      $this->getQueryArg(array(self::CST_ONGLET=>self::CST_SURVIVOR, self::CST_POSTACTION=>'add')),
+      // Subs - 4
       '',
       // Pagination - 5
       $strPagination,
@@ -103,12 +103,6 @@ class AdminSurvivorsBean extends AdminPageBean
       ($orderby==self::CST_NAME ? $order : 'desc'),
       // url pour le tri sur title - 9
       $urlSortName,
-    /*
-      // Url pour créer une nouvelle Compétence - 3
-      $this->getQueryArg(array(self::CST_ONGLET=>self::CST_SKILL, self::CST_POSTACTION=>'add')),
-      // Subs - 4
-      '',
-    */
       '','','','','','','','','','','','','','','','','','','','','','','','','');
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/survivor-listing.php');
     return vsprintf($str, $args);
@@ -118,53 +112,40 @@ class AdminSurvivorsBean extends AdminPageBean
    */
   public function getAddPage()
   {
-  /*
-    $Skill = new Skill();
-    if (isset($_POST) && !empty($_POST)) {
-      $doInsert = $Skill->updateWithPost($_POST);
-      if ($doInsert) {
-        $this->SkillServices->insert(__FILE__, __LINE__, $Skill);
-        $Skill->setId(MySQL::getLastInsertId());
-        return $this->getAddEditPage($Skill, 'Editer une Compétence', 'edit');
-      }
+    $Survivor = new Survivor();
+    if (isset($_POST) && !empty($_POST) && $Survivor->updateWithPost($_POST)) {
+      $this->SurvivorServices->insert(__FILE__, __LINE__, $Survivor);
+      $Survivor->setId(MySQL::getLastInsertId());
+      return $this->getAddEditPage($Survivor);
     }
-    return $this->getAddEditPage($Skill, 'Ajouter une Compétence', 'add');
-  */
+    return $this->getAddEditPage($Survivor, 'Ajouter un Survivant', 'add');
   }
   /**
+   * @param int $survivorId
    * @return string
    */
-  public function getClonePage($skillId)
+  public function getClonePage($survivorId)
   {
-  /*
-    $Skill = $this->SkillServices->select(__FILE__, __LINE__, $skillId);
-    $Skill->setId('');
-    if (isset($_POST) && !empty($_POST)) {
-      $doUpdate = $Skill->updateWithPost($_POST);
-      if ($doUpdate) {
-        $this->SkillServices->insert(__FILE__, __LINE__, $Skill);
-        $Skill->setId(MySQL::getLastInsertId());
-        return $this->getAddEditPage($Skill, 'Editer une Compétence', 'edit');
-      }
+    $Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $survivorId);
+    $Survivor->setId('');
+    if (isset($_POST) && !empty($_POST) && $Survivor->updateWithPost($_POST)) {
+      $this->SurvivorServices->insert(__FILE__, __LINE__, $Survivor);
+      $Survivor->setId(MySQL::getLastInsertId());
+      return $this->getAddEditPage($Survivor);
     }
-    return $this->getAddEditPage($Skill, 'Créer une Compétence', 'add');
-  */
+    return $this->getAddEditPage($Survivor, 'Créer un Survivant', 'add');
   }
   /**
+   * @param int $survivorId
    * @return string
    */
-  public function getEditPage($skillId)
+  public function getEditPage($survivorId)
   {
-  /*
-    $Skill = $this->SkillServices->select(__FILE__, __LINE__, $skillId);
-    if (isset($_POST) && !empty($_POST)) {
-      $doUpdate = $Skill->updateWithPost($_POST);
-      if ($doUpdate) {
-        $this->SkillServices->update(__FILE__, __LINE__, $Skill);
-      }
+    $Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $survivorId);
+    if (isset($_POST) && !empty($_POST) && $Survivor->updateWithPost($_POST)) {
+      $this->SurvivorServices->update(__FILE__, __LINE__, $Survivor);
     }
-    return $this->getAddEditPage($Skill, 'Editer une Compétence', 'edit');
-  */
+    return $this->getAddEditPage($Survivor);
   }
   /**
    * @param Survivor $Survivor
@@ -172,31 +153,25 @@ class AdminSurvivorsBean extends AdminPageBean
    * @param string $postAction
    * @return string
    */
-  public function getAddEditPage($Survivor, $title, $postAction)
+  public function getAddEditPage($Survivor, $title='Editer un Survivant', $postAction='edit')
   {
-  /*
     $args = array(
       // Nom de l'interface - 1
       $title,
       // Url de l'action - 2
       '#',
       // Url pour Annuler - 3
-      $this->getQueryArg(array(self::CST_ONGLET=>self::CST_SKILL)),
+      $this->getQueryArg(array(self::CST_ONGLET=>self::CST_SURVIVOR)),
       // Id de la Compétence - 4
-      $Skill->getId(),
+      $Survivor->getId(),
       // Type de l'action - 5
       $postAction,
-      // Nom de la Compétence - 6
-      $Skill->getName(),
-      // Code de la Compétence - 7
-      $Skill->getCode(),
-      // Description de la Compétence - 8
-      $Skill->getDescription(),
+      // Nom du Survivant - 6
+      $Survivor->getName(),
       '','','','','','','','','','','','','','',
     );
-    $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/skill-edit.php');
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/survivor-edit.php');
     return vsprintf($str, $args);
-  */
   }
   /**
    * Affiche l'interface de confirmation de suppression. Supprime le Survivant si suppression confirmée.
@@ -205,51 +180,46 @@ class AdminSurvivorsBean extends AdminPageBean
    */
   public function getTrashPage($survivorId=null)
   {
-  /*
     // Si on confirme la suppression, on le fait et on affiche la nouvelle liste
-    if (isset($_POST) && !empty($_POST) && !empty($_POST['skillIds'])) {
-      foreach ($_POST['skillIds'] as $skillId) {
-        $Skill = $this->SkillServices->select(__FILE__, __LINE__, $skillId);
-        $this->SkillServices->delete(__FILE__, __LINE__, $Skill);
+    if (isset($_POST) && !empty($_POST) && !empty($_POST['survivorIds'])) {
+      foreach ($_POST['survivorIds'] as $survivorId) {
+        $Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $survivorId);
+        $this->SurvivorServices->delete(__FILE__, __LINE__, $Survivor);
       }
       return $this->getListingPage();
     }
     // On affiche l'interface de confirmation de suppression avant de commettre l'irrémédiable.
-    $Skill = $this->SkillServices->select(__FILE__, __LINE__, $skillId);
+    $Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $survivorId);
     // Préparation des variables pour la mutualisation de l'interface de suppression
-    $title = 'Suppression de compétences';
-    $subTitle = 'la compétence suivante';
-    $strLis  = '<li><input type="hidden" name="skillIds[]" value="'.$skillId.'"/>'.$Skill->getName().'</li>';
-    $urlCancel = $this->getQueryArg(array(self::CST_ONGLET=>self::CST_SKILL));
+    $title = 'Suppression de survivants';
+    $subTitle = 'le survivant suivant';
+    $strLis  = '<li><input type="hidden" name="survivorIds[]" value="'.$survivorId.'"/>'.$Survivor->getName().'</li>';
+    $urlCancel = $this->getQueryArg(array(self::CST_ONGLET=>self::CST_SURVIVOR));
     return $this->getConfirmDeletePage($title, $subTitle, $strLis, $urlCancel);
-  */
   }
   /**
    * Affiche l'interface de confirmation de suppression. Supprime le Survivant si suppression confirmée.
-   * @param int|null $skillId Identifiant du Survivant à supprimer.
    * @return string
    */
   public function getBulkTrashPage()
   {
-  /*
     if (isset($_POST['post']) && !empty($_POST['post'])) {
       if (count($_POST['post'])==1) {
         return $this->getTrashPage($_POST['post'][0]);
       } else {
-        $title = 'Suppression de compétences';
-        $subTitle = 'les compétences suivantes';
-        $urlCancel = $this->getQueryArg(array(self::CST_ONGLET=>self::CST_SKILL));
+        $title = 'Suppression de survivants';
+        $subTitle = 'les survivants suivants';
+        $urlCancel = $this->getQueryArg(array(self::CST_ONGLET=>self::CST_SURVIVOR));
         $strLis  = '';
         foreach ($_POST['post'] as $value) {
-          $Skill = $this->SkillServices->select(__FILE__, __LINE__, $value);
-          $strLis .= '<li><input type="hidden" name="skillIds[]" value="'.$value.'"/>'.$Skill->getName().'</li>';
+          $Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $value);
+          $strLis .= '<li><input type="hidden" name="survivorIds[]" value="'.$value.'"/>'.$Survivor->getName().'</li>';
         }
         return $this->getConfirmDeletePage($title, $subTitle, $strLis, $urlCancel);
       }
     } else {
       return $this->getListingPage();
     }
-  */
   }
   /**
    * Retourne l'interface commune de confirmation de suppression d'éléments
@@ -261,7 +231,6 @@ class AdminSurvivorsBean extends AdminPageBean
    */
   public function getConfirmDeletePage($title, $subTitle, $strLis, $urlCancel)
   {
-  /*
     // Les données de l'interface.
     $args = array(
       // Titre de l'opération - 1
@@ -280,33 +249,7 @@ class AdminSurvivorsBean extends AdminPageBean
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/delete-common-elements.php');
     return vsprintf($str, $args);
-  */
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-  
 
 }

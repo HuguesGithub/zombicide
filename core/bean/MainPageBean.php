@@ -155,27 +155,6 @@ class MainPageBean implements iConstants
   public function displayPublicHeader()
   {
     if ($this->showHeaderAndFooter) {
-      $arrMenuDisplay  = array();
-      $children = $this->WpPostServices->getChildPagesByParentId(1022);
-      if (!empty($children)) {
-        foreach ($children as $WpPost) {
-          $cpt = 0;
-          $strMenuDisplay = '<span>'.$WpPost->getPostTitle().'</span><ul>';
-          $grandChildren = $this->WpPostServices->getChildPagesByParentId($WpPost->getID());
-          if (!empty($grandChildren)) {
-            foreach ($grandChildren as $WpPost) {
-              if ($WpPost->getPostMeta('selected')) {
-                $strMenuDisplay .= '<li><a href="'.$WpPost->getGuid().'">'.$WpPost->getPostTitle().'</a></li>';
-                $cpt++;
-              }
-            }
-          }
-          $strMenuDisplay .= '</ul>';
-          if ($cpt > 0) {
-            $arrMenuDisplay[] = $strMenuDisplay;
-          }
-        }
-      }
       $strPages  = '<a href="http://zombicide.jhugues.fr"><span>Accueil</span></a>';
       $strPages .= '<a href="http://zombicide.jhugues.fr/page-competences/"><span>Compétences</span></a>';
       $strPages .= '<a href="http://zombicide.jhugues.fr/page-missions/"><span>Missions</span></a>';
@@ -190,8 +169,8 @@ class MainPageBean implements iConstants
       $strPages .= '</ul>';
       $strPages .= '</span>';
       $args = array(
-          $arrMenuDisplay[0],
-          $arrMenuDisplay[1],
+          '',
+          '',
           $strPages
     );
     } else {

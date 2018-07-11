@@ -20,6 +20,7 @@ class WpPageLiveSpawnBean extends PagePageBean
     $this->ExpansionServices = FactoryServices::getExpansionServices();
     $this->LiveServices = FactoryServices::getLiveServices();
     $this->SpawnServices = FactoryServices::getSpawnServices();
+    $this->SpawnLiveDeckServices = FactoryServices::getSpawnLiveDeckServices();
   }
   /**
    * @param WpPage $WpPage
@@ -29,6 +30,43 @@ class WpPageLiveSpawnBean extends PagePageBean
   {
     $Bean = new WpPageLiveSpawnBean($WpPage);
     return $Bean->getSpawnDeckContent();
+  }
+  private function createSpawnLiveDeck($invasionSpanSelection, $matches)
+  {
+    // Aucune référence, on créé une nouvelle pioche
+    $pattern = "/([0-9]*-[0-9]*)/";
+    preg_match_all($pattern, $invasionSpanSelection, $matches);
+    if (!empty($matches) && !empty($matches[0])) {
+      $args['dateUpdate'] = date(self::CST_FORMATDATE);
+      $Live = new Live($args);
+      $this->LiveServices->insert(__FILE__, __LINE__, $Live);
+      $Live->setId(MySQL::getLastInsertId());
+      // Maintenant que le Live est créé, on va créer les cartes associées.
+      // On étudie la première entrée de $matches.
+      $arrToParse = $matches[1];
+      // On va devoir stocker les identifiants des cartes.
+      $arrNumbers = array();
+      while(!empty($arrToParse)) {
+        list($min, $max) = explode('-', array_shift($arrToParse));
+        $strSpawns .= '['.$min.'-'.$max.']';
+        for ($i=$min; $i<=$max; $i++) {
+          array_push($arrNumbers, $i);
+        }
+      }
+      // On mélange ces cartes
+      shuffle($arrNumbers);
+      // On prépare l'insertion en base
+      $SpawnLiveDeck = new SpawnLiveDeck(array('liveId'=>$Live->getId(), 'status'=>'P'));
+      foreach ($arrNumbers as $k => $value) {
+        $Spawns = $this->SpawnServices->getSpawnsWithFilters(__FILE__, __LINE__, array('spawnNumber'=>$value));
+        $Spawn = array_shift($Spawns);
+        $SpawnLiveDeck->setSpawnCardId($Spawn->getId());
+        $SpawnLiveDeck->setRank($k+1);
+        $this->SpawnLiveDeckServices->insert(__FILE__, __LINE__, $SpawnLiveDeck);
+      }
+    } else {
+      $strSpawns = 'Impossible de créer quoi que ce soit, les cartes sélectionnées ne correspondent pas au format attendu ([1-46]...)';
+    }
   }
   /**
    * @return string
@@ -46,17 +84,25 @@ class WpPageLiveSpawnBean extends PagePageBean
     if ($deckKey=='') {
       $blocExpansions = $this->nonLoggedInterface();
     } else {
+      $showSelection = 'hidden';
+      // deckKey est renseigné. On doit vérifier que cette clef existe ou non.
+      // Si elle existe, on va reprendre les données en cours.
       // Sinon, on va devoir créer la pioche complète
-      $pattern = "/([0-9]*-[0-9]*)/";
-      preg_match_all($pattern, $invasionSpanSelection, $matches);
+      $args = array('deckKey'=>$deckKey);
+      $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, $args);
+      if (empty($Lives)) {
+        $this->createSpawnLiveDeck($invasionSpanSelection, $matches);
+      } else {
+        $strSpawns = 'à récupérer';
+      }
+      
+      /*
       if (!empty($matches) && !empty($matches[0])) {
         //$_SESSION[self::CST_DECKKEY] = $deckKey;
-        $args = array('deckKey'=>$deckKey, 'dateUpdate'=>date(self::CST_FORMATDATE));
-        $Live = new Live($args);
-        $this->LiveServices->insert(__FILE__, __LINE__, $Live);
       } else {
         unset($_SESSION[self::CST_DECKKEY]);
       }
+      */
     }
     $args = array(
       $blocExpansions,

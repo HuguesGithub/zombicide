@@ -44,6 +44,9 @@ class LocalDomain extends GlobalDomain implements iConstants
           case 'Level'        :
             $this->LevelServices = FactoryServices::getLevelServices();
           break;
+          case 'Live'        :
+            $this->LiveServices = FactoryServices::getLiveServices();
+          break;
           case 'LiveDeck'        :
             $this->LiveDeckServices = FactoryServices::getLiveDeckServices();
           break;

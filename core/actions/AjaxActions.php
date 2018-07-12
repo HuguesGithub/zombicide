@@ -35,13 +35,12 @@ class AjaxActions extends LocalActions
         $returned = MissionBean::staticBuildBlockTiles($_POST);
       break;
       case 'deleteSpawnDeck'       :
-        $returned = SpawnDeckActions::staticDeleteSpawnDeck($_POST);
-      break;
       case 'discardSpawnActive'    :
-        $returned = SpawnDeckActions::staticDiscardSpawnCard($_POST);
-      break;
-      case 'drawSpawnCard'       :
-        $returned = SpawnDeckActions::staticDrawSpawnCard($_POST);
+      case 'drawSpawnCard'         :
+      case 'leaveSpawnDeck'        :
+      case 'showSpawnDiscard'      :
+      case 'shuffleSpawnDiscard'   :
+        $returned = SpawnDeckActions::dealWithStatic($_POST);
       break;
       case 'getCompetences'      :
         $returned = WpPageSkillsBean::staticGetSkillsSortedAndFiltered($_POST);
@@ -67,6 +66,9 @@ class AjaxActions extends LocalActions
       case 'postChat'          :
         $returned = ChatActions::staticPostChat($_POST);
       break;
+      case 'pregenEquipmentCard'    :
+        $returned = EquipmentDeckActions::dealWithStatic($_POST);
+      break;
       case 'refreshChat'         :
         $returned = ChatActions::staticChatContent($_POST);
       break;
@@ -75,12 +77,6 @@ class AjaxActions extends LocalActions
       break;
       case 'rotateMissionTile'     :
         $returned = MissionTileServices::staticRotate($_POST);
-      break;
-      case 'showSpawnDiscard'      :
-        $returned = SpawnDeckActions::staticShowSpawnDiscard($_POST);
-      break;
-      case 'shuffleSpawnDiscard'     :
-        $returned = SpawnDeckActions::staticShuffleSpawnDiscard($_POST);
       break;
       case 'updateMissionTile'     :
         $returned = MissionTileServices::staticUpdate($_POST);

@@ -58,7 +58,7 @@ class LocalDaoImpl extends GlobalDaoImpl implements iConstants
    */
   public function __construct($strDao='')
   {
-    $urlIni = '/wp-content/plugins/zombicide/core/daoimpl/requests.ini';
+    $urlIni = '/wp-content/plugins/zombicide/core/daoimpl/requests.php';
     $strGetCwd = getcwd();
     if (strpos($strGetCwd, 'wp-admin')!==false) {
       $strGetCwd = substr($strGetCwd, 0, -9);
@@ -95,6 +95,9 @@ class LocalDaoImpl extends GlobalDaoImpl implements iConstants
           break;
           case 'EquipmentKeyword'     :
             $Items[] = EquipmentKeyword::convertElement($row);
+          break;
+          case 'EquipmentLiveDeck'     :
+            $Items[] = EquipmentLiveDeck::convertElement($row);
           break;
           case 'EquipmentWeaponProfile' :
             $Items[] = EquipmentWeaponProfile::convertElement($row);

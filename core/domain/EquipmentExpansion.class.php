@@ -31,6 +31,14 @@ class EquipmentExpansion extends LocalDomain
    */
   protected $quantity;
   /**
+   * @param array $attributes
+   */
+  public function __construct($attributes=array())
+  {
+    parent::__construct($attributes);
+    $this->EquipmentServices = FactoryServices::getEquipmentServices();
+  }
+  /**
    * @return int
    */
   public function getId()
@@ -83,5 +91,6 @@ class EquipmentExpansion extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new EquipmentExpansion(), self::getClassVars(), $row); }
-
+  public function setEquipment($Equipment)
+  { $this->Equipment = $Equipment; }
 }

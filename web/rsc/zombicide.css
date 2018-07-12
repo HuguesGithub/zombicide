@@ -152,6 +152,7 @@ a.likeSubmitButton:hover { color: #f6a800; cursor: pointer; text-decoration: non
 #page-survivants, 
 #page-piste-de-des, 
 #page-selection-survivants,
+#page-live-equipment,
 #page-live-spawn { background-color: #ffffff; border-radius: 15px; margin: 0 auto; padding: 10px; width: 95%; }
 .mission.section-panel { margin-bottom: 10px; }
 .content-mission-page { }

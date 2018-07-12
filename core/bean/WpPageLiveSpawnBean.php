@@ -63,9 +63,31 @@ class WpPageLiveSpawnBean extends PagePageBean
         $SpawnLiveDeck->setRank($k+1);
         $this->SpawnLiveDeckServices->insert(__FILE__, __LINE__, $SpawnLiveDeck);
       }
+      return $Live;
     } else {
-      return 'Impossible de créer quoi que ce soit, les cartes sélectionnées ne correspondent pas au format attendu ([1-46]...)';
+      return new Live();
     }
+  }
+  private function getDeckButtons($Live)
+  {
+    $str  = '';
+    $str .= '<div class="btn-group-vertical live-spawn-selection" role="group">';
+    $deckKey = $Live->getDeckKey();
+    $str .= $this->getButtonDiv('btnDisabled1', $deckKey, 'Actions disponibles :', 'btn-dark disabled');
+    $label = 'Piocher une carte (<span id="nbCardInDeck">'.$Live->getNbCardsInDeck().'</span>)';
+    $str .= $this->getButtonDiv('btnDrawSpawnCard', $deckKey, $label);
+    $str .= $this->getButtonDiv('btnDiscardSpawnActive', $deckKey, 'Défausser les cartes piochées');
+    $str .= $this->getButtonDiv('btnShowDiscardSpawn', $deckKey, 'Afficher la défausse');
+    $label = 'Remélanger la défausse (<span id="nbCardInDiscard">'.$Live->getNbCardsInDiscard().'</span>)';
+    $str .= $this->getButtonDiv('btnShuffleDiscardSpawn', $deckKey, $label);
+    $str .= $this->getButtonDiv('btnLeaveSpawnDeck', $deckKey, 'Quitter cette pioche');
+    $str .= $this->getButtonDiv('btnDisabled2', $deckKey, 'Attention, action irréversible :', 'btn-dark disabled');
+    $str .= $this->getButtonDiv('btnDeleteSpawnDeck', $deckKey, 'Supprimer cette pioche', 'btn-danger');
+    return $str.'</div>';
+  }
+  private function getButtonDiv($id, $deckKey, $label, $classe='btn-dark')
+  {
+    return '<div type="button" id="'.$id.'" class="btn '.$classe.'" data-keyaccess="'.$deckKey.'">'.$label.'</div>';
   }
   /**
    * @return string
@@ -83,6 +105,7 @@ class WpPageLiveSpawnBean extends PagePageBean
     if ($deckKey=='') {
       $blocExpansions = $this->nonLoggedInterface();
     } else {
+      $_SESSION[self::CST_DECKKEY] = $deckKey;
       $showSelection = 'hidden';
       // deckKey est renseigné. On doit vérifier que cette clef existe ou non.
       // Si elle existe, on va reprendre les données en cours.
@@ -90,18 +113,11 @@ class WpPageLiveSpawnBean extends PagePageBean
       $args = array('deckKey'=>$deckKey);
       $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, $args);
       if (empty($Lives)) {
-        $strSpawns = $this->createSpawnLiveDeck($invasionSpanSelection, $matches);
+        $Live = $this->createSpawnLiveDeck($invasionSpanSelection, $matches);
       } else {
-        $strSpawns = 'à récupérer';
+        $Live = array_shift($Lives);
       }
-      
-      /*
-      if (!empty($matches) && !empty($matches[0])) {
-        //$_SESSION[self::CST_DECKKEY] = $deckKey;
-      } else {
-        unset($_SESSION[self::CST_DECKKEY]);
-      }
-      */
+      $blocExpansions = $this->getDeckButtons($Live);
     }
     $args = array(
       $blocExpansions,

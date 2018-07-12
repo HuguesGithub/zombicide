@@ -38,6 +38,9 @@ class PagePageBean extends MainPageBean
       case 'page-competences'          :
         $strReturned = WpPageSkillsBean::getStaticPageContent($this->WpPage);
       break;
+      case 'page-live-pioche-equipment' :
+        $strReturned = WpPageLiveEquipmentBean::getStaticPageContent($this->WpPage);
+      break;
       case 'page-live-pioche-invasion' :
         $strReturned = WpPageLiveSpawnBean::getStaticPageContent($this->WpPage);
       break;

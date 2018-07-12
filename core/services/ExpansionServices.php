@@ -69,7 +69,7 @@ class ExpansionServices extends LocalServices
    * @param string $defaultLabel
    * @return string
    */
-  public function getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value, $prefix, $classe, $multiple, $defaultLabel)
+  public function getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value, $prefix, $classe, $multiple, $defaultLabel='')
   {
     $arrSetLabels = array();
     foreach ($Expansions as $Expansion) {

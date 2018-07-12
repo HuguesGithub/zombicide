@@ -3,21 +3,24 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * SpawnDeckActions
+ * EquipmentDeckActions
  * @since 1.0.00
  * @author Hugues
  */
-class SpawnDeckActions extends LocalActions
+class EquipmentDeckActions extends LocalActions
 {
   /**
    * Constructeur
    */
   public function __construct($post)
   {
+    $this->EquipmentServices = FactoryServices::getEquipmentServices();
+    $this->EquipmentExpansionServices = FactoryServices::getEquipmentExpansionServices();
+    /*
     $this->LiveServices = FactoryServices::getLiveServices();
-    $this->SpawnLiveDeckServices = FactoryServices::getSpawnLiveDeckServices();
     $LiveDecks = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, array(self::CST_DECKKEY=>$post[self::CST_KEYACCESS]));
     $this->Live = array_shift($LiveDecks);
+    */
   }
   /**
    * Point d'entrée des méthodes statiques.
@@ -26,8 +29,13 @@ class SpawnDeckActions extends LocalActions
    **/
   public static function dealWithStatic($post)
   {
-    $Act = new SpawnDeckActions($post);
-    $returned = '{}';
+    $Act = new EquipmentDeckActions($post);
+    if ($post['ajaxAction']=='pregenEquipmentCard') {
+      $returned = $Act->getPreGen($post);
+    } else {
+      $returned = '{}';
+    }
+	/*
     if ($_SESSION[self::CST_DECKKEY]==$post[self::CST_KEYACCESS]) {
       switch ($post['ajaxAction']) {
         case 'deleteSpawnDeck'    :
@@ -52,16 +60,53 @@ class SpawnDeckActions extends LocalActions
         break;
       }
     }
+	*/
     return $returned;
   }
+  public function getPreGen($post)
+  {
+    $strReturned = '';
+    $expansionIds = explode(',', $post['expansionIds']);
+    $arrEquipment = array();
+    while (!empty($expansionIds)) {
+      $expansionId = array_shift($expansionIds);
+      $arrFilters = array('expansionId'=>$expansionId);
+      $EquipmentExpansions = $this->EquipmentExpansionServices->getEquipmentExpansionsWithFilters(__FILE__, __LINE__, $arrFilters);
+      if (!empty($EquipmentExpansions)) {
+        foreach ($EquipmentExpansions as $EquipmentExpansion) {
+          $Equipment = $this->EquipmentServices->select(__FILE__, __LINE__, $EquipmentExpansion->getEquipmentCardId());
+          $EquipmentExpansion->setEquipment($Equipment);
+          $arrEquipment[$Equipment->getNiceName().'-'.$Equipment->getId().'-'.$EquipmentExpansion->getExpansionId()] = $EquipmentExpansion;
+        }
+      }
+    }
+    if (!empty($arrEquipment)) {
+      ksort($arrEquipment);
+      while (!empty($arrEquipment)) {
+        $EquipmentExpansion = array_shift($arrEquipment);
+        $Equipment = $this->EquipmentServices->select(__FILE__, __LINE__, $EquipmentExpansion->getEquipmentCardId());
+        $strReturned .= '<div class="input-group input-group-sm mb-3 col-12 col-md-6 col-xl-4 float-left">';
+        $strReturned .= '<div class="input-group-prepend">';
+        $strReturned .= '<span class="input-group-text">'.$EquipmentExpansion->getExpansionId().' / '.($Equipment->isStarter()?'*':'').$Equipment->getName().'</span>';
+        $strReturned .= '</div>';
+        $strReturned .= '<div class="input-group-prepend"><span class="input-group-text">&nbsp;<i class="fa fa-question-circle"></i></span></div>';
+        $nb = $EquipmentExpansion->getQuantity();
+        $strReturned .= '<input class="form-control" type="text" name="ec-'.$EquipmentExpansion->getId().'" data-default="'.$nb.'" value="'.$nb.'">';
+        $strReturned .= '</div>';
+      }
+    }
+    return '{"equipment-container":'.json_encode($strReturned).'}';
+  }
+  /*
   private function touchLive()
   {
     $this->Live->setDateUpdate(date(self::CST_FORMATDATE));
     $this->LiveServices->update(__FILE__, __LINE__, $this->Live);
   }
+  */
   /**
    * @param array $post
-   */
+   *
   public function drawSpawnCard()
   {
     $Live = $this->Live;
@@ -85,7 +130,7 @@ class SpawnDeckActions extends LocalActions
   }
   /**
    * @param array $post
-   */
+   *
   public function discardSpawnCard()
   {
     $Live = $this->Live;
@@ -109,7 +154,7 @@ class SpawnDeckActions extends LocalActions
   }
   /**
    * @param array $post
-   */
+   *
   public function shuffleSpawnCards()
   {
     $Live = $this->Live;
@@ -136,7 +181,7 @@ class SpawnDeckActions extends LocalActions
   }
   /**
    * @param array $post
-   */
+   *
   public function showDiscardSpawnCards()
   {
     $Live = $this->Live;
@@ -153,7 +198,7 @@ class SpawnDeckActions extends LocalActions
   }
   /**
    * @param array $post
-   */
+   *
   public function deleteSpawnCard()
   {
     $Live = $this->Live;
@@ -161,4 +206,5 @@ class SpawnDeckActions extends LocalActions
     unset($_SESSION[self::CST_DECKKEY]);
     return '{}';
   }
+  */
 }

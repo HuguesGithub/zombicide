@@ -64,6 +64,10 @@ $hj(document).ready(function(){
     addPageLiveSpawnActions();
     return false;
   }
+  if ($hj('#page-live-equipment').length!=0 ) {
+    addPageLiveEquipmentActions();
+    return false;
+  }
 
   if ($hj('#page-online').length!=0 ) {
     var height = $hj('body').height()-17;
@@ -1015,7 +1019,7 @@ function addSelectionSurvivantActions() {
     );
   });
 }
-function doSpawnDeckActions(data, type) {
+function doEquipmentDeckActions(data, type) {
   var obj;
   $hj.post(
     ajaxurl,
@@ -1023,12 +1027,12 @@ function doSpawnDeckActions(data, type) {
     function(response) {
       try {
         obj = JSON.parse(response);
+        if (type == 'reload' ) {
+          location.href = 'http://zombicide.jhugues.fr/page-live-pioche-equipment/';
+        }
         for (var anchor in obj ) {
           if (type == 'insert' ) {
             $hj('#'+anchor).html(obj[anchor]);
-          } else if (type == 'replace' ) {
-            $hj('#'+anchor).replaceWith(obj[anchor]);
-            addPageLiveSpawnActions();
           }
         }
       } catch (e) {
@@ -1038,7 +1042,30 @@ function doSpawnDeckActions(data, type) {
     }
   );
 }
-function addPageLiveSpawnActions() {
+function doSpawnDeckActions(data, type) {
+  var obj;
+  $hj.post(
+    ajaxurl,
+    data,
+    function(response) {
+      try {
+        obj = JSON.parse(response);
+        if (type == 'reload' ) {
+          location.href = 'http://zombicide.jhugues.fr/page-live-pioche-invasion/';
+        }
+        for (var anchor in obj ) {
+          if (type == 'insert' ) {
+            $hj('#'+anchor).html(obj[anchor]);
+          }
+        }
+      } catch (e) {
+        console.log("error: "+e);
+        console.log(response);
+      }
+    }
+  );
+}
+function addGenKeyActions() {
   $hj('#genKey').click(function(e){
     e.preventDefault();
     var n = 16;
@@ -1051,6 +1078,49 @@ function addPageLiveSpawnActions() {
     }
     $hj('#keyAccess').val(password);
   });
+}
+function addPageLiveEquipmentActions() {
+  addGenKeyActions();
+  $hj('#equipmentSetupSelection .btn-expansion').click(function(){
+    $hj(this).toggleClass('active');
+    $hj(this).find('svg').toggleClass('fa-square fa-check-square');
+    var expansionIds = '';
+    $hj('.btn-expansion.active').each(function(){
+      if (expansionIds!='') { expansionIds+=','; }
+      expansionIds += $hj(this).data('expansion-id');
+    });
+    var data = {'action': 'dealWithAjax', 'ajaxAction': 'pregenEquipmentCard', 'expansionIds': expansionIds};
+    doSpawnDeckActions(data, 'insert');
+  });
+  if ($hj('#btnDrawEquipmentCard').length!=0 ) {
+    $hj('#btnDrawEquipmentCard').unbind().click(function(){
+      var data = {'action': 'dealWithAjax', 'ajaxAction': 'drawEquipmentCard', 'keyAccess': $hj(this).data('keyaccess')};
+      doEquipmentDeckActions(data, 'insert');
+    });
+    $hj('#btnDiscardEquipmentActive').unbind().click(function(){
+      var data = {'action': 'dealWithAjax', 'ajaxAction': 'discardEquipmentActive', 'keyAccess': $hj(this).data('keyaccess')};
+      doEquipmentDeckActions(data, 'insert');
+    });
+    $hj('#btnShowDiscardEquipment').unbind().click(function(){
+      var data = {'action': 'dealWithAjax', 'ajaxAction': 'showEquipmentDiscard', 'keyAccess': $hj(this).data('keyaccess')};
+      doEquipmentDeckActions(data, 'insert');
+    });
+    $hj('#btnShuffleDiscardEquipment').unbind().click(function(){
+      var data = {'action': 'dealWithAjax', 'ajaxAction': 'shuffleEquipmentDiscard', 'keyAccess': $hj(this).data('keyaccess')};
+      doEquipmentDeckActions(data, 'insert');
+    });
+    $hj('#btnLeaveEquipmentDeck').unbind().click(function(){
+      var data = {'action': 'dealWithAjax', 'ajaxAction': 'leaveEquipmentDeck', 'keyAccess': $hj(this).data('keyaccess')};
+      doEquipmentDeckActions(data, 'reload');
+    });
+    $hj('#btnDeleteEquipmentDeck').unbind().click(function(){
+      var data = {'action': 'dealWithAjax', 'ajaxAction': 'deleteEquipmentDeck', 'keyAccess': $hj(this).data('keyaccess')};
+      doEquipmentDeckActions(data, 'reload');
+    });
+  }
+}
+function addPageLiveSpawnActions() {
+  addGenKeyActions();
   $hj('#spawnSetupSelection .btn-expansion span').click(function(){
     $hj(this).find('svg').toggleClass('fa-square fa-check-square');
     var isChecked = $hj(this).find('svg').hasClass('fa-check-square');
@@ -1080,9 +1150,13 @@ function addPageLiveSpawnActions() {
       var data = {'action': 'dealWithAjax', 'ajaxAction': 'shuffleSpawnDiscard', 'keyAccess': $hj(this).data('keyaccess')};
       doSpawnDeckActions(data, 'insert');
     });
+    $hj('#btnLeaveSpawnDeck').unbind().click(function(){
+      var data = {'action': 'dealWithAjax', 'ajaxAction': 'leaveSpawnDeck', 'keyAccess': $hj(this).data('keyaccess')};
+      doSpawnDeckActions(data, 'reload');
+    });
     $hj('#btnDeleteSpawnDeck').unbind().click(function(){
       var data = {'action': 'dealWithAjax', 'ajaxAction': 'deleteSpawnDeck', 'keyAccess': $hj(this).data('keyaccess')};
-      doSpawnDeckActions(data, 'replace');
+      doSpawnDeckActions(data, 'reload');
     });
   }
 }

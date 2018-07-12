@@ -129,8 +129,12 @@ class LocalDomain extends GlobalDomain implements iConstants
    */
   public function getEquipment()
   {
-    if ($this->Equipment == null) {
-      $this->Equipment = $this->EquipmentServices->select(__FILE__, __LINE__, $this->equipmentId);
+    if ($this->Equipment == null ) {
+      if ($this->equipmentId != null) {
+        $this->Equipment = $this->EquipmentServices->select(__FILE__, __LINE__, $this->equipmentId);
+      } elseif ($this->equipmentCardId != null) {
+        $this->Equipment = $this->EquipmentServices->select(__FILE__, __LINE__, $this->equipmentCardId);
+      }
     }
     return $this->Equipment;
   }
@@ -424,7 +428,7 @@ class LocalDomain extends GlobalDomain implements iConstants
   public function getSpawnLiveDecks()
   {
     if ($this->SpawnLiveDecks == null && $this->id!='') {
-      $arrFilters = array('liveDeckId'=>$this->id);
+      $arrFilters = array('liveId'=>$this->id);
       $this->SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
     }
     return $this->SpawnLiveDecks;

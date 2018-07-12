@@ -37,6 +37,11 @@ class FactoryServices
   public static function getEquipmentLiveServices()
   { return new EquipmentLiveServices(); }
   /**
+   * Retourne les Services relatifs à EquipmentLiveDeck
+   */
+  public static function getEquipmentLiveDeckServices()
+  { return new EquipmentLiveDeckServices(); }
+  /**
    * Retourne les Services relatifs à EquipmentWeaponProfile
    */
   public static function getEquipmentWeaponProfileServices()

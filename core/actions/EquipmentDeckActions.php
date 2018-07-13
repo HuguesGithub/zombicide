@@ -14,13 +14,12 @@ class EquipmentDeckActions extends LocalActions
    */
   public function __construct($post)
   {
-    $this->EquipmentServices = FactoryServices::getEquipmentServices();
-    $this->EquipmentExpansionServices = FactoryServices::getEquipmentExpansionServices();
-    /*
     $this->LiveServices = FactoryServices::getLiveServices();
     $LiveDecks = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, array(self::CST_DECKKEY=>$post[self::CST_KEYACCESS]));
     $this->Live = array_shift($LiveDecks);
-    */
+    $this->EquipmentServices = FactoryServices::getEquipmentServices();
+    $this->EquipmentExpansionServices = FactoryServices::getEquipmentExpansionServices();
+    $this->EquipmentLiveDeckServices = FactoryServices::getEquipmentLiveDeckServices();
   }
   /**
    * Point d'entrée des méthodes statiques.
@@ -35,32 +34,39 @@ class EquipmentDeckActions extends LocalActions
     } else {
       $returned = '{}';
     }
-	/*
     if ($_SESSION[self::CST_DECKKEY]==$post[self::CST_KEYACCESS]) {
       switch ($post['ajaxAction']) {
-        case 'deleteSpawnDeck'    :
-          $returned = $Act->deleteSpawnCard();
+        case 'deleteEquipmentDeck'     :
+          $returned = $Act->deleteEquipmentCard();
         break;
-        case 'discardSpawnActive' :
-          $returned = $Act->discardSpawnCard();
+        case 'discardEquipmentActive'  :
+          $returned = $Act->discardEquipmentCard();
         break;
-        case 'drawSpawnCard' :
-          $returned = $Act->drawSpawnCard();
+        case 'discardEquippedCard'     :
+          $returned = $Act->discardEquipmentCard($post);
         break;
-        case 'leaveSpawnDeck' :
-          $returned = $Act->leaveSpawnCard();
+        case 'drawEquipmentCard'       :
+          $returned = $Act->drawEquipmentCard();
         break;
-        case 'showSpawnDiscard' :
-          $returned = $Act->showDiscardSpawnCards();
+        case 'equipEquipmentActive'    :
+          $returned = $Act->equipEquipmentCard();
         break;
-        case 'shuffleSpawnDiscard' :
-          $returned = $Act->shuffleSpawnCards();
+        case 'leaveEquipmentDeck'      :
+          $returned = $Act->leaveEquipmentCard();
+        break;
+        case 'showEquipmentDiscard'    :
+          $returned = $Act->showDiscardEquipmentCards();
+        break;
+        case 'showEquipmentEquip'      :
+          $returned = $Act->showEquippedEquipmentCards();
+        break;
+        case 'shuffleEquipmentDiscard' :
+          $returned = $Act->shuffleEquipmentCards();
         break;
         default :
         break;
       }
     }
-	*/
     return $returned;
   }
   public function getPreGen($post)
@@ -97,114 +103,182 @@ class EquipmentDeckActions extends LocalActions
     }
     return '{"equipment-container":'.json_encode($strReturned).'}';
   }
-  /*
   private function touchLive()
   {
     $this->Live->setDateUpdate(date(self::CST_FORMATDATE));
     $this->LiveServices->update(__FILE__, __LINE__, $this->Live);
   }
-  */
+  /**
+   * Retourne la chaîne json mutualisée pour l'ensemble des méthodes.
+   * @param int $nbCardInDeck Nombre de cartes dans la pioche
+   * @param int $nbCardInDiscard Nombre de cartes dans la défausse
+   * @param string $pageSelectionResult Le contenu à afficher
+   * @return string
+   */
+  private function jsonBuild($nbCardInDeck, $nbCardInDiscard, $nbCardsEquipped, $pageSelectionResult)
+  {
+    $json  = '{';
+    if ($nbCardInDeck!==-1) {
+      $json .= '"nbCardInDeck":'.json_encode($nbCardInDeck);
+    }
+    if ($nbCardInDiscard!==-1) {
+      $json .= ($json!='{'?',':'').'"nbCardInDiscard":'.json_encode($nbCardInDiscard);
+    }
+    if ($nbCardsEquipped!==-1) {
+      $json .= ($json!='{'?',':'').'"nbCardEquipped":'.json_encode($nbCardsEquipped);
+    }
+    return $json.($json!='{'?',':'').'"page-selection-result":'.json_encode($pageSelectionResult).'}';
+  }
+  /**
+   * @param string $status
+   * @return array
+   */
+  private function getEquipmentLiveDecksByStatus($status)
+  {
+    $arrFilters = array(self::CST_LIVEID=>$this->Live->getId(), self::CST_STATUS=>$status);
+    return $this->EquipmentLiveDeckServices->getEquipmentLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
+  }
+  /**
+   * @param array $EquipmentLiveDecks
+   * @param string $status
+   */
+  private function updateToStatus($EquipmentLiveDecks, $status)
+  {
+    if (!empty($EquipmentLiveDecks)) {
+      foreach ($EquipmentLiveDecks as $EquipmentLiveDeck) {
+        $EquipmentLiveDeck->setStatus($status);
+        $this->EquipmentLiveDeckServices->update(__FILE__, __LINE__, $EquipmentLiveDeck);
+      }
+      // On met à jour le Live, histoire qu'il soit maintenu en vie.
+      $this->touchLive();
+    }
+  }
   /**
    * @param array $post
-   *
-  public function drawSpawnCard()
+   */
+  public function drawEquipmentCard()
   {
-    $Live = $this->Live;
-    $arrFilters = array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'P');
-    $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters, 'rank', 'DESC');
-    // TODO : Si $SpawnLiveDecks est vide, il faut remélanger la Pioche.
+    $EquipmentLiveDecks = $this->getEquipmentLiveDecksByStatus('P');
+    // Si $SpawnLiveDecks est vide, il faut remélanger la Pioche.
+    if (empty($EquipmentLiveDecks)) {
+      //$this->shuffleSpawnCards();
+      //$EquipmentLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters, 'rank', 'DESC');
+    }
     // On prend la première carte retournée par la requête, elle devient active, on met à jour son statut
-    $SpawnLiveDeck = array_shift($SpawnLiveDecks);
-    $nbInDeck = count($SpawnLiveDecks);
-    $SpawnLiveDeck->setStatus('A');
-    $this->SpawnLiveDeckServices->update(__FILE__, __LINE__, $SpawnLiveDeck);
+    $EquipmentLiveDeck = array_shift($EquipmentLiveDecks);
+    $nbInDeck = count($EquipmentLiveDecks);
+    $EquipmentLiveDeck->setStatus('A');
+    $this->EquipmentLiveDeckServices->update(__FILE__, __LINE__, $EquipmentLiveDeck);
     // On met à jour le Live, histoire qu'il soit maintenu en vie.
     $this->touchLive();
     // On récupère toutes les cartes Actives, au cas où plusieurs seraient affichées en même temps.
-    $arrFilters[self::CST_STATUS] = 'A';
-    $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters, 'rank', 'ASC');
+    $EquipmentLiveDecks = $this->getEquipmentLiveDecksByStatus('A');
     // On retourne les infos à modifier sur l'interface en mode Json.
-    $json = '{"nbCardInDeck":'.json_encode($nbInDeck);
-    $pageSelectionResult = SpawnDeckPageBean::getStaticSpawnCardActives($SpawnLiveDecks);
-    return $json.(!empty($SpawnLiveDecks) ? ',"page-selection-result":'.json_encode($pageSelectionResult) : '').'}';
+    $pageSelectionResult = WpPageLiveEquipmentBean::getStaticEquipmentCardActives($EquipmentLiveDecks);
+    return $this->jsonBuild($nbInDeck, -1, -1, $pageSelectionResult);
   }
   /**
-   * @param array $post
-   *
-  public function discardSpawnCard()
+   * @return string
+   */
+  public function equipEquipmentCard()
   {
-    $Live = $this->Live;
-    $arrFilters = array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'A');
-    $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
-    // Si au moins une carte est actuellement révélée, on doit la défausser.
-    if (!empty($SpawnLiveDecks)) {
-      foreach ($SpawnLiveDecks as $SpawnLiveDeck) {
-        $SpawnLiveDeck->setStatus('D');
-        $this->SpawnLiveDeckServices->update(__FILE__, __LINE__, $SpawnLiveDeck);
-      }
-      // On met à jour le Live, histoire qu'il soit maintenu en vie.
-      $this->touchLive();
+    $EquipmentLiveDecks = $this->getEquipmentLiveDecksByStatus('A');
+    // Si au moins une carte est actuellement révélée, on doit l'équiper.
+    $this->updateToStatus($EquipmentLiveDecks, 'E');
+    // On récupère toutes les cartes Actives, au cas où plusieurs seraient affichées en même temps.
+    $EquipmentLiveDecks = $this->getEquipmentLiveDecksByStatus('E');
+    // On retourne les infos à modifier sur l'interface en mode Json.
+    return $this->jsonBuild(-1, -1, count($EquipmentLiveDecks), '');
+  }
+  /**
+   * @return string
+   */
+  public function showEquippedEquipmentCards()
+  {
+    $EquipmentLiveDecks = $this->getEquipmentLiveDecksByStatus('E');
+    // On retourne les infos à modifier sur l'interface en mode Json.
+    $pageSelectionResult = WpPageLiveEquipmentBean::getStaticEquipmentCardActives($EquipmentLiveDecks, true);
+    return $this->jsonBuild(-1, -1, -1, $pageSelectionResult);
+  }
+  /**
+   * @return string
+   */
+  public function discardEquipmentCard($post=null)
+  {
+    if ($post==null) {
+      $EquipmentLiveDecks = $this->getEquipmentLiveDecksByStatus('A');
+      // Si au moins une carte est actuellement révélée, on doit la défausser.
+      $this->updateToStatus($EquipmentLiveDecks, 'D');
+      $pageSelectionResult = '';
+      $nbDisplayed = -1;
+    } else {
+      $EquipmentLiveDeck = $this->EquipmentLiveDeckServices->select(__FILE__, __LINE__, $post['id']);
+      $EquipmentLiveDeck->setStatus('D');
+      $this->EquipmentLiveDeckServices->update(__FILE__, __LINE__, $EquipmentLiveDeck);
+      // On retourne les infos à modifier sur l'interface en mode Json.
+      $EquipmentLiveDecks = $this->getEquipmentLiveDecksByStatus('E');
+      $pageSelectionResult = WpPageLiveEquipmentBean::getStaticEquipmentCardActives($EquipmentLiveDecks, true);
+      $nbDisplayed = count($EquipmentLiveDecks);
     }
     // Le nombre de cartes défaussées augmente, il faut le mettre à jour.
-    $arrFilters[self::CST_STATUS] = 'D';
-    $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
+    $EquipmentLiveDecks = $this->getEquipmentLiveDecksByStatus('D');
     // On retourne les infos à modifier sur l'interface en mode Json.
-    $json = '{"nbCardInDiscard":'.json_encode(count($SpawnLiveDecks));
-    return $json.',"page-selection-result":'.json_encode('').'}';
+    return $this->jsonBuild(-1, count($EquipmentLiveDecks), $nbDisplayed, $pageSelectionResult);
   }
   /**
-   * @param array $post
-   *
-  public function shuffleSpawnCards()
+   * @return string
+   */
+  public function showDiscardEquipmentCards()
+  {
+    $EquipmentLiveDecks = $this->getEquipmentLiveDecksByStatus('D');
+    // On retourne les infos à modifier sur l'interface en mode Json.
+    $pageSelectionResult = WpPageLiveEquipmentBean::getStaticEquipmentCardActives($EquipmentLiveDecks);
+    return $this->jsonBuild(-1, -1, -1, $pageSelectionResult);
+  }
+  /**
+   * @return string
+   */
+  public function shuffleEquipmentCards()
   {
     $Live = $this->Live;
     $arrFilters = array(self::CST_LIVEID=>$Live->getId());
-    $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
-    // S'il y a au moins une carte de Spawn (si ce n'est pas le cas, on se demande ce qu'on fait ici...), on remélange ensemble
-    // les cartes défaussées et toujours dans la pioche. Les cartes actuellement révélée et celles retirées ne sont pas remélangées.
-    if (!empty($SpawnLiveDecks)) {
-      shuffle($SpawnLiveDecks);
+    $EquipmentLiveDecks = $this->EquipmentLiveDeckServices->getEquipmentLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
+    // S'il y a au moins une carte Equipement (si ce n'est pas le cas, on se demande ce qu'on fait ici...), on remélange ensemble
+    // les cartes défaussées et toujours dans la pioche. Les cartes actuellement révélée et celles retirées ne sont pas remélangées,
+    // tout comme les cartes équipées.
+    if (!empty($EquipmentLiveDecks)) {
+      shuffle($EquipmentLiveDecks);
       $cpt = 0;
-      foreach ($SpawnLiveDecks as $SpawnLiveDeck) {
-        if ($SpawnLiveDeck->getStatus()=='R' || $SpawnLiveDeck->getStatus()=='A') {
+      foreach ($EquipmentLiveDecks as $EquipmentLiveDeck) {
+        if ($EquipmentLiveDeck->getStatus()=='R' || $EquipmentLiveDeck->getStatus()=='A' || $EquipmentLiveDeck->getStatus()=='E') {
           continue;
         }
         $cpt++;
-        $SpawnLiveDeck->setStatus('P');
-        $SpawnLiveDeck->setRank($cpt);
-        $this->SpawnLiveDeckServices->update(__FILE__, __LINE__, $SpawnLiveDeck);
+        $EquipmentLiveDeck->setStatus('P');
+        $EquipmentLiveDeck->setRank($cpt);
+        $this->EquipmentLiveDeckServices->update(__FILE__, __LINE__, $EquipmentLiveDeck);
       }
       // On met à jour le Live, histoire qu'il soit maintenu en vie.
       $this->touchLive();
     }
-    return '{"nbCardInDeck":'.json_encode($cpt).',"nbCardInDiscard":'.json_encode('0').',"page-selection-result":'.json_encode('').'}';
+    return $this->jsonBuild($cpt, 0, -1, '');
   }
   /**
-   * @param array $post
-   *
-  public function showDiscardSpawnCards()
-  {
-    $Live = $this->Live;
-    $arrFilters = array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'D');
-    $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
-    // On retourne les infos à modifier sur l'interface en mode Json.
-    $pageSelectionResult = SpawnDeckPageBean::getStaticSpawnCardActives($SpawnLiveDecks);
-    return '{"page-selection-result":'.json_encode($pageSelectionResult).'}';
-  }
-  public function leaveSpawnCard()
+   * @return string
+   */
+  public function leaveEquipmentCard()
   {
     unset($_SESSION[self::CST_DECKKEY]);
     return '{}';
   }
   /**
-   * @param array $post
-   *
-  public function deleteSpawnCard()
+   * @return string
+   */
+  public function deleteEquipmentCard()
   {
     $Live = $this->Live;
     $this->LiveServices->delete(__FILE__, __LINE__, $Live);
     unset($_SESSION[self::CST_DECKKEY]);
     return '{}';
   }
-  */
 }

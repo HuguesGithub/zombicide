@@ -35,7 +35,9 @@ class MissionObjective extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    parent::__construct($attributes, array('Objective'));
+    parent::__construct($attributes);
+    $this->MissionServices   = new MissionServices();
+    $this->ObjectiveServices = new ObjectiveServices();
   }
   /**
    * @return int
@@ -90,7 +92,16 @@ class MissionObjective extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new MissionObjective(), self::getClassVars(), $row); }
-
+  /**
+   * @return Objective
+   */
+  public function getObjective()
+  {
+    if ($this->Objective==null) {
+      $this->Objective = $this->getObjectiveFromGlobal($this->objectiveId);
+    }
+    return $this->Objective;
+  }
   /**
    * @return string
    */

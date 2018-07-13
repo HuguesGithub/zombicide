@@ -51,8 +51,11 @@ class Survivor extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    $services = array('Expansion', 'Skill', 'SurvivorSkill', 'WpPost');
-    parent::__construct($attributes, $services);
+    parent::__construct($attributes);
+    $this->ExpansionServices     = new ExpansionServices();
+    $this->SkillServices         = new SkillServices();
+    $this->SurvivorSkillServices = new SurvivorSkillServices();
+    $this->WpPostServices        = new WpPostServices();
   }
 
   /**
@@ -138,6 +141,27 @@ class Survivor extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new Survivor(), self::getClassVars(), $row); }
+  /**
+   * @return array SurvivorSkill
+   */
+  public function getSurvivorSkills()
+  {
+    if ($this->SurvivorSkills == null) {
+      $arrFilters = array('survivorId'=>$this->id);
+      $this->SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
+    }
+    return $this->SurvivorSkills;
+  }
+  /**
+   * @return Expansion
+   */
+  public function getExpansion()
+  {
+    if ($this->Expansion == null) {
+      $this->Expansion = $this->getExpansionFromGlobal($this->expansionId);
+    }
+    return $this->Expansion;
+  }
   /**
    * @return string
    */

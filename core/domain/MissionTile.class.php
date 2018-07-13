@@ -45,8 +45,10 @@ class MissionTile extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    $services = array('Mission', 'MissionTile', 'Tile');
-    parent::__construct($attributes, $services);
+    parent::__construct($attributes);
+    $this->MissionServices       = new MissionServices();
+    $this->MissionTileServices   = new MissionTileServices();
+    $this->TileServices          = new TileServices();
   }
   /**
    * @return int
@@ -121,6 +123,16 @@ class MissionTile extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new MissionTile(), self::getClassVars(), $row); }
+  /**
+   * @return Tile
+   */
+  public function getTile()
+  {
+    if ($this->Tile==null) {
+      $this->Tile = $this->TileServices->select(__FILE__, __LINE__, $this->tileId);
+    }
+    return $this->Tile;
+  }
   /**
    * @return string
    */

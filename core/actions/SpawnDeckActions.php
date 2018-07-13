@@ -21,7 +21,7 @@ class SpawnDeckActions extends LocalActions
   }
   /**
    * Point d'entrée des méthodes statiques.
-   * @param array $post 
+   * @param array $post
    * @return string
    **/
   public static function dealWithStatic($post)
@@ -60,14 +60,36 @@ class SpawnDeckActions extends LocalActions
     $this->LiveServices->update(__FILE__, __LINE__, $this->Live);
   }
   /**
-   * @param array $post
+   * Retourne la chaîne json mutualisée pour l'ensemble des méthodes.
+   * @param int $nbCardInDeck Nombre de cartes dans la pioche
+   * @param int $nbCardInDiscard Nombre de cartes dans la défausse
+   * @param string $pageSelectionResult Le contenu à afficher
+   * @return string
+   */
+  private function jsonBuild($nbCardInDeck, $nbCardInDiscard, $pageSelectionResult)
+  {
+    $json  = '{';
+    if ($nbCardInDeck!==-1) {
+      $json .= '"nbCardInDeck":'.json_encode($nbCardInDeck);
+    }
+    if ($nbCardInDiscard!==-1) {
+      $json .= ($json!='{'?',':'').'"nbCardInDiscard":'.json_encode($nbCardInDiscard);
+    }
+    return $json.($json!='{'?',':'').'"page-selection-result":'.json_encode($pageSelectionResult).'}';
+  }
+  /**
+   * @return string
    */
   public function drawSpawnCard()
   {
     $Live = $this->Live;
     $arrFilters = array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'P');
     $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters, 'rank', 'DESC');
-    // TODO : Si $SpawnLiveDecks est vide, il faut remélanger la Pioche.
+    // Si $SpawnLiveDecks est vide, il faut remélanger la Pioche.
+    if (empty($SpawnLiveDecks)) {
+      $this->shuffleSpawnCards();
+      $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters, 'rank', 'DESC');
+    }
     // On prend la première carte retournée par la requête, elle devient active, on met à jour son statut
     $SpawnLiveDeck = array_shift($SpawnLiveDecks);
     $nbInDeck = count($SpawnLiveDecks);
@@ -79,12 +101,11 @@ class SpawnDeckActions extends LocalActions
     $arrFilters[self::CST_STATUS] = 'A';
     $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters, 'rank', 'ASC');
     // On retourne les infos à modifier sur l'interface en mode Json.
-    $json = '{"nbCardInDeck":'.json_encode($nbInDeck);
     $pageSelectionResult = SpawnDeckPageBean::getStaticSpawnCardActives($SpawnLiveDecks);
-    return $json.(!empty($SpawnLiveDecks) ? ',"page-selection-result":'.json_encode($pageSelectionResult) : '').'}';
+    return $this->jsonBuild($nbInDeck, -1, $pageSelectionResult);
   }
   /**
-   * @param array $post
+   * @return string
    */
   public function discardSpawnCard()
   {
@@ -104,11 +125,10 @@ class SpawnDeckActions extends LocalActions
     $arrFilters[self::CST_STATUS] = 'D';
     $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
     // On retourne les infos à modifier sur l'interface en mode Json.
-    $json = '{"nbCardInDiscard":'.json_encode(count($SpawnLiveDecks));
-    return $json.',"page-selection-result":'.json_encode('').'}';
+    return $this->jsonBuild(-1, count($SpawnLiveDecks), '');
   }
   /**
-   * @param array $post
+   * @return string
    */
   public function shuffleSpawnCards()
   {
@@ -132,10 +152,10 @@ class SpawnDeckActions extends LocalActions
       // On met à jour le Live, histoire qu'il soit maintenu en vie.
       $this->touchLive();
     }
-    return '{"nbCardInDeck":'.json_encode($cpt).',"nbCardInDiscard":'.json_encode('0').',"page-selection-result":'.json_encode('').'}';
+    return $this->jsonBuild($cpt, 0, '');
   }
   /**
-   * @param array $post
+   * @return string
    */
   public function showDiscardSpawnCards()
   {
@@ -144,15 +164,18 @@ class SpawnDeckActions extends LocalActions
     $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
     // On retourne les infos à modifier sur l'interface en mode Json.
     $pageSelectionResult = SpawnDeckPageBean::getStaticSpawnCardActives($SpawnLiveDecks);
-    return '{"page-selection-result":'.json_encode($pageSelectionResult).'}';
+    return $this->jsonBuild(-1, -1, $pageSelectionResult);
   }
+  /**
+   * @return string
+   */
   public function leaveSpawnCard()
   {
     unset($_SESSION[self::CST_DECKKEY]);
     return '{}';
   }
   /**
-   * @param array $post
+   * @return string
    */
   public function deleteSpawnCard()
   {

@@ -36,7 +36,9 @@ class MissionRule extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    parent::__construct($attributes, array('Rule'));
+    parent::__construct($attributes);
+    $this->MissionServices   = new MissionServices();
+    $this->RuleServices      = new RuleServices();
   }
   /**
    * @return int
@@ -91,7 +93,16 @@ class MissionRule extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new MissionRule(), self::getClassVars(), $row); }
-
+  /**
+   * @return Rule
+   */
+  public function getRule()
+  {
+    if ($this->Rule==null) {
+     $this->Rule = $this->getRuleFromGlobal($this->ruleId);
+    }
+    return $this->Rule;
+  }
   /**
    * @return int
    */

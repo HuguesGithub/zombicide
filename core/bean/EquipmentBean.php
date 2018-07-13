@@ -23,7 +23,7 @@ class EquipmentBean extends MainPageBean
    * @param int $expansionId
    * @return string
    */
-  public function displayCard($expansionId='')
+  public function displayCard($expansionId='', $equipmentLiveDeckId=-1)
   {
     $EquipmentCard = $this->EquipmentCard;
     if ($expansionId=='') {
@@ -69,6 +69,12 @@ class EquipmentBean extends MainPageBean
       implode(', ', $arrKeyWords),
       // URL de l'image
       $EquipmentCard->getImgUrl($expansionId),
+      // On montre le bouton Discard ou non - 6
+      ($equipmentLiveDeckId!=-1?'':'hidden'),
+      // On a besoin du KeyAccess - 7
+      ($equipmentLiveDeckId!=-1?$_SESSION[self::CST_DECKKEY]:''),
+      // On a besoin de l'id de l'EquipmentExpansion - 8
+      ($equipmentLiveDeckId!=-1?$equipmentLiveDeckId:''),
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-equipment-card.php');
     return vsprintf($str, $args);

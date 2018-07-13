@@ -165,8 +165,9 @@ class MainPageBean implements iConstants
       $strPages .= '<a href="#"><span>Outils</span></a>';
       $strPages .= '<ul>';
       $strPages .= '<li><a href="http://zombicide.jhugues.fr/page-selection-survivants/"><span>Génération équipe</span></a></li>';
-      $strPages .= '<li><a href="http://zombicide.jhugues.fr/page-piste-de-des/"><span>Piste de dés</span></a></li>';
+      $strPages .= '<li><a href="http://zombicide.jhugues.fr/page-live-pioche-equipment/"><span>Pioche Equipement</span></a></li>';
       $strPages .= '<li><a href="http://zombicide.jhugues.fr/page-live-pioche-invasion/"><span>Pioche Zombie</span></a></li>';
+      $strPages .= '<li><a href="http://zombicide.jhugues.fr/page-piste-de-des/"><span>Piste de dés</span></a></li>';
       $strPages .= '</ul>';
       $strPages .= '</span>';
       $args = array(

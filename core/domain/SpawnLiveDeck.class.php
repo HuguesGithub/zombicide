@@ -19,7 +19,7 @@ class SpawnLiveDeck extends LocalDomain
    * Clé étrangère vers Live
    * @var int $liveId
    */
-  protected $liveId; // TODO : Renommer le champ liveDeckId en liveId dans les requêtes associées à SpawnLiveDeck
+  protected $liveId;
   /**
    * Clé étrangère vers SpawnCard
    * @var int $spawnCardId
@@ -44,8 +44,9 @@ class SpawnLiveDeck extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    $services = array('Live', 'Spawn');
-    parent::__construct($attributes, $services);
+    parent::__construct($attributes);
+    $this->LiveServices  = new LiveServices();
+    $this->SpawnServices = new SpawnServices();
   }
   /**
    * @return int

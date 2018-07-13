@@ -10,6 +10,7 @@ if (!defined('ABSPATH')) {
  */
 class MissionBean extends MainPageBean
 {
+  public $classe = 'custom-select custom-select-sm filters';
   /**
    * Template pour afficher une Mission
    * @var $tplMissionExtract
@@ -33,9 +34,9 @@ class MissionBean extends MainPageBean
   public function getRowForAdminPage()
   {
     $Mission = $this->Mission;
-    $queryArgs = array('onglet'=>'mission', self::CST_POSTACTION=>'edit', 'id'=>$Mission->getId());
+    $queryArgs = array(self::CST_ONGLET=>self::CST_MISSION, self::CST_POSTACTION=>'edit', 'id'=>$Mission->getId());
     $hrefEdit = $this->getQueryArg($queryArgs);
-    $queryArgs[self::CST_POSTACTION] = 'trash';
+    $queryArgs[self::CST_POSTACTION] = self::CST_TRASH;
     $hrefTrash = $this->getQueryArg($queryArgs);
     $queryArgs[self::CST_POSTACTION] = 'clone';
     $hrefClone = $this->getQueryArg($queryArgs);
@@ -78,7 +79,7 @@ class MissionBean extends MainPageBean
     $urlWpPost = $Mission->getWpPostUrl();
     $args = array(
       $urlWpPost,
-      $urlWpPost=='#' ? 'disabled' : '',
+      $urlWpPost=='#' ? self::CST_DISABLED : '',
       $Mission->getCode(),
       $Mission->getTitle(),
       $Mission->getStrDifficulty(),
@@ -131,7 +132,7 @@ class MissionBean extends MainPageBean
     $action = $post['dealAction'];
     $rkCol = ($action==self::CST_RMVCOL ? $post['rkCol'] : 0);
     $rkRow = ($action==self::CST_RMVROW ? $post['rkRow'] : 0);
-    $missionId = $post['missionId'];
+    $missionId = $post[self::CST_MISSIONID];
     $MissionServices = new MissionServices();
     $Mission = $MissionServices->select(__FILE__, __LINE__, $missionId);
     $Bean = new MissionBean($Mission);
@@ -162,12 +163,12 @@ class MissionBean extends MainPageBean
     $width = $Mission->getWidth();
     $height = $Mission->getHeight();
     $disabledButton = '<button type="button" class="btn btn-secondary" disabled></button>';
-    $openDivTile = '<div class="col tile%2$s" data-rkcol="%1$s">';
+    $openDivTile = '<div class="col tile %2$s" data-rkcol="%1$s">';
     $closeDivTile = '</div>';
     $colBreaker = '<div class="w-100"></div>';
     $addButton = '<button type="button" class="btn btn-info" data-action="%1$s">+</button>';
     $rmvButton = '<button type="button" class="btn btn-info" data-action="%1$s" data-%2$s="%3$s">-</button>';
-    $firstRow  = vsprintf($openDivTile, array(0, ' firstRow')).$disabledButton.$closeDivTile;
+    $firstRow  = vsprintf($openDivTile, array(0, self::CST_FIRSTROW)).$disabledButton.$closeDivTile;
     $lastRow  =  $colBreaker.'<div class="col tile prependBefore firstRow" data-rkcol="0">'.sprintf($addButton, 'addRow').$closeDivTile;
     $innerRows = array();
     for ($i=0; $i<$height; $i++) {
@@ -175,10 +176,9 @@ class MissionBean extends MainPageBean
       $innerRows[$i] .= vsprintf($rmvButton, array(self::CST_RMVROW, 'row', $i+1)).$closeDivTile;
     }
     for ($i=1; $i<=$width; $i++) {
-      $firstRow  .= vsprintf($openDivTile, array($i, ' firstRow')).vsprintf($rmvButton, array(self::CST_RMVCOL, 'col', $i)).$closeDivTile;
-      $lastRow  .= vsprintf($openDivTile, array($i, ' firstRow')).$disabledButton.$closeDivTile;
+      $firstRow  .= vsprintf($openDivTile, array($i, self::CST_FIRSTROW)).vsprintf($rmvButton, array(self::CST_RMVCOL, 'col', $i)).$closeDivTile;
+      $lastRow  .= vsprintf($openDivTile, array($i, self::CST_FIRSTROW)).$disabledButton.$closeDivTile;
     }
-    $classe = 'custom-select custom-select-sm filters';
     $arrOrientations = array('N'=>'north', 'E'=>'east', 'S'=>'south', 'O'=>'west');
     for ($i=0; $i<$height; $i++) {
       for ($j=1; $j<=$width; $j++) {
@@ -203,7 +203,7 @@ class MissionBean extends MainPageBean
         $innerRows[$i] .= vsprintf($openDivTile, array($j, ''));
         $innerRows[$i] .= '<img class="thumbTile'.$classImg.'" src="/wp-content/plugins/zombicide/web/rsc/images/tiles/';
         $innerRows[$i] .= $Mission->getTileCode($j, $i+1).'-500px.png" alt="'.$tileCode.'">';
-        $innerRows[$i] .= $this->TileServices->getTilesSelect(__FILE__, __LINE__, $tileCode, $name, $classe, false, '--');
+        $innerRows[$i] .= $this->TileServices->getTilesSelect(__FILE__, __LINE__, $tileCode, $name, $this->classe, false, '--');
         foreach ($arrOrientations as $key => $value) {
           $innerRows[$i] .= '<button type="button" class="rdv '.$value.($orientation==$key ? ' active' : '');
           $innerRows[$i] .= '" data-action="'.$key.'" data-col="'.$j.'" data-row="'.($i+1).'"></button>';
@@ -212,8 +212,8 @@ class MissionBean extends MainPageBean
       }
       $innerRows[$i] .= vsprintf($openDivTile, array($width+1, '')).$disabledButton.$closeDivTile;
     }
-    $firstRow .= vsprintf($openDivTile, array($width+1, ' firstRow')).sprintf($addButton, 'addCol').$closeDivTile;
-    $lastRow .= vsprintf($openDivTile, array($width+1, ' firstRow')).$disabledButton.$closeDivTile;
+    $firstRow .= vsprintf($openDivTile, array($width+1, self::CST_FIRSTROW)).sprintf($addButton, 'addCol').$closeDivTile;
+    $lastRow .= vsprintf($openDivTile, array($width+1, self::CST_FIRSTROW)).$disabledButton.$closeDivTile;
     $returned = '<div class="row tileRow" data-width="'.$Mission->getWidth().'" data-height="';
     return $returned.$Mission->getHeight().'">'.$firstRow.implode('', $innerRows).$lastRow.'</div>';
   }
@@ -256,7 +256,7 @@ class MissionBean extends MainPageBean
     }
     $none = '<li>Aucune règle spéciale</li>';
     $type = 'rule';
-    $select = $this->RuleServices->getRuleNoSettingSelect(__FILE__, __LINE__, '', 'id', 'custom-select custom-select-sm filters');
+    $select = $this->RuleServices->getRuleNoSettingSelect(__FILE__, __LINE__, '', 'id', $this->classe);
     return $this->getMissionObjAndRuleGenericBlock($displayMissionRules, $none, $type, $select);
   }
   /**
@@ -275,7 +275,7 @@ class MissionBean extends MainPageBean
     }
     $none = '<li>Aucune mise en place particulière</li>';
     $type = 'setting';
-    $select = $this->RuleServices->getRuleSettingSelect(__FILE__, __LINE__, '', 'id', 'custom-select custom-select-sm filters');
+    $select = $this->RuleServices->getRuleSettingSelect(__FILE__, __LINE__, '', 'id', $this->classe);
     return $this->getMissionObjAndRuleGenericBlock($displayMissionRules, $none, $type, $select);
   }
   /**
@@ -291,7 +291,7 @@ class MissionBean extends MainPageBean
     }
     $none = '<li>Aucun objectif</li>';
     $type = 'objective';
-    $select = $this->ObjectiveServices->getObjectiveSelect(__FILE__, __LINE__, '', 'id', 'custom-select custom-select-sm filters');
+    $select = $this->ObjectiveServices->getObjectiveSelect(__FILE__, __LINE__, '', 'id', $this->classe);
     return $this->getMissionObjAndRuleGenericBlock($displayMissionObjectives, $none, $type, $select);
   }
   /**

@@ -32,14 +32,5 @@ class Error404PageBean extends PagePageBean
   public function getContentPage()
   {
     return '<section id="page-live-spawn">Oops</section>';
-  /*
-    $args = array(
-      $blocExpansions,
-      $showSelection,
-      $strSpawns
-    );
-    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-live-spawn-deck.php');
-    return vsprintf($str, $args);
-	*/
   }
 }

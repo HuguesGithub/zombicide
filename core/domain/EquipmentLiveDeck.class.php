@@ -45,8 +45,8 @@ class EquipmentLiveDeck extends LocalDomain
   public function __construct($attributes=array())
   {
     parent::__construct($attributes);
-	$this->LiveServices = FactoryServices::getLiveServices();
-	$this->EquipmentServices = FactoryServices::getEquipmentServices();
+    $this->LiveServices = new LiveServices();
+    $this->EquipmentServices = new EquipmentServices();
   }
   /**
    * @return int

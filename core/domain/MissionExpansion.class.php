@@ -30,8 +30,9 @@ class MissionExpansion extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    $services = array('Expansion', 'Mission');
-    parent::__construct($attributes, $services);
+    parent::__construct($attributes);
+    $this->ExpansionServices = new ExpansionServices();
+    $this->MissionServices   = new MissionServices();
   }
   /**
    * @return int
@@ -76,6 +77,16 @@ class MissionExpansion extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new MissionExpansion(), self::getClassVars(), $row); }
+  /**
+   * @return Expansion
+   */
+  public function getExpansion()
+  {
+    if ($this->Expansion == null) {
+      $this->Expansion = $this->getExpansionFromGlobal($this->expansionId);
+    }
+    return $this->Expansion;
+  }
   /**
    * @return string
    */

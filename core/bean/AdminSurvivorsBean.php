@@ -15,8 +15,7 @@ class AdminSurvivorsBean extends AdminPageBean
    **/
   public function __construct()
   {
-    $tag = self::CST_SURVIVOR;
-    parent::__construct($tag);
+    parent::__construct(self::CST_SURVIVOR);
     $this->SurvivorServices = FactoryServices::getSurvivorServices();
     $this->title = 'Survivants';
   }
@@ -37,7 +36,7 @@ class AdminSurvivorsBean extends AdminPageBean
       case 'edit'  :
         $returned = $Bean->getEditPage($urlParams['id']);
       break;
-      case 'trash' :
+      case self::CST_TRASH :
         $returned = $Bean->getTrashPage($urlParams['id']);
       break;
       case 'clone' :
@@ -45,7 +44,7 @@ class AdminSurvivorsBean extends AdminPageBean
       break;
       case 'Appliquer' :
         // On est dans le cas du bulkAction. On doit donc vérifier l'action.
-        if ($urlParams['action']=='trash') {
+        if ($urlParams['action']==self::CST_TRASH) {
           $returned = $Bean->getBulkTrashPage();
         } else {
           $returned = $Bean->getListingPage();
@@ -66,7 +65,7 @@ class AdminSurvivorsBean extends AdminPageBean
     $nbPerPage = 15;
     $curPage = $this->initVar(self::CST_CURPAGE, 1);
     $orderby = $this->initVar(self::CST_ORDERBY, self::CST_NAME);
-    $order = $this->initVar(self::CST_ORDER, 'ASC');
+    $order = $this->initVar(self::CST_ORDER, 'asc');
     $Survivors = $this->SurvivorServices->getSurvivorsWithFilters(__FILE__, __LINE__, array(), $orderby, $order);
     $nbElements = count($Survivors);
     $nbPages = ceil($nbElements/$nbPerPage);
@@ -244,7 +243,7 @@ class AdminSurvivorsBean extends AdminPageBean
       // Url pour Annuler - 5
       $urlCancel,
       // Postaction - 6
-      'trash',
+      self::CST_TRASH,
       '','','','','','','','','','','','','','',
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/delete-common-elements.php');

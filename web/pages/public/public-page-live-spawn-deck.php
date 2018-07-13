@@ -13,7 +13,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="labelKeyAccess">Clé personnelle</span>
         </div>
-        <input class="form-control" placeholder="Clé personnelle" type="text" id="keyAccess" name="keyAccess">
+        <input class="form-control" placeholder="Clé personnelle" type="text" id="keyAccess" name="keyAccess" value="%4$s">
         <div class="input-group-append">
           <button id="genKey" class="btn btn-lg btn-outline-secondary" type="button"><i class="far fa-sun"></i></button>
         </div>

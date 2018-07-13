@@ -32,11 +32,11 @@ class Live extends LocalDomain
   public function __construct($attributes=array())
   {
     parent::__construct($attributes);
-    $this->ExpansionServices = FactoryServices::getExpansionServices();
-    $this->SkillServices = FactoryServices::getSkillServices();
-    $this->SurvivorSkillServices = FactoryServices::getSurvivorSkillServices();
-    $this->SpawnLiveDeckServices = FactoryServices::getSpawnLiveDeckServices();
-    $this->EquipmentLiveDeckServices = FactoryServices::getEquipmentLiveDeckServices();
+    $this->ExpansionServices         = new ExpansionServices();
+    $this->EquipmentLiveDeckServices = new EquipmentLiveDeckServices();
+    $this->SkillServices             = new SkillServices();
+    $this->SpawnLiveDeckServices     = new SpawnLiveDeckServices();
+    $this->SurvivorSkillServices     = new SurvivorSkillServices();
   }
   /**
    * @return int
@@ -91,6 +91,11 @@ class Live extends LocalDomain
    */
   public function getNbCardsInDiscard($type='spawn')
   { return $this->getNbCardsByStatus($type, 'D'); }
+  /**
+   * @return int
+   */
+  public function getNbCardsEquipped()
+  { return $this->getNbCardsByStatus('equipment', 'E'); }
   /**
    */
   public function getNbCardsByStatus($type, $status)

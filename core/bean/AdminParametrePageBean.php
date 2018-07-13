@@ -14,8 +14,7 @@ class AdminParametrePageBean extends AdminPageBean
 
   public function __construct()
   {
-    $tag = 'parametre';
-    parent::__construct($tag);
+    parent::__construct(self::CST_PARAMETRE);
     $this->DurationServices = FactoryServices::getDurationServices();
     $this->ExpansionServices = FactoryServices::getExpansionServices();
     $this->KeywordServices = FactoryServices::getKeywordServices();
@@ -49,7 +48,7 @@ class AdminParametrePageBean extends AdminPageBean
      * On traite éventuellement une action formulaure
      * On affiche la page dédiée à l'onglet
      */
-    switch ($urlParams['table']) {
+    switch ($urlParams[self::CST_TABLE]) {
       case 'duration' :
         $Services = $Bean->DurationServices;
         $Bean->dealWithPostAction($Services, $urlParams);
@@ -145,7 +144,7 @@ class AdminParametrePageBean extends AdminPageBean
     );
     $strTabs = '';
     foreach ($arrTabs as $key => $value) {
-      $strTabs .= '<a href="'.$this->getQueryArg(array('onglet'=>'parametre', 'table'=>$key));
+      $strTabs .= '<a href="'.$this->getQueryArg(array(self::CST_ONGLET=>self::CST_PARAMETRE, self::CST_TABLE=>$key));
       $strTabs .= '" class="list-group-item list-group-item-action';
       $strTabs .= ($key==$table ? ' active' : '').'">'.$value.'</a>';
     }
@@ -164,7 +163,7 @@ class AdminParametrePageBean extends AdminPageBean
     $curPage = $urlParams[self::CST_CURPAGE];
     $orderby = $urlParams[self::CST_ORDERBY];
     $order = $urlParams[self::CST_ORDER];
-    $table = $urlParams['table'];
+    $table = $urlParams[self::CST_TABLE];
     $nbPerPage = 15;
     $tHeader = '';
     $prefixTBody = '';
@@ -182,8 +181,8 @@ class AdminParametrePageBean extends AdminPageBean
       return vsprintf($str, $args);
     }
     $queryArg = array(
-      self::CST_ONGLET=>'parametre',
-      'table'=>$table,
+      self::CST_ONGLET=>self::CST_PARAMETRE,
+      self::CST_TABLE=>$table,
       self::CST_ORDERBY=>$orderby,
       self::CST_ORDER=>$order,
     );

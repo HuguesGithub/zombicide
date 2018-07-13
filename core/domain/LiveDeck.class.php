@@ -30,8 +30,8 @@ class LiveDeck extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    $services = array('SpawnLiveDeck');
-    parent::__construct($attributes, $services);
+    parent::__construct($attributes);
+    $this->SpawnLiveDeckServices = new SpawnLiveDeckServices();
   }
   /**
    * @return int
@@ -76,6 +76,17 @@ class LiveDeck extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new LiveDeck(), self::getClassVars(), $row); }
+  /**
+   * @return array SpawnLiveDeck
+   */
+  public function getSpawnLiveDecks()
+  {
+    if ($this->SpawnLiveDecks == null) {
+      $arrFilters = array('liveId'=>$this->id);
+      $this->SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
+    }
+    return $this->SpawnLiveDecks;
+  }
   /**
    * @return int
    */

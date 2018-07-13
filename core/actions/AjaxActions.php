@@ -34,12 +34,24 @@ class AjaxActions extends LocalActions
       case 'buildBlockTiles'       :
         $returned = MissionBean::staticBuildBlockTiles($_POST);
       break;
-      case 'deleteSpawnDeck'       :
-      case 'discardSpawnActive'    :
-      case 'drawSpawnCard'         :
-      case 'leaveSpawnDeck'        :
-      case 'showSpawnDiscard'      :
-      case 'shuffleSpawnDiscard'   :
+      case 'deleteEquipmentDeck'     :
+      case 'discardEquipmentActive'  :
+      case 'discardEquippedCard'     :
+      case 'drawEquipmentCard'       :
+      case 'equipEquipmentActive'    :
+      case 'leaveEquipmentDeck'      :
+      case 'pregenEquipmentCard'     :
+      case 'showEquipmentDiscard'    :
+      case 'showEquipmentEquip'      :
+      case 'shuffleEquipmentDiscard' :
+        $returned = EquipmentDeckActions::dealWithStatic($_POST);
+      break;
+      case 'deleteSpawnDeck'         :
+      case 'discardSpawnActive'      :
+      case 'drawSpawnCard'           :
+      case 'leaveSpawnDeck'          :
+      case 'showSpawnDiscard'        :
+      case 'shuffleSpawnDiscard'     :
         $returned = SpawnDeckActions::dealWithStatic($_POST);
       break;
       case 'getCompetences'      :
@@ -65,9 +77,6 @@ class AjaxActions extends LocalActions
       break;
       case 'postChat'          :
         $returned = ChatActions::staticPostChat($_POST);
-      break;
-      case 'pregenEquipmentCard'    :
-        $returned = EquipmentDeckActions::dealWithStatic($_POST);
       break;
       case 'refreshChat'         :
         $returned = ChatActions::staticChatContent($_POST);

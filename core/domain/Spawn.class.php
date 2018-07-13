@@ -80,8 +80,8 @@ class Spawn extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    $services = array('Expansion');
-    parent::__construct($attributes, $services);
+    parent::__construct($attributes);
+    $this->ExpansionServices = new ExpansionServices();
   }
   /**
    * @return $id

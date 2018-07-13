@@ -47,6 +47,7 @@ interface iConstants
   const CST_ORDER       = 'order';
   const CST_ORDERBY     = 'orderby';
   const CST_ORIGINEID      = 'origineId';
+  const CST_PARAMETRE      = 'parametre';
   const CST_PENDING        = 'pending';
   const CST_PLAYERID       = 'playerId';
   const CST_POSTACTION     = 'postAction';
@@ -64,6 +65,7 @@ interface iConstants
   const CST_SUCCESS        = 'success';
   const CST_SURVIVOR       = 'survivor';
   const CST_SURVIVORTYPEID = 'survivorTypeId';
+  const CST_TABLE          = 'table';
   const CST_TAGLEVELID     = 'tagLevelId';
   const CST_TD_SEP         = '</td><td>';
   const CST_TEXTE          = 'texte';

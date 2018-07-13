@@ -31,17 +31,24 @@ class WpPageLiveSpawnBean extends PagePageBean
     $Bean = new WpPageLiveSpawnBean($WpPage);
     return $Bean->getSpawnDeckContent();
   }
-  private function createSpawnLiveDeck($invasionSpanSelection, $matches)
+  private function createSpawnLiveDeck($args)
   {
-    // Aucune référence, on créé une nouvelle pioche
-    $pattern = "/([0-9]*-[0-9]*)/";
-    preg_match_all($pattern, $invasionSpanSelection, $matches);
-    if (!empty($matches) && !empty($matches[0])) {
+    // On vérifie l'existence éventuelle d'un Live avec cette clé.
+    $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, $args);
+    if (empty($Lives)) {
+      // S'il n'en existe pas, on en créé un.
       $args['dateUpdate'] = date(self::CST_FORMATDATE);
       $Live = new Live($args);
       $this->LiveServices->insert(__FILE__, __LINE__, $Live);
       $Live->setId(MySQL::getLastInsertId());
-      // Maintenant que le Live est créé, on va créer les cartes associées.
+    } else {
+      // Sinon, on récupère celui existant.
+      $Live = array_shift($Lives);
+    }
+    $invasionSpanSelection = $this->initVar('invasionSpanSelection');
+    $pattern = "/([0-9]*-[0-9]*)/";
+    if (preg_match_all($pattern, $invasionSpanSelection, $matches)) {
+      // On va créer les cartes associées.
       // On étudie la première entrée de $matches.
       $arrToParse = $matches[1];
       // On va devoir stocker les identifiants des cartes.
@@ -97,32 +104,60 @@ class WpPageLiveSpawnBean extends PagePageBean
     $blocExpansions = '';
     $showSelection = '';
     $strSpawns = '';
-    $invasionSpanSelection = $this->initVar('invasionSpanSelection');
-    $deckKey = $this->initVar('keyAccess');
-    if ($deckKey == '' && isset($_SESSION[self::CST_DECKKEY]) && $_SESSION[self::CST_DECKKEY]!='') {
+    if (isset($_SESSION[self::CST_DECKKEY]) && $_SESSION[self::CST_DECKKEY]!='') {
+      // On a un KeyAccess en Session
       $deckKey = $_SESSION[self::CST_DECKKEY];
-    }
-    if ($deckKey=='') {
-      $blocExpansions = $this->nonLoggedInterface();
-    } else {
-      $_SESSION[self::CST_DECKKEY] = $deckKey;
-      $showSelection = 'hidden';
-      // deckKey est renseigné. On doit vérifier que cette clef existe ou non.
-      // Si elle existe, on va reprendre les données en cours.
-      // Sinon, on va devoir créer la pioche complète
       $args = array('deckKey'=>$deckKey);
       $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, $args);
-      if (empty($Lives)) {
-        $Live = $this->createSpawnLiveDeck($invasionSpanSelection, $matches);
+      $Live = array_shift($Lives);
+      if ($Live==null) {
+        unset($_SESSION[self::CST_DECKKEY]);
+        $blocExpansions = $this->nonLoggedInterface();
       } else {
-        $Live = array_shift($Lives);
+        if ($Live->getNbCardsInDeck()+$Live->getNbCardsInDiscard()==0) {
+          if ($deckKey!='') {
+            // On a un KeyAccess en Formulaire
+            $args = array('deckKey'=>$deckKey);
+            $Live = $this->createSpawnLiveDeck($args);
+            $blocExpansions = $this->getDeckButtons($Live);
+            $showSelection = 'hidden';
+            $_SESSION[self::CST_DECKKEY] = $deckKey;
+          } else {
+            // On n'a rien
+            $blocExpansions = $this->nonLoggedInterface();
+          }
+        } else {
+          // On a une Session et des cartes.
+          $blocExpansions = $this->getDeckButtons($Live);
+          $showSelection = 'hidden';
+        }
       }
-      $blocExpansions = $this->getDeckButtons($Live);
+    } else {
+      // On n'a pas de Session, en a-t-on un en POST ?
+      $deckKey = $this->initVar('keyAccess');
+      if ($deckKey!='') {
+        // On a un KeyAccess en Formulaire
+        $args = array('deckKey'=>$deckKey);
+        $Live = $this->createSpawnLiveDeck($args);
+        $blocExpansions = $this->getDeckButtons($Live);
+        $showSelection = 'hidden';
+        $_SESSION[self::CST_DECKKEY] = $deckKey;
+      } else {
+        // On n'a rien
+        $blocExpansions = $this->nonLoggedInterface();
+      }
+    }
+    if ($showSelection=='hidden') {
+      // On a des cartes, par défaut, on affiche les cartes "actives".
+      $arrFilters = array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'A');
+      $SpawntLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
+      $strSpawns = $this->getSpawnCardActives($SpawnLiveDecks);
     }
     $args = array(
       $blocExpansions,
       $showSelection,
-      $strSpawns
+      $strSpawns,
+      $deckKey,
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-live-spawn-deck.php');
     return vsprintf($str, $args);
@@ -150,5 +185,21 @@ class WpPageLiveSpawnBean extends PagePageBean
       $str .= '</div>';
     }
     return $str;
+  }
+  /**
+   * @param array $SpawnLiveDecks
+   * @return string
+   */
+  public function getSpawnCardActives($SpawnLiveDecks)
+  {
+    $strSpawns = '';
+    if (!empty($SpawnLiveDecks)) {
+      foreach ($SpawnLiveDecks as $SpawnLiveDeck) {
+        $SpawnCard = $SpawnLiveDeck->getSpawnCard();
+        $strSpawns .= '<div class="card spawn set"><img width="320" height="440" src="'.$SpawnCard->getImgUrl();
+        $strSpawns .= '" alt="#'.$SpawnCard->getSpawnNumber().'"></div>';
+      }
+    }
+    return $strSpawns;
   }
 }

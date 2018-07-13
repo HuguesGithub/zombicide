@@ -1035,6 +1035,10 @@ function doEquipmentDeckActions(data, type) {
             $hj('#'+anchor).html(obj[anchor]);
           }
         }
+        $hj('.discardEquipButton').unbind().click(function(){
+          var data = {'action': 'dealWithAjax', 'ajaxAction': 'discardEquippedCard', 'keyAccess': $hj(this).data('keyaccess'), 'id': $hj(this).data('id')};
+          doEquipmentDeckActions(data, 'insert');
+        });
       } catch (e) {
         console.log("error: "+e);
         console.log(response);
@@ -1090,11 +1094,19 @@ function addPageLiveEquipmentActions() {
       expansionIds += $hj(this).data('expansion-id');
     });
     var data = {'action': 'dealWithAjax', 'ajaxAction': 'pregenEquipmentCard', 'expansionIds': expansionIds};
-    doSpawnDeckActions(data, 'insert');
+    doEquipmentDeckActions(data, 'insert');
   });
   if ($hj('#btnDrawEquipmentCard').length!=0 ) {
     $hj('#btnDrawEquipmentCard').unbind().click(function(){
       var data = {'action': 'dealWithAjax', 'ajaxAction': 'drawEquipmentCard', 'keyAccess': $hj(this).data('keyaccess')};
+      doEquipmentDeckActions(data, 'insert');
+    });
+    $hj('#btnEquipEquipmentActive').unbind().click(function(){
+      var data = {'action': 'dealWithAjax', 'ajaxAction': 'equipEquipmentActive', 'keyAccess': $hj(this).data('keyaccess')};
+      doEquipmentDeckActions(data, 'insert');
+    });
+    $hj('#btnShowEquipEquipment').unbind().click(function(){
+      var data = {'action': 'dealWithAjax', 'ajaxAction': 'showEquipmentEquip', 'keyAccess': $hj(this).data('keyaccess')};
       doEquipmentDeckActions(data, 'insert');
     });
     $hj('#btnDiscardEquipmentActive').unbind().click(function(){

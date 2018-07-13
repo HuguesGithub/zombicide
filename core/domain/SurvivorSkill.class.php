@@ -42,8 +42,8 @@ class SurvivorSkill extends LocalDomain
   public function __construct($attributes=array())
   {
     parent::__construct($attributes);
-    $this->SkillServices = FactoryServices::getSkillServices();
-    $this->SurvivorServices = FactoryServices::getSurvivorServices();
+    $this->SkillServices    = new SkillServices();
+    $this->SurvivorServices = new SurvivorServices();
   }
   
   /**
@@ -109,6 +109,16 @@ class SurvivorSkill extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new SurvivorSkill(), self::getClassVars(), $row); }
+  /**
+   * @return Skill
+   */
+  public function getSkill()
+  {
+    if ($this->Skill == null) {
+      $this->Skill = $this->SkillServices->select(__FILE__, __LINE__, $this->skillId);
+    }
+    return $this->Skill;
+  }
   /**
    * @return string
    */

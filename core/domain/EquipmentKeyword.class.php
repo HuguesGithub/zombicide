@@ -30,8 +30,8 @@ class EquipmentKeyword extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    $services = array('Keyword');
-    parent::__construct($attributes, $services);
+    parent::__construct($attributes);
+    $this->KeywordServices = new KeywordServices();
   }
   /**
    * @return int
@@ -76,4 +76,14 @@ class EquipmentKeyword extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new EquipmentKeyword(), self::getClassVars(), $row); }
+  /**
+   * @return Keyword
+   */
+  public function getKeyword()
+  {
+    if ($this->Keyword == null) {
+      $this->Keyword = $this->KeywordServices->select(__FILE__, __LINE__, $this->keywordId);
+    }
+    return $this->Keyword;
+  }
 }

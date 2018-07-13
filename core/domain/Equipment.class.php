@@ -30,8 +30,10 @@ class Equipment extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    $services = array('EquipmentKeyword', 'EquipmentWeaponProfile');
-      parent::__construct($attributes, $services);
+    parent::__construct($attributes);
+    $this->EquipmentKeywordServices       = new EquipmentKeywordServices();
+    $this->EquipmentWeaponProfileServices = new EquipmentWeaponProfileServices();
+    $this->WeaponProfileServices          = new WeaponProfileServices();
   }
   /**
    * @return $id
@@ -76,6 +78,48 @@ class Equipment extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new Equipment(), self::getClassVars(), $row); }
+  /**
+   * @return WeaponProfile
+   */
+  public function getWeaponProfile()
+  {
+    if ($this->WeaponProfile==null) {
+      $this->WeaponProfile = $this->WeaponProfileServices->select(__FILE__, __LINE__, $this->weaponProfileId);
+    }
+    return $this->WeaponProfile;
+  }
+  /**
+   * @return array EquipmentWeaponProfile
+   */
+  public function getEquipmentWeaponProfiles()
+  {
+    if ($this->EquipmentWeaponProfiles == null) {
+      $arrFilters = array(self::CST_EQUIPMENTCARDID=>$this->id);
+      $this->EquipmentWeaponProfiles = $this->EquipmentWeaponProfileServices->getEquipmentWeaponProfilesWithFilters(__FILE__, __LINE__, $arrFilters);
+    }
+    return $this->EquipmentWeaponProfiles;
+  }
+  /**
+   * @return array EquipmenKeyword
+   */
+  public function getEquipmentKeywords()
+  {
+    if ($this->EquipmentKeywords == null) {
+      $arrFilters = array(self::CST_EQUIPMENTCARDID=>$this->id);
+      $this->EquipmentKeywords = $this->EquipmentKeywordServices->getEquipmentKeywordsWithFilters(__FILE__, __LINE__, $arrFilters);
+    }
+    return $this->EquipmentKeywords;
+  }
+  /**
+   * @return Keyword
+   */
+  public function getKeyword()
+  {
+    if ($this->Keyword == null) {
+      $this->Keyword = $this->KeywordServices->select(__FILE__, __LINE__, $this->keywordId);
+    }
+    return $this->Keyword;
+  }
   public function getExpansionId()
   { return $this->expansionId; }
   /**
@@ -117,7 +161,7 @@ class Equipment extends LocalDomain
       } else {
         $isRanged = false;
         foreach ($this->EquipmentWeaponProfiles as $EquipmentWeaponProfile) {
-          $WeaponProfile = $EquipmentWeaponProfile->getWeaponProfile(__FILE__, __LINE__);
+          $WeaponProfile = $this->getWeaponProfile(__FILE__, __LINE__);
           if ($WeaponProfile->getMaxRange()>0) {
             $isRanged = true;
           } else {

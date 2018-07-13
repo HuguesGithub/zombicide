@@ -66,9 +66,16 @@ class Mission extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    $services = array('Duration', 'MissionExpansion', 'Level', 'MissionObjective', 'Origine', 'Player', 'MissionRule',
-                      'MissionTile', 'WpPost');
     parent::__construct($attributes, $services);
+    $this->DurationServices         = new DurationServices();
+    $this->LevelServices            = new LevelServices();
+    $this->MissionExpansionServices = new MissionExpansionServices();
+    $this->MissionObjectiveServices = new MissionObjectiveServices();
+    $this->MissionRuleServices      = new MissionRuleServices();
+    $this->MissionTileServices      = new MissionTileServices();
+    $this->OrigineServices          = new OrigineServices();
+    $this->PlayerServices           = new PlayerServices();
+    $this->WpPostServices           = new WpPostServices();
   }
 
   /**
@@ -184,6 +191,92 @@ class Mission extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new Mission(), self::getClassVars(), $row); }
+  /**
+   * @param string $aF
+   * @param string $aO
+   * @return array MissionTile
+   */
+  public function getMissionTiles($orderBy='id', $order='asc')
+  {
+    if ($this->MissionTiles == null) {
+      $arrFilters = array(self::CST_MISSIONID=>$this->id);
+      $this->MissionTiles = $this->MissionTileServices->getMissionTilesWithFilters(__FILE__, __LINE__, $arrFilters, $orderBy, $order);
+    }
+    return $this->MissionTiles;
+  }
+  /**
+   * @return array MissionRule
+   */
+  public function getMissionRules($orderBy='id')
+  {
+    if ($this->MissionRules == null) {
+      $arrFilters = array(self::CST_MISSIONID=>$this->id);
+      $this->MissionRules = $this->MissionRuleServices->getMissionRulesWithFilters(__FILE__, __LINE__, $arrFilters, $orderBy);
+    }
+    return $this->MissionRules;
+  }
+  /**
+   * @return array MissionObjective
+   */
+  public function getMissionObjectives($orderBy='id')
+  {
+    if ($this->MissionObjectives == null) {
+      $arrFilters = array(self::CST_MISSIONID=>$this->id);
+      $this->MissionObjectives = $this->MissionObjectiveServices->getMissionObjectivesWithFilters(__FILE__, __LINE__, $arrFilters, $orderBy);
+    }
+    return $this->MissionObjectives;
+  }
+  /**
+   * @return array MissionExpansion
+   */
+  public function getMissionExpansions()
+  {
+    if ($this->MissionExpansions == null) {
+      $arrFilters = array(self::CST_MISSIONID=>$this->id);
+      $this->MissionExpansions = $this->MissionExpansionServices->getMissionExpansionsWithFilters(__FILE__, __LINE__, $arrFilters);
+    }
+    return $this->MissionExpansions;
+  }
+  /**
+   * @return Duration
+   */
+  public function getDuration()
+  {
+    if ($this->Duration == null) {
+      $this->Duration = $this->DurationServices->select(__FILE__, __LINE__, $this->durationId);
+    }
+    return $this->Duration;
+  }
+  /**
+   * @return Level
+   */
+  public function getLevel()
+  {
+    if ($this->Level == null) {
+      $this->Level = $this->LevelServices->select(__FILE__, __LINE__, $this->levelId);
+    }
+    return $this->Level;
+  }
+  /**
+   * @return Origine
+   */
+  public function getOrigine()
+  {
+    if ($this->Origine==null) {
+      $this->Origine = $this->getOrigineFromGlobal($this->origineId);
+    }
+    return $this->Origine;
+  }
+  /**
+   * @return Player
+   */
+  public function getPlayer()
+  {
+    if ($this->Player == null) {
+      $this->Player = $this->PlayerServices->select(__FILE__, __LINE__, $this->playerId);
+    }
+    return $this->Player;
+  }
   /**
    * @return string
    */

@@ -16,10 +16,11 @@ class WpPageLiveEquipmentBean extends PagePageBean
   public function __construct($WpPage='')
   {
     parent::__construct($WpPage);
-    $this->ExpansionServices = FactoryServices::getExpansionServices();
+    $this->EquipmentServices = FactoryServices::getEquipmentServices();
     $this->EquipmentExpansionServices = FactoryServices::getEquipmentExpansionServices();
-    $this->LiveServices = FactoryServices::getLiveServices();
     $this->EquipmentLiveDeckServices = FactoryServices::getEquipmentLiveDeckServices();
+    $this->ExpansionServices = FactoryServices::getExpansionServices();
+    $this->LiveServices = FactoryServices::getLiveServices();
   }
   /**
    * @param WpPage $WpPage
@@ -32,12 +33,20 @@ class WpPageLiveEquipmentBean extends PagePageBean
   }
   private function createEquipmentLiveDeck($args)
   {
-    $args['dateUpdate'] = date(self::CST_FORMATDATE);
-    $Live = new Live($args);
-    $this->LiveServices->insert(__FILE__, __LINE__, $Live);
-    $Live->setId(MySQL::getLastInsertId());
+    // On vérifie l'existence éventuelle d'un Live avec cette clé.
+    $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, $args);
+    if (empty($Lives)) {
+      // S'il n'en existe pas, on en créé un.
+      $args['dateUpdate'] = date(self::CST_FORMATDATE);
+      $Live = new Live($args);
+      $this->LiveServices->insert(__FILE__, __LINE__, $Live);
+      $Live->setId(MySQL::getLastInsertId());
+    } else {
+      // Sinon, on récupère celui existant.
+      $Live = array_shift($Lives);
+    }
     $arrEE = array();
-    // Maintenant que le Live est créé, on va créer les cartes associées.
+    // Maintenant on va créer les cartes associées.
     if (!empty($_POST)) {
       foreach ($_POST as $key => $value) {
         list($t, $id) = explode('-', $key);
@@ -74,6 +83,9 @@ class WpPageLiveEquipmentBean extends PagePageBean
     $str .= $this->getButtonDiv('btnDisabled1', $deckKey, 'Actions disponibles :', 'btn-dark disabled');
     $label = 'Piocher une carte (<span id="nbCardInDeck">'.$Live->getNbCardsInDeck('equipment').'</span>)';
     $str .= $this->getButtonDiv('btnDrawEquipmentCard', $deckKey, $label);
+    $str .= $this->getButtonDiv('btnEquipEquipmentActive', $deckKey, 'Equiper les cartes piochées');
+    $label = 'Afficher les cartes équipées (<span id="nbCardEquipped">'.$Live->getNbCardsEquipped().'</span>)';
+    $str .= $this->getButtonDiv('btnShowEquipEquipment', $deckKey, $label);
     $str .= $this->getButtonDiv('btnDiscardEquipmentActive', $deckKey, 'Défausser les cartes piochées');
     $str .= $this->getButtonDiv('btnShowDiscardEquipment', $deckKey, 'Afficher la défausse');
     $label = 'Remélanger la défausse (<span id="nbCardInDiscard">'.$Live->getNbCardsInDiscard('equipment').'</span>)';
@@ -94,41 +106,61 @@ class WpPageLiveEquipmentBean extends PagePageBean
   {
     $blocExpansions = '';
     $showSelection = '';
-    $strSpawns = '';
-    $deckKey = $this->initVar('keyAccess');
-    $Lives = array();
-    if ($deckKey == '' && isset($_SESSION[self::CST_DECKKEY]) && $_SESSION[self::CST_DECKKEY]!='') {
+    $strEquipments = '';
+    if (isset($_SESSION[self::CST_DECKKEY]) && $_SESSION[self::CST_DECKKEY]!='') {
+      // On a un KeyAccess en Session
       $deckKey = $_SESSION[self::CST_DECKKEY];
       $args = array('deckKey'=>$deckKey);
       $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, $args);
-      if (empty($Lives)) {
+      $Live = array_shift($Lives);
+      if ($Live==null) {
         unset($_SESSION[self::CST_DECKKEY]);
-        $deckKey = '';
+        $blocExpansions = $this->nonLoggedInterface();
+      } else {
+        if ($Live->getNbCardsInDeck('equipment')+$Live->getNbCardsInDiscard('equipment')==0) {
+          if ($deckKey!='') {
+            // On a un KeyAccess en Formulaire
+            $args = array('deckKey'=>$deckKey);
+            $Live = $this->createEquipmentLiveDeck($args);
+            $blocExpansions = $this->getDeckButtons($Live);
+            $showSelection = 'hidden';
+            $_SESSION[self::CST_DECKKEY] = $deckKey;
+          } else {
+            // On n'a rien
+            $blocExpansions = $this->nonLoggedInterface();
+          }
+        } else {
+          // On a une Session et des cartes.
+          $blocExpansions = $this->getDeckButtons($Live);
+          $showSelection = 'hidden';
+        }
+      }
+    } else {
+      // On n'a pas de Session, en a-t-on un en POST ?
+      $deckKey = $this->initVar('keyAccess');
+      if ($deckKey!='') {
+        // On a un KeyAccess en Formulaire
+        $args = array('deckKey'=>$deckKey);
+        $Live = $this->createEquipmentLiveDeck($args);
+        $blocExpansions = $this->getDeckButtons($Live);
+        $showSelection = 'hidden';
+        $_SESSION[self::CST_DECKKEY] = $deckKey;
+      } else {
+        // On n'a rien
+        $blocExpansions = $this->nonLoggedInterface();
       }
     }
-    if ($deckKey=='') {
-      $blocExpansions = $this->nonLoggedInterface();
-    } else {
-      if (empty($Lives)) {
-        $args = array('deckKey'=>$deckKey);
-        $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, $args);
-      }
-      $_SESSION[self::CST_DECKKEY] = $deckKey;
-      $showSelection = 'hidden';
-      // deckKey est renseigné. On doit vérifier que cette clef existe ou non.
-      // Si elle existe, on va reprendre les données en cours.
-      // Sinon, on va devoir créer la pioche complète
-      if (empty($Lives)) {
-        $Live = $this->createEquipmentLiveDeck($args);
-      } else {
-        $Live = array_shift($Lives);
-      }
-      $blocExpansions = $this->getDeckButtons($Live);
+    if ($showSelection=='hidden') {
+      // On a des cartes, par défaut, on affiche les cartes "actives".
+      $arrFilters = array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'A');
+      $EquipmentLiveDecks = $this->EquipmentLiveDeckServices->getEquipmentLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
+      $strEquipments = $this->getEquipmentCardActives($EquipmentLiveDecks);
     }
     $args = array(
       $blocExpansions,
       $showSelection,
-      $strSpawns
+      $strEquipments,
+      $deckKey,
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-live-equipment-deck.php');
     return vsprintf($str, $args);
@@ -153,5 +185,31 @@ class WpPageLiveEquipmentBean extends PagePageBean
       $str .= '</div>';
     }
     return $str;
+  }
+  /**
+   * @param array $EquipmentLiveDecks
+   * @return string
+   */
+  public static function getStaticEquipmentCardActives($EquipmentLiveDecks, $showDiscardButton)
+  {
+    $Bean = new WpPageLiveEquipmentBean();
+    return $Bean->getEquipmentCardActives($EquipmentLiveDecks, $showDiscardButton);
+  }
+  /**
+   * @param array $EquipmentLiveDecks
+   * @return string
+   */
+  public function getEquipmentCardActives($EquipmentLiveDecks, $showDiscardButton=false)
+  {
+    $strEquipments = '';
+    if (!empty($EquipmentLiveDecks)) {
+      foreach ($EquipmentLiveDecks as $EquipmentLiveDeck) {
+        $EquipmentExpansion = $this->EquipmentExpansionServices->select(__FILE__, __LINE__, $EquipmentLiveDeck->getEquipmentCardId());
+        $Equipment = $this->EquipmentServices->select(__FILE__, __LINE__, $EquipmentExpansion->getEquipmentCardId());
+        $EquipmentBean = new EquipmentBean($Equipment);
+        $strEquipments .= $EquipmentBean->displayCard($EquipmentExpansion->getExpansionId(), ($showDiscardButton?$EquipmentLiveDeck->getId():-1));
+      }
+    }
+    return $strEquipments;
   }
 }

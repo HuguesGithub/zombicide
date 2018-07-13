@@ -35,8 +35,8 @@ class EquipmentWeaponProfile extends LocalDomain
    */
   public function __construct($attributes=array())
   {
-    $services = array('WeaponProfile');
     parent::__construct($attributes, $services);
+    $this->WeaponProfileServices = new WeaponProfileServices();
   }
   /**
    * @return int

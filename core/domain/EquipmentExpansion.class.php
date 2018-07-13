@@ -36,7 +36,7 @@ class EquipmentExpansion extends LocalDomain
   public function __construct($attributes=array())
   {
     parent::__construct($attributes);
-    $this->EquipmentServices = FactoryServices::getEquipmentServices();
+    $this->EquipmentServices = new EquipmentServices();
   }
   /**
    * @return int

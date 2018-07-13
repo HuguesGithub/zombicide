@@ -181,6 +181,7 @@ a.likeSubmitButton:hover { color: #f6a800; cursor: pointer; text-decoration: non
 
 .tooltip { display: none; }
 .hasTooltip:hover .tooltip {display: block; opacity: 1; width: 100%; background-color: #ffffff; top: 20px; padding:10px; }
+.discardEquipButton { background: rgb(255, 255, 255); cursor: pointer; padding: 2px; position: absolute; right: 0; }
 
 table.table thead .sorting,
 table.table thead .sorting_asc,

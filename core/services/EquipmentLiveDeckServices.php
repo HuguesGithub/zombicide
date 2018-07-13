@@ -25,7 +25,7 @@ class EquipmentLiveDeckServices extends LocalServices
   {
     $arrParams = array();
     $arrParams[] = (isset($arrFilters['liveId']) ? $arrFilters['liveId'] : '%');
-    $arrParams[] = (isset($arrFilters['equipmentCardId']) ? $arrFilters['spawnCardId'] : '%');
+    $arrParams[] = (isset($arrFilters['equipmentCardId']) ? $arrFilters['equipmentCardId'] : '%');
     $arrParams[] = (isset($arrFilters['status']) ? $arrFilters['status'] : '%');
     return $arrParams;
   }

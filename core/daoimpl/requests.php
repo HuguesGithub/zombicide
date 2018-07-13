@@ -1,7 +1,7 @@
 [Chat]
 select="SELECT id, liveId, sendToId, senderId, timestamp, texte "
 from="FROM wp_11_zombicide_chat "
-where="WHERE (liveId LIKE '%s' OR sendToId LIKE '%s' OR senderId LIKE '%s') AND timestamp > '%s' " 
+where="WHERE (liveId LIKE '%s' OR sendToId LIKE '%s' OR senderId LIKE '%s') AND timestamp > '%s' "
 insert="INSERT INTO wp_11_zombicide_chat (liveId, sendToId, senderId, timestamp, texte) VALUES ('%s', '%s', '%s', '%s', '%s');"
 update="UPDATE wp_11_zombicide_chat SET liveId='%s', sendToId='%s', senderId='%s', timestamp='%s', texte='%s' "
 [Duration]

@@ -16,3 +16,4 @@
 *.png
 ./logs/*
 sonar-zombicide.properties
+./core/daoimpl/requests.php

@@ -150,7 +150,7 @@ class WpPageLiveSpawnBean extends PagePageBean
     if ($showSelection=='hidden') {
       // On a des cartes, par défaut, on affiche les cartes "actives".
       $arrFilters = array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'A');
-      $SpawntLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
+      $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
       $strSpawns = $this->getSpawnCardActives($SpawnLiveDecks);
     }
     $args = array(

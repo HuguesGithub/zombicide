@@ -11,13 +11,6 @@ if (!defined('ABSPATH')) {
 class Error404PageBean extends PagePageBean
 {
   /**
-   * Class Constructor
-   */
-  public function __construct($WpPage='')
-  {
-    parent::__construct($WpPage);
-  }
-  /**
    * @param WpPage $WpPage
    * @return string
    */

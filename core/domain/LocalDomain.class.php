@@ -11,13 +11,6 @@ if (!defined('ABSPATH')) {
 class LocalDomain extends GlobalDomain implements iConstants
 {
   /**
-   * @param array $attributes
-   * @param array $services
-   */
-  public function __construct($attributes=array())
-  { parent::__construct($attributes); }
-
-  /**
    * @param int $expansionId
    * @return Expansion
    */

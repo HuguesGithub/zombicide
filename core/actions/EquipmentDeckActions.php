@@ -23,7 +23,7 @@ class EquipmentDeckActions extends LocalActions
   }
   /**
    * Point d'entrée des méthodes statiques.
-   * @param array $post 
+   * @param array $post
    * @return string
    **/
   public static function dealWithStatic($post)

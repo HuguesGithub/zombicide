@@ -111,4 +111,14 @@ class SpawnLiveDeck extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new SpawnLiveDeck(), self::getClassVars(), $row); }
+  /**
+   * @return Spawn
+   */
+  public function getSpawnCard()
+  {
+    if ($this->Spawn==null) {
+     $this->Spawn = $this->SpawnServices->select(__FILE__, __LINE__, $this->spawnCardId);
+    }
+    return $this->Spawn;
+  }
 }

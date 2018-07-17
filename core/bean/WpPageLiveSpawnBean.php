@@ -80,21 +80,21 @@ class WpPageLiveSpawnBean extends PagePageBean
     $str  = '';
     $str .= '<div class="btn-group-vertical live-spawn-selection" role="group">';
     $deckKey = $Live->getDeckKey();
-    $str .= $this->getButtonDiv('btnDisabled1', $deckKey, 'Actions disponibles :', 'btn-dark disabled');
+    $str .= $this->getButtonDiv('btnDisabled1', $deckKey, '', 'Actions disponibles :', '', 'btn-dark disabled');
     $label = 'Piocher une carte (<span id="nbCardInDeck">'.$Live->getNbCardsInDeck().'</span>)';
-    $str .= $this->getButtonDiv('btnDrawSpawnCard', $deckKey, $label);
-    $str .= $this->getButtonDiv('btnDiscardSpawnActive', $deckKey, 'Défausser les cartes piochées');
-    $str .= $this->getButtonDiv('btnShowDiscardSpawn', $deckKey, 'Afficher la défausse');
+    $str .= $this->getButtonDiv('btnDrawSpawnCard', $deckKey, 'drawSpawnCard', $label);
+    $str .= $this->getButtonDiv('btnDiscardSpawnActive', $deckKey, 'discardSpawnActive', 'Défausser les cartes piochées');
+    $str .= $this->getButtonDiv('btnShowDiscardSpawn', $deckKey, 'showSpawnDiscard', 'Afficher la défausse');
     $label = 'Remélanger la défausse (<span id="nbCardInDiscard">'.$Live->getNbCardsInDiscard().'</span>)';
-    $str .= $this->getButtonDiv('btnShuffleDiscardSpawn', $deckKey, $label);
-    $str .= $this->getButtonDiv('btnLeaveSpawnDeck', $deckKey, 'Quitter cette pioche');
-    $str .= $this->getButtonDiv('btnDisabled2', $deckKey, 'Attention, action irréversible :', 'btn-dark disabled');
-    $str .= $this->getButtonDiv('btnDeleteSpawnDeck', $deckKey, 'Supprimer cette pioche', 'btn-danger');
+    $str .= $this->getButtonDiv('btnShuffleDiscardSpawn', $deckKey, 'shuffleSpawnDiscard', $label);
+    $str .= $this->getButtonDiv('btnLeaveSpawnDeck', $deckKey, 'leaveSpawnDeck', 'Quitter cette pioche');
+    $str .= $this->getButtonDiv('btnDisabled2', $deckKey, '', 'Attention, action irréversible :', '', 'btn-dark disabled');
+    $str .= $this->getButtonDiv('btnDeleteSpawnDeck', $deckKey, 'deleteSpawnDeck', 'Supprimer cette pioche', 'reload', 'btn-danger');
     return $str.'</div>';
   }
-  private function getButtonDiv($id, $deckKey, $label, $classe='btn-dark')
+  private function getButtonDiv($id, $deckKey, $action, $label, $type='insert', $classe='btn-dark')
   {
-    return '<div type="button" id="'.$id.'" class="btn '.$classe.'" data-keyaccess="'.$deckKey.'">'.$label.'</div>';
+    return '<div type="button" id="'.$id.'" class="btn '.$classe.' withSpawnAction" data-type="'.$type.'" data-action="'.$action.'" data-keyaccess="'.$deckKey.'">'.$label.'</div>';
   }
   /**
    * @return string
@@ -150,7 +150,7 @@ class WpPageLiveSpawnBean extends PagePageBean
     if ($showSelection=='hidden') {
       // On a des cartes, par défaut, on affiche les cartes "actives".
       $arrFilters = array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'A');
-      $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
+      $SpawntLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
       $strSpawns = $this->getSpawnCardActives($SpawnLiveDecks);
     }
     $args = array(

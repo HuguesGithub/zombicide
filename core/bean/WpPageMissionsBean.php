@@ -150,7 +150,7 @@ class WpPageMissionsBean extends PagePageBean
    */
   public static function staticGetMissionsSortedAndFiltered($post)
   {
-    $Bean = new MissionsPageBean();
+    $Bean = new WpPageMissionsBean();
     $arrFilters = array();
     if ($post['filters']!='') {
       $arrParams = explode('&', $post['filters']);

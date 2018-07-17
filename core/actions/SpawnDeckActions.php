@@ -101,7 +101,8 @@ class SpawnDeckActions extends LocalActions
     $arrFilters[self::CST_STATUS] = 'A';
     $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters, 'rank', 'ASC');
     // On retourne les infos à modifier sur l'interface en mode Json.
-    $pageSelectionResult = SpawnDeckPageBean::getStaticSpawnCardActives($SpawnLiveDecks);
+    $Bean = new WpPageLiveSpawnBean();
+    $pageSelectionResult = $Bean->getSpawnCardActives($SpawnLiveDecks);
     return $this->jsonBuild($nbInDeck, -1, $pageSelectionResult);
   }
   /**

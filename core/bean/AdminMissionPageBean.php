@@ -28,36 +28,15 @@ class AdminMissionPageBean extends AdminPageBean
     if (!isset($urlParams[self::CST_POSTACTION])) {
       return $Bean->getListingPage();
     }
-    $MissionServices = FactoryServices::getMissionServices();
-    $Mission = $MissionServices->select(__FILE__, __LINE__, $urlParams['id']);
-    switch ($urlParams[self::CST_POSTACTION]) {
-      case 'add'   :
-        $returned = $Bean->getAddPage($Mission);
-      break;
-      case 'edit'  :
-        $returned = ($Mission->getId() == '' ? $Bean->getListingPage() : $Bean->getEditPage($Mission));
-      break;
-      case 'trash' :
-        $returned = 'trash';
-      break;
-      case 'view'  :
-        $returned = 'view';
-      break;
-      case 'clone' :
-        $returned = 'clone';
-      break;
-      default      :
-        $returned = $Bean->getListingPage();
-      break;
-    }
-    return $returned;
+    return $Bean->returnPostActionPage($urlParams);
   }
   /**
    * @param Mission $Mission
    * @return string
    */
-  public function getAddPage($Mission)
+  public function getAddPage($id='')
   {
+    $Mission = $this->MissionServices->select(__FILE__, __LINE__, $id);
     if (isset($_POST) && !empty($_POST)) {
       $doInsert = $Mission->initWithPost($_POST);
       if ($doInsert) {
@@ -73,8 +52,9 @@ class AdminMissionPageBean extends AdminPageBean
      * @param Mission $Mission
      * @return string
      */
-  public function getEditPage($Mission)
+  public function getEditPage($id)
   {
+    $Mission = $this->MissionServices->select(__FILE__, __LINE__, $id);
     if (isset($_POST) && !empty($_POST)) {
       $doUpdate = $Mission->updateWithPost($_POST);
       $this->dealWithExpansions($Mission, $_POST[self::CST_EXPANSIONID]);

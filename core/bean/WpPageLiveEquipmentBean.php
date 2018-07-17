@@ -80,24 +80,24 @@ class WpPageLiveEquipmentBean extends PagePageBean
     $str  = '';
     $str .= '<div class="btn-group-vertical live-spawn-selection" role="group">';
     $deckKey = $Live->getDeckKey();
-    $str .= $this->getButtonDiv('btnDisabled1', $deckKey, 'Actions disponibles :', 'btn-dark disabled');
+    $str .= $this->getButtonDiv('btnDisabled1', $deckKey, 'Actions disponibles :', '', 'btn-dark disabled');
     $label = 'Piocher une carte (<span id="nbCardInDeck">'.$Live->getNbCardsInDeck('equipment').'</span>)';
-    $str .= $this->getButtonDiv('btnDrawEquipmentCard', $deckKey, $label);
-    $str .= $this->getButtonDiv('btnEquipEquipmentActive', $deckKey, 'Equiper les cartes piochées');
+    $str .= $this->getButtonDiv('btnDrawEquipmentCard', $deckKey, 'drawEquipmentCard', $label);
+    $str .= $this->getButtonDiv('btnEquipEquipmentActive', $deckKey, 'equipEquipmentActive', 'Equiper les cartes piochées');
     $label = 'Afficher les cartes équipées (<span id="nbCardEquipped">'.$Live->getNbCardsEquipped().'</span>)';
-    $str .= $this->getButtonDiv('btnShowEquipEquipment', $deckKey, $label);
-    $str .= $this->getButtonDiv('btnDiscardEquipmentActive', $deckKey, 'Défausser les cartes piochées');
-    $str .= $this->getButtonDiv('btnShowDiscardEquipment', $deckKey, 'Afficher la défausse');
+    $str .= $this->getButtonDiv('btnShowEquipEquipment', $deckKey, 'showEquipmentEquip', $label);
+    $str .= $this->getButtonDiv('btnDiscardEquipmentActive', $deckKey, 'discardEquipmentActive', 'Défausser les cartes piochées');
+    $str .= $this->getButtonDiv('btnShowDiscardEquipment', $deckKey, 'showEquipmentDiscard', 'Afficher la défausse');
     $label = 'Remélanger la défausse (<span id="nbCardInDiscard">'.$Live->getNbCardsInDiscard('equipment').'</span>)';
-    $str .= $this->getButtonDiv('btnShuffleDiscardEquipment', $deckKey, $label);
-    $str .= $this->getButtonDiv('btnLeaveEquipmentDeck', $deckKey, 'Quitter cette pioche');
-    $str .= $this->getButtonDiv('btnDisabled2', $deckKey, 'Attention, action irréversible :', 'btn-dark disabled');
-    $str .= $this->getButtonDiv('btnDeleteEquipmentDeck', $deckKey, 'Supprimer cette pioche', 'btn-danger');
+    $str .= $this->getButtonDiv('btnShuffleDiscardEquipment', $deckKey, 'shuffleEquipmentDiscard', $label);
+    $str .= $this->getButtonDiv('btnLeaveEquipmentDeck', $deckKey, 'leaveEquipmentDeck', 'Quitter cette pioche', 'reload');
+    $str .= $this->getButtonDiv('btnDisabled2', $deckKey, 'Attention, action irréversible :', '', 'btn-dark disabled');
+    $str .= $this->getButtonDiv('btnDeleteEquipmentDeck', $deckKey, 'deleteEquipmentDeck', 'Supprimer cette pioche', 'reload', 'btn-danger');
     return $str.'</div>';
   }
-  private function getButtonDiv($id, $deckKey, $label, $classe='btn-dark')
+  private function getButtonDiv($id, $deckKey, $action, $label, $type='insert', $classe='btn-dark')
   {
-    return '<div type="button" id="'.$id.'" class="btn '.$classe.'" data-keyaccess="'.$deckKey.'">'.$label.'</div>';
+    return '<div type="button" id="'.$id.'" class="btn '.$classe.' withSpawnAction" data-type="'.$type.'" data-action="'.$action.'" data-keyaccess="'.$deckKey.'">'.$label.'</div>';
   }
   /**
    * @return string

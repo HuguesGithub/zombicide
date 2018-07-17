@@ -104,4 +104,24 @@ class WpPageSurvivorsBean extends PagePageBean
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-survivors.php');
     return vsprintf($str, $args);
   }
+  /**
+   * @param array $post
+   * @return string
+   */
+  public static function staticGetSurvivorsSortedAndFiltered($post)
+  {
+    $Bean = new WpPageSurvivorsBean();
+    $arrFilters = array();
+    if ($post['filters']!='') {
+      $arrParams = explode('&', $post['filters']);
+      if (!empty($arrParams)) {
+        foreach ($arrParams as $arrParam) {
+          list($key, $value) = explode('=', $arrParam);
+          $arrFilters[$key][]= $value;
+        }
+      }
+    }
+    $jsonStr = $Bean->getListingPage($post['colsort'], $post['colorder'], $post['nbperpage'], $post['paged'], $arrFilters);
+    return '{"page-survivants":'.json_encode($jsonStr).'}';
+  }
 }

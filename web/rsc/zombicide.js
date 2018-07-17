@@ -1097,37 +1097,9 @@ function addPageLiveEquipmentActions() {
     doEquipmentDeckActions(data, 'insert');
   });
   if ($hj('#btnDrawEquipmentCard').length!=0 ) {
-    $hj('#btnDrawEquipmentCard').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': 'drawEquipmentCard', 'keyAccess': $hj(this).data('keyaccess')};
-      doEquipmentDeckActions(data, 'insert');
-    });
-    $hj('#btnEquipEquipmentActive').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': 'equipEquipmentActive', 'keyAccess': $hj(this).data('keyaccess')};
-      doEquipmentDeckActions(data, 'insert');
-    });
-    $hj('#btnShowEquipEquipment').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': 'showEquipmentEquip', 'keyAccess': $hj(this).data('keyaccess')};
-      doEquipmentDeckActions(data, 'insert');
-    });
-    $hj('#btnDiscardEquipmentActive').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': 'discardEquipmentActive', 'keyAccess': $hj(this).data('keyaccess')};
-      doEquipmentDeckActions(data, 'insert');
-    });
-    $hj('#btnShowDiscardEquipment').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': 'showEquipmentDiscard', 'keyAccess': $hj(this).data('keyaccess')};
-      doEquipmentDeckActions(data, 'insert');
-    });
-    $hj('#btnShuffleDiscardEquipment').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': 'shuffleEquipmentDiscard', 'keyAccess': $hj(this).data('keyaccess')};
-      doEquipmentDeckActions(data, 'insert');
-    });
-    $hj('#btnLeaveEquipmentDeck').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': 'leaveEquipmentDeck', 'keyAccess': $hj(this).data('keyaccess')};
-      doEquipmentDeckActions(data, 'reload');
-    });
-    $hj('#btnDeleteEquipmentDeck').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': 'deleteEquipmentDeck', 'keyAccess': $hj(this).data('keyaccess')};
-      doEquipmentDeckActions(data, 'reload');
+    $hj('.withSpawnAction').unbind().click(function(){
+      var data = {'action': 'dealWithAjax', 'ajaxAction': $hj(this).data('action'), 'keyAccess': $hj(this).data('keyaccess')};
+      doSpawnDeckActions(data, $hj(this).data('type'));
     });
   }
 }
@@ -1146,29 +1118,9 @@ function addPageLiveSpawnActions() {
   });
   
   if ($hj('#btnDrawSpawnCard').length!=0 ) {
-    $hj('#btnDrawSpawnCard').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': 'drawSpawnCard', 'keyAccess': $hj(this).data('keyaccess')};
-      doSpawnDeckActions(data, 'insert');
-    });
-    $hj('#btnDiscardSpawnActive').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': 'discardSpawnActive', 'keyAccess': $hj(this).data('keyaccess')};
-      doSpawnDeckActions(data, 'insert');
-    });
-    $hj('#btnShowDiscardSpawn').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': 'showSpawnDiscard', 'keyAccess': $hj(this).data('keyaccess')};
-      doSpawnDeckActions(data, 'insert');
-    });
-    $hj('#btnShuffleDiscardSpawn').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': 'shuffleSpawnDiscard', 'keyAccess': $hj(this).data('keyaccess')};
-      doSpawnDeckActions(data, 'insert');
-    });
-    $hj('#btnLeaveSpawnDeck').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': 'leaveSpawnDeck', 'keyAccess': $hj(this).data('keyaccess')};
-      doSpawnDeckActions(data, 'reload');
-    });
-    $hj('#btnDeleteSpawnDeck').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': 'deleteSpawnDeck', 'keyAccess': $hj(this).data('keyaccess')};
-      doSpawnDeckActions(data, 'reload');
+    $hj('.withSpawnAction').unbind().click(function(){
+      var data = {'action': 'dealWithAjax', 'ajaxAction': $hj(this).data('action'), 'keyAccess': $hj(this).data('keyaccess')};
+      doSpawnDeckActions(data, $hj(this).data('type'));
     });
   }
 }

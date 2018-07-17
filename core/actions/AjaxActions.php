@@ -64,7 +64,7 @@ class AjaxActions extends LocalActions
         $returned = SurvivorsPageBean::staticGetRandomTeam($_POST);
       break;
       case 'getSurvivants'       :
-        $returned = SurvivorsPageBean::staticGetSurvivorsSortedAndFiltered($_POST);
+        $returned = WpPageSurvivorsBean::staticGetSurvivorsSortedAndFiltered($_POST);
       break;
       case 'getObjRuleDescription'   :
         $returned = self::dealWithObjRuleDescription($_POST);

@@ -30,32 +30,7 @@ class AdminSkillsBean extends AdminPageBean
     if (!isset($urlParams[self::CST_POSTACTION])) {
       return $Bean->getListingPage();
     }
-    switch ($urlParams[self::CST_POSTACTION]) {
-      case 'add'   :
-        $returned = $Bean->getAddPage();
-      break;
-      case 'edit'  :
-        $returned = $Bean->getEditPage($urlParams['id']);
-      break;
-      case self::CST_TRASH :
-        $returned = $Bean->getTrashPage($urlParams['id']);
-      break;
-      case 'clone' :
-        $returned = $Bean->getClonePage($urlParams['id']);
-      break;
-      case 'Appliquer' :
-        // On est dans le cas du bulkAction. On doit donc vérifier l'action.
-        if ($urlParams['action']==self::CST_TRASH) {
-          $returned = $Bean->getBulkTrashPage();
-        } else {
-          $returned = $Bean->getListingPage();
-        }
-      break;
-      default      :
-        $returned = $Bean->getListingPage();
-      break;
-    }
-    return $returned;
+    return $Bean->returnPostActionPage($urlParams);
   }
   /**
    * @return string

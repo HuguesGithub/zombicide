@@ -11,6 +11,13 @@ if (!defined('ABSPATH')) {
 class LocalDomain extends GlobalDomain implements iConstants
 {
   /**
+   * @param array $attributes
+   * @param array $services
+   */
+  public function __construct($attributes=array())
+  { parent::__construct($attributes); }
+
+  /**
    * @param int $expansionId
    * @return Expansion
    */
@@ -50,55 +57,45 @@ class LocalDomain extends GlobalDomain implements iConstants
     }
     return $GlobalOrigine;
   }
-  
-  
-  
-
-  /**
-   * @param int $objectiveId
-   * @return Objective
-   *
-  protected function getObjectiveFromGlobal($objectiveId)
-  {
-    global $globalObjectives;
-    $GlobalObjective = null;
-    if (!empty($globalObjectives)) {
-      foreach ($globalObjectives as $Objective) {
-        if ($Objective->getId()==$objectiveId) {
-          $GlobalObjective = $Objective;
-        }
-      }
-    }
-    if ($GlobalObjective == null) {
-      $GlobalObjective = $this->ObjectiveServices->select(__FILE__, __LINE__, $objectiveId);
-      if ($GlobalObjective != null) {
-        $globalObjectives[] = $GlobalObjective;
-      }
-    }
-    return $GlobalObjective;
-  }
   /**
    * @param int $ruleId
    * @return Rule
-   *
+   */
   protected function getRuleFromGlobal($ruleId)
   {
     global $globalRules;
-    $GlobalRule = null;
     if (!empty($globalRules)) {
       foreach ($globalRules as $Rule) {
         if ($Rule->getId()==$ruleId) {
-          $GlobalRule = $Rule;
+          return $Rule;
         }
       }
     }
-    if ($GlobalRule == null) {
-      $GlobalRule = $this->RuleServices->select(__FILE__, __LINE__, $ruleId);
-      if ($GlobalRule != null) {
-        $globalRules[] = $GlobalRule;
-      }
+    $GlobalRule = $this->RuleServices->select(__FILE__, __LINE__, $ruleId);
+    if ($GlobalRule != null) {
+      $globalRules[] = $GlobalRule;
     }
     return $GlobalRule;
+  }
+  /**
+   * @param int $objectiveId
+   * @return Objective
+   */
+  protected function getObjectiveFromGlobal($objectiveId)
+  {
+    global $globalObjectives;
+    if (!empty($globalObjectives)) {
+      foreach ($globalObjectives as $Objective) {
+        if ($Objective->getId()==$objectiveId) {
+          return $Objective;
+        }
+      }
+    }
+    $GlobalObjective = $this->ObjectiveServices->select(__FILE__, __LINE__, $objectiveId);
+    if ($GlobalObjective != null) {
+      $globalObjectives[] = $GlobalObjective;
+    }
+    return $GlobalObjective;
   }
   /**
    * @param int $weaponProfileId

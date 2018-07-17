@@ -155,4 +155,33 @@ class AdminPageBean extends MainPageBean
     return vsprintf($str, $args);
   }
   
+  public function returnPostActionPage($urlParams)
+  {
+    switch ($urlParams[self::CST_POSTACTION]) {
+      case 'add'   :
+        $returned = $this->getAddPage();
+      break;
+      case 'edit'  :
+        $returned = $this->getEditPage($urlParams['id']);
+      break;
+      case self::CST_TRASH :
+        $returned = $this->getTrashPage($urlParams['id']);
+      break;
+      case 'clone' :
+        $returned = $this->getClonePage($urlParams['id']);
+      break;
+      case 'Appliquer' :
+        // On est dans le cas du bulkAction. On doit donc vérifier l'action.
+        if ($urlParams['action']==self::CST_TRASH) {
+          $returned = $this->getBulkTrashPage();
+        } else {
+          $returned = $this->getListingPage();
+        }
+      break;
+      default      :
+        $returned = $this->getListingPage();
+      break;
+    }
+    return $returned;
+  }
 }

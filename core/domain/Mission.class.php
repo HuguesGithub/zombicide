@@ -218,11 +218,11 @@ class Mission extends LocalDomain
   /**
    * @return array MissionObjective
    */
-  public function getMissionObjectives($orderBy='id')
+  public function getMissionObjectives($oBy='id')
   {
     if ($this->MissionObjectives == null) {
-      $arrFilters = array(self::CST_MISSIONID=>$this->id);
-      $this->MissionObjectives = $this->MissionObjectiveServices->getMissionObjectivesWithFilters(__FILE__, __LINE__, $arrFilters, $orderBy);
+      $arrF = array(self::CST_MISSIONID=>$this->id);
+      $this->MissionObjectives = $this->MissionObjectiveServices->getMissionObjectivesWithFilters(__FILE__, __LINE__, $arrF, $oBy);
     }
     return $this->MissionObjectives;
   }

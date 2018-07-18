@@ -94,7 +94,8 @@ class WpPageLiveSpawnBean extends PagePageBean
   }
   private function getButtonDiv($id, $deckKey, $action, $label, $type='insert', $classe='btn-dark')
   {
-    return '<div type="button" id="'.$id.'" class="btn '.$classe.' withSpawnAction" data-type="'.$type.'" data-action="'.$action.'" data-keyaccess="'.$deckKey.'">'.$label.'</div>';
+    $str = '<div type="button" id="'.$id.'" class="btn '.$classe.' withSpawnAction" data-type="'.$type.'" data-action="';
+    return $str.$action.'" data-keyaccess="'.$deckKey.'">'.$label.'</div>';
   }
   /**
    * @return string
@@ -150,7 +151,7 @@ class WpPageLiveSpawnBean extends PagePageBean
     if ($showSelection=='hidden') {
       // On a des cartes, par défaut, on affiche les cartes "actives".
       $arrFilters = array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'A');
-      $SpawntLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
+      $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
       $strSpawns = $this->getSpawnCardActives($SpawnLiveDecks);
     }
     $args = array(

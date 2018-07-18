@@ -27,7 +27,11 @@ class MissionServices extends LocalServices
   {
     $arrParams = array();
     array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_LEVELID) ? $arrFilters[self::CST_LEVELID] : '%'));
-    array_push($arrParams, ($arrFilters[self::CST_DURATIONID]!='' && !is_array($arrFilters[self::CST_DURATIONID])) ? $arrFilters[self::CST_DURATIONID] : '%');
+    if ($arrFilters[self::CST_DURATIONID]!='' && !is_array($arrFilters[self::CST_DURATIONID])) {
+      array_push($arrParams, $arrFilters[self::CST_DURATIONID]);
+    } else {
+      array_push($arrParams, '%');
+    }
     array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_PLAYERID) ? $arrFilters[self::CST_PLAYERID] : '%'));
     array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_ORIGINEID) ? $arrFilters[self::CST_ORIGINEID] : '%'));
     $bPublished = isset($arrFilters[self::CST_PUBLISHED]) && !is_array($arrFilters[self::CST_PUBLISHED]);

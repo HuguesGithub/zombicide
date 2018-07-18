@@ -41,8 +41,8 @@ class WpPostSkillBean extends PostPageBean
 
     $arrTags = array(
       'blue' => array(10, 11),
-      'yellow' => array(20),
-      'orange' => array(30, 31),
+      self::CST_YELLOW => array(20),
+      self::CST_ORANGE => array(30, 31),
       'red' => array(40, 41, 42),
     );
     $arrLvls = array(1=>'S', 2=>'Z', 3=>'U', 4=>'UZ');
@@ -66,12 +66,12 @@ class WpPostSkillBean extends PostPageBean
     $strTpl = '<ul class="col-3"><li>%1$s :</li>%2$s</ul>';
     $strBlue  = vsprintf($strTpl, array('S', $this->buildSkillLis($skills['blue'][1], 'blue')));
     $strBlue .= vsprintf($strTpl, array('U', $this->buildSkillLis($skills['blue'][3], 'blue')));
-    $strYellow  = vsprintf($strTpl, array('S', $this->buildSkillLis($skills['yellow'][1], 'yellow')));
-    $strYellow .= vsprintf($strTpl, array('Z', $this->buildSkillLis($skills['yellow'][2], 'yellow')));
-    $strOrange  = vsprintf($strTpl, array('S', $this->buildSkillLis($skills['orange'][1], 'orange')));
-    $strOrange .= vsprintf($strTpl, array('Z', $this->buildSkillLis($skills['orange'][2], 'orange')));
-    $strOrange .= vsprintf($strTpl, array('U', $this->buildSkillLis($skills['orange'][3], 'orange')));
-    $strOrange .= vsprintf($strTpl, array('UZ', $this->buildSkillLis($skills['orange'][4], 'orange')));
+    $strYellow  = vsprintf($strTpl, array('S', $this->buildSkillLis($skills[self::CST_YELLOW][1], self::CST_YELLOW)));
+    $strYellow .= vsprintf($strTpl, array('Z', $this->buildSkillLis($skills[self::CST_YELLOW][2], self::CST_YELLOW)));
+    $strOrange  = vsprintf($strTpl, array('S', $this->buildSkillLis($skills[self::CST_ORANGE][1], self::CST_ORANGE)));
+    $strOrange .= vsprintf($strTpl, array('Z', $this->buildSkillLis($skills[self::CST_ORANGE][2], self::CST_ORANGE)));
+    $strOrange .= vsprintf($strTpl, array('U', $this->buildSkillLis($skills[self::CST_ORANGE][3], self::CST_ORANGE)));
+    $strOrange .= vsprintf($strTpl, array('UZ', $this->buildSkillLis($skills[self::CST_ORANGE][4], self::CST_ORANGE)));
     $strRed  = vsprintf($strTpl, array('S', $this->buildSkillLis($skills['red'][1], 'red')));
     $strRed .= vsprintf($strTpl, array('Z', $this->buildSkillLis($skills['red'][2], 'red')));
     $strRed .= vsprintf($strTpl, array('U', $this->buildSkillLis($skills['red'][3], 'red')));

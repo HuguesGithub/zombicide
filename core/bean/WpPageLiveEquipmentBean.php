@@ -16,11 +16,11 @@ class WpPageLiveEquipmentBean extends PagePageBean
   public function __construct($WpPage='')
   {
     parent::__construct($WpPage);
-    $this->EquipmentServices = FactoryServices::getEquipmentServices();
+    $this->EquipmentServices          = FactoryServices::getEquipmentServices();
     $this->EquipmentExpansionServices = FactoryServices::getEquipmentExpansionServices();
-    $this->EquipmentLiveDeckServices = FactoryServices::getEquipmentLiveDeckServices();
-    $this->ExpansionServices = FactoryServices::getExpansionServices();
-    $this->LiveServices = FactoryServices::getLiveServices();
+    $this->EquipmentLiveDeckServices  = FactoryServices::getEquipmentLiveDeckServices();
+    $this->ExpansionServices          = FactoryServices::getExpansionServices();
+    $this->LiveServices               = FactoryServices::getLiveServices();
   }
   /**
    * @param WpPage $WpPage
@@ -92,12 +92,14 @@ class WpPageLiveEquipmentBean extends PagePageBean
     $str .= $this->getButtonDiv('btnShuffleDiscardEquipment', $deckKey, 'shuffleEquipmentDiscard', $label);
     $str .= $this->getButtonDiv('btnLeaveEquipmentDeck', $deckKey, 'leaveEquipmentDeck', 'Quitter cette pioche', 'reload');
     $str .= $this->getButtonDiv('btnDisabled2', $deckKey, 'Attention, action irréversible :', '', 'btn-dark disabled');
-    $str .= $this->getButtonDiv('btnDeleteEquipmentDeck', $deckKey, 'deleteEquipmentDeck', 'Supprimer cette pioche', 'reload', 'btn-danger');
+    $label = 'Supprimer cette pioche';
+    $str .= $this->getButtonDiv('btnDeleteEquipmentDeck', $deckKey, 'deleteEquipmentDeck', $label, 'reload', 'btn-danger');
     return $str.'</div>';
   }
   private function getButtonDiv($id, $deckKey, $action, $label, $type='insert', $classe='btn-dark')
   {
-    return '<div type="button" id="'.$id.'" class="btn '.$classe.' withSpawnAction" data-type="'.$type.'" data-action="'.$action.'" data-keyaccess="'.$deckKey.'">'.$label.'</div>';
+    $str = '<div type="button" id="'.$id.'" class="btn '.$classe.' withEquipmentAction" data-type="'.$type.'" data-action="';
+    return $str.$action.'" data-keyaccess="'.$deckKey.'">'.$label.'</div>';
   }
   /**
    * @return string
@@ -110,7 +112,7 @@ class WpPageLiveEquipmentBean extends PagePageBean
     if (isset($_SESSION[self::CST_DECKKEY]) && $_SESSION[self::CST_DECKKEY]!='') {
       // On a un KeyAccess en Session
       $deckKey = $_SESSION[self::CST_DECKKEY];
-      $args = array('deckKey'=>$deckKey);
+      $args = array(self::CST_DECKKEY=>$deckKey);
       $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, $args);
       $Live = array_shift($Lives);
       if ($Live==null) {
@@ -120,10 +122,10 @@ class WpPageLiveEquipmentBean extends PagePageBean
         if ($Live->getNbCardsInDeck('equipment')+$Live->getNbCardsInDiscard('equipment')==0) {
           if ($deckKey!='') {
             // On a un KeyAccess en Formulaire
-            $args = array('deckKey'=>$deckKey);
+            $args = array(self::CST_DECKKEY=>$deckKey);
             $Live = $this->createEquipmentLiveDeck($args);
             $blocExpansions = $this->getDeckButtons($Live);
-            $showSelection = 'hidden';
+            $showSelection = self::CST_HIDDEN;
             $_SESSION[self::CST_DECKKEY] = $deckKey;
           } else {
             // On n'a rien
@@ -132,25 +134,25 @@ class WpPageLiveEquipmentBean extends PagePageBean
         } else {
           // On a une Session et des cartes.
           $blocExpansions = $this->getDeckButtons($Live);
-          $showSelection = 'hidden';
+          $showSelection = self::CST_HIDDEN;
         }
       }
     } else {
       // On n'a pas de Session, en a-t-on un en POST ?
-      $deckKey = $this->initVar('keyAccess');
+      $deckKey = $this->initVar(self::CST_KEYACCESS);
       if ($deckKey!='') {
         // On a un KeyAccess en Formulaire
-        $args = array('deckKey'=>$deckKey);
+        $args = array(self::CST_DECKKEY=>$deckKey);
         $Live = $this->createEquipmentLiveDeck($args);
         $blocExpansions = $this->getDeckButtons($Live);
-        $showSelection = 'hidden';
+        $showSelection = self::CST_HIDDEN;
         $_SESSION[self::CST_DECKKEY] = $deckKey;
       } else {
         // On n'a rien
         $blocExpansions = $this->nonLoggedInterface();
       }
     }
-    if ($showSelection=='hidden') {
+    if ($showSelection==self::CST_HIDDEN) {
       // On a des cartes, par défaut, on affiche les cartes "actives".
       $arrFilters = array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'A');
       $EquipmentLiveDecks = $this->EquipmentLiveDeckServices->getEquipmentLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
@@ -176,7 +178,8 @@ class WpPageLiveEquipmentBean extends PagePageBean
       $str .= '<div class="btn-group-vertical live-equipment-selection" role="group">';
       foreach ($Expansions as $Expansion) {
         $id = $Expansion->getId();
-        $EquipmentCards = $this->EquipmentExpansionServices->getEquipmentExpansionsWithFilters(__FILE__, __LINE__, array('expansionId'=>$id));
+        $arrF = array(self::CST_EXPANSIONID=>$id);
+        $EquipmentCards = $this->EquipmentExpansionServices->getEquipmentExpansionsWithFilters(__FILE__, __LINE__, $arrF);
         if (!empty($EquipmentCards)) {
           $str .= '<div type="button" class="btn btn-dark btn-expansion" data-expansion-id="'.$id.'"><span class="';
           $str .= '"><i class="far fa-square"></i></span> '.$Expansion->getName().'</div>';
@@ -207,7 +210,8 @@ class WpPageLiveEquipmentBean extends PagePageBean
         $EquipmentExpansion = $this->EquipmentExpansionServices->select(__FILE__, __LINE__, $EquipmentLiveDeck->getEquipmentCardId());
         $Equipment = $this->EquipmentServices->select(__FILE__, __LINE__, $EquipmentExpansion->getEquipmentCardId());
         $EquipmentBean = new EquipmentBean($Equipment);
-        $strEquipments .= $EquipmentBean->displayCard($EquipmentExpansion->getExpansionId(), ($showDiscardButton?$EquipmentLiveDeck->getId():-1));
+        $id = ($showDiscardButton?$EquipmentLiveDeck->getId():-1);
+        $strEquipments .= $EquipmentBean->displayCard($EquipmentExpansion->getExpansionId(), $id);
       }
     }
     return $strEquipments;

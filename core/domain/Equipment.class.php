@@ -31,9 +31,9 @@ class Equipment extends LocalDomain
   public function __construct($attributes=array())
   {
     parent::__construct($attributes);
-    $this->EquipmentKeywordServices       = new EquipmentKeywordServices();
-    $this->EquipmentWeaponProfileServices = new EquipmentWeaponProfileServices();
-    $this->WeaponProfileServices          = new WeaponProfileServices();
+    $this->EquipmentKeywordServices = new EquipmentKeywordServices();
+    $this->EWProfileServices        = new EquipmentWeaponProfileServices();
+    $this->WeaponProfileServices    = new WeaponProfileServices();
   }
   /**
    * @return $id
@@ -94,8 +94,8 @@ class Equipment extends LocalDomain
   public function getEquipmentWeaponProfiles()
   {
     if ($this->EquipmentWeaponProfiles == null) {
-      $arrFilters = array(self::CST_EQUIPMENTCARDID=>$this->id);
-      $this->EquipmentWeaponProfiles = $this->EquipmentWeaponProfileServices->getEquipmentWeaponProfilesWithFilters(__FILE__, __LINE__, $arrFilters);
+      $arrF = array(self::CST_EQUIPMENTCARDID=>$this->id);
+      $this->EquipmentWeaponProfiles = $this->EWProfileServices->getEquipmentWeaponProfilesWithFilters(__FILE__, __LINE__, $arrF);
     }
     return $this->EquipmentWeaponProfiles;
   }
@@ -161,7 +161,7 @@ class Equipment extends LocalDomain
       } else {
         $isRanged = false;
         foreach ($this->EquipmentWeaponProfiles as $EquipmentWeaponProfile) {
-          $WeaponProfile = $EquipmentWeaponProfile->getWeaponProfile(__FILE__, __LINE__);
+          $WeaponProfile = $this->getWeaponProfile(__FILE__, __LINE__);
           if ($WeaponProfile->getMaxRange()>0) {
             $isRanged = true;
           } else {

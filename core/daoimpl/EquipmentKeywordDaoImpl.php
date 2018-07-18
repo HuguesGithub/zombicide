@@ -22,7 +22,15 @@ class EquipmentKeywordDaoImpl extends LocalDaoImpl
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('EquipmentKeyword', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = EquipmentKeyword::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line

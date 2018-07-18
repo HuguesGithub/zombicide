@@ -29,7 +29,7 @@ class SpawnDeckActions extends LocalActions
     $Act = new SpawnDeckActions($post);
     $returned = '{}';
     if ($_SESSION[self::CST_DECKKEY]==$post[self::CST_KEYACCESS]) {
-      switch ($post['ajaxAction']) {
+      switch ($post['ajaxChildAction']) {
         case 'deleteSpawnDeck'    :
           $returned = $Act->deleteSpawnCard();
         break;

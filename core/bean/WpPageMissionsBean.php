@@ -17,12 +17,12 @@ class WpPageMissionsBean extends PagePageBean
   public function __construct($WpPage='')
   {
     parent::__construct($WpPage);
-    $this->DurationServices = FactoryServices::getDurationServices();
+    $this->DurationServices  = FactoryServices::getDurationServices();
     $this->ExpansionServices = FactoryServices::getExpansionServices();
-    $this->LevelServices = FactoryServices::getLevelServices();
-    $this->MissionServices = FactoryServices::getMissionServices();
-    $this->OrigineServices = FactoryServices::getOrigineServices();
-    $this->PlayerServices = FactoryServices::getPlayerServices();
+    $this->LevelServices     = FactoryServices::getLevelServices();
+    $this->MissionServices   = FactoryServices::getMissionServices();
+    $this->OrigineServices   = FactoryServices::getOrigineServices();
+    $this->PlayerServices    = FactoryServices::getPlayerServices();
   }
   /**
    * On arrive rarement en mode direct pour afficher la Page. On passe par une méthode static.
@@ -83,7 +83,7 @@ class WpPageMissionsBean extends PagePageBean
     /**
      * Tableau de données pour l'affichage de la page.
      */
-    $selectClasses = 'custom-select custom-select-sm filters';
+    $selClass = 'custom-select custom-select-sm filters';
     $args = array(
       ($nbPerPage==10 ? self::CST_SELECTED:''),
       ($nbPerPage==25 ? self::CST_SELECTED:''),
@@ -93,9 +93,9 @@ class WpPageMissionsBean extends PagePageBean
       // Tri sue le Titre - 5
       ($sort_col=='title' ? '_'.$sort_order:''),
       // Filtre sur Difficulté
-      $this->LevelServices->getLevelsSelectAlreadyRequested(__FILE__, __LINE__, $Levels, $arrLevelIds, '', $selectClasses, true),
+      $this->LevelServices->getLevelsSelectAlreadyRequested(__FILE__, __LINE__, $Levels, $arrLevelIds, '', $selClass, true),
       // Filtre sur Joueurs
-      $this->PlayerServices->getNbPlayersSelect(__FILE__, __LINE__, $arrPlayerIds, '', $selectClasses, true),
+      $this->PlayerServices->getNbPlayersSelect(__FILE__, __LINE__, $arrPlayerIds, '', $selClass, true),
       // Les lignes du tableau - 8
       $strBody,
       // N° du premier élément - 9
@@ -119,7 +119,7 @@ class WpPageMissionsBean extends PagePageBean
       // Doit-on afficher les filtres ? - 18
       (!$hasFilters ? 'hidden' : ''),
       // Filtre sur Extension - 19
-      $this->ExpansionServices->getExpansionsSelectAlreadyRequested(__FILE__, __LINE__, $Expansions, $arrExpansionIds, '', $selectClasses, true),
+      $this->ExpansionServices->getExpansionsSelectAlreadyRequested(__FILE__, __LINE__, $Expansions, $arrExpansionIds, '', $selClass, true),
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-missions.php');
     return vsprintf($str, $args);

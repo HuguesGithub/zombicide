@@ -176,7 +176,8 @@ class MissionBean extends MainPageBean
       $innerRows[$i] .= vsprintf($rmvButton, array(self::CST_RMVROW, 'row', $i+1)).$closeDivTile;
     }
     for ($i=1; $i<=$width; $i++) {
-      $firstRow  .= vsprintf($openDivTile, array($i, self::CST_FIRSTROW)).vsprintf($rmvButton, array(self::CST_RMVCOL, 'col', $i)).$closeDivTile;
+      $firstRow .= vsprintf($openDivTile, array($i, self::CST_FIRSTROW));
+      $firstRow .= vsprintf($rmvButton, array(self::CST_RMVCOL, 'col', $i)).$closeDivTile;
       $lastRow  .= vsprintf($openDivTile, array($i, self::CST_FIRSTROW)).$disabledButton.$closeDivTile;
     }
     $arrOrientations = array('N'=>'north', 'E'=>'east', 'S'=>'south', 'O'=>'west');

@@ -23,19 +23,19 @@ class EquipmentDeckActions extends LocalActions
   }
   /**
    * Point d'entrée des méthodes statiques.
-   * @param array $post
+   * @param array $post 
    * @return string
    **/
   public static function dealWithStatic($post)
   {
     $Act = new EquipmentDeckActions($post);
-    if ($post['ajaxAction']=='pregenEquipmentCard') {
+    if ($post['ajaxChildAction']=='pregenEquipmentCard') {
       $returned = $Act->getPreGen($post);
     } else {
       $returned = '{}';
     }
     if ($_SESSION[self::CST_DECKKEY]==$post[self::CST_KEYACCESS]) {
-      switch ($post['ajaxAction']) {
+      switch ($post['ajaxChildAction']) {
         case 'deleteEquipmentDeck'     :
           $returned = $Act->deleteEquipmentCard();
         break;
@@ -93,11 +93,14 @@ class EquipmentDeckActions extends LocalActions
         $Equipment = $this->EquipmentServices->select(__FILE__, __LINE__, $EquipmentExpansion->getEquipmentCardId());
         $strReturned .= '<div class="input-group input-group-sm mb-3 col-12 col-md-6 col-xl-4 float-left">';
         $strReturned .= '<div class="input-group-prepend">';
-        $strReturned .= '<span class="input-group-text">'.$EquipmentExpansion->getExpansionId().' / '.($Equipment->isStarter()?'*':'').$Equipment->getName().'</span>';
+        $strReturned .= '<span class="input-group-text">'.$EquipmentExpansion->getExpansionId().' / ';
+        $strReturned .= ($Equipment->isStarter()?'*':'').$Equipment->getName().'</span>';
         $strReturned .= '</div>';
-        $strReturned .= '<div class="input-group-prepend"><span class="input-group-text">&nbsp;<i class="fa fa-question-circle"></i></span></div>';
+        $strReturned .= '<div class="input-group-prepend"><span class="input-group-text">&nbsp;';
+        $strReturend .= '<i class="fa fa-question-circle"></i></span></div>';
         $nb = $EquipmentExpansion->getQuantity();
-        $strReturned .= '<input class="form-control" type="text" name="ec-'.$EquipmentExpansion->getId().'" data-default="'.$nb.'" value="'.$nb.'">';
+        $strReturned .= '<input class="form-control" type="text" name="ec-'.$EquipmentExpansion->getId();
+        $strReturned .= '" data-default="'.$nb.'" value="'.$nb.'">';
         $strReturned .= '</div>';
       }
     }

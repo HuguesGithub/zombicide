@@ -195,35 +195,6 @@ class AdminSurvivorsBean extends AdminPageBean
       return $this->getListingPage();
     }
   }
-  /**
-   * Retourne l'interface commune de confirmation de suppression d'éléments
-   * @param string $title Titre de la page
-   * @param string $subTitle Libellé spécifique à la suppression
-   * @param string $strLis Liste des lis des éléments à supprimer
-   * @param string $urlCancel Url de rollback si on annule la suppression.
-   * @return string
-   */
-  public function getConfirmDeletePage($title, $subTitle, $strLis, $urlCancel)
-  {
-    // Les données de l'interface.
-    $args = array(
-      // Titre de l'opération - 1
-      $title,
-      // Url de l'action - 2
-      '#',
-      // - 3
-      $subTitle,
-      // Liste des éléments qui vont être supprimés - 4
-      $strLis,
-      // Url pour Annuler - 5
-      $urlCancel,
-      // Postaction - 6
-      self::CST_TRASH,
-      '','','','','','','','','','','','','','',
-    );
-    $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/delete-common-elements.php');
-    return vsprintf($str, $args);
-  }
 
 
 }

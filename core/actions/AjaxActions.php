@@ -22,76 +22,66 @@ class AjaxActions extends LocalActions
   public static function dealWithAjax()
   {
     switch ($_POST['ajaxAction']) {
-      case 'addMissionObjRule'     :
-        $returned = self::dealWithAddMissionObjRule($_POST);
-      break;
-      case 'addMoreNews'         :
-        $returned = HomePageBean::staticAddMoreNews($_POST['value']);
-      break;
-      case 'addParameter'        :
-        $returned = self::dealWithAddParameter($_POST);
-      break;
-      case 'buildBlockTiles'       :
-        $returned = MissionBean::staticBuildBlockTiles($_POST);
-      break;
-      case 'deleteEquipmentDeck'     :
-      case 'discardEquipmentActive'  :
-      case 'discardEquippedCard'     :
-      case 'drawEquipmentCard'       :
-      case 'equipEquipmentActive'    :
-      case 'leaveEquipmentDeck'      :
-      case 'pregenEquipmentCard'     :
-      case 'showEquipmentDiscard'    :
-      case 'showEquipmentEquip'      :
-      case 'shuffleEquipmentDiscard' :
+      case 'EquipmentDeck' :
         $returned = EquipmentDeckActions::dealWithStatic($_POST);
       break;
-      case 'deleteSpawnDeck'         :
-      case 'discardSpawnActive'      :
-      case 'drawSpawnCard'           :
-      case 'leaveSpawnDeck'          :
-      case 'showSpawnDiscard'        :
-      case 'shuffleSpawnDiscard'     :
+      case 'SpawnDeck' :
         $returned = SpawnDeckActions::dealWithStatic($_POST);
       break;
-      case 'getCompetences'      :
-        $returned = WpPageSkillsBean::staticGetSkillsSortedAndFiltered($_POST);
-      break;
-      case 'getMissions'         :
-        $returned = WpPageMissionsBean::staticGetMissionsSortedAndFiltered($_POST);
-      break;
-      case 'getRandomTeam'       :
-        $returned = SurvivorsPageBean::staticGetRandomTeam($_POST);
-      break;
-      case 'getSurvivants'       :
-        $returned = WpPageSurvivorsBean::staticGetSurvivorsSortedAndFiltered($_POST);
-      break;
-      case 'getObjRuleDescription'   :
-        $returned = self::dealWithObjRuleDescription($_POST);
-      break;
-      case 'getParameter'        :
-        $returned = self::dealWithGetParameter($_POST);
-      break;
-      case 'joinGame'          :
-        $returned = self::dealWithJoinLive($_POST);
-      break;
-      case 'postChat'          :
-        $returned = ChatActions::staticPostChat($_POST);
-      break;
-      case 'refreshChat'         :
-        $returned = ChatActions::staticChatContent($_POST);
-      break;
-      case 'rmwMissionObjRule'     :
-        $returned = self::dealWithRmvMissionObjRule($_POST);
-      break;
-      case 'rotateMissionTile'     :
-        $returned = MissionTileServices::staticRotate($_POST);
-      break;
-      case 'updateMissionTile'     :
-        $returned = MissionTileServices::staticUpdate($_POST);
-      break;
-      default              :
-        $returned = 'Erreur dans le POST[action] - '.$_POST['ajaxAction'];
+      default :  
+        switch ($_POST['ajaxChildAction']) {
+          case 'addMissionObjRule'     :
+            $returned = self::dealWithAddMissionObjRule($_POST);
+          break;
+          case 'addMoreNews'         :
+            $returned = HomePageBean::staticAddMoreNews($_POST['value']);
+          break;
+          case 'addParameter'        :
+            $returned = self::dealWithAddParameter($_POST);
+          break;
+          case 'buildBlockTiles'       :
+            $returned = MissionBean::staticBuildBlockTiles($_POST);
+          break;
+          case 'getCompetences'      :
+            $returned = WpPageSkillsBean::staticGetSkillsSortedAndFiltered($_POST);
+          break;
+          case 'getMissions'         :
+            $returned = WpPageMissionsBean::staticGetMissionsSortedAndFiltered($_POST);
+          break;
+          case 'getRandomTeam'       :
+            $returned = SurvivorsPageBean::staticGetRandomTeam($_POST);
+          break;
+          case 'getSurvivants'       :
+            $returned = WpPageSurvivorsBean::staticGetSurvivorsSortedAndFiltered($_POST);
+          break;
+          case 'getObjRuleDescription'   :
+            $returned = self::dealWithObjRuleDescription($_POST);
+          break;
+          case 'getParameter'        :
+            $returned = self::dealWithGetParameter($_POST);
+          break;
+          case 'joinGame'          :
+            $returned = self::dealWithJoinLive($_POST);
+          break;
+          case 'postChat'          :
+            $returned = ChatActions::staticPostChat($_POST);
+          break;
+          case 'refreshChat'         :
+            $returned = ChatActions::staticChatContent($_POST);
+          break;
+          case 'rmwMissionObjRule'     :
+            $returned = self::dealWithRmvMissionObjRule($_POST);
+          break;
+          case 'rotateMissionTile'     :
+            $returned = MissionTileServices::staticRotate($_POST);
+          break;
+          case 'updateMissionTile'     :
+            $returned = MissionTileServices::staticUpdate($_POST);
+          break;
+          default              :
+            $returned = 'Erreur dans le POST[action] - '.$_POST['ajaxAction'];
+          break;
+        }
       break;
     }
     return $returned;

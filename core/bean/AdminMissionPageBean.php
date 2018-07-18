@@ -326,7 +326,7 @@ class AdminMissionPageBean extends AdminPageBean
       ($orderby==self::CST_TITLE?$order=='asc':'desc'),
       // url pour le tri sur title - 9
       $urlSortTitle,
-  );
+    );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/missions-admin-board.php');
     return vsprintf($str, $args);
   }

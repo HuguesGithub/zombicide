@@ -22,7 +22,15 @@ class DurationDaoImpl extends LocalDaoImpl
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('Duration', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = Duration::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line

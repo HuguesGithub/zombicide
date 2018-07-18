@@ -1090,16 +1090,20 @@ function addPageLiveEquipmentActions() {
     $hj(this).find('svg').toggleClass('fa-square fa-check-square');
     var expansionIds = '';
     $hj('.btn-expansion.active').each(function(){
-      if (expansionIds!='') { expansionIds+=','; }
+      if (expansionIds!='') {
+        expansionIds+=',';
+      }
       expansionIds += $hj(this).data('expansion-id');
     });
     var data = {'action': 'dealWithAjax', 'ajaxAction': 'pregenEquipmentCard', 'expansionIds': expansionIds};
     doEquipmentDeckActions(data, 'insert');
   });
   if ($hj('#btnDrawEquipmentCard').length!=0 ) {
-    $hj('.withSpawnAction').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': $hj(this).data('action'), 'keyAccess': $hj(this).data('keyaccess')};
-      doSpawnDeckActions(data, $hj(this).data('type'));
+    $hj('.withEquipmentAction').unbind().click(function(){
+      var action = $hj(this).data('action');
+      var keyAccess = $hj(this).data('keyaccess');
+      var data = {'action': 'dealWithAjax', 'ajaxAction': 'EquipmentDeck' , 'ajaxChildAction': action, 'keyAccess': keyAccess};
+      doEquipmentDeckActions(data, $hj(this).data('type'));
     });
   }
 }
@@ -1119,7 +1123,9 @@ function addPageLiveSpawnActions() {
   
   if ($hj('#btnDrawSpawnCard').length!=0 ) {
     $hj('.withSpawnAction').unbind().click(function(){
-      var data = {'action': 'dealWithAjax', 'ajaxAction': $hj(this).data('action'), 'keyAccess': $hj(this).data('keyaccess')};
+      var action = $hj(this).data('action');
+      var keyAccess = $hj(this).data('keyaccess');
+      var data = {'action': 'dealWithAjax', 'ajaxAction': 'SpawnDeck' , 'ajaxChildAction': action, 'keyAccess': keyAccess};
       doSpawnDeckActions(data, $hj(this).data('type'));
     });
   }

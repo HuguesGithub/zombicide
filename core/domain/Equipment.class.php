@@ -161,7 +161,7 @@ class Equipment extends LocalDomain
       } else {
         $isRanged = false;
         foreach ($this->EquipmentWeaponProfiles as $EquipmentWeaponProfile) {
-          $WeaponProfile = $this->getWeaponProfile(__FILE__, __LINE__);
+          $WeaponProfile = $EquipmentWeaponProfile->getWeaponProfile(__FILE__, __LINE__);
           if ($WeaponProfile->getMaxRange()>0) {
             $isRanged = true;
           } else {

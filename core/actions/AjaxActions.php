@@ -28,7 +28,7 @@ class AjaxActions extends LocalActions
       case 'SpawnDeck' :
         $returned = SpawnDeckActions::dealWithStatic($_POST);
       break;
-      default :  
+      default :
         switch ($_POST['ajaxChildAction']) {
           case 'addMissionObjRule'     :
             $returned = self::dealWithAddMissionObjRule($_POST);

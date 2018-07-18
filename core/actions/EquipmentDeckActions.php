@@ -23,7 +23,7 @@ class EquipmentDeckActions extends LocalActions
   }
   /**
    * Point d'entrée des méthodes statiques.
-   * @param array $post 
+   * @param array $post
    * @return string
    **/
   public static function dealWithStatic($post)
@@ -97,7 +97,7 @@ class EquipmentDeckActions extends LocalActions
         $strReturned .= ($Equipment->isStarter()?'*':'').$Equipment->getName().'</span>';
         $strReturned .= '</div>';
         $strReturned .= '<div class="input-group-prepend"><span class="input-group-text">&nbsp;';
-        $strReturend .= '<i class="fa fa-question-circle"></i></span></div>';
+        $strReturned .= '<i class="fa fa-question-circle"></i></span></div>';
         $nb = $EquipmentExpansion->getQuantity();
         $strReturned .= '<input class="form-control" type="text" name="ec-'.$EquipmentExpansion->getId();
         $strReturned .= '" data-default="'.$nb.'" value="'.$nb.'">';

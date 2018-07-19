@@ -72,9 +72,6 @@ class LevelServices extends LocalServices
     foreach ($Levels as $Level) {
       $arrSetLabels[$Level->getId()] = $Level->getName();
     }
-    $this->labelDefault = $defaultLabel;
-    $this->classe = $classe;
-    $this->multiple = $multiple;
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix, $value);
   }
 }

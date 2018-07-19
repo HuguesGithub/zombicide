@@ -87,7 +87,6 @@ class RuleServices extends LocalServices
     }
     $this->labelDefault = '---';
     $this->classe = $classe;
-    $this->multiple = $multiple;
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'ruleId', $value);
   }
   /**
@@ -109,7 +108,6 @@ class RuleServices extends LocalServices
     }
     $this->labelDefault = '---';
     $this->classe = $classe;
-    $this->multiple = $multiple;
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'settingId', $value);
   }
 }

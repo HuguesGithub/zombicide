@@ -10,7 +10,9 @@ if (!defined('ABSPATH')) {
  */
 class SurvivorBean extends LocalBean
 {
-
+  private $strPortraitSurvivant = 'portrait-survivant';
+  private $strPortraitZombivant = 'portrait-zombivant';
+	
   public function __construct($Survivor='')
   {
     parent::__construct();
@@ -74,19 +76,32 @@ class SurvivorBean extends LocalBean
   public function getRowForSurvivorsPage()
   {
     $Survivor = $this->Survivor;
-    $urlWpPost = $Survivor->getWpPostUrl();
-    $strRow  = '<tr class="survivant">';
-    $strRow .= '<td rowspan="3">'.$this->getAllPortraits().'</td>';
-    $strRow .= '<td><a href="'.$urlWpPost.'">'.$Survivor->getName().'</a></td>';
-    $strRow .= '<td data-id="'.$Survivor->getId().'" data-type="zombivant" class="'.($Survivor->isZombivor()?'changeProfile':'');
-    $strRow .= '"><i class="far fa-'.($Survivor->isZombivor()?'square pointer':'window-close').'"></i></td>';
-    $strRow .= '<td data-id="'.$Survivor->getId().'" data-type="ultimate" class="'.($Survivor->isUltimate()?'changeProfile':'');
-    $strRow .= '"><i class="far fa-'.($Survivor->isUltimate()?'square pointer':'window-close').'"></i></td>';
-    $strRow .= '<td>'.$Survivor->getExpansionName().'</td>';
-    $strRow .= '<td>'.$this->getAllSkills().'</td>';
-    $strRow .= '</tr>';
-    $strRow .= '<tr><td colspan="5" style="height:0;line-height:0;padding:0;border:0 none;">&nbsp;</td></tr>';
-    return $strRow.'<tr><td colspan="5">'.$Survivor->getBackground().'</td></tr>';
+  	$args = array(
+  	  // Les portraits du Survivants - 1
+      $this->getAllPortraits(),
+  	  // Url du WpPost associé, s'il existe - 2
+      $Survivor->getWpPostUrl(),
+  	  // Nom du Survivant - 3
+  	  $Survivor->getName(),
+  	  // Id du Survivant - 4
+  	  $Survivor->getId(),
+  	  // Si on a un profil de Zombivant, on donne la possibilité de l'afficher - 5
+      ($Survivor->isZombivor()?'changeProfile':''),
+  	  // Si on a un profil de Zombivant, on veut une case à cocher - 6
+      ($Survivor->isZombivor()?'square pointer':'window-close'),
+  	  // Si on a un profil d'Ultimate, on donne la possibilité de l'afficher - 7
+      ($Survivor->isUltimate()?'changeProfile':''),
+  	  // Si on a un profil d'Ultimate, on veut une case à cocher - 8
+      ($Survivor->isUltimate()?'square pointer':'window-close'),
+  	  // Extension à laquelle est rattaché le Survivant - 9
+  	  $Survivor->getExpansionName(),
+  	  // Liste des Compétences du Survivant - 10
+  	  $this->getAllSkills(),
+  	  // Background du Survivant - 11
+  	  $Survivor->getBackground(),
+  	);
+  	$str = file_get_contents(PLUGIN_PATH.'web/pages/admin/fragments/survivor-row-public.php');
+  	return vsprintf($str, $args);
   }
   public function getAllSkills()
   {
@@ -108,14 +123,14 @@ class SurvivorBean extends LocalBean
   {
     $Survivor = $this->Survivor;
     $name = $Survivor->getName();
-    $str  = $this->getStrImgPortrait($Survivor->getPortraitUrl(), 'Portrait Survivant - '.$name, 'portrait-survivant');
+    $str  = $this->getStrImgPortrait($Survivor->getPortraitUrl(), 'Portrait Survivant - '.$name, $this->strPortraitSurvivant);
     if ($Survivor->isZombivor()) {
-      $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('z'), 'Portrait Zombivant - '.$name, 'portrait-zombivant');
+      $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('z'), 'Portrait Zombivant - '.$name, $this->strPortraitZombivant);
     }
     if ($Survivor->isUltimate()) {
       $extraClass = ' portrait-ultimate';
-      $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('u'), 'Portrait Ultimate - '.$name, 'portrait-survivant'.$extraClass);
-      $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('uz'), 'Portrait ZUltimate - '.$name, 'portrait-zombivant'.$extraClass);
+      $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('u'), 'Portrait Ultimate - '.$name, $this->strPortraitSurvivant.$extraClass);
+      $str .= $this->getStrImgPortrait($Survivor->getPortraitUrl('uz'), 'Portrait ZUltimate - '.$name, $this->strPortraitZombivant.$extraClass);
     }
     return $str;
   }
@@ -130,7 +145,7 @@ class SurvivorBean extends LocalBean
     $Survivor = $this->Survivor;
     $name = $Survivor->getName();
     $args = array(
-      $this->getStrImgPortrait($Survivor->getPortraitUrl(), 'Portrait Survivant - '.$name, 'portrait-survivant'),
+      $this->getStrImgPortrait($Survivor->getPortraitUrl(), 'Portrait Survivant - '.$name, $this->strPortraitSurvivant),
       $name,
       $this->getSkillsBySurvivorType('skills-survivant', $Survivor->getUlSkills()),
       ($addClass==''?'':' '.$addClass),

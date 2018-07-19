@@ -160,6 +160,7 @@ class WpPageLiveSpawnBean extends WpPageBean
     }
   }
   /**
+   * Retourne l'interface pour créer une pioche Invasion
    * @return string
    */
   private function nonLoggedInterface()

@@ -153,19 +153,20 @@ class WpPageLiveEquipmentBean extends WpPageBean
   }
   private function buildInterface($args, $deckKey, &$blocExpansions, &$showSelection)
   {
-  	if ($deckKey!='') {
-  		// On a un KeyAccess en Formulaire
-  		$args = array(self::CST_DECKKEY=>$deckKey);
-  		$Live = $this->createEquipmentLiveDeck($args);
-  		$blocExpansions = $this->getDeckButtons($Live);
-  		$showSelection = self::CST_HIDDEN;
-  		$_SESSION[self::CST_DECKKEY] = $deckKey;
-  	} else {
-  		// On n'a rien
-  		$blocExpansions = $this->nonLoggedInterface();
-  	}
+    if ($deckKey!='') {
+      // On a un KeyAccess en Formulaire
+      $args = array(self::CST_DECKKEY=>$deckKey);
+      $Live = $this->createEquipmentLiveDeck($args);
+      $blocExpansions = $this->getDeckButtons($Live);
+      $showSelection = self::CST_HIDDEN;
+      $_SESSION[self::CST_DECKKEY] = $deckKey;
+    } else {
+      // On n'a rien
+      $blocExpansions = $this->nonLoggedInterface();
+    }
   }
   /**
+   * Retourne l'interface pour créer une pioche Equipement
    * @return string
    */
   private function nonLoggedInterface()

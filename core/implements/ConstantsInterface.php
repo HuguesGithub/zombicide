@@ -2,6 +2,7 @@
 interface ConstantsInterface
 {
   const CST_BACKGROUND      = 'background';
+  const CST_CHANGEPROFILE   = 'changeProfile';
   const CST_COORDX          = 'coordX';
   const CST_COORDY          = 'coordY';
   const CST_CURPAGE         = 'cur_page';
@@ -12,6 +13,7 @@ interface ConstantsInterface
   const CST_DISABLED        = 'disabled';
   const CST_DISPLAYRANK     = 'displayRank';
   const CST_DURATIONID      = 'durationId';
+  const CST_EQUIPMENT       = 'equipment';
   const CST_EQUIPMENTCARDID = 'equipmentCardId';
   const CST_EXPANSIONID     = 'expansionId';
   const CST_FORMATDATE      = 'Y-m-d H:i:s';
@@ -49,6 +51,7 @@ interface ConstantsInterface
   const CST_SETTING         = 'setting';
   const CST_SKILL           = 'skill';
   const CST_SPAWNNUMBER     = 'spawnNumber';
+  const CST_SQUAREPOINTER   = 'square pointer';
   const CST_STATUS          = 'status';
   const CST_SUCCESS         = 'success';
   const CST_SURVIVOR        = 'survivor';
@@ -62,6 +65,7 @@ interface ConstantsInterface
   const CST_TRASH           = 'trash';
   const CST_ULTIMATE        = 'ultimate';
   const CST_UPLOADFILES     = 'upload_files';
+  const CST_WINDOWCLOSE     = 'window_close';
   const CST_YELLOW          = 'yellow';
   const CST_ZOMBIVOR        = 'zombivor';
 }

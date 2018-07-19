@@ -50,13 +50,13 @@ class SurvivorBean extends LocalBean
       // Url Article
       $urlWpPost,
       //
-      ($Survivor->isZombivor()?'changeProfile':''),
+      ($Survivor->isZombivor()?self::CST_CHANGEPROFILE:''),
       // Le Survivant a-t-il un profil Zombivant ?
-      '<i class="far fa-'.($Survivor->isZombivor()?'square pointer':'window-close').'"></i>',
+      '<i class="far fa-'.($Survivor->isZombivor()?self::CST_SQUAREPOINTER:self::CST_WINDOWCLOSE).'"></i>',
       //
-      ($Survivor->isUltimate()?'changeProfile':''),
+      ($Survivor->isUltimate()?self::CST_CHANGEPROFILE:''),
       // Le Survivant a-t-il un profil Ultimate ?
-      '<i class="far fa-'.($Survivor->isUltimate()?'square pointer':'window-close').'"></i>',
+      '<i class="far fa-'.($Survivor->isUltimate()?self::CST_SQUAREPOINTER:self::CST_WINDOWCLOSE).'"></i>',
       // Extension de provenance
       $Survivor->getExpansionName(),
       // Background du Survivant
@@ -86,13 +86,13 @@ class SurvivorBean extends LocalBean
   	  // Id du Survivant - 4
   	  $Survivor->getId(),
   	  // Si on a un profil de Zombivant, on donne la possibilité de l'afficher - 5
-      ($Survivor->isZombivor()?'changeProfile':''),
+      ($Survivor->isZombivor()?self::CST_CHANGEPROFILE:''),
   	  // Si on a un profil de Zombivant, on veut une case à cocher - 6
-      ($Survivor->isZombivor()?'square pointer':'window-close'),
+      ($Survivor->isZombivor()?self::CST_SQUAREPOINTER:self::CST_WINDOWCLOSE),
   	  // Si on a un profil d'Ultimate, on donne la possibilité de l'afficher - 7
-      ($Survivor->isUltimate()?'changeProfile':''),
+      ($Survivor->isUltimate()?self::CST_CHANGEPROFILE:''),
   	  // Si on a un profil d'Ultimate, on veut une case à cocher - 8
-      ($Survivor->isUltimate()?'square pointer':'window-close'),
+      ($Survivor->isUltimate()?self::CST_SQUAREPOINTER:self::CST_WINDOWCLOSE),
   	  // Extension à laquelle est rattaché le Survivant - 9
   	  $Survivor->getExpansionName(),
   	  // Liste des Compétences du Survivant - 10

@@ -10,6 +10,10 @@ if (!defined('ABSPATH')) {
  */
 class WpPageLiveEquipmentBean extends WpPageBean
 {
+  private $labelDraw = 'Piocher une carte (<span id="nbCardInDeck">%1$s</span>)';
+  private $labelDisplay = 'Afficher les cartes équipées (<span id="nbCardEquipped">%2$s</span>)';
+  private $labelShuffle = 'Remélanger la défausse (<span id="nbCardInDiscard">%3$s</span>)';
+
   /**
    * Class Constructor
    */
@@ -81,14 +85,14 @@ class WpPageLiveEquipmentBean extends WpPageBean
     $str .= '<div class="btn-group-vertical live-spawn-selection" role="group">';
     $deckKey = $Live->getDeckKey();
     $str .= $this->getButtonDiv('btnDisabled1', $deckKey, '', 'Actions disponibles :', '', 'btn-dark disabled');
-    $label = 'Piocher une carte (<span id="nbCardInDeck">'.$Live->getNbCardsInDeck('equipment').'</span>)';
+    $label = vsprintf($this->labelDraw, $Live->getNbCardsInDeck(self::CST_EQUIPMENT));
     $str .= $this->getButtonDiv('btnDrawEquipmentCard', $deckKey, 'drawEquipmentCard', $label);
     $str .= $this->getButtonDiv('btnEquipEquipmentActive', $deckKey, 'equipEquipmentActive', 'Equiper les cartes piochées');
-    $label = 'Afficher les cartes équipées (<span id="nbCardEquipped">'.$Live->getNbCardsEquipped().'</span>)';
+    $label = vsprintf($this->labelDisplay, $Live->getNbCardsEquipped());
     $str .= $this->getButtonDiv('btnShowEquipEquipment', $deckKey, 'showEquipmentEquip', $label);
     $str .= $this->getButtonDiv('btnDiscardEquipmentActive', $deckKey, 'discardEquipmentActive', 'Défausser les cartes piochées');
     $str .= $this->getButtonDiv('btnShowDiscardEquipment', $deckKey, 'showEquipmentDiscard', 'Afficher la défausse');
-    $label = 'Remélanger la défausse (<span id="nbCardInDiscard">'.$Live->getNbCardsInDiscard('equipment').'</span>)';
+    $label = vsprintf($this->labelShuffle, $Live->getNbCardsInDiscard(self::CST_EQUIPMENT));
     $str .= $this->getButtonDiv('btnShuffleDiscardEquipment', $deckKey, 'shuffleEquipmentDiscard', $label);
     $str .= $this->getButtonDiv('btnLeaveEquipmentDeck', $deckKey, 'leaveEquipmentDeck', 'Quitter cette pioche', 'reload');
     $str .= $this->getButtonDiv('btnDisabled2', $deckKey, 'Attention, action irréversible :', '', 'btn-dark disabled');
@@ -119,7 +123,7 @@ class WpPageLiveEquipmentBean extends WpPageBean
         unset($_SESSION[self::CST_DECKKEY]);
         $blocExpansions = $this->nonLoggedInterface();
       } else {
-        if ($Live->getNbCardsInDeck('equipment')+$Live->getNbCardsInDiscard('equipment')==0) {
+        if ($Live->getNbCardsInDeck(self::CST_EQUIPMENT)+$Live->getNbCardsInDiscard(self::CST_EQUIPMENT)==0) {
           if ($deckKey!='') {
             // On a un KeyAccess en Formulaire
             $args = array(self::CST_DECKKEY=>$deckKey);

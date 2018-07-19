@@ -10,6 +10,9 @@ if (!defined('ABSPATH')) {
  */
 class WpPageLiveSpawnBean extends WpPageBean
 {
+  private $labelDraw = 'Piocher une carte (<span id="nbCardInDeck">%1$s</span>)';
+  private $labelShuffle = 'Remélanger la défausse (<span id="nbCardInDiscard">%3$s</span>)';
+  
   /**
    * Class Constructor
    */
@@ -61,7 +64,7 @@ class WpPageLiveSpawnBean extends WpPageBean
       // On mélange ces cartes
       shuffle($arrNumbers);
       // On prépare l'insertion en base
-      $SpawnLiveDeck = new SpawnLiveDeck(array('liveId'=>$Live->getId(), 'status'=>'P'));
+      $SpawnLiveDeck = new SpawnLiveDeck(array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'P'));
       foreach ($arrNumbers as $k => $value) {
         $Spawns = $this->SpawnServices->getSpawnsWithFilters(__FILE__, __LINE__, array('spawnNumber'=>$value));
         $Spawn = array_shift($Spawns);
@@ -80,11 +83,11 @@ class WpPageLiveSpawnBean extends WpPageBean
     $str .= '<div class="btn-group-vertical live-spawn-selection" role="group">';
     $deckKey = $Live->getDeckKey();
     $str .= $this->getButtonDiv('btnDisabled1', $deckKey, '', 'Actions disponibles :', '', 'btn-dark disabled');
-    $label = 'Piocher une carte (<span id="nbCardInDeck">'.$Live->getNbCardsInDeck().'</span>)';
+    $label = vsprintf($this->labelDraw, $Live->getNbCardsInDeck());
     $str .= $this->getButtonDiv('btnDrawSpawnCard', $deckKey, 'drawSpawnCard', $label);
     $str .= $this->getButtonDiv('btnDiscardSpawnActive', $deckKey, 'discardSpawnActive', 'Défausser les cartes piochées');
     $str .= $this->getButtonDiv('btnShowDiscardSpawn', $deckKey, 'showSpawnDiscard', 'Afficher la défausse');
-    $label = 'Remélanger la défausse (<span id="nbCardInDiscard">'.$Live->getNbCardsInDiscard().'</span>)';
+    $label = vsprintf($this->labelShuffle, $Live->getNbCardsInDiscard());
     $str .= $this->getButtonDiv('btnShuffleDiscardSpawn', $deckKey, 'shuffleSpawnDiscard', $label);
     $str .= $this->getButtonDiv('btnLeaveSpawnDeck', $deckKey, 'leaveSpawnDeck', 'Quitter cette pioche');
     $str .= $this->getButtonDiv('btnDisabled2', $deckKey, '', 'Attention, action irréversible :', '', 'btn-dark disabled');
@@ -107,7 +110,7 @@ class WpPageLiveSpawnBean extends WpPageBean
     if (isset($_SESSION[self::CST_DECKKEY]) && $_SESSION[self::CST_DECKKEY]!='') {
       // On a un KeyAccess en Session
       $deckKey = $_SESSION[self::CST_DECKKEY];
-      $args = array('deckKey'=>$deckKey);
+      $args = array(self::CST_DECKKEY=>$deckKey);
       $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, $args);
       $Live = array_shift($Lives);
       if ($Live==null) {
@@ -117,10 +120,10 @@ class WpPageLiveSpawnBean extends WpPageBean
         if ($Live->getNbCardsInDeck()+$Live->getNbCardsInDiscard()==0) {
           if ($deckKey!='') {
             // On a un KeyAccess en Formulaire
-            $args = array('deckKey'=>$deckKey);
+            $args = array(self::CST_DECKKEY=>$deckKey);
             $Live = $this->createSpawnLiveDeck($args);
             $blocExpansions = $this->getDeckButtons($Live);
-            $showSelection = 'hidden';
+            $showSelection = self::CST_HIDDEN;
             $_SESSION[self::CST_DECKKEY] = $deckKey;
           } else {
             // On n'a rien
@@ -129,25 +132,25 @@ class WpPageLiveSpawnBean extends WpPageBean
         } else {
           // On a une Session et des cartes.
           $blocExpansions = $this->getDeckButtons($Live);
-          $showSelection = 'hidden';
+          $showSelection = self::CST_HIDDEN;
         }
       }
     } else {
       // On n'a pas de Session, en a-t-on un en POST ?
-      $deckKey = $this->initVar('keyAccess');
+      $deckKey = $this->initVar(self::CST_KEYACCESS);
       if ($deckKey!='') {
         // On a un KeyAccess en Formulaire
-        $args = array('deckKey'=>$deckKey);
+        $args = array(self::CST_DECKKEY=>$deckKey);
         $Live = $this->createSpawnLiveDeck($args);
         $blocExpansions = $this->getDeckButtons($Live);
-        $showSelection = 'hidden';
+        $showSelection = self::CST_HIDDEN;
         $_SESSION[self::CST_DECKKEY] = $deckKey;
       } else {
         // On n'a rien
         $blocExpansions = $this->nonLoggedInterface();
       }
     }
-    if ($showSelection=='hidden') {
+    if ($showSelection==self::CST_HIDDEN) {
       // On a des cartes, par défaut, on affiche les cartes "actives".
       $arrFilters = array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'A');
       $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);

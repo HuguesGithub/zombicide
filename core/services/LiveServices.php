@@ -19,7 +19,10 @@ class LiveServices extends LocalServices
    * Class Constructor
    */
   public function __construct()
-  { $this->Dao = new LiveDaoImpl(); }
+  {
+    $this->Dao = new LiveDaoImpl();
+    parent::__construct();
+  }
 
   private function buildFilters($arrFilters)
   {

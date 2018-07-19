@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class RuleBean extends MainPageBean
+class RuleBean extends LocalBean
 {
   /**
    * Class Constructor
@@ -17,8 +17,8 @@ class RuleBean extends MainPageBean
   public function __construct($Rule='')
   {
     parent::__construct();
-    $this->MissionRuleServices = FactoryServices::getMissionRuleServices();
     $this->Rule = ($Rule=='' ? new Rule() : $Rule);
+    $this->MissionRuleServices = new MissionRuleServices();
   }
   /**
    * @param string $tBodyButtons Template des Boutons de fin de ligne

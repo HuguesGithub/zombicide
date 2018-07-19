@@ -19,7 +19,10 @@ class MarketServices extends LocalServices
    * Class Constructor
    */
   public function __construct()
-  { $this->Dao = new MarketDaoImpl(); }
+  {
+    $this->Dao = new MarketDaoImpl();
+    parent::__construct();
+  }
 
   /**
    * @param string $file

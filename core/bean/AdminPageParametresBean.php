@@ -4,33 +4,35 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * AdminParametrePageBean
+ * AdminPageParametresBean
  * @version 1.0.00
  * @since 1.0.00
  * @author Hugues
  */
-class AdminParametrePageBean extends AdminPageBean
+class AdminPageParametresBean extends AdminPageBean
 {
-
+  /**
+   * Class Constructor
+   */
   public function __construct()
   {
     parent::__construct(self::CST_PARAMETRE);
-    $this->DurationServices = FactoryServices::getDurationServices();
-    $this->ExpansionServices = FactoryServices::getExpansionServices();
-    $this->KeywordServices = FactoryServices::getKeywordServices();
-    $this->LevelServices = FactoryServices::getLevelServices();
-    $this->MissionServices = FactoryServices::getMissionServices();
+    $this->title = 'Paramètres';
+    $this->DurationServices         = FactoryServices::getDurationServices();
+    $this->ExpansionServices        = FactoryServices::getExpansionServices();
+    $this->KeywordServices          = FactoryServices::getKeywordServices();
+    $this->LevelServices            = FactoryServices::getLevelServices();
+    $this->MissionServices          = FactoryServices::getMissionServices();
     $this->MissionExpansionServices = FactoryServices::getMissionExpansionServices();
     $this->MissionObjectiveServices = FactoryServices::getMissionObjectiveServices();
-    $this->MissionRuleServices = FactoryServices::getMissionRuleServices();
-    $this->ObjectiveServices = FactoryServices::getObjectiveServices();
-    $this->OrigineServices = FactoryServices::getOrigineServices();
-    $this->PlayerServices = FactoryServices::getPlayerServices();
-    $this->RuleServices = FactoryServices::getRuleServices();
-    $this->SpawnTypeServices = FactoryServices::getSpawnTypeServices();
-    $this->TokenServices = FactoryServices::getTokenServices();
-    $this->WeaponProfileServices = FactoryServices::getWeaponProfileServices();
-    $this->title = 'Paramètres';
+    $this->MissionRuleServices      = FactoryServices::getMissionRuleServices();
+    $this->ObjectiveServices        = FactoryServices::getObjectiveServices();
+    $this->OrigineServices          = FactoryServices::getOrigineServices();
+    $this->PlayerServices           = FactoryServices::getPlayerServices();
+    $this->RuleServices             = FactoryServices::getRuleServices();
+    $this->SpawnTypeServices        = FactoryServices::getSpawnTypeServices();
+    $this->TokenServices            = FactoryServices::getTokenServices();
+    $this->WeaponProfileServices    = FactoryServices::getWeaponProfileServices();
   }
   /**
    * @param array $urlParams
@@ -38,7 +40,7 @@ class AdminParametrePageBean extends AdminPageBean
    */
   public static function getStaticContentPage($urlParams)
   {
-    $Bean = new AdminParametrePageBean();
+    $Bean = new AdminPageParametresBean();
     $tBodyButtons  = '<td><a class="btn btn-xs btn-success editParam" href="%2$s"><i class="fas fa-pencil-alt"></i></a> ';
     $tBodyButtons .= '<a class="btn btn-xs btn-danger rmvParam" href="%3$s"><i class="fas fa-trash-alt"></i></a></td><td>%1$s</td>';
     $orderby = $Bean->initVar(self::CST_ORDERBY, 'id');

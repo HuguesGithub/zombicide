@@ -14,15 +14,21 @@ class LevelDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('Level');
-  }
+  { parent::__construct('Level'); }
   /**
    * @param array $rows
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('Level', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = Level::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line
@@ -30,9 +36,5 @@ class LevelDaoImpl extends LocalDaoImpl
    * @return array|Level
    */
   public function select($file, $line, $arrParams)
-  {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new Level() : array_shift($Objs));
-  }
-  
+  { return parent::localSelect($file, $line, $arrParams, new Level()); }
 }

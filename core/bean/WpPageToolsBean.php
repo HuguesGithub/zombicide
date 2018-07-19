@@ -3,20 +3,25 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * Classe ToolsPageBean
+ * Classe WpPageToolsBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class ToolsPageBean extends PagePageBean
+class WpPageToolsBean extends WpPageBean
 {
   /**
    * Class Constructor
    */
   public function __construct($WpPage='')
   {
-    $services = array('Equipment', 'EquipmentExpansion', 'Expansion', 'Spawn', 'SpawnLiveDeck', 'Survivor');
-    parent::__construct($WpPage, $services);
+    parent::__construct($WpPage);
+    $this->EquipmentServices          = new EquipmentServices();
+    $this->EquipmentExpansionServices = new EquipmentExpansionServices();
+    $this->ExpansionServices          = new ExpansionServices();
+    $this->SpawnServices              = new SpawnServices();
+    $this->SpawnLiveDeckServices      = new SpawnLiveDeckServices();
+    $this->SurvivorServices           = new SurvivorServices();
   }
   /**
    * @param WpPost $WpPage
@@ -24,7 +29,7 @@ class ToolsPageBean extends PagePageBean
    */
   public function getStaticPisteContent($WpPage)
   {
-    $Bean = new ToolsPageBean($WpPage);
+    $Bean = new WpPageToolsBean($WpPage);
     return $Bean->getPisteContent();
   }
   /**
@@ -79,7 +84,7 @@ class ToolsPageBean extends PagePageBean
    */
   public function getStaticSurvivorsContent($WpPage)
   {
-    $Bean = new ToolsPageBean($WpPage);
+    $Bean = new WpPageToolsBean($WpPage);
     return $Bean->getSurvivorsContent();
   }
   /**

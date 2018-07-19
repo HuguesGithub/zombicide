@@ -3,12 +3,12 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * Classe OnlinePageBean
+ * Classe WpPageOnlineBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class OnlinePageBean extends PagePageBean
+class WpPageOnlineBean extends WpPageBean
 {
   /**
    * Class Constructor
@@ -16,8 +16,9 @@ class OnlinePageBean extends PagePageBean
    */
   public function __construct($WpPage='')
   {
-    $services = array('Live', 'Mission');
-    parent::__construct($WpPage, $services);
+    parent::__construct($WpPage);
+    $this->LiveServices    = new LiveServices();
+    $this->MissionServices = new MissionServices();
   }
   /**
    * @param WpPost $WpPage
@@ -25,7 +26,7 @@ class OnlinePageBean extends PagePageBean
    */
   public function getStaticPageContent($WpPage)
   {
-    $Bean = new OnlinePageBean($WpPage);
+    $Bean = new WpPageOnlineBean($WpPage);
     return $Bean->getContentPage();
   }
   /**

@@ -19,7 +19,10 @@ class SurvivorServices extends LocalServices
    * Class Constructor
    */
   public function __construct()
-  { $this->Dao = new SurvivorDaoImpl(); }
+  {
+    $this->Dao = new SurvivorDaoImpl();
+    parent::__construct();
+  }
   /**
    * Construit le tableau des filtres pour la requête dédiée.
    * @param array $arrFilters

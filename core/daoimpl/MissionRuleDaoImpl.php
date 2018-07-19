@@ -14,15 +14,21 @@ class MissionRuleDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('MissionRule');
-  }
+  { parent::__construct('MissionRule'); }
   /**
    * @param array $rows
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('MissionRule', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = MissionRule::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line
@@ -30,8 +36,5 @@ class MissionRuleDaoImpl extends LocalDaoImpl
    * @return array|MissionRule
    */
   public function select($file, $line, $arrParams)
-  {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new MissionRule() : array_shift($Objs));
-  }
+  { return parent::localSelect($file, $line, $arrParams, new MissionRule()); }
 }

@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class WpPageSpawnsBean extends PagePageBean
+class WpPageSpawnsBean extends WpPageBean
 {
   /**
    * Class Constructor
@@ -17,8 +17,8 @@ class WpPageSpawnsBean extends PagePageBean
   public function __construct($WpPage='')
   {
     parent::__construct($WpPage);
-    $this->ExpansionServices = FactoryServices::getExpansionServices();
-    $this->SpawnServices = FactoryServices::getSpawnServices();
+    $this->ExpansionServices = new ExpansionServices();
+    $this->SpawnServices     = new SpawnServices();
   }
   /**
    * On arrive rarement en mode direct pour afficher la Page. On passe par une méthode static.

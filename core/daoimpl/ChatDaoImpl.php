@@ -14,9 +14,7 @@ class ChatDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('Chat');
-  }
+  { parent::__construct('Chat'); }
   /**
    * @param array $rows
    * @return array
@@ -38,8 +36,5 @@ class ChatDaoImpl extends LocalDaoImpl
    * @return array|Chat
    */
   public function select($file, $line, $arrParams)
-  {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new Chat() : array_shift($Objs));
-  }
+  { return parent::localSelect($file, $line, $arrParams, new Chat()); }
 }

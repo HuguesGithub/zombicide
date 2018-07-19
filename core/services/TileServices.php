@@ -19,7 +19,10 @@ class TileServices extends LocalServices
    * Class Constructor
    */
   public function __construct()
-  { $this->Dao = new TileDaoImpl(); }
+  {
+    $this->Dao = new TileDaoImpl();
+    parent::__construct();
+  }
 
   private function buildFilters($arrFilters)
   {

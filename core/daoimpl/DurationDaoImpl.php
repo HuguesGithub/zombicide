@@ -14,9 +14,7 @@ class DurationDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('Duration');
-  }
+  { parent::__construct('Duration'); }
   /**
    * @param array $rows
    * @return array
@@ -38,9 +36,5 @@ class DurationDaoImpl extends LocalDaoImpl
    * @return array|Duration
    */
   public function select($file, $line, $arrParams)
-  {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new Duration() : array_shift($Objs));
-  }
-  
+  { return parent::localSelect($file, $line, $arrParams, new Duration()); }
 }

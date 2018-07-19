@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class MissionBean extends MainPageBean
+class MissionBean extends LocalBean
 {
   public $classe = 'custom-select custom-select-sm filters';
   /**
@@ -19,12 +19,13 @@ class MissionBean extends MainPageBean
 
   public function __construct($Mission='')
   {
-    $services = array('Expansion', 'Mission', 'Objective', 'Rule', 'Tile');
-    parent::__construct($services);
-    if ($Mission=='') {
-      $Mission = new Mission();
-    }
-    $this->Mission = $Mission;
+    parent::__construct();
+    $this->Mission = ($Mission=='' ? new Mission() : $Mission);
+    $this->ExpansionServices = new ExpansionServices();
+    $this->MissionServices   = new MissionServices();
+    $this->ObjectiveServices = new ObjectiveServices();
+    $this->RuleServices      = new RuleServices();
+    $this->TileServices      = new TileServices();
     $this->tplRow = 'web/pages/admin/mission/row.php';
     $this->tplEdit = 'web/pages/admin/mission/edit.php';
   }

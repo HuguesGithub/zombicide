@@ -14,15 +14,21 @@ class EquipmentWeaponProfileDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('EquipementWeaponProfile');
-  }
+  { parent::__construct('EquipementWeaponProfile'); }
   /**
    * @param array $rows
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('EquipmentWeaponProfile', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = EquipmentWeaponProfile::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line
@@ -30,9 +36,5 @@ class EquipmentWeaponProfileDaoImpl extends LocalDaoImpl
    * @return array|EquipmentWeaponProfile
    */
   public function select($file, $line, $arrParams)
-  {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new EquipmentWeaponProfile() : array_shift($Objs));
-  }
-  
+  { return parent::localSelect($file, $line, $arrParams, new EquipmentWeaponProfile()); }
 }

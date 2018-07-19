@@ -14,15 +14,21 @@ class MissionTokenDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('MissionToken');
-  }
+  { parent::__construct('MissionToken'); }
   /**
    * @param array $rows
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('MissionToken', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = MissionToken::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line
@@ -30,8 +36,5 @@ class MissionTokenDaoImpl extends LocalDaoImpl
    * @return array|MissionToken
    */
   public function select($file, $line, $arrParams)
-  {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new MissionToken() : array_shift($Objs));
-  }
+  { return parent::localSelect($file, $line, $arrParams, new MissionToken()); }
 }

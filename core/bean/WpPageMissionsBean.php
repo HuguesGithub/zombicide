@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class WpPageMissionsBean extends PagePageBean
+class WpPageMissionsBean extends WpPageBean
 {
   /**
    * Class Constructor
@@ -17,12 +17,12 @@ class WpPageMissionsBean extends PagePageBean
   public function __construct($WpPage='')
   {
     parent::__construct($WpPage);
-    $this->DurationServices  = FactoryServices::getDurationServices();
-    $this->ExpansionServices = FactoryServices::getExpansionServices();
-    $this->LevelServices     = FactoryServices::getLevelServices();
-    $this->MissionServices   = FactoryServices::getMissionServices();
-    $this->OrigineServices   = FactoryServices::getOrigineServices();
-    $this->PlayerServices    = FactoryServices::getPlayerServices();
+    $this->DurationServices  = new DurationServices();
+    $this->ExpansionServices = new ExpansionServices();
+    $this->LevelServices     = new LevelServices();
+    $this->MissionServices   = new MissionServices();
+    $this->OrigineServices   = new OrigineServices();
+    $this->PlayerServices    = new PlayerServices();
   }
   /**
    * On arrive rarement en mode direct pour afficher la Page. On passe par une méthode static.

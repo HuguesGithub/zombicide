@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class WpPageLiveSpawnBean extends PagePageBean
+class WpPageLiveSpawnBean extends WpPageBean
 {
   /**
    * Class Constructor
@@ -16,11 +16,10 @@ class WpPageLiveSpawnBean extends PagePageBean
   public function __construct($WpPage='')
   {
     parent::__construct($WpPage);
-//    $services = array('Expansion', 'LiveDeck', 'Spawn', 'SpawnLiveDeck');
-    $this->ExpansionServices = FactoryServices::getExpansionServices();
-    $this->LiveServices = FactoryServices::getLiveServices();
-    $this->SpawnServices = FactoryServices::getSpawnServices();
-    $this->SpawnLiveDeckServices = FactoryServices::getSpawnLiveDeckServices();
+    $this->ExpansionServices     = new ExpansionServices();
+    $this->LiveServices          = new  LiveServices();
+    $this->SpawnServices         = new SpawnServices();
+    $this->SpawnLiveDeckServices = new SpawnLiveDeckServices();
   }
   /**
    * @param WpPage $WpPage
@@ -152,7 +151,7 @@ class WpPageLiveSpawnBean extends PagePageBean
       // On a des cartes, par défaut, on affiche les cartes "actives".
       $arrFilters = array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'A');
       $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
-      $strSpawns = $this->getSpawnCardActives($SpawnLiveDecks);
+      $strSpawns = self::getStaticSpawnCardActives($SpawnLiveDecks);
     }
     $args = array(
       $blocExpansions,
@@ -191,7 +190,7 @@ class WpPageLiveSpawnBean extends PagePageBean
    * @param array $SpawnLiveDecks
    * @return string
    */
-  public function getSpawnCardActives($SpawnLiveDecks)
+  public static function getStaticSpawnCardActives($SpawnLiveDecks)
   {
     $strSpawns = '';
     if (!empty($SpawnLiveDecks)) {

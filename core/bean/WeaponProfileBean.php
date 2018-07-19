@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class WeaponProfileBean extends MainPageBean
+class WeaponProfileBean extends LocalBean
 {
   /**
    * Class Constructor
@@ -17,8 +17,8 @@ class WeaponProfileBean extends MainPageBean
   public function __construct($WeaponProfile='')
   {
     parent::__construct();
-    $this->EquipmentWeaponProfileServices = FactoryServices::getEquipmentWeaponProfileServices();
     $this->WeaponProfile = ($WeaponProfile=='' ? new WeaponProfile() : $WeaponProfile);
+    $this->EquipmentWeaponProfileServices = new EquipmentWeaponProfileServices();
   }
   /**
    * @param string $tBodyButtons Template des Boutons de fin de ligne

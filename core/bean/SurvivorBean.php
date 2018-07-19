@@ -8,17 +8,15 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class SurvivorBean extends MainPageBean
+class SurvivorBean extends LocalBean
 {
 
   public function __construct($Survivor='')
   {
-    $services = array('Survivor', 'Expansion');
-    parent::__construct($services);
-    if ($Survivor=='') {
-      $Survivor = new Survivor();
-    }
-    $this->Survivor = $Survivor;
+    parent::__construct();
+    $this->Survivor = ($Survivor=='' ? new Survivor() : $Survivor);
+    $this->ExpansionServices = new ExpansionServices();
+    $this->SurvivorServices  = new SurvivorServices();
   }
   
   /**

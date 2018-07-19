@@ -14,12 +14,12 @@ class EquipmentDeckActions extends LocalActions
    */
   public function __construct($post)
   {
-    $this->LiveServices = FactoryServices::getLiveServices();
+    $this->LiveServices = new LiveServices();
     $LiveDecks = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, array(self::CST_DECKKEY=>$post[self::CST_KEYACCESS]));
     $this->Live = array_shift($LiveDecks);
-    $this->EquipmentServices = FactoryServices::getEquipmentServices();
-    $this->EquipmentExpansionServices = FactoryServices::getEquipmentExpansionServices();
-    $this->EquipmentLiveDeckServices = FactoryServices::getEquipmentLiveDeckServices();
+    $this->EquipmentServices = new EquipmentServices();
+    $this->EquipmentExpansionServices = new EquipmentExpansionServices();
+    $this->EquipmentLiveDeckServices = new EquipmentLiveDeckServices();
   }
   /**
    * Point d'entrée des méthodes statiques.

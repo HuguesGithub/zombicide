@@ -19,7 +19,10 @@ class EquipmentServices extends LocalServices
    * Class Constructor
    */
   public function __construct()
-  {  $this->Dao = new EquipmentDaoImpl(); }
+  {
+    $this->Dao = new EquipmentDaoImpl();
+    parent::__construct();
+  }
 
   /**
    * @param string $file

@@ -14,15 +14,21 @@ class SpawnTypeDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('SpawnType');
-  }
+  { parent::__construct('SpawnType'); }
   /**
    * @param array $rows
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('SpawnType', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = SpawnType::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line
@@ -30,9 +36,5 @@ class SpawnTypeDaoImpl extends LocalDaoImpl
    * @return array|SpawnType
    */
   public function select($file, $line, $arrParams)
-  {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new SpawnType() : array_shift($Objs));
-  }
-  
+  { return parent::localSelect($file, $line, $arrParams, new SpawnType()); }
 }

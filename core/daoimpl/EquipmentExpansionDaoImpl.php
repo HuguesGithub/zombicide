@@ -14,9 +14,7 @@ class EquipmentExpansionDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('EquipmentExpansion');
-  }
+  { parent::__construct('EquipmentExpansion'); }
   /**
    * @param array $rows
    * @return array
@@ -38,8 +36,5 @@ class EquipmentExpansionDaoImpl extends LocalDaoImpl
    * @return array|EquipmentExpansion
    */
   public function select($file, $line, $arrParams)
-  {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new EquipmentExpansion() : array_shift($Objs));
-  }
+  { return parent::localSelect($file, $line, $arrParams, new EquipmentExpansion()); }
 }

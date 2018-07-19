@@ -14,15 +14,21 @@ class SpawnLiveDeckDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('SpawnLive');
-  }
+  { parent::__construct('SpawnLive'); }
   /**
    * @param array $rows
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('SpawnLiveDeck', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = SpawnLiveDeck::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line
@@ -30,9 +36,5 @@ class SpawnLiveDeckDaoImpl extends LocalDaoImpl
    * @return array|SpawnLiveDeck
    */
   public function select($file, $line, $arrParams)
-  {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new SpawnLiveDeck() : array_shift($Objs));
-  }
-  
+  { return parent::localSelect($file, $line, $arrParams, new SpawnLiveDeck()); }
 }

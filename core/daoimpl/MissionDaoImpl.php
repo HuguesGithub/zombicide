@@ -14,15 +14,21 @@ class MissionDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('Mission');
-  }
+  { parent::__construct('Mission'); }
   /**
    * @param array $rows
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('Mission', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = Mission::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line
@@ -30,10 +36,7 @@ class MissionDaoImpl extends LocalDaoImpl
    * @return array|Mission
    */
   public function select($file, $line, $arrParams)
-  {
-    $Missions = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Missions) ? new Mission() : array_shift($Missions));
-  }
+  { return parent::localSelect($file, $line, $arrParams, new Mission()); }
   /**
    * @param string $file
    * @param int $line
@@ -48,17 +51,17 @@ class MissionDaoImpl extends LocalDaoImpl
       $requete .= 'INNER JOIN wp_11_zombicide_mission_expansion me ON m.id=me.missionId ';
     }
     $requete .= $this->whereFilters;
-    if (isset($filters['levelId'])) {
-      $requete .= 'AND levelId IN ('.implode(',', $filters['levelId']).') ';
+    if (isset($filters[self::CST_LEVELID])) {
+      $requete .= 'AND levelId IN ('.implode(',', $filters[self::CST_LEVELID]).') ';
     }
-    if (isset($filters['durationId'])) {
-      $requete .= 'AND durationId IN ('.implode(',', $filters['durationId']).') ';
+    if (isset($filters[self::CST_DURATIONID])) {
+      $requete .= 'AND durationId IN ('.implode(',', $filters[self::CST_DURATIONID]).') ';
     }
-    if (isset($filters['playerId'])) {
-      $requete .= 'AND playerId IN ('.implode(',', $filters['playerId']).') ';
+    if (isset($filters[self::CST_PLAYERID])) {
+      $requete .= 'AND playerId IN ('.implode(',', $filters[self::CST_PLAYERID]).') ';
     }
-    if (isset($filters['origineId'])) {
-      $requete .= 'AND origineId IN ('.implode(',', $filters['origineId']).') ';
+    if (isset($filters[self::CST_ORIGINEID])) {
+      $requete .= 'AND origineId IN ('.implode(',', $filters[self::CST_ORIGINEID]).') ';
     }
     if (isset($filters[self::CST_EXPANSIONID])) {
       $requete .= 'AND expansionId IN ('.implode(',', $filters[self::CST_EXPANSIONID]).') ';

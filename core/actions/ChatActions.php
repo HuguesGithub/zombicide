@@ -145,7 +145,7 @@ class ChatActions extends LocalActions
   }
   private function joinNewLive($deckKey='')
   {
-    $LiveServices = FactoryServices::getLiveServices();
+    $LiveServices = new LiveServices();
     $Lives = $LiveServices->getLivesWithFilters(__FILE__, __LINE__, array(self::CST_DECKKEY=>$deckKey));
     if (empty($Lives)) {
       return $this->getChatContent();

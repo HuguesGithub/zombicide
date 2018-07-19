@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class WpPostMissionBean extends PostPageBean
+class WpPostMissionBean extends WpPostBean
 {
   /**
    * Constructeur
@@ -16,7 +16,7 @@ class WpPostMissionBean extends PostPageBean
   public function __construct($WpPost='')
   {
     parent::__construct();
-    $this->MissionServices = FactoryServices::getMissionServices();
+    $this->MissionServices = new MissionServices();
     $this->WpPost = $WpPost;
   }
   private function getMissionContentObjectives($Mission, $strModel)

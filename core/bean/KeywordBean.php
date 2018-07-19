@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class KeywordBean extends MainPageBean
+class KeywordBean extends LocalBean
 {
   /**
    * Class Constructor
@@ -17,8 +17,8 @@ class KeywordBean extends MainPageBean
   public function __construct($Keyword='')
   {
     parent::__construct();
-    $this->EquipmentKeywordServices = FactoryServices::getEquipmentKeywordServices();
     $this->Keyword = ($Keyword=='' ? new Keyword() : $Keyword);
+    $this->EquipmentKeywordServices = new EquipmentKeywordServices();
   }
   /**
    * @param string $tBodyButtons Template des Boutons de fin de ligne

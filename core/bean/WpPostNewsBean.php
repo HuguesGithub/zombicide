@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 /**
  * WpPostNewsBean
  */
-class WpPostNewsBean extends MainPageBean
+class WpPostNewsBean extends WpPostBean
 {
   /**
    * Constructeur

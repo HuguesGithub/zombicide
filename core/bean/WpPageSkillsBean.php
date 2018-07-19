@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class WpPageSkillsBean extends PagePageBean
+class WpPageSkillsBean extends WpPageBean
 {
   /**
    * Class Constructor
@@ -17,7 +17,7 @@ class WpPageSkillsBean extends PagePageBean
   public function __construct($WpPage='')
   {
     parent::__construct($WpPage);
-    $this->SkillServices = FactoryServices::getSkillServices();
+    $this->SkillServices = new SkillServices();
   }
   /**
    * On arrive rarement en mode direct pour afficher la Page. On passe par une méthode static.

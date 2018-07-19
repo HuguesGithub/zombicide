@@ -34,110 +34,8 @@ class MainPageBean implements iConstants
   /**
    * @param array $services
    */
-  public function __construct($services=array())
+  public function __construct()
   {
-    if (!empty($services)) {
-      foreach ($services as $service) {
-        switch ($service) {
-          case 'Duration'      :
-            $this->DurationServices = FactoryServices::getDurationServices();
-          break;
-          case 'Equipment'        :
-            $this->EquipmentServices = FactoryServices::getEquipmentServices();
-          break;
-          case 'EquipmentExpansion'        :
-            $this->EquipmentExpansionServices = FactoryServices::getEquipmentExpansionServices();
-          break;
-          case 'EquipmentWeaponProfile'  :
-            $this->EquipmentWeaponProfileServices = FactoryServices::getEquipmentWeaponProfileServices();
-          break;
-          case 'Expansion'         :
-            $this->ExpansionServices = FactoryServices::getExpansionServices();
-          break;
-          case 'Invasion'         :
-            $this->InvasionServices = FactoryServices::getInvasionServices();
-          break;
-          case 'Level'        :
-            $this->LevelServices = FactoryServices::getLevelServices();
-          break;
-          case 'Live'           :
-            $this->LiveServices = FactoryServices::getLiveServices();
-          break;
-          case 'LiveDeck'         :
-            $this->LiveDeckServices = FactoryServices::getLiveDeckServices();
-          break;
-          case 'Market'        :
-            $this->MarketServices = FactoryServices::getMarketServices();
-          break;
-          case 'Mission'          :
-            $this->MissionServices = FactoryServices::getMissionServices();
-          break;
-          case 'MissionExpansion'      :
-            $this->MissionExpansionServices = FactoryServices::getMissionExpansionServices();
-          break;
-          case 'MissionLive'        :
-            $this->MissionLiveServices = FactoryServices::getMissionLiveServices();
-          break;
-          case 'MissionObjective'    :
-            $this->MissionObjectiveServices = FactoryServices::getMissionObjectiveServices();
-          break;
-          case 'MissionRule'        :
-            $this->MissionRuleServices = FactoryServices::getMissionRuleServices();
-          break;
-          case 'MissionTile'        :
-            $this->MissionTileServices = FactoryServices::getMissionTileServices();
-          break;
-          case 'MissionToken'        :
-            $this->MissionTokenServices = FactoryServices::getMissionTokenServices();
-          break;
-          case 'MissionZone'        :
-            $this->MissionZoneServices = FactoryServices::getMissionZoneServices();
-          break;
-          case 'Objective'          :
-            $this->ObjectiveServices = FactoryServices::getObjectiveServices();
-          break;
-          case 'Origine'      :
-            $this->OrigineServices = FactoryServices::getOrigineServices();
-          break;
-          case 'Player'      :
-            $this->PlayerServices = FactoryServices::getPlayerServices();
-          break;
-          case 'Rule'            :
-            $this->RuleServices = FactoryServices::getRuleServices();
-          break;
-          case 'Skill'          :
-            $this->SkillServices = FactoryServices::getSkillServices();
-          break;
-          case 'Spawn'         :
-            $this->SpawnServices = FactoryServices::getSpawnServices();
-          break;
-          case 'SpawnLiveDeck'         :
-            $this->SpawnLiveDeckServices = FactoryServices::getSpawnLiveDeckServices();
-          break;
-          case 'Survivor'          :
-            $this->SurvivorServices = FactoryServices::getSurvivorServices();
-          break;
-          case 'SurvivorSkill'          :
-            $this->SurvivorSkillServices = FactoryServices::getSurvivorSkillServices();
-          break;
-          case 'Tile'            :
-            $this->TileServices = FactoryServices::getTileServices();
-          break;
-          case 'Token'          :
-            $this->TokenServices = FactoryServices::getTokenServices();
-          break;
-          case 'WeaponProfile'      :
-            $this->WeaponProfileServices = FactoryServices::getWeaponProfileServices();
-          break;
-          case 'Zone'            :
-            $this->ZoneServices = FactoryServices::getZoneServices();
-          break;
-          default              :
-            echo "[[Ajouter $service dans MainPageBean.php]]<br>";
-          break;
-        }
-      }
-    }
     $this->WpPostServices = GlobalFactoryServices::getWpPostServices();
   }
   /**
@@ -187,7 +85,7 @@ class MainPageBean implements iConstants
   public static function getPageBean()
   {
     if (is_front_page()) {
-      $returned = new HomePageBean();
+      $returned = new WpPageHomeBean();
     } else {
       $post = get_post();
       if (empty($post)) {
@@ -202,11 +100,11 @@ class MainPageBean implements iConstants
         $post = array_shift($my_posts);
       }
       if ($post->post_type == 'page') {
-        $returned = new PagePageBean($post);
+        $returned = new WpPageBean($post);
       } elseif ($post->post_type == 'post') {
-        $returned = new PostPageBean($post);
+        $returned = new WpPostBean($post);
       } else {
-        $returned = new Error404PageBean();
+        $returned = new WpPageError404Bean();
       }
     }
     return $returned;

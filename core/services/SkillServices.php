@@ -19,7 +19,10 @@ class SkillServices extends LocalServices
    * Class Constructor
    */
   public function __construct()
-  { $this->Dao = new SkillDaoImpl(); }
+  {
+    $this->Dao = new SkillDaoImpl();
+    parent::__construct();
+  }
 
   private function buildFilters($arrF)
   {

@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class WpPostSkillBean extends PostPageBean
+class WpPostSkillBean extends WpPostBean
 {
   /**
    * Class Constructor
@@ -16,9 +16,9 @@ class WpPostSkillBean extends PostPageBean
   public function __construct($skillId)
   {
     parent::__construct();
-    $this->SkillServices = FactoryServices::getSkillServices();
-    $this->SurvivorServices = FactoryServices::getSurvivorServices();
-    $this->SurvivorSkillServices = FactoryServices::getSurvivorSkillServices();
+    $this->SkillServices         = new SkillServices();
+    $this->SurvivorServices      = new SurvivorServices();
+    $this->SurvivorSkillServices = new SurvivorSkillServices();
     $this->Skill = $this->SkillServices->select(__FILE__, __LINE__, $skillId);
   }
   /**

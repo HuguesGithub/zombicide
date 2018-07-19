@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class SkillBean extends MainPageBean
+class SkillBean extends LocalBean
 {
   /**
    * Class Constructor
@@ -17,9 +17,9 @@ class SkillBean extends MainPageBean
   public function __construct($Skill='')
   {
     parent::__construct();
-    $this->SkillServices = FactoryServices::getSkillServices();
-    $this->SurvivorSkillServices = FactoryServices::getSurvivorSkillServices();
     $this->Skill = ($Skill=='' ? new Skill() : $Skill);
+    $this->SkillServices         = new SkillServices();
+    $this->SurvivorSkillServices = new SurvivorSkillServices();
   }
   /**
    * @return string

@@ -14,9 +14,7 @@ class EquipmentKeywordDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('EquipmentKeyword');
-  }
+  { parent::__construct('EquipmentKeyword'); }
   /**
    * @param array $rows
    * @return array
@@ -38,8 +36,5 @@ class EquipmentKeywordDaoImpl extends LocalDaoImpl
    * @return array|EquipmentKeyword
    */
   public function select($file, $line, $arrParams)
-  {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new EquipmentKeyword() : array_shift($Objs));
-  }
+  { return parent::localSelect($file, $line, $arrParams, new EquipmentKeyword()); }
 }

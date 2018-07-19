@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class WpPageEquipmentsBean extends PagePageBean
+class WpPageEquipmentsBean extends WpPageBean
 {
   /**
    * Class Constructor
@@ -17,9 +17,9 @@ class WpPageEquipmentsBean extends PagePageBean
   public function __construct($WpPage='')
   {
     parent::__construct($WpPage);
-    $this->EquipmentServices = FactoryServices::getEquipmentServices();
-    $this->EquipmentExpansionServices = FactoryServices::getEquipmentExpansionServices();
-    $this->ExpansionServices = FactoryServices::getExpansionServices();
+    $this->EquipmentServices          = new EquipmentServices();
+    $this->EquipmentExpansionServices = new EquipmentExpansionServices();
+    $this->ExpansionServices          = new ExpansionServices();
   }
   /**
    * On arrive rarement en mode direct pour afficher la Page. On passe par une méthode static.

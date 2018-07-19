@@ -27,7 +27,7 @@ from="FROM wp_11_zombicide_equipment_keyword "
 where="WHERE equipmentCardId LIKE '%s' AND keywordId LIKE '%s' "
 insert="INSERT INTO wp_11_zombicide_equipment_keyword (equipmentCardId, keywordId) VALUES ('%s', '%s');"
 update="UPDATE wp_11_zombicide_equipment_keyword SET equipmentCardId='%s', keywordId='%s' "
-[EquipmentLive]
+[EquipmentLiveDeck]
 select="SELECT id, liveId, equipmentCardId, rank, status "
 from="FROM wp_11_zombicide_equipmentlivedeck "
 where="WHERE liveId LIKE '%s' AND equipmentCardId LIKE '%s' AND status LIKE '%s' "
@@ -133,7 +133,7 @@ from="FROM wp_11_zombicide_origine "
 where="WHERE name LIKE '%s' "
 insert="INSERT INTO wp_11_zombicide_origine (name) VALUES ('%s');"
 update="UPDATE wp_11_zombicide_origine SET name='%s' "
-[PLayer]
+[Player]
 select="SELECT id, name "
 from="FROM wp_11_zombicide_player "
 insert="INSERT INTO wp_11_zombicide_player (name) VALUES ('%s');"

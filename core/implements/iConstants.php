@@ -1,20 +1,6 @@
 <?php
 interface iConstants
 {
-  const DECKKEY = 'deckKey';
-  const FORMATDATE = 'Y-m-d H:i:s';
-  const KEYACCESS = 'keyAccess';
-  const LEVEL = 'level';
-  const LIVEDECKID = 'liveDeckId';
-  const LIVEID = 'liveId';
-  const MISSIONID = 'missionId';
-  const OBJECTIVE = 'objective';
-  const SENDTOID = 'sendToId';
-  const SETTING = 'setting';
-  const STATUS = 'status';
-  const TEXTE = 'texte';
-  const TIMESTAMP = 'timestamp';
-
   const CST_BACKGROUND      = 'background';
   const CST_COORDX          = 'coordX';
   const CST_COORDY          = 'coordY';

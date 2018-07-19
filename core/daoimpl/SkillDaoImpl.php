@@ -14,15 +14,21 @@ class SkillDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('Skill');
-  }
+  { parent::__construct('Skill'); }
   /**
    * @param array $rows
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('Skill', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = Skill::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line
@@ -30,9 +36,5 @@ class SkillDaoImpl extends LocalDaoImpl
    * @return array|Skill
    */
   public function select($file, $line, $arrParams)
-  {
-    $Skills = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Skills) ? new Skill() : array_shift($Skills));
-  }
-  
+  { return parent::localSelect($file, $line, $arrParams, new Skill()); }
 }

@@ -3,22 +3,21 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * AdminSkillsBean
+ * AdminPageSkillsBean
  * @version 1.0.00
  * @since 1.0.00
  * @author Hugues
  */
-class AdminSkillsBean extends AdminPageBean
+class AdminPageSkillsBean extends AdminPageBean
 {
   /**
    * Class Constructor
-   **/
+   */
   public function __construct()
   {
-    $tag = self::CST_SKILL;
-    parent::__construct($tag);
-    $this->SkillServices = FactoryServices::getSkillServices();
+    parent::__construct(self::CST_SKILL);
     $this->title = 'Compétences';
+    $this->SkillServices = FactoryServices::getSkillServices();
   }
   /**
    * @param array $urlParams
@@ -26,7 +25,7 @@ class AdminSkillsBean extends AdminPageBean
    */
   public static function getStaticContentPage($urlParams)
   {
-    $Bean = new AdminSkillsBean();
+    $Bean = new AdminPageSkillsBean();
     if (!isset($urlParams[self::CST_POSTACTION])) {
       return $Bean->getListingPage();
     }

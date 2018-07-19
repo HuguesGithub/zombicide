@@ -20,7 +20,15 @@ class KeywordDaoImpl extends LocalDaoImpl
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('Keyword', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = Keyword::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line
@@ -28,8 +36,5 @@ class KeywordDaoImpl extends LocalDaoImpl
    * @return array|Keyword
    */
   public function select($file, $line, $arrParams)
-  {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new Keyword() : array_shift($Objs));
-  }
+  { return parent::localSelect($file, $line, $arrParams, new Keyword()); }
 }

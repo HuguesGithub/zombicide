@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class OrigineBean extends MainPageBean
+class OrigineBean extends LocalBean
 {
   /**
    * Class Constructor
@@ -17,8 +17,8 @@ class OrigineBean extends MainPageBean
   public function __construct($Origine='')
   {
     parent::__construct();
-    $this->MissionServices = FactoryServices::getMissionServices();
     $this->Origine = ($Origine=='' ? new Origine() : $Origine);
+    $this->MissionServices = new MissionServices();
   }
   /**
    * @param string $tBodyButtons Template des Boutons de fin de ligne

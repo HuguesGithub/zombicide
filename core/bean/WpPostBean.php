@@ -3,10 +3,10 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * PostPageBean
+ * WpPostBean
  * @author Hugues
  */
-class PostPageBean extends MainPageBean
+class WpPostBean extends MainPageBean
 {
   /**
    * WpPost affiché
@@ -30,7 +30,7 @@ class PostPageBean extends MainPageBean
     parent::__construct($services);
   }
   /**
-   * @return string|Error404PageBean
+   * @return string|WpPageError404Bean
    */
   public function getContentPage()
   {
@@ -44,7 +44,7 @@ class PostPageBean extends MainPageBean
       if ($Survivor->getId()!='') {
         $strReturned = $WpBean->getSurvivorPageContent($Survivor);
       } else {
-        $strReturned = new Error404PageBean();
+        $strReturned = new WpPageError404Bean();
       }
     }
     return $strReturned;

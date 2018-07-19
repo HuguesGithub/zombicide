@@ -4,19 +4,26 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * AdminMissionPageBean
+ * AdminPageMissionsBean
  * @version 1.0.00
  * @since 1.0.00
  * @author Hugues
  */
-class AdminMissionPageBean extends AdminPageBean
+class AdminPageMissionsBean extends AdminPageBean
 {
+  /**
+   * Class Constructor
+   */
   public function __construct()
   {
-    $services = array('Mission', 'Duration', 'MissionExpansion', 'Level', 'Origine', 'Player');
-    $tag = self::CST_MISSION;
-    parent::__construct($tag, $services);
+    parent::__construct(self::CST_MISSION);
     $this->title = 'Missions';
+    $this->DurationServices         = new DurationServices();
+    $this->LevelServices            = new LevelServices();
+    $this->MissionServices          = new MissionServices();
+    $this->MissionExpansionServices = new MissionExpansionServices();
+    $this->OrigineServices          = new OrigineServices();
+    $this->PlayerServices           = new PlayerServices();
   }
   /**
    * @param array $urlParams
@@ -24,7 +31,7 @@ class AdminMissionPageBean extends AdminPageBean
    */
   public static function getStaticContentPage($urlParams)
   {
-    $Bean = new AdminMissionPageBean();
+    $Bean = new AdminPageMissionsBean();
     if (!isset($urlParams[self::CST_POSTACTION])) {
       return $Bean->getListingPage();
     }

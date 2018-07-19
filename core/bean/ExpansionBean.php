@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class ExpansionBean extends MainPageBean
+class ExpansionBean extends LocalBean
 {
   /**
    * Class Constructor
@@ -17,8 +17,8 @@ class ExpansionBean extends MainPageBean
   public function __construct($Expansion='')
   {
     parent::__construct();
-    $this->MissionExpansionServices = FactoryServices::getMissionExpansionServices();
     $this->Expansion = ($Expansion=='' ? new Expansion() : $Expansion);
+    $this->MissionExpansionServices = new MissionExpansionServices();
   }
   /**
    * @param string $tBodyButtons Template des Boutons de fin de ligne

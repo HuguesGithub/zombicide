@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class MarketBean extends MainPageBean
+class MarketBean extends LocalBean
 {
   /**
    * Class Constructor
@@ -16,12 +16,9 @@ class MarketBean extends MainPageBean
    */
   public function __construct($Market='')
   {
-    $services = array('Market');
-    parent::__construct($services);
-    if ($Market=='') {
-      $Market = new Market();
-    }
-    $this->Market = $Market;
+    parent::__construct();
+    $this->Market = ($Market=='' ? new Market() : $Market);
+    $this->MarketServices = new MarketServices();
   }
   /**
    * @return string

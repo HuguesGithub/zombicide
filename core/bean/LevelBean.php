@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class LevelBean extends MainPageBean
+class LevelBean extends LocalBean
 {
   /**
    * Class Constructor
@@ -17,8 +17,8 @@ class LevelBean extends MainPageBean
   public function __construct($Level='')
   {
     parent::__construct();
-    $this->MissionServices = FactoryServices::getMissionServices();
     $this->Level = ($Level=='' ? new Level() : $Level);
+    $this->MissionServices = new MissionServices();
   }
   /**
    * @param string $tBodyButtons Template des Boutons de fin de ligne

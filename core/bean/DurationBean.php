@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class DurationBean extends MainPageBean
+class DurationBean extends LocalBean
 {
   /**
    * Class Constructor
@@ -17,8 +17,8 @@ class DurationBean extends MainPageBean
   public function __construct($Duration='')
   {
     parent::__construct();
-    $this->MissionServices = FactoryServices::getMissionServices();
     $this->Duration = ($Duration=='' ? new Duration() : $Duration);
+    $this->MissionServices = new MissionServices();
   }
   /**
    * @param string $tBodyButtons Template des Boutons de fin de ligne

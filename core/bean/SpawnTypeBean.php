@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class SpawnTypeBean extends MainPageBean
+class SpawnTypeBean extends LocalBean
 {
   /**
    * Class Constructor

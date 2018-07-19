@@ -14,15 +14,21 @@ class ExpansionDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('Expansion');
-  }
+  { parent::__construct('Expansion'); }
   /**
    * @param array $rows
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('Expansion', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = Expansion::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line
@@ -30,10 +36,7 @@ class ExpansionDaoImpl extends LocalDaoImpl
    * @return array|Expansion
    */
   public function select($file, $line, $arrParams)
-  {
-    $Expansions = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Expansions) ? new Expansion() : array_shift($Expansions));
-  }
+  { return parent::localSelect($file, $line, $arrParams, new Expansion()); }
   /**
    * @param string $file
    * @param string $line

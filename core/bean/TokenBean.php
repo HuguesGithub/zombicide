@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class TokenBean extends MainPageBean
+class TokenBean extends LocalBean
 {
   /**
    * Class Constructor

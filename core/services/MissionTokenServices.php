@@ -19,7 +19,10 @@ class MissionTokenServices extends LocalServices
    * Class Constructor
    */
   public function __construct()
-  { $this->Dao = new MissionTokenDaoImpl(); }
+  {
+    $this->Dao = new MissionTokenDaoImpl();
+    parent::__construct();
+  }
 
   /**
    * @param string $file

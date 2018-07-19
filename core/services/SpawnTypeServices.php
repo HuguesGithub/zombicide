@@ -19,7 +19,10 @@ class SpawnTypeServices extends LocalServices
    * Class Constructor
    */
   public function __construct()
-  { $this->Dao = new SpawnTypeDaoImpl(); }
+  {
+    $this->Dao = new SpawnTypeDaoImpl();
+    parent::__construct();
+  }
 
   /**
    * @param string $file

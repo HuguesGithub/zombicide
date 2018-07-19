@@ -14,15 +14,21 @@ class OrigineDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('Origine');
-  }
+  { parent::__construct('Origine'); }
   /**
    * @param array $rows
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('Origine', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = Origine::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param string $line
@@ -30,8 +36,5 @@ class OrigineDaoImpl extends LocalDaoImpl
    * @return Origine
    */
    public function select($file, $line, $arrParams)
-   {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new Origine() : array_shift($Objs));
-  }
+   { return parent::localSelect($file, $line, $arrParams, new Origine()); }
 }

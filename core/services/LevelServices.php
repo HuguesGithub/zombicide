@@ -19,7 +19,10 @@ class LevelServices extends LocalServices
    * Class Constructor
    */
   public function __construct()
-  { $this->Dao = new LevelDaoImpl(); }
+  {
+    $this->Dao = new LevelDaoImpl();
+    parent::__construct();
+  }
 
   /**
    * @param string $file

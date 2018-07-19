@@ -97,11 +97,6 @@ class FactoryServices
   public static function getLiveServices()
   { return new LiveServices(); }
   /**
-   * Retourne les Services relatifs à LiveDeck
-   */
-  public static function getLiveDeckServices()
-  { return new LiveDeckServices(); }
-  /**
    * Retourne les Services relatifs à LiveMission
    */
   public static function getLiveMissionServices()

@@ -14,15 +14,21 @@ class TokenDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('Token');
-  }
+  { parent::__construct('Token'); }
   /**
    * @param array $rows
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('Token', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = Token::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line
@@ -30,8 +36,5 @@ class TokenDaoImpl extends LocalDaoImpl
    * @return array|Token
    */
   public function select($file, $line, $arrParams)
-  {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new Token() : array_shift($Objs));
-  }
+  { return parent::localSelect($file, $line, $arrParams, new Token()); }
 }

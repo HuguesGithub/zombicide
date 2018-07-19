@@ -14,8 +14,8 @@ class SpawnDeckActions extends LocalActions
    */
   public function __construct($post)
   {
-    $this->LiveServices = FactoryServices::getLiveServices();
-    $this->SpawnLiveDeckServices = FactoryServices::getSpawnLiveDeckServices();
+    $this->LiveServices = new LiveServices();
+    $this->SpawnLiveDeckServices = new SpawnLiveDeckServices();
     $LiveDecks = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, array(self::CST_DECKKEY=>$post[self::CST_KEYACCESS]));
     $this->Live = array_shift($LiveDecks);
   }
@@ -49,8 +49,11 @@ class SpawnDeckActions extends LocalActions
           $returned = $Act->shuffleSpawnCards();
         break;
         default :
+          $returned = 'Valeur de ajaxChildAction non prévue : ['.$post['ajaxChildAction'].']';
         break;
       }
+    } else {
+      $returned = 'Session non valide.';
     }
     return $returned;
   }
@@ -102,7 +105,7 @@ class SpawnDeckActions extends LocalActions
     $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters, 'rank', 'ASC');
     // On retourne les infos à modifier sur l'interface en mode Json.
     $Bean = new WpPageLiveSpawnBean();
-    $pageSelectionResult = $Bean->getSpawnCardActives($SpawnLiveDecks);
+    $pageSelectionResult = $Bean::getStaticSpawnCardActives($SpawnLiveDecks);
     return $this->jsonBuild($nbInDeck, -1, $pageSelectionResult);
   }
   /**
@@ -164,7 +167,7 @@ class SpawnDeckActions extends LocalActions
     $arrFilters = array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'D');
     $SpawnLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);
     // On retourne les infos à modifier sur l'interface en mode Json.
-    $pageSelectionResult = SpawnDeckPageBean::getStaticSpawnCardActives($SpawnLiveDecks);
+    $pageSelectionResult = WpPageLiveSpawnBean::getStaticSpawnCardActives($SpawnLiveDecks);
     return $this->jsonBuild(-1, -1, $pageSelectionResult);
   }
   /**

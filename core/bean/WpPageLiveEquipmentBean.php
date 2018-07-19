@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class WpPageLiveEquipmentBean extends PagePageBean
+class WpPageLiveEquipmentBean extends WpPageBean
 {
   /**
    * Class Constructor
@@ -16,11 +16,11 @@ class WpPageLiveEquipmentBean extends PagePageBean
   public function __construct($WpPage='')
   {
     parent::__construct($WpPage);
-    $this->EquipmentServices          = FactoryServices::getEquipmentServices();
-    $this->EquipmentExpansionServices = FactoryServices::getEquipmentExpansionServices();
-    $this->EquipmentLiveDeckServices  = FactoryServices::getEquipmentLiveDeckServices();
-    $this->ExpansionServices          = FactoryServices::getExpansionServices();
-    $this->LiveServices               = FactoryServices::getLiveServices();
+    $this->EquipmentServices          = new EquipmentServices();
+    $this->EquipmentExpansionServices = new EquipmentExpansionServices();
+    $this->EquipmentLiveDeckServices  = new EquipmentLiveDeckServices();
+    $this->ExpansionServices          = new ExpansionServices();
+    $this->LiveServices               = new LiveServices();
   }
   /**
    * @param WpPage $WpPage
@@ -72,7 +72,7 @@ class WpPageLiveEquipmentBean extends PagePageBean
       }
       return $Live;
     } else {
-      return new Live();
+      return $Live;
     }
   }
   private function getDeckButtons($Live)
@@ -80,7 +80,7 @@ class WpPageLiveEquipmentBean extends PagePageBean
     $str  = '';
     $str .= '<div class="btn-group-vertical live-spawn-selection" role="group">';
     $deckKey = $Live->getDeckKey();
-    $str .= $this->getButtonDiv('btnDisabled1', $deckKey, 'Actions disponibles :', '', 'btn-dark disabled');
+    $str .= $this->getButtonDiv('btnDisabled1', $deckKey, '', 'Actions disponibles :', '', 'btn-dark disabled');
     $label = 'Piocher une carte (<span id="nbCardInDeck">'.$Live->getNbCardsInDeck('equipment').'</span>)';
     $str .= $this->getButtonDiv('btnDrawEquipmentCard', $deckKey, 'drawEquipmentCard', $label);
     $str .= $this->getButtonDiv('btnEquipEquipmentActive', $deckKey, 'equipEquipmentActive', 'Equiper les cartes piochées');

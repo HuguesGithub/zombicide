@@ -8,16 +8,16 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class EquipmentBean extends MainPageBean
+class EquipmentBean extends LocalBean
 {
   /**
    * Class Constructor
    * @param Equipment $EquipmentCard
    */
-  public function __construct($EquipmentCard)
+  public function __construct($EquipmentCard='')
   {
-    $this->EquipmentCard = $EquipmentCard;
     parent::__construct();
+    $this->EquipmentCard = ($EquipmentCard=='' ? new EquipmentCard() : $EquipmentCard);
   }
   /**
    * @param int $expansionId

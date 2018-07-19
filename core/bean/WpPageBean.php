@@ -3,10 +3,10 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * PagePageBean
+ * WpPageBean
  * @author Hugues
  */
-class PagePageBean extends MainPageBean
+class WpPageBean extends MainPageBean
 {
   /**
    * WpPost affiché
@@ -17,7 +17,7 @@ class PagePageBean extends MainPageBean
    * @param string $post
    * @param array $services
    */
-  public function __construct($post='', $services=array())
+  public function __construct($post='')
   {
     if ($post=='') {
       $post = get_post();
@@ -27,7 +27,7 @@ class PagePageBean extends MainPageBean
     } else {
       $this->WpPage = WpPost::convertElement($post);
     }
-    parent::__construct($services);
+    parent::__construct();
   }
   /**
    * @return string|Error404PageBean
@@ -45,19 +45,19 @@ class PagePageBean extends MainPageBean
         $strReturned = WpPageLiveSpawnBean::getStaticPageContent($this->WpPage);
       break;
       case 'page-market'               :
-        $strReturned = MarketPageBean::getStaticPageContent($this->WpPage);
+        $strReturned = WpPageMarketBean::getStaticPageContent($this->WpPage);
       break;
       case 'page-missions'             :
         $strReturned = WpPageMissionsBean::getStaticPageContent($this->WpPage);
       break;
       case 'page-partie-online'        :
-        $strReturned = OnlinePageBean::getStaticPageContent($this->WpPage);
+        $strReturned = WpPageOnlineBean::getStaticPageContent($this->WpPage);
       break;
       case 'page-piste-de-des'         :
-        $strReturned = ToolsPageBean::getStaticPisteContent($this->WpPage);
+        $strReturned = WpPageToolsBean::getStaticPisteContent($this->WpPage);
       break;
       case 'page-selection-survivants' :
-        $strReturned = ToolsPageBean::getStaticSurvivorsContent($this->WpPage);
+        $strReturned = WpPageToolsBean::getStaticSurvivorsContent($this->WpPage);
       break;
       case 'page-equipmentcards'       :
         $strReturned = WpPageEquipmentsBean::getStaticPageContent($this->WpPage);
@@ -69,7 +69,7 @@ class PagePageBean extends MainPageBean
         $strReturned = WpPageSurvivorsBean::getStaticPageContent($this->WpPage);
       break;
       default                          :
-        $strReturned = new Error404PageBean();
+        $strReturned = new WpPageError404Bean();
       break;
     }
     return $strReturned;

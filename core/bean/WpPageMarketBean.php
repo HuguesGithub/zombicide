@@ -3,12 +3,12 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * Classe MarketPageBean
+ * Classe WpPageMarketBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class MarketPageBean extends PagePageBean
+class WpPageMarketBean extends WpPageBean
 {
   /**
    * Class Constructor
@@ -16,8 +16,8 @@ class MarketPageBean extends PagePageBean
    */
   public function __construct($WpPage='')
   {
-    $services = array('Market');
-    parent::__construct($WpPage, $services);
+    parent::__construct($WpPage);
+    $this->MarketServices = new MarketServices();
   }
   /**
    * @param WpPost $WpPage
@@ -25,7 +25,7 @@ class MarketPageBean extends PagePageBean
    */
   public function getStaticPageContent($WpPage)
   {
-    $Bean = new MarketPageBean($WpPage);
+    $Bean = new WpPageMarketBean($WpPage);
     return $Bean->getContentPage();
   }
   /**

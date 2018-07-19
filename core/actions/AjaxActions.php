@@ -22,6 +22,21 @@ class AjaxActions extends LocalActions
   public static function dealWithAjax()
   {
     switch ($_POST['ajaxAction']) {
+      case 'addMoreNews'         :
+        $returned = WpPageHomeBean::staticAddMoreNews($_POST['value']);
+      break;
+      case 'getCompetences'      :
+        $returned = WpPageSkillsBean::staticGetSkillsSortedAndFiltered($_POST);
+      break;
+      case 'getMissions'         :
+        $returned = WpPageMissionsBean::staticGetMissionsSortedAndFiltered($_POST);
+      break;
+      case 'getRandomTeam'       :
+        $returned = WpPageSurvivorsBean::staticGetRandomTeam($_POST);
+      break;
+      case 'getSurvivants'       :
+        $returned = WpPageSurvivorsBean::staticGetSurvivorsSortedAndFiltered($_POST);
+      break;
       case 'EquipmentDeck' :
         $returned = EquipmentDeckActions::dealWithStatic($_POST);
       break;
@@ -33,26 +48,11 @@ class AjaxActions extends LocalActions
           case 'addMissionObjRule'     :
             $returned = self::dealWithAddMissionObjRule($_POST);
           break;
-          case 'addMoreNews'         :
-            $returned = HomePageBean::staticAddMoreNews($_POST['value']);
-          break;
           case 'addParameter'        :
             $returned = self::dealWithAddParameter($_POST);
           break;
           case 'buildBlockTiles'       :
             $returned = MissionBean::staticBuildBlockTiles($_POST);
-          break;
-          case 'getCompetences'      :
-            $returned = WpPageSkillsBean::staticGetSkillsSortedAndFiltered($_POST);
-          break;
-          case 'getMissions'         :
-            $returned = WpPageMissionsBean::staticGetMissionsSortedAndFiltered($_POST);
-          break;
-          case 'getRandomTeam'       :
-            $returned = SurvivorsPageBean::staticGetRandomTeam($_POST);
-          break;
-          case 'getSurvivants'       :
-            $returned = WpPageSurvivorsBean::staticGetSurvivorsSortedAndFiltered($_POST);
           break;
           case 'getObjRuleDescription'   :
             $returned = self::dealWithObjRuleDescription($_POST);
@@ -92,7 +92,7 @@ class AjaxActions extends LocalActions
   public function dealWithJoinLive($post)
   {
     $deckKey = $post['keyAccess'];
-    $LiveServices = FactoryServices::getLiveServices();
+    $LiveServices = new LiveServices();
     $arr = array(self::CST_DECKKEY=>$deckKey);
     $Lives = $LiveServices->getLivesWithFilters(__FILE__, __LINE__, $arr);
     if (empty($Lives)) {
@@ -150,12 +150,12 @@ class AjaxActions extends LocalActions
   {
     switch ($post['type']) {
       case 'duration' :
-        $DurationServices = FactoryServices::getDurationServices();
+        $DurationServices = new DurationServices();
         $Duration = $DurationServices->select(__FILE__, __LINE__, $post['id']);
         $returned = $Duration->toJson();
       break;
       case self::CST_LEVEL :
-        $LevelServices = FactoryServices::getLevelServices();
+        $LevelServices = new LevelServices();
         $Level = $LevelServices->select(__FILE__, __LINE__, $post['id']);
         $returned = $Level->toJson();
       break;

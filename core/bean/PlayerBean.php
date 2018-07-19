@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class PlayerBean extends MainPageBean
+class PlayerBean extends LocalBean
 {
   /**
    * Class Constructor
@@ -17,8 +17,8 @@ class PlayerBean extends MainPageBean
   public function __construct($Player='')
   {
     parent::__construct();
-    $this->MissionServices = FactoryServices::getMissionServices();
     $this->Player = ($Player=='' ? new Player() : $Player);
+    $this->MissionServices = new MissionServices();
   }
   /**
    * @param string $tBodyButtons Template des Boutons de fin de ligne

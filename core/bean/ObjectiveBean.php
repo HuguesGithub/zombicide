@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class ObjectiveBean extends MainPageBean
+class ObjectiveBean extends LocalBean
 {
   /**
    * Class Constructor
@@ -17,8 +17,8 @@ class ObjectiveBean extends MainPageBean
   public function __construct($Objective='')
   {
     parent::__construct();
-    $this->MissionObjectiveServices = FactoryServices::getMissionObjectiveServices();
     $this->Objective = ($Objective=='' ? new Objective() : $Objective);
+    $this->MissionObjectiveServices = new MissionObjectiveServices();
   }
   /**
    * @param string $tBodyButtons Template des Boutons de fin de ligne

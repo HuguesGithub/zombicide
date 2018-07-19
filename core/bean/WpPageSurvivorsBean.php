@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class WpPageSurvivorsBean extends PagePageBean
+class WpPageSurvivorsBean extends WpPageBean
 {
   /**
    * Class Constructor
@@ -17,7 +17,7 @@ class WpPageSurvivorsBean extends PagePageBean
   public function __construct($WpPage='')
   {
     parent::__construct($WpPage);
-    $this->SurvivorServices = FactoryServices::getSurvivorServices();
+    $this->SurvivorServices = new SurvivorServices();
   }
   /**
    * On arrive rarement en mode direct pour afficher la Page. On passe par une méthode static.
@@ -124,4 +124,32 @@ class WpPageSurvivorsBean extends PagePageBean
     $jsonStr = $Bean->getListingPage($post['colsort'], $post['colorder'], $post['nbperpage'], $post['paged'], $arrFilters);
     return '{"page-survivants":'.json_encode($jsonStr).'}';
   }
+  /**
+   * @param array $post
+   */
+  public static function staticGetRandomTeam($post)
+  {
+    $Bean = new WpPageSurvivorsBean();
+    return '{"page-selection-result":'.json_encode($Bean->getSelectionTeam($post)).'}';
+  }
+  /**
+   * @param array $post
+   */
+  public function getSelectionTeam($post)
+  {
+    $nbMax = $post['nbSurvSel'];
+    $arrValues = explode(',', $post['value']);
+    shuffle($arrValues);
+    $nb = 0;
+    $strReturned  = '';
+    while (!empty($arrValues) && $nb<$nbMax) {
+      $value = array_shift($arrValues);
+      $Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $value);
+      $Bean = new SurvivorBean($Survivor);
+      $strReturned .= $Bean->getVisitCard('col-12 col-md-6');
+      $nb++;
+    }
+    return $strReturned;
+  }
+  
 }

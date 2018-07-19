@@ -14,15 +14,21 @@ class EquipmentLiveDeckDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('EquipmentLive');
-  }
+  { parent::__construct('EquipmentLiveDeck'); }
   /**
    * @param array $rows
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('EquipmentLiveDeck', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = EquipmentLiveDeck::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line
@@ -30,9 +36,5 @@ class EquipmentLiveDeckDaoImpl extends LocalDaoImpl
    * @return array|EquipmentLiveDeck
    */
   public function select($file, $line, $arrParams)
-  {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new EquipmentLiveDeck() : array_shift($Objs));
-  }
-  
+  { return parent::localSelect($file, $line, $arrParams, new EquipmentLiveDeck()); }
 }

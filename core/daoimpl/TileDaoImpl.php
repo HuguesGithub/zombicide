@@ -14,15 +14,21 @@ class TileDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('Tile');
-  }
+  { parent::__construct('Tile'); }
   /**
    * @param array $rows
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('Tile', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = Tile::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line
@@ -30,8 +36,5 @@ class TileDaoImpl extends LocalDaoImpl
    * @return array|Tile
    */
   public function select($file, $line, $arrParams)
-  {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new Tile() : array_shift($Objs));
-  }
+  { return parent::localSelect($file, $line, $arrParams, new Tile()); }
 }

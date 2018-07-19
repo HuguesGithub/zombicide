@@ -18,9 +18,9 @@ class AdminPageBean extends MainPageBean
    * @param string $tag
    * @param array $services
    */
-  public function __construct($tag='', $services=array())
+  public function __construct($tag='')
   {
-    parent::__construct($services);
+    parent::__construct();
     $this->analyzeUri();
     $this->tableName = 'wp_11_zombicide_'.$tag;
     $this->tplAdminerUrl  = 'http://zombicide.jhugues.fr/wp-content/plugins/adminer/inc/adminer/loader.php';
@@ -63,16 +63,16 @@ class AdminPageBean extends MainPageBean
     if (self::isAdmin()) {
       switch ($this->urlParams['onglet']) {
         case 'mission'    :
-          $returned = AdminMissionPageBean::getStaticContentPage($this->urlParams);
+          $returned = AdminPageMissionsBean::getStaticContentPage($this->urlParams);
         break;
         case 'parametre'  :
-          $returned = AdminParametrePageBean::getStaticContentPage($this->urlParams);
+          $returned = AdminPageParametresBean::getStaticContentPage($this->urlParams);
         break;
         case 'skill'  :
-          $returned = AdminSkillsBean::getStaticContentPage($this->urlParams);
+          $returned = AdminPageSkillsBean::getStaticContentPage($this->urlParams);
         break;
         case 'survivor'  :
-          $returned = AdminSurvivorsBean::getStaticContentPage($this->urlParams);
+          $returned = AdminPageSurvivorsBean::getStaticContentPage($this->urlParams);
         break;
         case ''       :
           $returned = $this->getHomeContentPage();

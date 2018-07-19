@@ -3,21 +3,21 @@ if (!defined('ABSPATH')) {
 die('Forbidden');
 }
 /**
- * AdminSurvivorsBean
+ * AdminPageSurvivorsBean
  * @version 1.0.00
  * @since 1.0.00
  * @author Hugues
  */
-class AdminSurvivorsBean extends AdminPageBean
+class AdminPageSurvivorsBean extends AdminPageBean
 {
   /**
    * Class Constructor
-   **/
+   */
   public function __construct()
   {
     parent::__construct(self::CST_SURVIVOR);
-    $this->SurvivorServices = FactoryServices::getSurvivorServices();
     $this->title = 'Survivants';
+    $this->SurvivorServices = FactoryServices::getSurvivorServices();
   }
   /**
    * @param array $urlParams
@@ -25,7 +25,7 @@ class AdminSurvivorsBean extends AdminPageBean
    */
   public static function getStaticContentPage($urlParams)
   {
-    $Bean = new AdminSurvivorsBean();
+    $Bean = new AdminPageSurvivorsBean();
     if (!isset($urlParams[self::CST_POSTACTION])) {
       return $Bean->getListingPage();
     }

@@ -3,12 +3,12 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * Classe Error404PageBean
+ * Classe WpPageError404Bean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class Error404PageBean extends PagePageBean
+class WpPageError404Bean extends WpPageBean
 {
   /**
    * @param WpPage $WpPage
@@ -16,7 +16,7 @@ class Error404PageBean extends PagePageBean
    */
   public static function getStaticPageContent($WpPage='')
   {
-    $Bean = new Error404PageBean($WpPage);
+    $Bean = new WpPageError404Bean($WpPage);
     return $Bean->getContentPage();
   }
   /**

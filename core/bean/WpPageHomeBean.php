@@ -3,20 +3,20 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * Classe HomePageBean
+ * Classe WpPageHomeBean
  * @author Hugues.
  * @version 1.0.00
  * @since 1.0.00
  */
-class HomePageBean extends MainPageBean
+class WpPageHomeBean extends WpPageBean
 {
   /**
    * Class Constructor
    */
   public function __construct()
   {
-    $services = array('Mission');
-    parent::__construct($services);
+    parent::__construct();
+    $this->MissionServices = new MissionServices();
   }
   
   /**
@@ -39,7 +39,7 @@ class HomePageBean extends MainPageBean
    */
   public static function staticAddMoreNews($offset=0)
   {
-    $Bean = new HomePageBean();
+    $Bean = new WpPageHomeBean();
     return $Bean->addMoreNews($offset);
   }
   /**

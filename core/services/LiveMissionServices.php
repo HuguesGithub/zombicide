@@ -19,7 +19,10 @@ class LiveMissionServices extends LocalServices
    * Clas Constructor
    */
   public function __construct()
-  { $this->Dao = new LiveMissionDaoImpl(); }
+  {
+    $this->Dao = new LiveMissionDaoImpl();
+    parent::__construct();
+  }
 
   /**
    * @param string $file

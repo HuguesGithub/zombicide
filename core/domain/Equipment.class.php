@@ -79,16 +79,6 @@ class Equipment extends LocalDomain
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new Equipment(), self::getClassVars(), $row); }
   /**
-   * @return WeaponProfile
-   */
-  public function getWeaponProfile()
-  {
-    if ($this->WeaponProfile==null) {
-      $this->WeaponProfile = $this->WeaponProfileServices->select(__FILE__, __LINE__, $this->weaponProfileId);
-    }
-    return $this->WeaponProfile;
-  }
-  /**
    * @return array EquipmentWeaponProfile
    */
   public function getEquipmentWeaponProfiles()

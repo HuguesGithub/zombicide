@@ -5,17 +5,22 @@ if (!defined('ABSPATH')) {
 /**
  * WpPostSurvivorBean
  */
-class WpPostSurvivorBean extends MainPageBean
+class WpPostSurvivorBean extends WpPostBean
 {
   /**
-   * Constructeur
+   * Class Constructor
+   * @param WpPost $WpPost
    */
   public function __construct($WpPost='')
   {
-    $services = array('Survivor');
-    parent::__construct($services);
+    parent::__construct();
+    $this->SurvivorServices = new SurvivorServices();
     $this->WpPost = $WpPost;
   }
+  /**
+   * @param Survivor $Survivor
+   * @return string
+   */
   public function getSurvivorPageContent($Survivor)
   {
     $WpBean = new SurvivorBean($Survivor);

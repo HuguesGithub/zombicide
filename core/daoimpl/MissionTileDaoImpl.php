@@ -14,15 +14,21 @@ class MissionTileDaoImpl extends LocalDaoImpl
    * Class constructor
    */
   public function __construct()
-  {
-    parent::__construct('MissionObjective');
-  }
+  { parent::__construct('MissionTile'); }
   /**
    * @param array $rows
    * @return array
    */
   protected function convertToArray($rows)
-  { return $this->globalConvertToArray('MissionTile', $rows); }
+  {
+    $Items = array();
+    if (!empty($rows)) {
+      foreach ($rows as $row) {
+        $Items[] = MissionTile::convertElement($row);
+      }
+    }
+    return $Items;
+  }
   /**
    * @param string $file
    * @param int $line
@@ -30,9 +36,5 @@ class MissionTileDaoImpl extends LocalDaoImpl
    * @return array|MissionTile
    */
   public function select($file, $line, $arrParams)
-  {
-    $Objs = $this->selectEntry($file, $line, $arrParams);
-    return (empty($Objs) ? new MissionTile() : array_shift($Objs));
-  }
-  
+  { return parent::localSelect($file, $line, $arrParams, new MissionTile()); }
 }

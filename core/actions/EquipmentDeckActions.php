@@ -14,12 +14,12 @@ class EquipmentDeckActions extends LocalActions
    */
   public function __construct($post)
   {
-    $this->LiveServices = new LiveServices();
+    $this->EquipmentServices          = new EquipmentServices();
+    $this->EquipmentExpansionServices = new EquipmentExpansionServices();
+    $this->EquipmentLiveDeckServices  = new EquipmentLiveDeckServices();
+    $this->LiveServices               = new LiveServices();
     $LiveDecks = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, array(self::CST_DECKKEY=>$post[self::CST_KEYACCESS]));
     $this->Live = array_shift($LiveDecks);
-    $this->EquipmentServices = new EquipmentServices();
-    $this->EquipmentExpansionServices = new EquipmentExpansionServices();
-    $this->EquipmentLiveDeckServices = new EquipmentLiveDeckServices();
   }
   /**
    * Point d'entrée des méthodes statiques.
@@ -164,8 +164,8 @@ class EquipmentDeckActions extends LocalActions
     $EquipmentLiveDecks = $this->getEquipmentLiveDecksByStatus('P');
     // Si $SpawnLiveDecks est vide, il faut remélanger la Pioche.
     if (empty($EquipmentLiveDecks)) {
-      //$this->shuffleSpawnCards();
-      //$EquipmentLiveDecks = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters, 'rank', 'DESC');
+      $this->shuffleEquipmentCards();
+      $EquipmentLiveDecks = $this->getEquipmentLiveDecksByStatus('P');
     }
     // On prend la première carte retournée par la requête, elle devient active, on met à jour son statut
     $EquipmentLiveDeck = array_shift($EquipmentLiveDecks);

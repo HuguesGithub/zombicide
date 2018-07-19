@@ -118,17 +118,7 @@ class WpPageLiveSpawnBean extends WpPageBean
         $blocExpansions = $this->nonLoggedInterface();
       } else {
         if ($Live->getNbCardsInDeck()+$Live->getNbCardsInDiscard()==0) {
-          if ($deckKey!='') {
-            // On a un KeyAccess en Formulaire
-            $args = array(self::CST_DECKKEY=>$deckKey);
-            $Live = $this->createSpawnLiveDeck($args);
-            $blocExpansions = $this->getDeckButtons($Live);
-            $showSelection = self::CST_HIDDEN;
-            $_SESSION[self::CST_DECKKEY] = $deckKey;
-          } else {
-            // On n'a rien
-            $blocExpansions = $this->nonLoggedInterface();
-          }
+          $this->buildInterface($args, $deckKey, $blocExpansions, $showSelection);
         } else {
           // On a une Session et des cartes.
           $blocExpansions = $this->getDeckButtons($Live);
@@ -138,17 +128,7 @@ class WpPageLiveSpawnBean extends WpPageBean
     } else {
       // On n'a pas de Session, en a-t-on un en POST ?
       $deckKey = $this->initVar(self::CST_KEYACCESS);
-      if ($deckKey!='') {
-        // On a un KeyAccess en Formulaire
-        $args = array(self::CST_DECKKEY=>$deckKey);
-        $Live = $this->createSpawnLiveDeck($args);
-        $blocExpansions = $this->getDeckButtons($Live);
-        $showSelection = self::CST_HIDDEN;
-        $_SESSION[self::CST_DECKKEY] = $deckKey;
-      } else {
-        // On n'a rien
-        $blocExpansions = $this->nonLoggedInterface();
-      }
+      $this->buildInterface($args, $deckKey, $blocExpansions, $showSelection);
     }
     if ($showSelection==self::CST_HIDDEN) {
       // On a des cartes, par défaut, on affiche les cartes "actives".
@@ -164,6 +144,20 @@ class WpPageLiveSpawnBean extends WpPageBean
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-live-spawn-deck.php');
     return vsprintf($str, $args);
+  }
+  private function buildInterface($args, $deckKey, &$blocExpansions, &$showSelection)
+  {
+    if ($deckKey!='') {
+      // On a un KeyAccess en Formulaire
+      $args = array(self::CST_DECKKEY=>$deckKey);
+      $Live = $this->createSpawnLiveDeck($args);
+      $blocExpansions = $this->getDeckButtons($Live);
+      $showSelection = self::CST_HIDDEN;
+      $_SESSION[self::CST_DECKKEY] = $deckKey;
+    } else {
+      // On n'a rien
+      $blocExpansions = $this->nonLoggedInterface();
+    }
   }
   /**
    * @return string

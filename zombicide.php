@@ -18,7 +18,7 @@ class Zombicide
     add_filter('template_include', array($this,'template_loader'));
   }
 
-  public function template_loader($template)
+  public function template_loader()
   {
     wp_enqueue_script('jquery');
     return PLUGIN_PATH.'web/pages/public/public-main-page.php';

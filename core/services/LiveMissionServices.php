@@ -21,7 +21,7 @@ class LiveMissionServices extends LocalServices
   public function __construct()
   {
     parent::__construct();
-  	$this->Dao = new LiveMissionDaoImpl();
+    $this->Dao = new LiveMissionDaoImpl();
   }
 
   /**
@@ -37,5 +37,5 @@ class LiveMissionServices extends LocalServices
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
-  
+
 }

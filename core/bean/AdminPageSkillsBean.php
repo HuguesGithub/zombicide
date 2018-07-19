@@ -17,7 +17,7 @@ class AdminPageSkillsBean extends AdminPageBean
   {
     parent::__construct(self::CST_SKILL);
     $this->title = 'Compétences';
-    $this->SkillServices = FactoryServices::getSkillServices();
+    $this->SkillServices = new SkillServices();
   }
   /**
    * @param array $urlParams

@@ -18,21 +18,21 @@ class AdminPageParametresBean extends AdminPageBean
   {
     parent::__construct(self::CST_PARAMETRE);
     $this->title = 'Paramètres';
-    $this->DurationServices         = FactoryServices::getDurationServices();
-    $this->ExpansionServices        = FactoryServices::getExpansionServices();
-    $this->KeywordServices          = FactoryServices::getKeywordServices();
-    $this->LevelServices            = FactoryServices::getLevelServices();
-    $this->MissionServices          = FactoryServices::getMissionServices();
-    $this->MissionExpansionServices = FactoryServices::getMissionExpansionServices();
-    $this->MissionObjectiveServices = FactoryServices::getMissionObjectiveServices();
-    $this->MissionRuleServices      = FactoryServices::getMissionRuleServices();
-    $this->ObjectiveServices        = FactoryServices::getObjectiveServices();
-    $this->OrigineServices          = FactoryServices::getOrigineServices();
-    $this->PlayerServices           = FactoryServices::getPlayerServices();
-    $this->RuleServices             = FactoryServices::getRuleServices();
-    $this->SpawnTypeServices        = FactoryServices::getSpawnTypeServices();
-    $this->TokenServices            = FactoryServices::getTokenServices();
-    $this->WeaponProfileServices    = FactoryServices::getWeaponProfileServices();
+    $this->DurationServices         = new DurationServices();
+    $this->ExpansionServices        = new ExpansionServices();
+    $this->KeywordServices          = new KeywordServices();
+    $this->LevelServices            = new LevelServices();
+    $this->MissionServices          = new MissionServices();
+    $this->MissionExpansionServices = new MissionExpansionServices();
+    $this->MissionObjectiveServices = new MissionObjectiveServices();
+    $this->MissionRuleServices      = new MissionRuleServices();
+    $this->ObjectiveServices        = new ObjectiveServices();
+    $this->OrigineServices          = new OrigineServices();
+    $this->PlayerServices           = new PlayerServices();
+    $this->RuleServices             = new RuleServices();
+    $this->SpawnTypeServices        = new SpawnTypeServices();
+    $this->TokenServices            = new TokenServices();
+    $this->WeaponProfileServices    = new WeaponProfileServices();
   }
   /**
    * @param array $urlParams

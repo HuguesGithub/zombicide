@@ -17,7 +17,7 @@ class AdminPageSurvivorsBean extends AdminPageBean
   {
     parent::__construct(self::CST_SURVIVOR);
     $this->title = 'Survivants';
-    $this->SurvivorServices = FactoryServices::getSurvivorServices();
+    $this->SurvivorServices = new SurvivorServices();
   }
   /**
    * @param array $urlParams

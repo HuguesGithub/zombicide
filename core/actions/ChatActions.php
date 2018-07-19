@@ -22,8 +22,9 @@ class ChatActions extends LocalActions
     foreach ($arrParams as $key => $param) {
       $this->{$key} = isset($post[$key]) ? $post[$key] : $param;
     }
-    $services = array('Chat', 'Live');
-    parent::__construct($services);
+    parent::__construct();
+    $this->ChatServices = new ChatServices();
+    $this->LiveServices = new LiveServices();
   }
   /**
    * @param unknown $post

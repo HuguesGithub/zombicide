@@ -20,8 +20,8 @@ class SurvivorSkillServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new SurvivorSkillDaoImpl();
     parent::__construct();
+    $this->Dao = new SurvivorSkillDaoImpl();
   }
 
   private function buildFilters($arrFilters)

@@ -20,8 +20,8 @@ class OrigineServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new OrigineDaoImpl();
     parent::__construct();
+    $this->Dao = new OrigineDaoImpl();
   }
 
   private function buildFilters($arrFilters)

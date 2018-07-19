@@ -20,8 +20,8 @@ class SpawnServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new SpawnDaoImpl();
     parent::__construct();
+    $this->Dao = new SpawnDaoImpl();
   }
 
   private function buildFilters($arrFilters)

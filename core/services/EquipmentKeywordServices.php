@@ -18,8 +18,8 @@ class EquipmentKeywordServices extends LocalServices
   
   public function __construct()
   {
-    $this->Dao = new EquipmentKeywordDaoImpl();
     parent::__construct();
+    $this->Dao = new EquipmentKeywordDaoImpl();
   }
 
   private function buildFilters($arrFilters)

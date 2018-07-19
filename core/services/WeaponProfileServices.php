@@ -20,8 +20,8 @@ class WeaponProfileServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new WeaponProfileDaoImpl();
     parent::__construct();
+    $this->Dao = new WeaponProfileDaoImpl();
   }
 
   /**

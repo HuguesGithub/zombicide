@@ -20,8 +20,8 @@ class EquipmentLiveDeckServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new EquipmentLiveDeckDaoImpl();
     parent::__construct();
+    $this->Dao = new EquipmentLiveDeckDaoImpl();
   }
 
   private function buildFilters($arrFilters)

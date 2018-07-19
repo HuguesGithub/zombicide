@@ -10,7 +10,7 @@ define('SQL_PARAMS_ORDERBY', '__orderby__');
  * @version 1.0.00
  * @since 1.0.00
  */
-class LocalDaoImpl extends GlobalDaoImpl implements iConstants
+class LocalDaoImpl extends GlobalDaoImpl implements ConstantsInterface
 {
   /**
    * Recherche unitaire

@@ -18,8 +18,8 @@ class ChatServices extends LocalServices
   
   public function __construct()
   {
-    $this->Dao = new ChatDaoImpl();
     parent::__construct();
+    $this->Dao = new ChatDaoImpl();
   }
 
   private function buildFilters($arrFilters)

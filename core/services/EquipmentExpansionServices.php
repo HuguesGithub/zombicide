@@ -20,8 +20,8 @@ class EquipmentExpansionServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new EquipmentExpansionDaoImpl();
     parent::__construct();
+    $this->Dao = new EquipmentExpansionDaoImpl();
   }
 
   private function buildFilters($arrFilters)

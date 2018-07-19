@@ -20,8 +20,8 @@ class ObjectiveServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new ObjectiveDaoImpl();
     parent::__construct();
+    $this->Dao = new ObjectiveDaoImpl();
   }
 
   private function buildFilters($arrFilters)

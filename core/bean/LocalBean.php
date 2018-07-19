@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class LocalBean implements iConstants
+class LocalBean implements ConstantsInterface
 {
   /**
    */

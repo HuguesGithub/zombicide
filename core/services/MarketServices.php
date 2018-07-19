@@ -20,8 +20,8 @@ class MarketServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new MarketDaoImpl();
     parent::__construct();
+    $this->Dao = new MarketDaoImpl();
   }
 
   /**

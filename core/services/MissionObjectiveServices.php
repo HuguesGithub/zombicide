@@ -18,8 +18,8 @@ class MissionObjectiveServices extends LocalServices
   
   public function __construct()
   {
-    $this->Dao = new MissionObjectiveDaoImpl();
     parent::__construct();
+    $this->Dao = new MissionObjectiveDaoImpl();
   }
 
   private function buildFilters($arrFilters)

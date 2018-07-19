@@ -20,8 +20,8 @@ class RuleServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new RuleDaoImpl();
     parent::__construct();
+    $this->Dao = new RuleDaoImpl();
   }
 
   private function buildFilters($arrFilters)

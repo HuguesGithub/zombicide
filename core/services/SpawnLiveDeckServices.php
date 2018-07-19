@@ -20,8 +20,8 @@ class SpawnLiveDeckServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new SpawnLiveDeckDaoImpl();
     parent::__construct();
+    $this->Dao = new SpawnLiveDeckDaoImpl();
   }
 
   private function buildFilters($arrFilters)

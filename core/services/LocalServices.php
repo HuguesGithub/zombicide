@@ -8,25 +8,14 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class LocalServices extends GlobalServices implements iConstants
+class LocalServices extends GlobalServices implements ConstantsInterface
 {
 
   /**
    * @param array $services
    */
-  public function __construct($services=array())
+  public function __construct()
   {
-    if (!empty($services)) {
-      foreach ($services as $service) {
-        switch ($service) {
-          case 'Expansion'         :
-            $this->ExpansionServices = FactoryServices::getExpansionServices();
-          break;
-          default :
-            break;
-        }
-      }
-    }
   }
   
   /**
@@ -68,11 +57,10 @@ class LocalServices extends GlobalServices implements iConstants
       return $key==$values;
     }
     $isSelected = false;
-    if (!empty($values)) {
-      foreach ($values as $_ => $value) {
-        if ($key==$value) {
-          $isSelected = true;
-        }
+    while (!empty($values)) {
+      $value = array_shift($values);
+      if ($key==$value) {
+        $isSelected = true;
       }
     }
     return $isSelected;

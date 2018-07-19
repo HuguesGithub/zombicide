@@ -20,8 +20,8 @@ class KeywordServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new KeywordDaoImpl();
     parent::__construct();
+    $this->Dao = new KeywordDaoImpl();
   }
   private function buildFilters($arrFilters)
   {

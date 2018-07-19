@@ -20,8 +20,8 @@ class LiveTokenServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new LiveTokenDaoImpl();
     parent::__construct();
+    $this->Dao = new LiveTokenDaoImpl();
   }
 
   /**

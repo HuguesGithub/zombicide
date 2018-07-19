@@ -35,10 +35,17 @@ $Zombicide = new Zombicide();
 spl_autoload_register(PLUGIN_PACKAGE.'_autoloader');
 function zombicide_autoloader($classname)
 {
-  $pattern = "/(Bean|DaoImpl|Dao|Services|Actions|Utils)/";
+  $pattern = "/(Bean|DaoImpl|Dao|Services|Actions|Utils|Interface)/";
   preg_match($pattern, $classname, $matches);
   if (isset($matches[1])) {
     switch ($matches[1]) {
+      case 'Interface' :
+        if (file_exists(PLUGIN_PATH.'core/implements/'.$classname.'.php')) {
+          include_once(PLUGIN_PATH.'core/implements/'.$classname.'.php');
+        } elseif (file_exists(PLUGIN_PATH.'../mycommon/core/implements/'.$classname.'.php')) {
+          include_once(PLUGIN_PATH.'../mycommon/core/implements/'.$classname.'.php');
+        }
+      break;
       case 'Actions' :
       case 'Bean' :
       case 'Dao' :
@@ -56,16 +63,9 @@ function zombicide_autoloader($classname)
         break;
     }
   } else {
-    if (substr($classname, 0, 1)=='i') {
-      $classfile = sprintf('%score/implements/%s.php', PLUGIN_PATH, $classname);
-      if (!file_exists($classfile)) {
-        $classfile = sprintf('%s../mycommon/core/implements/%s.php', PLUGIN_PATH, $classname);
-      }
-    } else {
-      $classfile = sprintf('%score/domain/%s.class.php', PLUGIN_PATH, str_replace('_', '-', $classname));
-      if (!file_exists($classfile)) {
-        $classfile = sprintf('%s../mycommon/core/domain/%s.class.php', PLUGIN_PATH, str_replace('_', '-', $classname));
-      }
+    $classfile = sprintf('%score/domain/%s.class.php', PLUGIN_PATH, str_replace('_', '-', $classname));
+    if (!file_exists($classfile)) {
+      $classfile = sprintf('%s../mycommon/core/domain/%s.class.php', PLUGIN_PATH, str_replace('_', '-', $classname));
     }
     if (file_exists($classfile)) {
       include_once($classfile);

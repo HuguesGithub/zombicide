@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  * @version 1.0.00
  * @since 1.0.00
  */
-class MainPageBean implements iConstants
+class MainPageBean implements ConstantsInterface
 {
   /**
    * Template pour afficher le header principal

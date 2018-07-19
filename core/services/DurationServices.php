@@ -18,8 +18,8 @@ class DurationServices extends LocalServices
   
   public function __construct()
   {
-    $this->Dao = new DurationDaoImpl();
     parent::__construct();
+    $this->Dao = new DurationDaoImpl();
   }
 
   private function buildFilters($arrFilters)

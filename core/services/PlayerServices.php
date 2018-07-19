@@ -20,8 +20,8 @@ class PlayerServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new PlayerDaoImpl();
     parent::__construct();
+    $this->Dao = new PlayerDaoImpl();
   }
 
   /**

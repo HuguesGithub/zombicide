@@ -20,8 +20,8 @@ class MissionExpansionServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new MissionExpansionDaoImpl();
     parent::__construct();
+    $this->Dao = new MissionExpansionDaoImpl();
     $this->ExpansionServices = new ExpansionServices();
   }
 

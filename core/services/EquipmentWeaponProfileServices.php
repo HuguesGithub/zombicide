@@ -20,8 +20,8 @@ class EquipmentWeaponProfileServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new EquipmentWeaponProfileDaoImpl();
     parent::__construct();
+    $this->Dao = new EquipmentWeaponProfileDaoImpl();
   }
 
   private function buildFilters($arrFilters)

@@ -20,8 +20,8 @@ class TokenServices extends LocalServices
    */
   public function __construct()
   {
-    $this->Dao = new TokenDaoImpl();
     parent::__construct();
+    $this->Dao = new TokenDaoImpl();
   }
 
   private function buildFilters($arrFilters)

@@ -1,5 +1,5 @@
 <?php
-interface iConstants
+interface ConstantsInterface
 {
   const CST_BACKGROUND      = 'background';
   const CST_COORDX          = 'coordX';

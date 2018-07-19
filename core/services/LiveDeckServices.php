@@ -19,7 +19,10 @@ class LiveDeckServices extends LocalServices
    * Class Constructor
    */
   public function __construct()
-  { $this->Dao = new LiveDeckDaoImpl(); }
+  {
+    parent::__construct();
+    $this->Dao = new LiveDeckDaoImpl();
+  }
 
   private function buildFilters($arrFilters)
   {

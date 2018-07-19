@@ -76,7 +76,10 @@ class ExpansionServices extends LocalServices
     foreach ($Expansions as $Expansion) {
       $arrSetLabels[$Expansion->getId()] = $Expansion->getName();
     }
-    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.self::CST_EXPANSIONID, $value, $defaultLabel, $classe, $multiple);
+    $this->labelDefault = $defaultValue;
+    $this->classe = $classe;
+    $this->multiple = $multiple;
+    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix, $value);
   }
   
   

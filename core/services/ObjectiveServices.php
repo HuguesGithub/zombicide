@@ -62,6 +62,9 @@ class ObjectiveServices extends LocalServices
     foreach ($Objectives as $Objective) {
       $arrSetLabels[$Objective->getId()] = $Objective->getCode();
     }
-    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'objectiveId', $value, $defaultLabel, $classe, $multiple);
+    $this->labelDefault = $defaultLabel;
+    $this->classe = $classe;
+    $this->multiple = $multiple;
+    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'objectiveId', $value);
   }
 }

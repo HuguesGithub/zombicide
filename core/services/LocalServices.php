@@ -10,6 +10,9 @@ if (!defined('ABSPATH')) {
  */
 class LocalServices extends GlobalServices implements ConstantsInterface
 {
+  protected $labelDefault = '';
+  protected $classe = 'form-control';
+  protected $multiple = false;
 
   /**
    * @param array $services
@@ -28,16 +31,16 @@ class LocalServices extends GlobalServices implements ConstantsInterface
    * @param string $classe
    * @param bool $multiple
    */
-  protected function getSetSelect($file, $line, $arrSetLabels, $name, $value, $labelDefault='', $classe='form-control', $multiple=false)
+  protected function getSetSelect($file, $line, $arrSetLabels, $name, $value)
   {
     $strSelect = '';
     $selName = $name;
-    if ($labelDefault!='') {
-      $strSelect .= '<label class="screen-reader-text" for="'.$name.'">'.$labelDefault.'</label>';
+    if ($this->labelDefault!='') {
+      $strSelect .= '<label class="screen-reader-text" for="'.$name.'">'.$this->labelDefault.'</label>';
     }
-    $strSelect .= '<select id="'.$name.'" name="'.$selName.'" class="'.$classe.'"'.($multiple?' multiple':'').'>';
-    if (!$multiple && $labelDefault!='') {
-      $strSelect .= '<option value="">'.$labelDefault.'</option>';
+    $strSelect .= '<select id="'.$name.'" name="'.$selName.'" class="'.$this->classe.'"'.($this->multiple?' multiple':'').'>';
+    if (!$this->multiple && $this->labelDefault!='') {
+      $strSelect .= '<option value="">'.$this->labelDefault.'</option>';
     }
     if (!empty($arrSetLabels)) {
       foreach ($arrSetLabels as $key => $labelValue) {

@@ -66,6 +66,9 @@ class TileServices extends LocalServices
     foreach ($this->MissionTiles as $MissionTile) {
       $arrSetLabels[$MissionTile->getId()] = $MissionTile->getCode();
     }
-    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'id', $value, $defaultLabel, $classe, $multiple);
+    $this->labelDefault = $defaultLabel;
+    $this->classe = $classe;
+    $this->multiple = $multiple;
+    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'id', $value);
   }
 }

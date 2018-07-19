@@ -61,6 +61,9 @@ class TokenServices extends LocalServices
     foreach ($Tokens as $Token) {
       $arrSetLabels[$Token->getId()] = $Token->getCode();
     }
-    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'id', $value, $defaultLabel, $classe, $multiple);
+    $this->labelDefault = $defaultLabel;
+    $this->classe = $classe;
+    $this->multiple = $multiple;
+    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'id', $value);
   }
 }

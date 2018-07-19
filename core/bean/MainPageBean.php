@@ -89,7 +89,7 @@ class MainPageBean implements ConstantsInterface
     } else {
       $post = get_post();
       if (empty($post)) {
-        // On a un probl�me (ou pas). On pourrait �tre sur une page avec des variables, mais qui n'est pas prise en compte.
+        // On a un problème (ou pas). On pourrait être sur une page avec des variables, mais qui n'est pas prise en compte.
         $slug = str_replace('/', '', $_SERVER['REDIRECT_SCRIPT_URL']);
         $args = array(
             'name'=>$slug,

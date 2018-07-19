@@ -71,6 +71,9 @@ class MissionExpansionServices extends LocalServices
       }
     }
     $name = $prefix.self::CST_EXPANSIONID;
-    return $this->getSetSelect($file, $line, $arrSetLabels, $name, $arrSelValues, $defaultValue, $classe, $multiple);
+    $this->labelDefault = $defaultValue;
+    $this->classe = $classe;
+    $this->multiple = $multiple;
+    return $this->getSetSelect($file, $line, $arrSetLabels, $name, $value);
   }
 }

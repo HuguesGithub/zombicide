@@ -63,7 +63,10 @@ class RuleServices extends LocalServices
     foreach ($Rules as $Rule) {
       $arrSetLabels[$Rule->getId()] = $Rule->getCode();
     }
-    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'ruleId', $value, $defaultLabel, $classe, $multiple);
+    $this->labelDefault = $defaultLabel;
+    $this->classe = $classe;
+    $this->multiple = $multiple;
+    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'ruleId', $value);
   }
   /**
    * @param string $file
@@ -82,7 +85,10 @@ class RuleServices extends LocalServices
     foreach ($Rules as $Rule) {
       $arrSetLabels[$Rule->getId()] = $Rule->getCode();
     }
-    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'ruleId', $value, $defaultLabel, $classe, $multiple);
+    $this->labelDefault = $defaultLabel;
+    $this->classe = $classe;
+    $this->multiple = $multiple;
+    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'ruleId', $value);
   }
   /**
    * @param string $file
@@ -101,6 +107,9 @@ class RuleServices extends LocalServices
     foreach ($Rules as $Rule) {
       $arrSetLabels[$Rule->getId()] = $Rule->getCode();
     }
-    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'settingId', $value, $defaultLabel, $classe, $multiple);
+    $this->labelDefault = $defaultLabel;
+    $this->classe = $classe;
+    $this->multiple = $multiple;
+    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'settingId', $value);
   }
 }

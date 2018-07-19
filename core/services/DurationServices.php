@@ -60,7 +60,10 @@ class DurationServices extends LocalServices
     foreach ($Durations as $Duration) {
       $arrSetLabels[$Duration->getId()] = $Duration->getStrDuree();
     }
-    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.self::CST_DURATIONID, $value, $defaultValue, $classe, $multiple);
+    $this->labelDefault = $defaultValue;
+    $this->classe = $classe;
+    $this->multiple = $multiple;
+    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.self::CST_DURATIONID, $value);
   }
   
 }

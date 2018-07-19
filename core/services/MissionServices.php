@@ -83,7 +83,8 @@ class MissionServices extends LocalServices
     foreach ($arrSetValues as $setValue) {
       $arrSetLabels[$setValue] = $arrDifficulties[$setValue];
     }
-    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'difficulty', $value, 'Difficultés');
+    $this->labelDefault = 'Difficultés';
+    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'difficulty', $value);
   }
   /**
    * @param string $file
@@ -113,7 +114,8 @@ class MissionServices extends LocalServices
         $arrSetLabels[$setValue] = $min.' à '.$max.' Survivants';
       }
     }
-    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'nbPlayers', $value, 'Survivants');
+    $this->labelDefault = 'Survivants';
+    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'nbPlayers', $value);
   }
   /**
    * @param string $file
@@ -138,7 +140,8 @@ class MissionServices extends LocalServices
     foreach ($arrSetValues as $setValue) {
       $arrSetLabels[$setValue->label] = $setValue->label;
     }
-    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'dimension', $value, 'Dimensions');
+    $this->labelDefault = 'Dimensions';
+    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'dimension', $value);
   }
   /**
    * @param string $file
@@ -154,7 +157,8 @@ class MissionServices extends LocalServices
     foreach ($arrSetValues as $setValue) {
       $arrSetLabels[$setValue] = $setValue.' minutes';
     }
-    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'duration', $value, 'Durées');
+    $this->labelDefault = 'Durées';
+    return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'duration', $value);
   }
   /**
    * @param int $width

@@ -54,4 +54,10 @@ class ExpansionBean extends LocalBean
     $str  = '<div type="button" class="btn btn-dark btn-expansion" data-expansion-id="'.$id.'"><span class="';
     return $str.'"><i class="far fa-square"></i></span> '.$Expansion->getName().'</div>';
   }
+  public function getSpawnMenuButtonLive($id, $spawnSpan)
+  {
+    $Expansion = $this->Expansion;
+    $str  = '<div type="button" class="btn btn-dark btn-expansion" data-expansion-id="'.$id.'"><span data-spawnspan="'.$spawnSpan;
+    return $str.'"><i class="far fa-square"></i></span> '.$Expansion->getName().$spawnSpan.'</div>';
+  }
 }

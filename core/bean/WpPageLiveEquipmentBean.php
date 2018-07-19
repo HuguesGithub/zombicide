@@ -65,7 +65,7 @@ class WpPageLiveEquipmentBean extends WpPageBean
       // On mélange ces cartes
       shuffle($arrEE);
       // On prépare l'insertion en base
-      $EquipmentLiveDeck = new EquipmentLiveDeck(array('liveId'=>$Live->getId(), 'status'=>'P'));
+      $EquipmentLiveDeck = new EquipmentLiveDeck(array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'P'));
       $cpt = 1;
       while (!empty($arrEE)) {
         $id = array_shift($arrEE);
@@ -171,7 +171,7 @@ class WpPageLiveEquipmentBean extends WpPageBean
    */
   private function nonLoggedInterface()
   {
-    $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), 'displayRank', 'ASC');
+    $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), self::CST_DISPLAYRANK, 'ASC');
     $str = '';
     while (!empty($Expansions)) {
       $strTmp = '';
@@ -181,7 +181,7 @@ class WpPageLiveEquipmentBean extends WpPageBean
       $arrF = array(self::CST_EXPANSIONID=>$id);
       $EquipmentCards = $this->EquipmentExpansionServices->getEquipmentExpansionsWithFilters(__FILE__, __LINE__, $arrF);
       if (!empty($EquipmentCards)) {
-      	$strTmp = $ExpansionBean->getMenuButtonLive($id);
+        $strTmp = $ExpansionBean->getMenuButtonLive($id);
       }
       $str .= '<div class="btn-group-vertical live-equipment-selection" role="group">'.$strTmp.'</div>';
     }

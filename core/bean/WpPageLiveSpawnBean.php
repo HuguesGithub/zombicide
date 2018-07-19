@@ -167,18 +167,17 @@ class WpPageLiveSpawnBean extends WpPageBean
   {
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), array('displayRank'), array('ASC'));
     $str = '';
-    if (!empty($Expansions)) {
+    while (!empty($Expansions)) {
       $str .= '<div class="btn-group-vertical live-spawn-selection" role="group">';
-      foreach ($Expansions as $Expansion) {
-        $id = $Expansion->getId();
-        $Spawns = $this->SpawnServices->getSpawnsWithFilters(__FILE__, __LINE__, array('expansionId'=>$id), 'spawnNumber', 'ASC');
-        if (!empty($Spawns)) {
-          $FirstSpawn = array_shift($Spawns);
-          $LastSpawn = array_pop($Spawns);
-          $spawnSpan = ' ['.$FirstSpawn->getSpawnNumber().'-'.$LastSpawn->getSpawnNumber().']';
-          $str .= '<div type="button" class="btn btn-dark btn-expansion" data-expansion-id="'.$id.'"><span data-spawnspan="'.$spawnSpan;
-          $str .= '"><i class="far fa-square"></i></span> '.$Expansion->getName().$spawnSpan.'</div>';
-        }
+      $Expansion = array_shift($Expansions);
+      $ExpansionBean = $Expansion->getBean();
+      $id = $Expansion->getId();
+      $Spawns = $this->SpawnServices->getSpawnsWithFilters(__FILE__, __LINE__, array('expansionId'=>$id), 'spawnNumber', 'ASC');
+      if (!empty($Spawns)) {
+        $FirstSpawn = array_shift($Spawns);
+        $LastSpawn = array_pop($Spawns);
+        $spawnSpan = ' ['.$FirstSpawn->getSpawnNumber().'-'.$LastSpawn->getSpawnNumber().']';
+        $str .= $ExpansionBean->getSpawnMenuButtonLive($id, $spawnSpan);
       }
       $str .= '</div>';
     }

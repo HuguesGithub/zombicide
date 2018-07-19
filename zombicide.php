@@ -39,17 +39,11 @@ function zombicide_autoloader($classname)
   preg_match($pattern, $classname, $matches);
   if (isset($matches[1])) {
     switch ($matches[1]) {
-      case 'Interface' :
-        if (file_exists(PLUGIN_PATH.'core/implements/'.$classname.'.php')) {
-          include_once(PLUGIN_PATH.'core/implements/'.$classname.'.php');
-        } elseif (file_exists(PLUGIN_PATH.'../mycommon/core/implements/'.$classname.'.php')) {
-          include_once(PLUGIN_PATH.'../mycommon/core/implements/'.$classname.'.php');
-        }
-      break;
       case 'Actions' :
       case 'Bean' :
       case 'Dao' :
       case 'DaoImpl' :
+      case 'Interface' :
       case 'Services' :
       case 'Utils' :
         if (file_exists(PLUGIN_PATH.'core/'.strtolower($matches[1]).'/'.$classname.'.php')) {

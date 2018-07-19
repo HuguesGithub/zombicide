@@ -50,7 +50,10 @@ class LevelServices extends LocalServices
   public function getLevelsSelect($file, $line, $value='', $prefix='', $classe='form-control', $multiple=false, $defaultLabel='')
   {
     $Levels = $this->getLevelsWithFilters($file, $line);
-    return $this->getLevelsSelectAlreadyRequested($file, $line, $Levels, $value, $prefix, $classe, $multiple, $defaultLabel);
+    $this->labelDefault = $defaultLabel;
+    $this->classe = $classe;
+    $this->multiple = $multiple;
+    return $this->getLevelsSelectAlreadyRequested($file, $line, $Levels, $value, $prefix);
   }
   /**
    * @param string $file
@@ -63,7 +66,7 @@ class LevelServices extends LocalServices
    * @param string $defaultLabel
    * @return string
    */
-  public function getLevelsSelectAlreadyRequested($file, $line, $Levels, $value, $prefix, $classe, $multiple, $defaultLabel='')
+  public function getLevelsSelectAlreadyRequested($file, $line, $Levels, $value, $prefix)
   {
     $arrSetLabels = array();
     foreach ($Levels as $Level) {

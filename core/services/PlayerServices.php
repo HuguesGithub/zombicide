@@ -54,7 +54,7 @@ class PlayerServices extends LocalServices
     foreach ($Players as $Player) {
       $arrSetLabels[$Player->getId()] = $Player->getNbJoueurs();
     }
-    $this->labelDefault = $defaultLabel;
+    $this->labelDefault = $defaultValue;
     $this->classe = $classe;
     $this->multiple = $multiple;
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'playerId', $value);

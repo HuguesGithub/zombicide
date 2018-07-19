@@ -57,7 +57,10 @@ class ExpansionServices extends LocalServices
   public function getExpansionsSelect($file, $line, $value, $prefix, $classe, $multiple, $defaultLabel)
   {
     $Expansions = $this->getExpansionsWithFilters($file, $line);
-    return $this->getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value, $prefix, $classe, $multiple, $defaultLabel);
+    $this->labelDefault = $defaultLabel;
+    $this->classe = $classe;
+    $this->multiple = $multiple;
+    return $this->getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value, $prefix);
   }
   /**
    * @param string $file
@@ -70,13 +73,13 @@ class ExpansionServices extends LocalServices
    * @param string $defaultLabel
    * @return string
    */
-  public function getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value, $prefix, $classe, $multiple, $defaultLabel='')
+  public function getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value, $prefix)
   {
     $arrSetLabels = array();
     foreach ($Expansions as $Expansion) {
       $arrSetLabels[$Expansion->getId()] = $Expansion->getName();
     }
-    $this->labelDefault = $defaultValue;
+    $this->labelDefault = $defaultLabel;
     $this->classe = $classe;
     $this->multiple = $multiple;
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix, $value);

@@ -78,14 +78,14 @@ class RuleServices extends LocalServices
    * @param string $defaultLabel
    * @return string
    */
-  public function getRuleNoSettingSelect($file, $line, $value, $prefix='id', $classe, $multiple, $defaultLabel='---')
+  public function getRuleNoSettingSelect($file, $line, $value, $prefix='id', $classe=self::CST_FORMCONTROL)
   {
     $Rules = $this->getRulesWithFilters($file, $line, array(self::CST_SETTING=>0));
     $arrSetLabels = array();
     foreach ($Rules as $Rule) {
       $arrSetLabels[$Rule->getId()] = $Rule->getCode();
     }
-    $this->labelDefault = $defaultLabel;
+    $this->labelDefault = '---';
     $this->classe = $classe;
     $this->multiple = $multiple;
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'ruleId', $value);
@@ -100,14 +100,14 @@ class RuleServices extends LocalServices
    * @param string $defaultLabel
    * @return string
    */
-  public function getRuleSettingSelect($file, $line, $value, $prefix='id', $classe, $multiple, $defaultLabel='---')
+  public function getRuleSettingSelect($file, $line, $value, $prefix='id', $classe=self::CST_FORMCONTROL)
   {
     $Rules = $this->getRulesWithFilters($file, $line, array(self::CST_SETTING=>1));
     $arrSetLabels = array();
     foreach ($Rules as $Rule) {
       $arrSetLabels[$Rule->getId()] = $Rule->getCode();
     }
-    $this->labelDefault = $defaultLabel;
+    $this->labelDefault = '---';
     $this->classe = $classe;
     $this->multiple = $multiple;
     return $this->getSetSelect($file, $line, $arrSetLabels, $prefix.'settingId', $value);

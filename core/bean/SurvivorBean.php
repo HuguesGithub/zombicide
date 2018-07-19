@@ -100,7 +100,7 @@ class SurvivorBean extends LocalBean
       // Background du Survivant - 11
       $Survivor->getBackground(),
     );
-    $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/fragments/survivor-row-public.php');
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/survivor-row-public.php');
     return vsprintf($str, $args);
   }
   public function getAllSkills()

@@ -171,20 +171,19 @@ class WpPageLiveEquipmentBean extends WpPageBean
    */
   private function nonLoggedInterface()
   {
-    $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), array('displayRank'), array('ASC'));
+    $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), 'displayRank', 'ASC');
     $str = '';
-    if (!empty($Expansions)) {
-      $str .= '<div class="btn-group-vertical live-equipment-selection" role="group">';
-      foreach ($Expansions as $Expansion) {
-        $id = $Expansion->getId();
-        $arrF = array(self::CST_EXPANSIONID=>$id);
-        $EquipmentCards = $this->EquipmentExpansionServices->getEquipmentExpansionsWithFilters(__FILE__, __LINE__, $arrF);
-        if (!empty($EquipmentCards)) {
-          $str .= '<div type="button" class="btn btn-dark btn-expansion" data-expansion-id="'.$id.'"><span class="';
-          $str .= '"><i class="far fa-square"></i></span> '.$Expansion->getName().'</div>';
-        }
+    while (!empty($Expansions)) {
+      $strTmp = '';
+      $Expansion = array_shift($Expansions);
+      $ExpansionBean = $Expansion->geBean();
+      $id = $Expansion->getId();
+      $arrF = array(self::CST_EXPANSIONID=>$id);
+      $EquipmentCards = $this->EquipmentExpansionServices->getEquipmentExpansionsWithFilters(__FILE__, __LINE__, $arrF);
+      if (!empty($EquipmentCards)) {
+      	$strTmp = $ExpansionBean->getMenuButtonLive($id);
       }
-      $str .= '</div>';
+      $str .= '<div class="btn-group-vertical live-equipment-selection" role="group">'.$strTmp.'</div>';
     }
     return $str;
   }

@@ -46,6 +46,12 @@ class ExpansionBean extends LocalBean
     );
     $tBody  = '<tr><td>'.$Expansion->getId().self::CST_TD_SEP.$Expansion->getCode().self::CST_TD_SEP.$Expansion->getName();
     $tBody .= self::CST_TD_SEP.$Expansion->getDisplayRank().'</td>';
-  return $tBody.vsprintf($tBodyButtons, $args).'</tr>';
+    return $tBody.vsprintf($tBodyButtons, $args).'</tr>';
+  }
+  public function getMenuButtonLive($id)
+  {
+    $Expansion = $this->Expansion;
+    $str  = '<div type="button" class="btn btn-dark btn-expansion" data-expansion-id="'.$id.'"><span class="';
+    return $str.'"><i class="far fa-square"></i></span> '.$Expansion->getName().'</div>';
   }
 }

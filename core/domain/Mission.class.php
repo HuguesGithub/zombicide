@@ -60,6 +60,11 @@ class Mission extends LocalDomain
    * @var int $published
    */
   protected $published;
+  /**
+   * La mission peut-elle être jouée en ligne ?
+   * @var int $liveAble
+   */
+  protected $liveAble;
 
   /**
    * @param array $attributes
@@ -129,6 +134,11 @@ class Mission extends LocalDomain
   public function isPublished()
   { return ($this->published==1); }
   /**
+   * @return boolean
+   */
+  public function isLiveAble()
+  { return ($this->liveAble==1); }
+  /**
    * @param int $id
    */
   public function setId($id)
@@ -178,6 +188,11 @@ class Mission extends LocalDomain
    */
   public function setPublished($published)
   { $this->published=$published; }
+  /**
+   * @param boolean $liveAble
+   */
+  public function setLiveAble($liveAble)
+  { $this->liveAble=$liveAble; }
   /**
    * @return array
    */
@@ -437,7 +452,7 @@ class Mission extends LocalDomain
   public function getWpPostUrl()
   {
     $url = '#';
-    $args = array('meta_key'=>'missionId', 'meta_value'=>$this->id);
+    $args = array('meta_key'=>self::CST_MISSIONID, 'meta_value'=>$this->id);
     $WpPosts = $this->WpPostServices->getArticles(__FILE__, __LINE__, $args);
     if (!empty($WpPosts)) {
       $WpPost = array_shift($WpPosts);
@@ -457,7 +472,7 @@ class Mission extends LocalDomain
   public function updateWithPost($post)
   {
     $doUpdate = false;
-    $arr = array('title', 'code', 'levelId', 'durationId', 'playerId', 'origineId');
+    $arr = array(self::CST_TITLE, 'code', self::CST_LEVELID, self::CST_DURATIONID, self::CST_PLAYERID, self::CST_ORIGINEID);
     while (!empty($arr)) {
       $key = array_shift($arr);
       $value = stripslashes($post[$key]);
@@ -475,7 +490,7 @@ class Mission extends LocalDomain
   public function initWithPost($post)
   {
     $doInsert = true;
-    $arr = array('title', 'code', 'levelId', 'durationId', 'playerId', 'origineId');
+    $arr = array(self::CST_TITLE, 'code', self::CST_LEVELID, self::CST_DURATIONID, self::CST_PLAYERID, self::CST_ORIGINEID);
     while (!empty($arr)) {
       $key = array_shift($arr);
       if ($post[$key] == '') {

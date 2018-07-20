@@ -24,6 +24,7 @@ interface ConstantsInterface
   const CST_KEYACCESS       = 'keyAccess';
   const CST_LEVEL           = 'level';
   const CST_LEVELID         = 'levelId';
+  const CST_LIVEABLE        = 'liveAble';
   const CST_LIVEDECKID      = 'liveDeckId';
   const CST_LIVEID          = 'liveId';
   const CST_MINDURATION     = 'minDuration';

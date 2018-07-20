@@ -964,8 +964,10 @@ button#genKey i { color: #f6a800; padding-top: 4px; padding-right: 0px; }
 .popup-like { background: rgba(68,66,69,0.97); border: 3px solid rgb(250, 168, 0); border-radius: 10px; left: 50%; padding: 10px; position: absolute; top: 50%; }
 .online-identification { height: 66px; margin: -33px 0 0 -200px; width: 400px; }
 
-
-
+.popup-like.online-mission-selection { height: 80%; left: 10%; overflow-x: hidden; overflow-y: auto; top: 10%; width: 80%; }
+.popup-like.online-mission-selection .btn-mission { text-align: left; width: 100%; }
+.live-equipment-selection { width: 100%; }
+.live-equipment-selection .btn-expansion { text-align: left; }
 
 
 
@@ -995,3 +997,4 @@ button#genKey i { color: #f6a800; padding-top: 4px; padding-right: 0px; }
           url("/wp-content/plugins/mycommon/web/rsc/fonts/crackhouse/crackhouse.woff") format("woff"),
           url("./wp-content/plugins/mycommon/web/rsc/fonts/crackhouse/crackhouse.ttf") format("truetype");
 }
+

@@ -11,8 +11,8 @@ if (!defined('ABSPATH')) {
 class WpPageLiveEquipmentBean extends WpPageBean
 {
   private $labelDraw = 'Piocher une carte (<span id="nbCardInDeck">%1$s</span>)';
-  private $labelDisplay = 'Afficher les cartes équipées (<span id="nbCardEquipped">%2$s</span>)';
-  private $labelShuffle = 'Remélanger la défausse (<span id="nbCardInDiscard">%3$s</span>)';
+  private $labelDisplay = 'Afficher les cartes équipées (<span id="nbCardEquipped">%1$s</span>)';
+  private $labelShuffle = 'Remélanger la défausse (<span id="nbCardInDiscard">%1$s</span>)';
 
   /**
    * Class Constructor
@@ -184,7 +184,7 @@ class WpPageLiveEquipmentBean extends WpPageBean
       $arrF = array(self::CST_EXPANSIONID=>$id);
       $EquipmentCards = $this->EquipmentExpansionServices->getEquipmentExpansionsWithFilters(__FILE__, __LINE__, $arrF);
       if (!empty($EquipmentCards)) {
-        $ExpansionBean = $Expansion->geBean();
+        $ExpansionBean = $Expansion->getBean();
         $strTmp = $ExpansionBean->getMenuButtonLive($id);
         $args = array(
           $strTmp,

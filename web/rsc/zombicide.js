@@ -108,6 +108,17 @@ $hj(document).ready(function(){
     window.setInterval(function(){refreshChatContent()}, 5000);
     
     $hj('#startGame').unbind().click(function(){ $hj('form')[0].submit(); });
+    
+    // Sélection de la Mission
+    $hj('.btn.btn-mission').unbind().click(function(){
+      var missionId = $hj(this).data('mission-id');
+      $hj(this).find('input').prop('checked', true);
+      $hj(this).siblings().removeClass('active');
+      $hj(this).toggleClass('active');
+      $hj(this).siblings().find('svg').removeClass('fa-check-square').addClass('fa-square');
+      $hj(this).find('svg').removeClass('fa-square').addClass('fa-check-square');
+    });
+ 
   }
   if ($hj('#canvas-background').length !=0 ) {
     $hj('canvas').drawImage({

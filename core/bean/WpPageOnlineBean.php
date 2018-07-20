@@ -17,8 +17,9 @@ class WpPageOnlineBean extends WpPageBean
   public function __construct($WpPage='')
   {
     parent::__construct($WpPage);
-    $this->LiveServices    = new LiveServices();
-    $this->MissionServices = new MissionServices();
+    $this->LiveServices        = new LiveServices();
+    $this->LiveMissionServices = new LiveMissionServices();
+    $this->MissionServices     = new MissionServices();
   }
   /**
    * @param WpPost $WpPage
@@ -83,11 +84,10 @@ class WpPageOnlineBean extends WpPageBean
     }
     //$ts = date(self::CST_FORMATDATE, time());
     $Live = array_shift($Lives);
-    
     $args = array(self::CST_LIVEID=>$Live->getId());
-    $Missions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, $args);
+    $Missions = $this->LiveMissionServices->getLiveMissionsWithFilters(__FILE__, __LINE__, $args);
     if (empty($Missions)) {
-      return 'Display Mission Choice';
+      return $this->getMenuMissionSelection($Live);
       // On doit choisir une Mission au hasard.
     } else {
       return 'Check if Survivors are selected';
@@ -109,6 +109,35 @@ class WpPageOnlineBean extends WpPageBean
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php');
     return vsprintf($str, $args);
     */
+  }
+  private function getMenuMissionSelection($Live)
+  {
+    $arrFilters = array(
+      self::CST_LIVEABLE=>1,
+    );
+    $Missions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, $arrFilters);
+    $strDivs = '';
+    while (!empty($Missions)) {
+      $Mission = array_shift($Missions);
+      $strDivs .= '<div type="button" class="btn btn-dark btn-mission" data-mission-id="'.$Mission->getId().'">';
+      $strDivs .= '<input type="radio" name="missionId" class="hidden" value="'.$Mission->getId().'"/>';
+      $strDivs .= '<i class="far fa-square"></i></span> '.$Mission->getTitle().'</div>';
+    }
+  	$args = array(
+  	  $strDivs,
+  	);
+    $strSelection = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/online-mission-selection.php');
+    $strMsg = vsprintf($strSelection, $args);
+    $args = array(
+      'Buttons',
+      'Options',
+      '',
+      $strMsg,
+      '',
+      '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$Live->getId().'">'.$Live->getDeckKey().'</a></li>',
+    );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php');
+    return vsprintf($str, $args);
   }
   /**
    * {@inheritDoc}

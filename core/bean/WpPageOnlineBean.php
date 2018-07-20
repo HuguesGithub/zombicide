@@ -81,14 +81,16 @@ class WpPageOnlineBean extends WpPageBean
       unset($_SESSION[self::CST_DECKKEY]);
       return $this->getContentLoggedNotLive();
     }
-    $ts = date(self::CST_FORMATDATE, time());
+    //$ts = date(self::CST_FORMATDATE, time());
     $Live = array_shift($Lives);
     
     $args = array(self::CST_LIVEID=>$Live->getId());
     $Missions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, $args);
     if (empty($Missions)) {
+      return 'Display Mission Choice';
       // On doit choisir une Mission au hasard.
     } else {
+      return 'Check if Survivors are selected';
       // On doit choisir les Survivants joués. Sauf si c'est déjà fait.
     }
     /*

@@ -231,8 +231,7 @@ class AdminPageMissionsBean extends AdminPageBean
     $filters .= $this->PlayerServices->getNbPlayersSelect(__FILE__, __LINE__, $playerId, $pf, $cl, false, $label);
     $origineId = (isset($aF[self::CST_ORIGINEID]) ? $aF[self::CST_ORIGINEID] : '');
     $label = 'Toutes origines';
-    $filters .= $this->OrigineServices->getOriginesSelect(__FILE__, __LINE__, $origineId, $pf, $cl, false, $label);
-    return $filters;
+    return $filters.$this->OrigineServices->getOriginesSelect(__FILE__, __LINE__, $origineId, $pf, $cl, false, $label);
   }
 
   /**

@@ -192,6 +192,10 @@ class Mission extends LocalDomain
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new Mission(), self::getClassVars(), $row); }
   /**
+   */
+  public function getBean()
+  { return new MissionBean($this); }
+  /**
    * @param string $aF
    * @param string $aO
    * @return array MissionTile

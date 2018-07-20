@@ -79,10 +79,8 @@ class WpPageLiveSpawnBean extends WpPageBean
   }
   private function getDeckButtons($Live)
   {
-    $str  = '';
-    $str .= '<div class="btn-group-vertical live-spawn-selection" role="group">';
     $deckKey = $Live->getDeckKey();
-    $str .= $this->getButtonDiv('btnDisabled1', $deckKey, '', 'Actions disponibles :', '', 'btn-dark disabled');
+    $str  = $this->getButtonDiv('btnDisabled1', $deckKey, '', 'Actions disponibles :', '', 'btn-dark disabled');
     $label = vsprintf($this->labelDraw, $Live->getNbCardsInDeck());
     $str .= $this->getButtonDiv('btnDrawSpawnCard', $deckKey, 'drawSpawnCard', $label);
     $str .= $this->getButtonDiv('btnDiscardSpawnActive', $deckKey, 'discardSpawnActive', 'Défausser les cartes piochées');
@@ -92,7 +90,12 @@ class WpPageLiveSpawnBean extends WpPageBean
     $str .= $this->getButtonDiv('btnLeaveSpawnDeck', $deckKey, 'leaveSpawnDeck', 'Quitter cette pioche');
     $str .= $this->getButtonDiv('btnDisabled2', $deckKey, '', 'Attention, action irréversible :', '', 'btn-dark disabled');
     $str .= $this->getButtonDiv('btnDeleteSpawnDeck', $deckKey, 'deleteSpawnDeck', 'Supprimer cette pioche', 'reload', 'btn-danger');
-    return $str.'</div>';
+    $args = array(
+      $str,
+      'live-spawn-selection',
+    );
+    $strFile = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/dynamic-div.php');
+    return vsprintf($strFile, $args);
   }
   private function getButtonDiv($id, $deckKey, $action, $label, $type='insert', $classe='btn-dark')
   {
@@ -165,21 +168,26 @@ class WpPageLiveSpawnBean extends WpPageBean
    */
   private function nonLoggedInterface()
   {
-    $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), array('displayRank'), array('ASC'));
+    $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), 'displayRank', 'ASC');
+    $strFile = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/dynamic-div.php');
     $str = '';
     while (!empty($Expansions)) {
-      $str .= '<div class="btn-group-vertical live-spawn-selection" role="group">';
+      $strTmp = '';
       $Expansion = array_shift($Expansions);
-      $ExpansionBean = $Expansion->getBean();
       $id = $Expansion->getId();
       $Spawns = $this->SpawnServices->getSpawnsWithFilters(__FILE__, __LINE__, array('expansionId'=>$id), 'spawnNumber', 'ASC');
       if (!empty($Spawns)) {
+        $ExpansionBean = $Expansion->getBean();
         $FirstSpawn = array_shift($Spawns);
         $LastSpawn = array_pop($Spawns);
         $spawnSpan = ' ['.$FirstSpawn->getSpawnNumber().'-'.$LastSpawn->getSpawnNumber().']';
-        $str .= $ExpansionBean->getSpawnMenuButtonLive($id, $spawnSpan);
+        $strTmp = $ExpansionBean->getSpawnMenuButtonLive($id, $spawnSpan);
+        $args = array(
+          $strTmp,
+          'live-spawn-selection',
+        );
+        $str .= vsprintf($strFile, $args);
       }
-      $str .= '</div>';
     }
     return $str;
   }

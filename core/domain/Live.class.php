@@ -84,27 +84,26 @@ class Live extends LocalDomain
   /**
    * @return int
    */
-  public function getNbCardsInDeck($type='spawn')
+  public function getNbCardsInDeck($type=self::CST_SPAWN)
   { return $this->getNbCardsByStatus($type, 'P'); }
   /**
    * @return int
    */
-  public function getNbCardsInDiscard($type='spawn')
+  public function getNbCardsInDiscard($type=self::CST_SPAWN)
   { return $this->getNbCardsByStatus($type, 'D'); }
   /**
    * @return int
    */
   public function getNbCardsEquipped()
-  { return $this->getNbCardsByStatus('equipment', 'E'); }
+  { return $this->getNbCardsByStatus(self::CST_EQUIPMENT, 'E'); }
   /**
    */
   public function getNbCardsByStatus($type, $status)
   {
-    if ($type=='spawn') {
-      $args = array('liveId'=>$this->id, 'status'=>$status);
+    $args = array(self::CST_LIVEID=>$this->id, self::CST_STATUS=>$status);
+    if ($type==self::CST_SPAWN) {
       $Objs = $this->SpawnLiveDeckServices->getSpawnLiveDecksWithFilters(__FILE__, __LINE__, $args);
-    } elseif ($type=='equipment') {
-      $args = array('liveId'=>$this->id, 'status'=>$status);
+    } elseif ($type==self::CST_EQUIPMENT) {
       $Objs = $this->EquipmentLiveDeckServices->getEquipmentLiveDecksWithFilters(__FILE__, __LINE__, $args);
     }
     return count($Objs);

@@ -107,7 +107,7 @@ $hj(document).ready(function(){
     });
     window.setInterval(function(){refreshChatContent()}, 5000);
     
-    $hj('#startGame').unbind().click(function(){ joinGame(); });
+    $hj('#startGame').unbind().click(function(){ $hj('form')[0].submit(); });
   }
   if ($hj('#canvas-background').length !=0 ) {
     $hj('canvas').drawImage({

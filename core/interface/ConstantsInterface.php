@@ -50,6 +50,7 @@ interface ConstantsInterface
   const CST_SENDTOID        = 'sendToId';
   const CST_SETTING         = 'setting';
   const CST_SKILL           = 'skill';
+  const CST_SPAWN           = 'spawn';
   const CST_SPAWNNUMBER     = 'spawnNumber';
   const CST_SQUAREPOINTER   = 'square pointer';
   const CST_STATUS          = 'status';

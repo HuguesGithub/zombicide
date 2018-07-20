@@ -53,7 +53,7 @@ class LevelServices extends LocalServices
     $this->labelDefault = $defaultLabel;
     $this->classe = $classe;
     $this->multiple = $multiple;
-    return $this->getLevelsSelectAlreadyRequested($file, $line, $Levels, $value, $prefix);
+    return $this->getLevelsSelectAlreadyRequested($file, $line, $Levels, $value, $prefix.self::CST_LEVELID);
   }
   /**
    * @param string $file

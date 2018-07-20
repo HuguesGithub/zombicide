@@ -28,7 +28,14 @@ class WpPostServices extends GlobalServices
       'orderby'=> 'name',
       'order'=>'ASC',
       'posts_per_page'=>-1,
-      'post_type'=>'post'
+      'post_type'=>'post',
+      'tax_query' => array(
+        array(
+          'taxonomy' => 'post_tag',
+          'field' => 'slug',
+          'terms' => 'mission'
+        )
+      )
     );
     if (!empty($params)) {
       foreach ($params as $key => $value) {

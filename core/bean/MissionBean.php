@@ -29,6 +29,8 @@ class MissionBean extends LocalBean
     $this->tplRow = 'web/pages/admin/mission/row.php';
     $this->tplEdit = 'web/pages/admin/mission/edit.php';
   }
+  public function getMission()
+  { return $this->Mission; }
   /**
    * @return string
    */

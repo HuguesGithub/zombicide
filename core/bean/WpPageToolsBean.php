@@ -94,31 +94,29 @@ class WpPageToolsBean extends WpPageBean
   {
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), self::CST_DISPLAYRANK, 'ASC');
     if (!empty($Expansions)) {
-      $str .= '<div class="btn-group-vertical team-selection" role="group">';
-      $str .= '<div class="btn-toolbar" role="toolbar">';
-      $str .= '  <div class="btn-group" id="nbSurvSel" role="group">';
+      $str .= '<div class="btn-group-vertical team-selection" role="group"><div class="btn-toolbar" role="toolbar">';
+      $str .= '<div class="btn-group" id="nbSurvSel" role="group">';
       for ($i=1; $i<=6; $i++) {
         $str .= '  <button type="button" class="btn btn-dark'.($i==6?' active':'').'" data-nb="'.$i.'">'.$i.'</button>';
       }
-      $str .= '  </div>';
-      $str .= '</div>';
+      $str .= '</div></div>';
       foreach ($Expansions as $Expansion) {
         $id = $Expansion->getId();
-        $Survivors = $this->SurvivorServices->getSurvivorsWithFilters(__FILE__, __LINE__, array(self::CST_EXPANSIONID=>$id), 'name', 'ASC');
+        $Survivors = $this->SurvivorServices->getSurvivorsWithFilters(__FILE__, __LINE__, array(self::CST_EXPANSIONID=>$id));
         if (empty($Survivors)) {
           continue;
         }
         $str .= '<div type="button" class="btn btn-dark btn-expansion" data-expansion-id="'.$id.'"><span>';
         $str .= '<i class="far fa-square"></i></span> '.$Expansion->getName().'</div>';
-        foreach ($Survivors as $Survivor) {
+        while (!empty($Survivors)) {
+          $Survivor = array_shift($Survivors);
           $survivorId = $Survivor->getId();
           $str .= '<button type="button" class="btn btn-secondary btn-survivor hidden" data-expansion-id="';
           $str .= $id.'" data-survivor-id="'.$survivorId.'"><i class="far fa-square"></i> '.$Survivor->getName().'</button>';
         }
       }
       $str .= '<div type="button" class="btn btn-primary btn-expansion" id="proceedBuildTeam"><span>';
-      $str .= '<i class="far fa-check-circle"></i></span> Générer</div>';
-      $str .= '</div>';
+      $str .= '<i class="far fa-check-circle"></i></span> Générer</div></div>';
     }
     $args = array(
       $str

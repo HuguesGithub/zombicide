@@ -81,10 +81,8 @@ class WpPageLiveEquipmentBean extends WpPageBean
   }
   private function getDeckButtons($Live)
   {
-    $str  = '';
-    $str .= '<div class="btn-group-vertical live-spawn-selection" role="group">';
     $deckKey = $Live->getDeckKey();
-    $str .= $this->getButtonDiv('btnDisabled1', $deckKey, '', 'Actions disponibles :', '', 'btn-dark disabled');
+    $str  = $this->getButtonDiv('btnDisabled1', $deckKey, '', 'Actions disponibles :', '', 'btn-dark disabled');
     $label = vsprintf($this->labelDraw, $Live->getNbCardsInDeck(self::CST_EQUIPMENT));
     $str .= $this->getButtonDiv('btnDrawEquipmentCard', $deckKey, 'drawEquipmentCard', $label);
     $str .= $this->getButtonDiv('btnEquipEquipmentActive', $deckKey, 'equipEquipmentActive', 'Equiper les cartes piochées');
@@ -98,7 +96,12 @@ class WpPageLiveEquipmentBean extends WpPageBean
     $str .= $this->getButtonDiv('btnDisabled2', $deckKey, 'Attention, action irréversible :', '', 'btn-dark disabled');
     $label = 'Supprimer cette pioche';
     $str .= $this->getButtonDiv('btnDeleteEquipmentDeck', $deckKey, 'deleteEquipmentDeck', $label, 'reload', 'btn-danger');
-    return $str.'</div>';
+    $args = array(
+      $str,
+      'live-equipment-selection',
+    );
+    $strFile = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/dynamic-div.php');
+    return vsprintf($strFile, $args);
   }
   private function getButtonDiv($id, $deckKey, $action, $label, $type='insert', $classe='btn-dark')
   {
@@ -172,18 +175,23 @@ class WpPageLiveEquipmentBean extends WpPageBean
   private function nonLoggedInterface()
   {
     $Expansions = $this->ExpansionServices->getExpansionsWithFilters(__FILE__, __LINE__, array(), self::CST_DISPLAYRANK, 'ASC');
+    $strFile = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/dynamic-div.php');
     $str = '';
     while (!empty($Expansions)) {
       $strTmp = '';
       $Expansion = array_shift($Expansions);
-      $ExpansionBean = $Expansion->geBean();
       $id = $Expansion->getId();
       $arrF = array(self::CST_EXPANSIONID=>$id);
       $EquipmentCards = $this->EquipmentExpansionServices->getEquipmentExpansionsWithFilters(__FILE__, __LINE__, $arrF);
       if (!empty($EquipmentCards)) {
+        $ExpansionBean = $Expansion->geBean();
         $strTmp = $ExpansionBean->getMenuButtonLive($id);
+        $args = array(
+          $strTmp,
+          'live-equipment-selection',
+        );
+        $str .= vsprintf($strFile, $args);
       }
-      $str .= '<div class="btn-group-vertical live-equipment-selection" role="group">'.$strTmp.'</div>';
     }
     return $str;
   }

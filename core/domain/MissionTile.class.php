@@ -148,13 +148,14 @@ class MissionTile extends LocalDomain
    */
   public function getRowForTileTbody()
   {
-    $strTileTable  = '<tr>';
-    $strTileTable .= '<th>'.$this->getXCoord().'</th>';
-    $strTileTable .= '<th>'.$this->getYCoord().'</th>';
-    $strTileTable .= '<th>'.$this->getTileCode().'</th>';
-    $strTileTable .= '<th>'.$this->getOrientation().'</th>';
-    $strTileTable .= '<th><span data-missiontileid="'.$this->getId().'" class="btn btn-default btn-xs rmvTileRowBtn">';
-    $strTileTable .= '<i class="glyphicon glyphicon-minus-sign"></i></span></th>';
-    return $strTileTable.'</tr>';
+    $args = array(
+      $this->getXCoord(),
+      $this->getYCoord(),
+      $this->getTileCode(),
+      $this->getOrientation(),
+      $this->getId(),
+    );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/tile-row-public.php');
+    return vsprintf($str, $args);
   }
 }

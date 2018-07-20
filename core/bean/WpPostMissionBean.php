@@ -10,6 +10,7 @@ if (!defined('ABSPATH')) {
  */
 class WpPostMissionBean extends WpPostBean
 {
+  private $h5Ul = '<h5>%1$s</h5><ul>%2$s</ul>';
   /**
    * Constructeur
    */
@@ -29,8 +30,7 @@ class WpPostMissionBean extends WpPostBean
         $strObj .= vsprintf($strModel, array($MissionObjective->getTitle(), $MissionObjective->getObjectiveDescription()));
       }
       if ($strObj!='') {
-        $contentObjs .= '<h5>Objectifs</h5>';
-        $contentObjs .= '<ul>'.$strObj.'</ul>';
+        $contentObjs .= vsprintf($this->h5Ul, array('Objectifs', $strObj));
       }
     }
     return $contentObjs;
@@ -50,10 +50,10 @@ class WpPostMissionBean extends WpPostBean
         }
       }
       if ($strMep!='') {
-        $contentRules .= '<h5>Mise en place</h5><ul>'.$strMep.'</ul>';
+        $contentRules .= vsprintf($this->h5Ul, array('Mise en place', $strMep));
       }
       if ($strRs!='') {
-        $contentRules .= '<h5>Regles speciales</h5><ul>'.$strRs.'</ul>';
+        $contentRules .= vsprintf($this->h5Ul, array('Regles speciales', $strRs));
       }
     }
     return $contentRules;

@@ -188,4 +188,63 @@ class MissionServices extends LocalServices
     return $heightSelect.'</select>';
   }
 
+  public function getStartingZombies($Live, $Mission)
+  {
+    $LiveZombies = array();
+    if ($Mission->hasRule(11)) {
+      switch ($Mission->getId()) {
+        case 1 :
+          array_push($LiveZombies, new LiveZombie(array('liveId'=>$Live->getId(), 'missionZoneId'=>4, 'zombieTypeId'=>1, 'zombieCategoryId'=>1, 'quantity'=>1)));
+          array_push($LiveZombies, new LiveZombie(array('liveId'=>$Live->getId(), 'missionZoneId'=>12, 'zombieTypeId'=>1, 'zombieCategoryId'=>1, 'quantity'=>1)));
+        break;
+      }
+    }
+    return $LiveZombies;
+  }
+  
+  public function getStartingEquipmentDeck($Mission)
+  {
+    $arrEE = array();
+    // On récupère les Extensions rattachées à la Mission.
+    $MissionExpansions = $Mission->getMissionExpansions();
+    while (!empty($MissionExpansions)) {
+      $MissionExpansion = array_shift($MissionExpansions);
+      // On récupère les Equipements rattachés aux Extensions
+      $EquipmentExpansions = $MissionExpansion->getEquipmentExpansions();
+      while (!empty($EquipmentExpansions)) {
+        $EquipmentExpansion = array_shift($EquipmentExpansions);
+        $EquipmentCard = $EquipmentExpansion->getEquipment();
+        // On ne doit pas prendre les cartes suivantes :
+        // Starter / Pimp / TODO : gérer les cartes comme le Molotov, la Batte Cloutée...
+        if ($EquipmentCard->isStarter() || $EquipmentCard->isPimp()) {
+          continue;
+        }
+        // On ajoute autant de fois la carte que requis.
+        for ($i=0; $i<$EquipmentExpansion->getQuantity(); $i++) {
+          array_push($arrEE, $EquipmentExpansion->getId());
+        }
+      }
+    }
+    shuffle($arrEE);
+    // Certaines règles peuvent demander un traitement spécifique pour certaines cartes.
+    if ($Mission->hasRule(2)) {
+      // On rajoute le Pistolet, le Pied-de-biche et la Hache Starters en début de pioche.
+      $arrAdd = array(13, 23, 25);
+      shuffle($arrAdd);
+      $arrEE = array_merge($arrAdd, $arrEE);
+    }
+    return $arrEE;
+  }
+  
+  public function getSpawnDeck($Mission)
+  {
+    // Certaines règles peuvent demander un traitement spécifique pour certaines cartes.
+    if ($Mission->hasRule(1)) {
+      // On ne joue qu'avec les cartes #1, #2, #3, #4 et #41.
+      $arrNumbers = array(1, 2, 3, 4, 41);
+      shuffle($arrNumbers);
+    }
+    return $arrNumbers;
+  }
+  
 }

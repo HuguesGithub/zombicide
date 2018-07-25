@@ -46,4 +46,18 @@ class SpawnLiveDeckServices extends LocalServices
     $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
+
+  
+  public function createDeck($SpawnLiveDeck, $arrNumbers)
+  {
+    $cpt = 1;
+    while (!empty($arrNumbers)) {
+      $id = array_shift($arrNumbers);
+      $SpawnLiveDeck->setSpawnCardId($id);
+      $SpawnLiveDeck->setRank($cpt);
+      $cpt++;
+      $this->insert(__FILE__, __LINE__, $SpawnLiveDeck);
+    }
+  }
+  
 }

@@ -36,6 +36,7 @@ class SurvivorServices extends LocalServices
     array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_ULTIMATE) ? '%'.$arrFilters[self::CST_ULTIMATE].'%' : '%'));
     array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_EXPANSIONID) ? $arrFilters[self::CST_EXPANSIONID] : '%'));
     array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, self::CST_BACKGROUND) ? $arrFilters[self::CST_BACKGROUND] : '%'));
+    array_push($arrParams, ($this->isNonEmptyAndNoArray($arrFilters, 'liveAble') ? $arrFilters['liveAble'] : '%'));
     return $arrParams;
   }
   /**

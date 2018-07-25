@@ -31,7 +31,7 @@ class LiveMission extends LocalDomain
   public function __construct($attributes=array())
   {
     parent::__construct($attributes);
-    $this->LiveMissionServices = new LiveMissionServices();
+    $this->MissionServices = new MissionServices();
   }
   /**
    * @return int
@@ -72,8 +72,16 @@ class LiveMission extends LocalDomain
    * @param array $row
    * @param string $a
    * @param string $b
-   * @return MissionRule
+   * @return LiveMission
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new LiveMission(), self::getClassVars(), $row); }
+  
+  public function getMission()
+  {
+    if ($this->Mission==null) {
+      $this->Mission = $this->MissionServices->select(__FILE__, __LINE__, $this->missionId);
+    }
+    return $this->Mission;
+  }
 }

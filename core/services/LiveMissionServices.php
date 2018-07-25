@@ -24,6 +24,14 @@ class LiveMissionServices extends LocalServices
     $this->Dao = new LiveMissionDaoImpl();
   }
 
+  private function buildFilters($arrFilters)
+  {
+    $arrParams = array();
+    $arrParams[] = (isset($arrFilters[self::CST_LIVEID]) ? $arrFilters[self::CST_LIVEID] : '%');
+    $arrParams[] = (isset($arrFilters['missionId']) ? $arrFilters['missionId'] : '%');
+    return $arrParams;
+  }
+  
   /**
    * @param string $file
    * @param string $line
@@ -35,6 +43,7 @@ class LiveMissionServices extends LocalServices
   public function getLiveMissionsWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc')
   {
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
+    $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);  
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
 

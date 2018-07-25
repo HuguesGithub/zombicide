@@ -67,7 +67,7 @@ interface ConstantsInterface
   const CST_TRASH           = 'trash';
   const CST_ULTIMATE        = 'ultimate';
   const CST_UPLOADFILES     = 'upload_files';
-  const CST_WINDOWCLOSE     = 'window_close';
+  const CST_WINDOWCLOSE     = 'window-close';
   const CST_YELLOW          = 'yellow';
   const CST_ZOMBIVOR        = 'zombivor';
 }

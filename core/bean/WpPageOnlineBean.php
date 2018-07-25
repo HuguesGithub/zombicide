@@ -17,9 +17,17 @@ class WpPageOnlineBean extends WpPageBean
   public function __construct($WpPage='')
   {
     parent::__construct($WpPage);
-    $this->LiveServices        = new LiveServices();
-    $this->LiveMissionServices = new LiveMissionServices();
-    $this->MissionServices     = new MissionServices();
+    $this->EquipmentLiveDeckServices = new EquipmentLiveDeckServices();
+    $this->LiveServices              = new LiveServices();
+    $this->LiveMissionServices       = new LiveMissionServices();
+    $this->LiveMissionTokenServices  = new LiveMissionTokenServices();
+    $this->LiveSurvivorServices      = new LiveSurvivorServices();
+    $this->LiveSurvivorSkillServices = new LiveSurvivorSkillServices();
+    $this->LiveZombieServices        = new LiveZombieServices();
+    $this->MissionServices           = new MissionServices();
+    $this->MissionTokenServices      = new MissionTokenServices();
+    $this->SpawnLiveDeckServices     = new SpawnLiveDeckServices();
+    $this->SurvivorServices          = new SurvivorServices();
   }
   /**
    * @param WpPost $WpPage
@@ -84,34 +92,164 @@ class WpPageOnlineBean extends WpPageBean
     }
     //$ts = date(self::CST_FORMATDATE, time());
     $Live = array_shift($Lives);
+    $this->Live = $Live;
     $args = array(self::CST_LIVEID=>$Live->getId());
-    $Missions = $this->LiveMissionServices->getLiveMissionsWithFilters(__FILE__, __LINE__, $args);
-    if (empty($Missions)) {
-      return $this->getMenuMissionSelection($Live);
-      // On doit choisir une Mission au hasard.
+    $LiveMissions = $this->LiveMissionServices->getLiveMissionsWithFilters(__FILE__, __LINE__, $args);
+    if (empty($LiveMissions)) {
+      if (isset($_POST['createMission'])) {
+        $missionId = $_POST['missionId'];
+        $Mission = $this->MissionServices->select(__FILE__, __LINE__, $missionId);
+        if ($Mission->isLiveAble()) {
+          $this->Mission = $Mission;
+          $this->buildLiveMission();
+          return $this->getContentSurvivors();
+        }
+      }
+      return $this->getMenuMissionSelection();
     } else {
-      return 'Check if Survivors are selected';
+      $LiveMission = array_shift($LiveMissions);
+      $this->Mission = $LiveMission->getMission();
       // On doit choisir les Survivants joués. Sauf si c'est déjà fait.
+      return $this->getContentSurvivors();
     }
-    /*
-    $missionId = 1;
-    $MissionBean = new MissionBean($Mission);
-    $strMsg  = '<li class="msg-technique" data-timestamp="'.$ts.'"><div><span class="timestamp">'.$ts;
-    $strMsg .= '</span></div>Bienvenue dans l\'espace de discussion '.$Live->getDeckKey().'.</li>';
+  }
+  private function buildLiveMission()
+  {
+    $liveId = $this->Live->getId();
+    $missionId = $this->Mission->getId();
+    // On doit créer un LiveMission
+    $args = array('liveId'=>$liveId, 'missionId'=>$missionId);
+    $LiveMission = new LiveMission($args);
+    $this->LiveMissionServices->insert(__FILE__, __LINE__, $LiveMission);
+    // On doit créer des Live_MissionToken
+    $MissionTokens = $this->MissionTokenServices->getMissionTokensWithFilters(__FILE__, __LINE__, array('missionId'=>$missionId));
+    while (!empty($MissionTokens)) {
+      $MissionToken = array_shift($MissionTokens);
+      $LiveMissionToken = new LiveMissionToken(array('liveId'=>$liveId, 'missionTokenId'=>$MissionToken->getId(), 'status'=>$MissionToken->getStatus()));
+      $this->LiveMissionTokenServices->insert(__FILE__, __LINE__, $LiveMissionToken);
+    }
+    // On doit créer des Live_MissionZombies, si nécessaire.
+    $LiveZombies = $this->MissionServices->getStartingZombies($this->Live, $this->Mission);
+    while (!empty($LiveZombies)) {
+      $LiveZombie = array_shift($LiveZombies);
+      $this->LiveZombieServices->insert(__FILE__, __LINE__, $LiveZombie);
+    }
+    // On doit créer des EquipmentLive
+    $EquipmentLiveDeck = new EquipmentLiveDeck(array('liveId'=>$liveId, 'status'=>'P'));
+    $arrEE = $this->MissionServices->getStartingEquipmentDeck($this->Mission);
+    $this->EquipmentLiveDeckServices->createDeck($EquipmentLiveDeck, $arrEE);
+    // On doit créer des EquipmentSpawn
+    $SpawnLiveDeck = new SpawnLiveDeck(array('liveId'=>$liveId, 'status'=>'P'));
+    $arrNumbers = $this->MissionServices->getSpawnDeck($this->Mission);
+    $this->SpawnLiveDeckServices->createDeck($SpawnLiveDeck, $arrNumbers);
+  }
+  private function getContentSurvivors()
+  {
+    $Live = $this->Live;
+    $args = array(self::CST_LIVEID=>$Live->getId());
+    // Si on a au moins un LiveSurvivor, on affiche la Map.
+    $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, $args);
+    if (!empty($LiveSurvivors)) {
+      return $this->getContentOnline();
+    }
+    // A-t-on saisi une sélection de Survivants à ajouter à la partie Live ?
+    if (isset($_POST['createSurvivor'])) {
+      $Mission = $this->Mission;
+      $hasSurvivorSelection = false;
+      $LiveSurvivors = array();
+      $args['missionZoneId'] = $Mission->getStartingMissionZoneId();
+      $args['survivorTypeId'] = 1;
+      $args['experiencePoints'] = 0;
+      $args['hitPoints'] = 2;
+      $survivorIds = $_POST['survivorId'];
+      // On parcourt la sélection
+      while (!empty($survivorIds)) {
+        $survivorId = array_shift($survivorIds);
+        $Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $survivorId);
+        // On conserve ceux sélectionnables.
+        if ($Survivor->isLiveAble()) {
+          $hasSurvivorSelection = true;
+          $args['survivorId'] = $Survivor->getId();
+          $LiveSurvivor = new LiveSurvivor($args);
+          $this->LiveSurvivorServices->insert(__FILE__, __LINE__, $LiveSurvivor);
+          // Une fois le LiveSurvivor créé, on doit créer les LiveSurvivorSkills.
+          $argsLSS = array('liveSurvivorId'=>$LiveSurvivor->getId());
+          $SurvivorSkills = $Survivor->getSurvivorSkills(1);
+          while (!empty($SurvivorSkills)) {
+            $SurvivorSkill = array_shift($SurvivorSkills);
+            $argsLSS['skillId'] = $SurvivorSkill->getSkillId();
+            $argsLSS['tagLevelId'] = $SurvivorSkill->getTagLevelId();
+            $argsLSS['locked'] = ($SurvivorSkill->getTagLevelId()>=20?1:0);
+            $LiveSurvivorSkill = new LiveSurvivorSkill($argsLSS);
+            $this->LiveSurvivorSkillServices->insert(__FILE__, __LINE__, $LiveSurvivorSkill);
+            if ($LiveSurvivorSkill->isStartsWith()) {
+              // Si cette compétence est une compétence qui permet au Survivant de commencer avec un équipement, on le gère.
+              $Skill = $LiveSurvivorSkill->getSkill();
+              $EquipmentExpansions = EquipmentExpansion::getFromStartingSkill($Skill);
+              $LiveSurvivor->removeStartingEquipmentFromDeckAndEquip($Live, $EquipmentExpansions);
+            }
+          }
+          array_push($LiveSurvivors, $LiveSurvivor);
+        }
+      }
+      $Mission->addStandardStartingEquipment($Live, $LiveSurvivors);
+      // Si on en a au moins un de sélectionnable, la phase de préparation de la partie est finie, on affiche la Map.
+      if ($hasSurvivorSelection) {
+        return $this->getContentOnline();
+      }
+    }
+    
+    // Bon, bein, on veut afficher la liste des Survivants pouvant être joués...
+    $Survivors = $this->SurvivorServices->getSurvivorsWithFilters(__FILE__, __LINE__, array('liveAble'=>1));
+    $strDivs = '';
+    while (!empty($Survivors)) {
+      $Survivor = array_shift($Survivors);
+      $strDivs .= '<div type="button" class="btn btn-dark btn-survivor" data-survivor-id="'.$Survivor->getId().'">';
+      $strDivs .= '<input type="checkbox" name="survivorId[]" class="hidden" value="'.$Survivor->getId().'"/>';
+      $strDivs .= '<i class="far fa-square"></i></span> '.$Survivor->getName().'</div>';
+    }
+  	$args = array(
+  	  $strDivs,
+      $this->debugMsg,
+  	);
+    $strSelection = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/online-survivor-selection.php');
+    $strMsg = vsprintf($strSelection, $args);
+
     $args = array(
       'Buttons',
       'Options',
+      '',
       $strMsg,
-      $MissionBean->displayCanvas(),
       '',
       '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$Live->getId().'">'.$Live->getDeckKey().'</a></li>',
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php');
     return vsprintf($str, $args);
-    */
   }
-  private function getMenuMissionSelection($Live)
+  private function getContentOnline()
   {
+    $Live = $this->Live;
+    $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, array('liveId'=>$Live->getId()));
+    $sideBar = '';
+    while (!empty($LiveSurvivors)) {
+      $LiveSurvivor = array_shift($LiveSurvivors);
+      $Bean = $LiveSurvivor->getBean();
+      $sideBar .= $Bean->getSideBarContent();
+    }
+    $args = array(
+      'Buttons',
+      $sideBar,
+      '',
+      'TOTO',
+      '',
+      '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$Live->getId().'">'.$Live->getDeckKey().'</a></li>',
+    );
+    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php');
+    return vsprintf($str, $args);
+  }
+  private function getMenuMissionSelection()
+  {
+    $Live = $this->Live;
     $arrFilters = array(
       self::CST_LIVEABLE=>1,
     );

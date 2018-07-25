@@ -964,10 +964,30 @@ button#genKey i { color: #f6a800; padding-top: 4px; padding-right: 0px; }
 .popup-like { background: rgba(68,66,69,0.97); border: 3px solid rgb(250, 168, 0); border-radius: 10px; left: 50%; padding: 10px; position: absolute; top: 50%; }
 .online-identification { height: 66px; margin: -33px 0 0 -200px; width: 400px; }
 
-.popup-like.online-mission-selection { height: 80%; left: 10%; overflow-x: hidden; overflow-y: auto; top: 10%; width: 80%; }
-.popup-like.online-mission-selection .btn-mission { text-align: left; width: 100%; }
+.popup-like.online-mission-selection,
+.popup-like.online-survivor-selection{ height: 80%; left: 10%; overflow-x: hidden; overflow-y: auto; top: 10%; width: 80%; }
+.popup-like.online-mission-selection .btn-mission,
+.popup-like.online-survivor-selection .btn-survivor { text-align: left; width: 100%; }
 .live-equipment-selection { width: 100%; }
 .live-equipment-selection .btn-expansion { text-align: left; }
+
+#online-sidebar-options article { background: rgba(68,66,69,0.97); border-bottom: 3px solid rgb(250, 168, 0); margin: 0; }
+#online-sidebar-options .stats { color: #F6A800; }
+#online-sidebar-options .hp { color: #FF0000; }
+#online-sidebar-options .xp { padding: 2px; }
+#online-sidebar-options .xp .blue { border: 2px solid #007bff; height: 26px; position: relative; }
+#online-sidebar-options .xp .percent { background: #007bff; height: 100%; display: block; position: absolute; }
+#online-sidebar-options .xp .value { position: absolute; left: 50%; width: 40px; line-height: 18px; margin-left: -20px; text-align: center; }
+
+#online-sidebar-options nav { background: rgba(68,66,69,0.97); border: 0 none; margin-top: 5px; width: 100%; }
+#online-sidebar-options nav li { border: 1px solid rgb(250, 168, 0); line-height:inherit; margin: 1%; padding: 1px; width: 48%; }
+#online-sidebar-options nav li a { background: transparent; border: none 0; color: rgb(250, 168, 0); line-height: 16px; padding: 5px 2px; text-align: center; }
+#online-sidebar-options .skillsLis,
+#online-sidebar-options .equipList { display: none; }
+#online-sidebar-options .skillsLis.active,
+#online-sidebar-options .equipList.active { display: block; }
+
+
 
 
 

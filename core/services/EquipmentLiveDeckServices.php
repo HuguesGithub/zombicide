@@ -30,6 +30,7 @@ class EquipmentLiveDeckServices extends LocalServices
     $arrParams[] = (isset($arrFilters['liveId']) ? $arrFilters['liveId'] : '%');
     $arrParams[] = (isset($arrFilters['equipmentCardId']) ? $arrFilters['equipmentCardId'] : '%');
     $arrParams[] = (isset($arrFilters['status']) ? $arrFilters['status'] : '%');
+    $arrParams[] = (isset($arrFilters['liveSurvivorId']) ? $arrFilters['liveSurvivorId'] : '%');
     return $arrParams;
   }
   /**
@@ -45,5 +46,17 @@ class EquipmentLiveDeckServices extends LocalServices
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
     $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
+  }
+  
+  public function createDeck($EquipmentLiveDeck, $arrEE)
+  {
+    $cpt = 1;
+    while (!empty($arrEE)) {
+      $id = array_shift($arrEE);
+      $EquipmentLiveDeck->setEquipmentCardId($id);
+      $EquipmentLiveDeck->setRank($cpt);
+      $cpt++;
+      $this->insert(__FILE__, __LINE__, $EquipmentLiveDeck);
+    }
   }
 }

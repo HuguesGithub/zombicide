@@ -72,15 +72,16 @@ class Mission extends LocalDomain
   public function __construct($attributes=array())
   {
     parent::__construct($attributes, $services);
-    $this->DurationServices         = new DurationServices();
-    $this->LevelServices            = new LevelServices();
-    $this->MissionExpansionServices = new MissionExpansionServices();
-    $this->MissionObjectiveServices = new MissionObjectiveServices();
-    $this->MissionRuleServices      = new MissionRuleServices();
-    $this->MissionTileServices      = new MissionTileServices();
-    $this->OrigineServices          = new OrigineServices();
-    $this->PlayerServices           = new PlayerServices();
-    $this->WpPostServices           = new WpPostServices();
+    $this->DurationServices          = new DurationServices();
+    $this->EquipmentLiveDeckServices = new EquipmentLiveDeckServices();
+    $this->LevelServices             = new LevelServices();
+    $this->MissionExpansionServices  = new MissionExpansionServices();
+    $this->MissionObjectiveServices  = new MissionObjectiveServices();
+    $this->MissionRuleServices       = new MissionRuleServices();
+    $this->MissionTileServices       = new MissionTileServices();
+    $this->OrigineServices           = new OrigineServices();
+    $this->PlayerServices            = new PlayerServices();
+    $this->WpPostServices            = new WpPostServices();
   }
 
   /**
@@ -502,4 +503,43 @@ class Mission extends LocalDomain
     return $doInsert;
   }
 
+  public function hasRule($ruleId)
+  {
+    $hasRule = false;
+    $MissionRules = $this->getMissionRules();
+    while (!empty($MissionRules)) {
+      $MissionRule = array_shift($MissionRules);
+      if ($MissionRule->getRuleId()==$ruleId) {
+        $hasRule = true;
+      }
+    }
+    return $hasRule;
+  }
+  
+  public function getStartingMissionZoneId()
+  {
+    return 14;
+  }
+  
+  public function addStandardStartingEquipment($Live, $LiveSurvivors)
+  {
+    shuffle($LiveSurvivors);
+    // On va checker les éventuelles règles qui perturbent cette distribution.
+    if ($this->hasRule(2)) {
+      // On ne distribue que jusqu'à 3 Poêles aux Survivants. id de la Poêle : 27
+      $cpt=0;
+      while (!empty($LiveSurvivors) && $cpt<3) {
+        $LiveSurvivor = array_shift($LiveSurvivors);
+        $args = array('liveSurvivorId'=>$LiveSurvivor->getId());
+        $EquipmentLiveDecks = $this->EquipmentLiveDeckServices->getEquipmentLiveDecksWithFilters(__FILE__, __LINE__, $args);
+        $rk = count($EquipmentLiveDecks);
+        $args = array('liveId'=>$Live->getId(), 'equipmentCardId'=>27, 'rank'=>$rk, 'status'=>'E', 'liveSurvivorId'=>$LiveSurvivor->getId());
+        $EquipmentLiveDeck = new EquipmentLiveDeck($args);
+        $this->EquipmentLiveDeckServices->insert(__FILE__, __LINE__, $EquipmentLiveDeck);
+        $cpt++;
+      }
+    } else {
+      // On vérifie l'extension rattachée à la Mission et en fonction on donnera du matériel.
+    }
+  }
 }

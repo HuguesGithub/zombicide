@@ -45,6 +45,11 @@ class Survivor extends LocalDomain
    * @var string $altImgName
    */
   protected $altImgName;
+  /**
+   * Le Survivant peut-il être joué en ligne ?
+   * @var int $liveAble
+   */
+  protected $liveAble;
   
   /**
    * @param array $attributes
@@ -94,6 +99,11 @@ class Survivor extends LocalDomain
   public function getAltImgName()
   { return $this->altImgName; }
   /**
+   * @return boolean
+   */
+  public function isLiveAble()
+  { return ($this->liveAble==1); }
+  /**
    * @param int $id
    */
   public function setId($id)
@@ -129,6 +139,11 @@ class Survivor extends LocalDomain
   public function setAltImgName($altImgName)
   { $this->altImgName=$altImgName; }
   /**
+   * @param int $liveAble
+   */
+  public function setLiveAble($liveAble)
+  { $this->liveAble=$liveAble; }
+  /**
    * @return array
    */
   public function getClassVars()
@@ -144,10 +159,13 @@ class Survivor extends LocalDomain
   /**
    * @return array SurvivorSkill
    */
-  public function getSurvivorSkills()
+  public function getSurvivorSkills($survivorTypeId='')
   {
     if ($this->SurvivorSkills == null) {
       $arrFilters = array('survivorId'=>$this->id);
+      if ($survivorTypeId!='') {
+        $arrFilters['survivorTypeId'] = $survivorTypeId;
+      }
       $this->SurvivorSkills = $this->SurvivorSkillServices->getSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
     }
     return $this->SurvivorSkills;

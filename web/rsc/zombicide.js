@@ -118,6 +118,15 @@ $hj(document).ready(function(){
       $hj(this).siblings().find('svg').removeClass('fa-check-square').addClass('fa-square');
       $hj(this).find('svg').removeClass('fa-square').addClass('fa-check-square');
     });
+    
+    // Sélection des Survivants
+    $hj('.btn.btn-survivor').unbind().click(function(){
+      var survivorId = $hj(this).data('survivor-id');
+      var isChecked = $hj(this).find('input').prop('checked');
+      $hj(this).find('input').prop('checked', !isChecked);
+      $hj(this).toggleClass('active');
+      $hj(this).find('svg').toggleClass('fa-square fa-check-square');
+    });
  
   }
   if ($hj('#canvas-background').length !=0 ) {

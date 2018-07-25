@@ -66,18 +66,9 @@ class WpPageLiveEquipmentBean extends WpPageBean
       shuffle($arrEE);
       // On prépare l'insertion en base
       $EquipmentLiveDeck = new EquipmentLiveDeck(array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'P'));
-      $cpt = 1;
-      while (!empty($arrEE)) {
-        $id = array_shift($arrEE);
-        $EquipmentLiveDeck->setEquipmentCardId($id);
-        $EquipmentLiveDeck->setRank($cpt);
-        $cpt++;
-        $this->EquipmentLiveDeckServices->insert(__FILE__, __LINE__, $EquipmentLiveDeck);
-      }
-      return $Live;
-    } else {
-      return $Live;
+      $this->EquipmentLiveDeckServices->createDeck($EquipmentLiveDeck, $arrEE);
     }
+    return $Live;
   }
   private function getDeckButtons($Live)
   {
@@ -93,7 +84,7 @@ class WpPageLiveEquipmentBean extends WpPageBean
     $label = vsprintf($this->labelShuffle, $Live->getNbCardsInDiscard(self::CST_EQUIPMENT));
     $str .= $this->getButtonDiv('btnShuffleDiscardEquipment', $deckKey, 'shuffleEquipmentDiscard', $label);
     $str .= $this->getButtonDiv('btnLeaveEquipmentDeck', $deckKey, 'leaveEquipmentDeck', 'Quitter cette pioche', 'reload');
-    $str .= $this->getButtonDiv('btnDisabled2', $deckKey, 'Attention, action irréversible :', '', 'btn-dark disabled');
+    $str .= $this->getButtonDiv('btnDisabled2', $deckKey, '', 'Attention, action irréversible :', '', 'btn-dark disabled');
     $label = 'Supprimer cette pioche';
     $str .= $this->getButtonDiv('btnDeleteEquipmentDeck', $deckKey, 'deleteEquipmentDeck', $label, 'reload', 'btn-danger');
     $args = array(
@@ -140,6 +131,10 @@ class WpPageLiveEquipmentBean extends WpPageBean
       $this->buildInterface($args, $deckKey, $blocExpansions, $showSelection);
     }
     if ($showSelection==self::CST_HIDDEN) {
+      $deckKey = $_SESSION[self::CST_DECKKEY];
+      $args = array(self::CST_DECKKEY=>$deckKey);
+      $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, $args);
+      $Live = array_shift($Lives);
       // On a des cartes, par défaut, on affiche les cartes "actives".
       $arrFilters = array(self::CST_LIVEID=>$Live->getId(), self::CST_STATUS=>'A');
       $EquipmentLiveDecks = $this->EquipmentLiveDeckServices->getEquipmentLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters);

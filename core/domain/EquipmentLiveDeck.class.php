@@ -40,6 +40,11 @@ class EquipmentLiveDeck extends LocalDomain
    */
   protected $status;
   /**
+   * Clé étrangère vers LiveSurvivor si status=='E', 0 sinon
+   * @var int $liveSurvivorId
+   */
+  protected $liveSurvivorId;
+  /**
    * @param array $attributes
    */
   public function __construct($attributes=array())
@@ -74,12 +79,17 @@ class EquipmentLiveDeck extends LocalDomain
   public function getStatus()
   { return $this->status; }
   /**
+   * @return int
+   */
+  public function getLiveSurvivorId()
+  { return $this->liveSurvivorId; }
+  /**
    * @param int $id
    */
   public function setId($id)
   { $this->id = $id; }
   /**
-   * @param int $liveDeckId
+   * @param int $liveId
    */
   public function setLiveId($liveId)
   { $this->liveId = $liveId; }
@@ -98,6 +108,11 @@ class EquipmentLiveDeck extends LocalDomain
    */
   public function setStatus($status)
   { $this->status = $status; }
+  /**
+   * @param int $liveSurvivorId
+   */
+  public function setLiveSurvivorId($liveSurvivorId)
+  { $this->liveSurvivorId = $liveSurvivorId; }
   /**
    * @return array
    */

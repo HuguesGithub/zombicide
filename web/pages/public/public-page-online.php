@@ -21,3 +21,4 @@
      </div>
   </div>
 </section>
+<script type='text/javascript' src='http://zombicide.jhugues.fr/wp-content/plugins/zombicide/web/rsc/zombicide-online.js'></script>

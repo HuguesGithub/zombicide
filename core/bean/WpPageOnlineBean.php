@@ -38,6 +38,8 @@ class WpPageOnlineBean extends WpPageBean
     $Bean = new WpPageOnlineBean($WpPage);
     return $Bean->getContentPage();
   }
+  public function getHeaderChatSaisie($label='Général', $liveId=0)
+  { return '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$liveId.'">'.$label.'</a></li>'; }
   /**
    * @return string
    */
@@ -52,10 +54,9 @@ class WpPageOnlineBean extends WpPageBean
       $strMsg,
       '',
       'hidden',
-      '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>',
+      $this->getHeaderChatSaisie(),
     );
-    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php');
-    return vsprintf($str, $args);
+    return $this->getPublicPageOnline($args);
   }
   /**
    * @return string
@@ -74,10 +75,9 @@ class WpPageOnlineBean extends WpPageBean
       $strMsg,
       $strCanvas,
       '',
-      '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="0">Général</a></li>',
+      $this->getHeaderChatSaisie(),
     );
-    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php');
-    return vsprintf($str, $args);
+    return $this->getPublicPageOnline($args);
   }
   /**
    * @return string
@@ -97,7 +97,7 @@ class WpPageOnlineBean extends WpPageBean
     $LiveMissions = $this->LiveMissionServices->getLiveMissionsWithFilters(__FILE__, __LINE__, $args);
     if (empty($LiveMissions)) {
       if (isset($_POST['createMission'])) {
-        $missionId = $_POST['missionId'];
+        $missionId = $_POST[self::CST_MISSIONID];
         $Mission = $this->MissionServices->select(__FILE__, __LINE__, $missionId);
         if ($Mission->isLiveAble()) {
           $this->Mission = $Mission;
@@ -105,27 +105,32 @@ class WpPageOnlineBean extends WpPageBean
           return $this->getContentSurvivors();
         }
       }
-      return $this->getMenuMissionSelection();
+      $returned = $this->getMenuMissionSelection();
     } else {
       $LiveMission = array_shift($LiveMissions);
       $this->Mission = $LiveMission->getMission();
       // On doit choisir les Survivants joués. Sauf si c'est déjà fait.
-      return $this->getContentSurvivors();
+      $returned = $this->getContentSurvivors();
     }
+    return $returned;
   }
   private function buildLiveMission()
   {
     $liveId = $this->Live->getId();
     $missionId = $this->Mission->getId();
     // On doit créer un LiveMission
-    $args = array('liveId'=>$liveId, 'missionId'=>$missionId);
+    $args = array(
+      self::CST_LIVEID=>$liveId,
+      self::CST_MISSIONID=>$missionId,
+    );
     $LiveMission = new LiveMission($args);
     $this->LiveMissionServices->insert(__FILE__, __LINE__, $LiveMission);
     // On doit créer des Live_MissionToken
-    $MissionTokens = $this->MissionTokenServices->getMissionTokensWithFilters(__FILE__, __LINE__, array('missionId'=>$missionId));
+    $MissionTokens = $this->MissionTokenServices->getMissionTokensWithFilters(__FILE__, __LINE__, array(self::CST_MISSIONID=>$missionId));
     while (!empty($MissionTokens)) {
       $MissionToken = array_shift($MissionTokens);
-      $LiveMissionToken = new LiveMissionToken(array('liveId'=>$liveId, 'missionTokenId'=>$MissionToken->getId(), 'status'=>$MissionToken->getStatus()));
+      $arrLMT = array(self::CST_LIVEID=>$liveId, 'missionTokenId'=>$MissionToken->getId(), self::CST_STATUS=>$MissionToken->getStatus());
+      $LiveMissionToken = new LiveMissionToken($arrLMT);
       $this->LiveMissionTokenServices->insert(__FILE__, __LINE__, $LiveMissionToken);
     }
     // On doit créer des Live_MissionZombies, si nécessaire.
@@ -135,11 +140,11 @@ class WpPageOnlineBean extends WpPageBean
       $this->LiveZombieServices->insert(__FILE__, __LINE__, $LiveZombie);
     }
     // On doit créer des EquipmentLive
-    $EquipmentLiveDeck = new EquipmentLiveDeck(array('liveId'=>$liveId, 'status'=>'P'));
+    $EquipmentLiveDeck = new EquipmentLiveDeck(array(self::CST_LIVEID=>$liveId, self::CST_STATUS=>'P'));
     $arrEE = $this->MissionServices->getStartingEquipmentDeck($this->Mission);
     $this->EquipmentLiveDeckServices->createDeck($EquipmentLiveDeck, $arrEE);
     // On doit créer des EquipmentSpawn
-    $SpawnLiveDeck = new SpawnLiveDeck(array('liveId'=>$liveId, 'status'=>'P'));
+    $SpawnLiveDeck = new SpawnLiveDeck(array(self::CST_LIVEID=>$liveId, self::CST_STATUS=>'P'));
     $arrNumbers = $this->MissionServices->getSpawnDeck($this->Mission);
     $this->SpawnLiveDeckServices->createDeck($SpawnLiveDeck, $arrNumbers);
   }
@@ -221,15 +226,37 @@ class WpPageOnlineBean extends WpPageBean
       '',
       $strMsg,
       '',
-      '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$Live->getId().'">'.$Live->getDeckKey().'</a></li>',
+      $this->getHeaderChatSaisie($Live->getDeckKey(), $Live->getId()),
     );
-    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php');
-    return vsprintf($str, $args);
+    return $this->getPublicPageOnline($args);
+  }
+  public function getActionButtons($Live='')
+  {
+    // On part du Live poru récupérer la LiveMission puis le LiveSurvivor actif.
+    if ($Live=='') {
+      $Live = $this->Live;
+    }
+    $LiveMissions = $this->LiveMissionServices->getLiveMissionsWithFilters(__FILE__, __LINE__, array(self::CST_LIVEID=>$Live->getId()));
+    $LiveMission = array_shift($LiveMissions);
+    $LiveSurvivor = $this->LiveSurvivorServices->select(__FILE__, __LINE__, $LiveMission->getActiveLiveSurvivorId());
+    if ($LiveSurvivor->getId()=='') {
+      // Si on n'a pas de LiveSurvivor actif, on les récupère tous et on affiche les boutons en grisant ceux ayant déjà joué.
+      $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, array(self::CST_LIVEID=>$Live->getId()));
+      while (!empty($LiveSurvivors)) {
+        $LiveSurvivor = array_shift($LiveSurvivors);
+        $returned .= $LiveSurvivor->getBean()->getPortraitButton();
+      }
+    } else {
+      // On affiche les Boutons associés aux Actions disponibles pour le Survivant.
+      // TODO : On doit aussi trouver une façon de stocker les Actions disponibles...
+      $returned .= $LiveSurvivor->getBean()->getActionsButton();
+    }
+    return $returned;
   }
   private function getContentOnline()
   {
     $Live = $this->Live;
-    $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, array('liveId'=>$Live->getId()));
+    $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, array(self::CST_LIVEID=>$Live->getId()));
     $sideBar = '';
     while (!empty($LiveSurvivors)) {
       $LiveSurvivor = array_shift($LiveSurvivors);
@@ -237,15 +264,14 @@ class WpPageOnlineBean extends WpPageBean
       $sideBar .= $Bean->getSideBarContent();
     }
     $args = array(
-      'Buttons',
+      $this->getActionButtons(),
       $sideBar,
       '',
       'TOTO',
       '',
-      '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$Live->getId().'">'.$Live->getDeckKey().'</a></li>',
+      $this->getHeaderChatSaisie($Live->getDeckKey(), $Live->getId()),
     );
-    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php');
-    return vsprintf($str, $args);
+    return $this->getPublicPageOnline($args);
   }
   private function getMenuMissionSelection()
   {
@@ -272,11 +298,12 @@ class WpPageOnlineBean extends WpPageBean
       '',
       $strMsg,
       '',
-      '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$Live->getId().'">'.$Live->getDeckKey().'</a></li>',
+      $this->getHeaderChatSaisie($Live->getDeckKey(), $Live->getId()),
     );
-    $str = file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php');
-    return vsprintf($str, $args);
+    return $this->getPublicPageOnline($args);
   }
+  public function getPublicPageOnline($args)
+  { return vsprintf(file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php'), $args); }
   /**
    * {@inheritDoc}
    * @see PagePageBean::getContentPage()
@@ -288,7 +315,7 @@ class WpPageOnlineBean extends WpPageBean
       $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, $args);
       $Live = array_shift($Lives);
       if (empty($Live)) {
-        $args['dateUpdate'] = date('Y-m-d H:i:s');
+        $args['dateUpdate'] = date(self::CST_FORMATDATE);
         $Live = new Live($args);
         $this->LiveServices->insert(__FILE__, __LINE__, $Live);
         $Live->setId(MySQL::getLastInsertId());

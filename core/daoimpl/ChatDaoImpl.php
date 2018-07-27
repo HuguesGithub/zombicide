@@ -37,4 +37,19 @@ class ChatDaoImpl extends LocalDaoImpl
    */
   public function select($file, $line, $arrParams)
   { return parent::localSelect($file, $line, $arrParams, new Chat()); }
+  
+  public function selectPurgeableChats($file, $line)
+  {
+    $requete  = $this->selectRequest.$this->fromRequest;
+    $requete .= 'WHERE liveId NOT IN (SELECT liveId FROM wp_11_zombicide_live_mission) OR senderId=0;';
+    return $this->convertToArray($this->selectEntriesAndLogQuery($file, $line, $requete, array()));
+  }
+  
+  public function selectDistinctUsersOnline($file, $line)
+  {
+    $requete  = 'SELECT DISTINCT(senderId) AS senderId '.$this->fromRequest;
+    $requete .= "WHERE senderId<>0 AND timestamp>'".date(self::CST_FORMATDATE, time()-300)."'";
+    return $this->convertToArray($this->selectEntriesAndLogQuery($file, $line, $requete, array()));
+  }
+
 }

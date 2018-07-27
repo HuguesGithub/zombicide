@@ -46,12 +46,19 @@ class LiveSurvivor extends LocalDomain
    */
   protected $hitPoints;
   /**
+   * A-t-il joué ce tour ?
+   * @var int $playedThisTurn
+   */
+  protected $playedThisTurn;
+  /**
    * @param array $attributes
    */
   public function __construct($attributes=array())
   {
     parent::__construct($attributes);
     $this->EquipmentLiveDeckServices = new EquipmentLiveDeckServices();
+    $this->LiveServices              = new LiveServices();
+    $this->LiveMissionServices       = new LiveMissionServices();
     $this->SurvivorServices          = new SurvivorServices();
   }
   /**
@@ -90,6 +97,11 @@ class LiveSurvivor extends LocalDomain
   public function getHitPoints()
   { return $this->hitPoints; }
   /**
+   * @return boolean
+   */
+  public function hasPlayedThisTurn()
+  { return ($this->playedThisTurn==1); }
+  /**
    * @param int $id
    */
   public function setId($id)
@@ -124,6 +136,11 @@ class LiveSurvivor extends LocalDomain
    */
   public function setHitPoints($hitPoints)
   { $this->hitPoints = $hitPoints; }
+  /**
+   * @param int $playedThisTurn
+   */
+  public function setPlayedThisTurn($playedThisTurn)
+  { $this->playedThisTurn = $playedThisTurn; }
   /**
    * @return array
    */
@@ -162,6 +179,23 @@ class LiveSurvivor extends LocalDomain
   public function getBean()
   { return new LiveSurvivorBean($this); }
   
+  public function getLive()
+  {
+    if ($this->Live==null) {
+      $this->Live = $this->LiveServices->select(__FILE__, __LINE__, $this->liveId);
+    }
+    return $this->Live;
+  }
+  
+  public function getLiveMission()
+  {
+    if ($this->LiveMission==null) {
+      $LiveMissions = $this->LiveMissionServices->getLiveMissionsWithFilters(__FILE__, __LINE__, array(self::CST_LIVEID=>$this->liveId));
+      $this->LiveMission = array_shift($LiveMissions);
+    }
+    return $this->LiveMission;
+  }
+  
   public function getSurvivor()
   {
     if ($this->Survivor==null) {
@@ -169,4 +203,5 @@ class LiveSurvivor extends LocalDomain
     }
     return $this->Survivor;
   }
+
 }

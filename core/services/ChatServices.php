@@ -39,10 +39,17 @@ class ChatServices extends LocalServices
    * @param string $order
    * @return array
    */
-  public function getChatsWithFilters($file, $line, $arrFilters=array(), $orderby=self::CST_TIMESTAMP, $order='desc')
+  public function getChatsWithFilters($file, $line, $arrFilters=array(), $orderby=self::CST_TIMESTAMP, $order='asc')
   {
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
     $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
+  
+  public function getPurgeableChats($file, $line)
+  { return $this->Dao->selectPurgeableChats($file, $line); }
+  
+  public function getDistinctUsersOnline($file, $line)
+  { return $this->Dao->selectDistinctUsersOnline($file, $line); }
+  
 }

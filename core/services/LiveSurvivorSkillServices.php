@@ -42,7 +42,7 @@ class LiveSurvivorSkillServices extends LocalServices
   public function getLiveSurvivorSkillsWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc')
   {
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
-    $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);  
+    $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
 

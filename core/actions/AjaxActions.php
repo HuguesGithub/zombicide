@@ -25,6 +25,9 @@ class AjaxActions extends LocalActions
       case 'addMoreNews'         :
         $returned = WpPageHomeBean::staticAddMoreNews($_POST['value']);
       break;
+      case 'chatAction' :
+        $returned = ChatActions::dealWithStatic($_POST);
+      break;
       case 'getCompetences'      :
         $returned = WpPageSkillsBean::staticGetSkillsSortedAndFiltered($_POST);
       break;
@@ -37,8 +40,8 @@ class AjaxActions extends LocalActions
       case 'getSurvivants'       :
         $returned = WpPageSurvivorsBean::staticGetSurvivorsSortedAndFiltered($_POST);
       break;
-      case 'refreshChat'         :
-        $returned = ChatActions::staticChatContent($_POST);
+      case 'toolbarAction' :
+        $returned = OnlineActions::dealWithStatic($_POST);
       break;
       case 'EquipmentDeck' :
         $returned = EquipmentDeckActions::dealWithStatic($_POST);
@@ -65,9 +68,6 @@ class AjaxActions extends LocalActions
           break;
           case 'joinGame'          :
             $returned = self::dealWithJoinLive($_POST);
-          break;
-          case 'postChat'          :
-            $returned = ChatActions::staticPostChat($_POST);
           break;
           case 'rmwMissionObjRule'     :
             $returned = self::dealWithRmvMissionObjRule($_POST);

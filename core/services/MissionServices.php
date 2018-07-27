@@ -194,8 +194,13 @@ class MissionServices extends LocalServices
     if ($Mission->hasRule(11)) {
       switch ($Mission->getId()) {
         case 1 :
-          array_push($LiveZombies, new LiveZombie(array('liveId'=>$Live->getId(), 'missionZoneId'=>4, 'zombieTypeId'=>1, 'zombieCategoryId'=>1, 'quantity'=>1)));
-          array_push($LiveZombies, new LiveZombie(array('liveId'=>$Live->getId(), 'missionZoneId'=>12, 'zombieTypeId'=>1, 'zombieCategoryId'=>1, 'quantity'=>1)));
+          $args = array('liveId'=>$Live->getId(), 'missionZoneId'=>4, 'zombieTypeId'=>1, 'zombieCategoryId'=>1, 'quantity'=>1);
+          array_push($LiveZombies, new LiveZombie($args));
+          $args = array('liveId'=>$Live->getId(), 'missionZoneId'=>4, 'zombieTypeId'=>1, 'zombieCategoryId'=>1, 'quantity'=>1);
+          array_push($LiveZombies, new LiveZombie($args));
+        break;
+        default :
+          // Une Mission a des Zombies à mettre en place...
         break;
       }
     }

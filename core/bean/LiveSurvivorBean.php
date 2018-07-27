@@ -10,6 +10,7 @@ if (!defined('ABSPATH')) {
  */
 class LiveSurvivorBean extends LocalBean
 {
+  private $btnAction = '<div class="btn%1$s" data-ajaxaction="toolbarAction" data-ajaxchildaction="%2$s" data-livesurvivor="%3$s"><i class="%4$s"></i></div>';
   /**
    * Class Constructor
    * @param LiveSurvivor $LiveSurvivor
@@ -30,7 +31,7 @@ class LiveSurvivorBean extends LocalBean
       $hps .= '<i class="fa fa-heart"></i>';
     }
     // Une fois qu'on a compté les points de vie restants, on affiche ceux manquants.
-    for ( $j=$i; $j<2; $j++) {
+    for ($j=$i; $j<2; $j++) {
       $hps .= '<i class="far fa-heart"></i>';
     }
     $xps = $LiveSurvivor->getExperiencePoints();
@@ -62,5 +63,30 @@ class LiveSurvivorBean extends LocalBean
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/online-survivor-cardvisit.php');
     return vsprintf($str, $args);
+  }
+  
+  public function getPortraitButton()
+  {
+    $LiveSurvivor = $this->LiveSurvivor;
+    $Survivor = $LiveSurvivor->getSurvivor();
+    $returned  = '';
+    $returned .= '<div class="btn'.($LiveSurvivor->hasPlayedThisTurn()?' disabled':'').'" data-ajaxaction="toolbarAction"';
+    $returned .= 'data-ajaxchildaction="startSurvivorTurn" data-livesurvivor="'.$LiveSurvivor->getId().'">';
+    return $returned.'<img src="'.$Survivor->getPortraitUrl().'"/></div>';
+  }
+  
+  public function getActionsButton()
+  {
+    $LiveSurvivor = $this->LiveSurvivor;
+    $returned  = '';
+    $returned .= '<div class="btn" data-ajaxaction="toolbarAction" data-ajaxchildaction="openDoor" data-livesurvivor="'.$LiveSurvivor->getId().'"><i class="fas fa-first-aid"></i></div>';
+    $returned .= '<div class="btn" data-ajaxaction="toolbarAction" data-ajaxchildaction="openDoor" data-livesurvivor="'.$LiveSurvivor->getId().'"><i class="fas fa-times"></i></div>';
+    $returned .= '<div class="btn" data-ajaxaction="toolbarAction" data-ajaxchildaction="openDoor" data-livesurvivor="'.$LiveSurvivor->getId().'"><i class="fas fa-bullhorn"></i></div>';
+    $returned .= '<div class="btn" data-ajaxaction="toolbarAction" data-ajaxchildaction="openDoor" data-livesurvivor="'.$LiveSurvivor->getId().'"><i class="fas fa-shoe-prints"></i></div>';
+    $returned .= '<div class="btn" data-ajaxaction="toolbarAction" data-ajaxchildaction="openDoor" data-livesurvivor="'.$LiveSurvivor->getId().'"><i class="fas fa-door-search"></i></div>';
+    $returned .= '<div class="btn" data-ajaxaction="toolbarAction" data-ajaxchildaction="openDoor" data-livesurvivor="'.$LiveSurvivor->getId().'"><i class="fas fa-door-closed"></i></div>';
+    $returned .= '<div class="btn" data-ajaxaction="toolbarAction" data-ajaxchildaction="openDoor" data-livesurvivor="'.$LiveSurvivor->getId().'"><i class="fas fa-gift"></i></div>';
+      //vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-door-open'));
+    return $returned;
   }
 }

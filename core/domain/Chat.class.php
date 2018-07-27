@@ -148,4 +148,23 @@ class Chat extends LocalDomain
     $strTimestamp .= $H.':'.$i;
     return $strChats.'<span class="timestamp">'.$strTimestamp.'</span></div>'.$this->getTexte().'</li>';
   }
+  
+  public function isPurgeable()
+  {
+    $isPurgeable = false;
+    if ($this->getLiveId()==0) {
+      if ($this->getSenderId()==0 && $this->getTimestamp()<date(self::CST_FORMATDATE, time()-30)) {
+        $isPurgeable = true;
+      } elseif ($this->getSenderId()!=0 && $this->getTimestamp()<date(self::CST_FORMATDATE, time()-60*60*24)) {
+        $isPurgeable = true;
+      }
+    } elseif ($this->getLiveId()!=0) {
+      if ($this->getSenderId()==0 && $this->getTimestamp()<date(self::CST_FORMATDATE, time()-30)) {
+        $isPurgeable = true;
+      } elseif ($this->getSenderId()!=0) {
+        $isPurgeable = true;
+      }
+    }
+    return $isPurgeable;
+  }
 }

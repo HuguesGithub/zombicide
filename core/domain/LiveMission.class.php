@@ -26,12 +26,19 @@ class LiveMission extends LocalDomain
    */
   protected $missionId;
   /**
+   * Id technique du LiveSurvivor actif. Potentiellement nul.
+   * @var int $activeLiveSurvivorId
+   */
+  protected $activeLiveSurvivorId;
+  /**
    * @param array $attributes
    */
   public function __construct($attributes=array())
   {
     parent::__construct($attributes);
-    $this->MissionServices = new MissionServices();
+    $this->LiveServices         = new LiveServices();
+    $this->LiveSurvivorServices = new LiveSurvivorServices();
+    $this->MissionServices      = new MissionServices();
   }
   /**
    * @return int
@@ -49,6 +56,11 @@ class LiveMission extends LocalDomain
   public function getMissionId()
   { return $this->missionId; }
   /**
+   * @return int
+   */
+  public function getActiveLiveSurvivorId()
+  { return $this->activeLiveSurvivorId; }
+  /**
    * @param int $id
    */
   public function setId($id)
@@ -64,6 +76,11 @@ class LiveMission extends LocalDomain
   public function setMissionId($missionId)
   { $this->missionId = $missionId; }
   /**
+   * @param int $activeLiveSurvivorId
+   */
+  public function setActiveLiveSurvivorId($activeLiveSurvivorId)
+  { $this->activeLiveSurvivorId = $activeLiveSurvivorId; }
+  /**
    * @return array
    */
   public function getClassVars()
@@ -77,11 +94,27 @@ class LiveMission extends LocalDomain
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new LiveMission(), self::getClassVars(), $row); }
   
+  public function getLive()
+  {
+    if ($this->Live==null) {
+      $this->Live = $this->LiveServices->select(__FILE__, __LINE__, $this->liveId);
+    }
+    return $this->Live;
+  }
+  
   public function getMission()
   {
     if ($this->Mission==null) {
       $this->Mission = $this->MissionServices->select(__FILE__, __LINE__, $this->missionId);
     }
     return $this->Mission;
+  }
+  
+  public function getActiveLiveSurvivor()
+  {
+    if ($this->ActiveLiveSurvivor==null) {
+      $this->ActiveLiveSurvivor = $this->LiveSurvivorServices->select(__FILE__, __LINE__, $this->activeLiveSurvivorId);
+    }
+    return $this->ActiveLiveSurvivor;
   }
 }

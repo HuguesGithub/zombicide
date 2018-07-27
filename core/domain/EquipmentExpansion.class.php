@@ -109,61 +109,72 @@ class EquipmentExpansion extends LocalDomain
   {
     $EquipmentExpansions = array();
     $EquipmentExpansionServices = new EquipmentExpansionServices();
+    // Combien on va en récupérer ? 1 ou 2 selon les profils
+    $nb = 1;
+    // Dans le cas où un Survivant commence avec un équipement de départ
     switch ($Skill->getCode()) {
-      case 'STARTS_WITH_PISTOL' :
-        $args = array('equipmentCardId'=>24, 'expansionId'=>23);
-        $EEs = $EquipmentExpansionServices->getEquipmentExpansionsWithFilters(__FILE__, __LINE__, $args);
-        $EquipmentExpansion = array_shift($EEs);
-        $EquipmentExpansion->setQuantity(1);
-        array_push($EquipmentExpansions, $EquipmentExpansion);
-      break;
-        /*
-      case 'STARTS_WITH_2_KUKRIS' :
-        $args = array('equipmentCardId'=>, 'expansionId'=>, 'quantity'=>2);
-      break;
-      case 'STARTS_WITH_CHAINSAW' :
-        $args = array('equipmentCardId'=>, 'expansionId'=>, 'quantity'=>1);
-      break;
-      case 'STARTS_WITH_MAGNUM' :
-        $args = array('equipmentCardId'=>, 'expansionId'=>, 'quantity'=>1);
-      break;
-      case 'STARTS_WITH_2_MACHETES' :
-        $args = array('equipmentCardId'=>, 'expansionId'=>, 'quantity'=>1);
+      case 'STARTS_WITH_ARBALETE' :
+        $args = array('equipmentCardId'=>60);
       break;
       case 'STARTS_WITH_BASEBALL_BAT' :
-        $args = array('equipmentCardId'=>, 'expansionId'=>, 'quantity'=>1);
+        $args = array('equipmentCardId'=>3);
       break;
-      case 'STARTS_WITH_FLASHLIGHT' :
-        $args = array('equipmentCardId'=>, 'expansionId'=>, 'quantity'=>1);
+      case 'STARTS_WITH_CHAINSAW' :
+        $args = array('equipmentCardId'=>29);
       break;
       case 'STARTS_WITH_FLAMETHROWER' :
-        $args = array('equipmentCardId'=>, 'expansionId'=>, 'quantity'=>1);
+        $args = array('equipmentCardId'=>38);
       break;
-      case 'STARTS_WITH_SAWED_OFF' :
-        $args = array('equipmentCardId'=>, 'expansionId'=>, 'quantity'=>1);
-      break;
-      case 'STARTS_WITH_KATANA' :
-        $args = array('equipmentCardId'=>, 'expansionId'=>, 'quantity'=>1);
-      break;
-      case 'STARTS_WITH_SUBMG' :
-        $args = array('equipmentCardId'=>, 'expansionId'=>, 'quantity'=>1);
-      break;
-      case 'STARTS_WITH_SHOTGUN' :
-        $args = array('equipmentCardId'=>, 'expansionId'=>, 'quantity'=>1);
-      break;
-      case 'STARTS_WITH_2_MOLOTOV' :
-        $args = array('equipmentCardId'=>, 'expansionId'=>, 'quantity'=>2);
-      break;
-      case 'STARTS_WITH_RIFLE' :
-        $args = array('equipmentCardId'=>, 'expansionId'=>, 'quantity'=>1);
-      break;
-      case 'STARTS_WITH_ARBALETE' :
-        $args = array('equipmentCardId'=>, 'expansionId'=>, 'quantity'=>1);
+      case 'STARTS_WITH_FLASHLIGHT' :
+        $args = array('equipmentCardId'=>15);
       break;
       case 'STARTS_WITH_2_KATANAS' :
-        $args = array('equipmentCardId'=>, 'expansionId'=>, 'quantity'=>2);
+        $nb = 2;
+      case 'STARTS_WITH_KATANA' :
+        $args = array('equipmentCardId'=>14);
       break;
-      */
+      case 'STARTS_WITH_2_KUKRIS' :
+        $args = array('equipmentCardId'=>52);
+        $nb = 2;
+      break;
+      case 'STARTS_WITH_2_MACHETES' :
+        $args = array('equipmentCardId'=>17);
+        $nb = 2;
+      break;
+      case 'STARTS_WITH_MAGNUM' :
+        $args = array('equipmentCardId'=>40);
+      break;
+      case 'STARTS_WITH_2_MOLOTOV' :
+        $args = array('equipmentCardId'=>19);
+        $nb = 2;
+      break;
+      case 'STARTS_WITH_PISTOL' :
+        $args = array('equipmentCardId'=>24);
+      break;
+      case 'STARTS_WITH_SAWED_OFF' :
+        $args = array('equipmentCardId'=>10);
+      break;
+      case 'STARTS_WITH_RIFLE' :
+        $args = array('equipmentCardId'=>5);
+      break;
+      case 'STARTS_WITH_SHOTGUN' :
+        $args = array('equipmentCardId'=>11);
+      break;
+      case 'STARTS_WITH_SUBMG' :
+        $args = array('equipmentCardId'=>26);
+      break;
+      default :
+        // Un cas qui n'aurait pas encore été prévu...
+      break;
+    }
+    // On récupère tous les objets de ce type de la pioche et on mélange
+    $EEs = $EquipmentExpansionServices->getEquipmentExpansionsWithFilters(__FILE__, __LINE__, $args);
+    shuffle($EEs);
+    // On prend autant que nécessaire et on le met de côté pour l'ajouter à l'équipement.
+    for ($i=0; $i<$nb; $i++) {
+      $EquipmentExpansion = array_shift($EEs);
+      $EquipmentExpansion->setQuantity(1);
+      array_push($EquipmentExpansions, $EquipmentExpansion);
     }
     return $EquipmentExpansions;
   }

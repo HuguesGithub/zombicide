@@ -70,43 +70,6 @@ $hj(document).ready(function(){
   }
 
   if ($hj('#page-online').length!=0 ) {
-    var height = $hj('body').height()-17;
-    height -= $hj('#wpadminbar').height();
-    height -= $hj('#shell > header').height();
-    height -= $hj('#shell > footer').height();
-    height -= $hj('#online-btn-actions').height();
-    $hj('#online-board').css('height', height);
-
-    height =  $hj('#online-sidebar-chat').height();
-    height -= $hj('.online-chat-saisie').height();
-    $hj('#online-chat-content').css('height', height);
-
-    $hj('.online-chat-unfold').unbind().click(function(){ $hj(this).parent().parent().toggleClass('closed-chat'); });
-    $hj('.online-chat-fold').unbind().click(function(){ $hj(this).parent().parent().toggleClass('closed-chat'); });
-    $hj('#online-chat-input').bind('keypress', function(e) {
-      if (e.keyCode == 13 ) {
-        sendMessage();
-      } else if (e.keyCode == 38 ) {
-        $hj('#online-chat-input').val(arrHisto[rkHisto]);
-        if (rkHisto>0 ) { rkHisto--; }
-      } else if (e.keyCode == 40 ) {
-        if (rkHisto<arrHisto.length ) {
-          rkHisto++;
-          $hj('#online-chat-input').val(arrHisto[rkHisto]);
-        } else {
-          $hj('#online-chat-input').val('');
-        }
-      } else {
-        //console.log(e.keyCode);
-      }
-    });
-    $hj('#online-chat-submit').unbind().click(function(e){
-      e.preventDefault();
-      sendMessage();
-      return false;
-    });
-    window.setInterval(function(){refreshChatContent()}, 5000);
-    
     $hj('#startGame').unbind().click(function(){ $hj('form')[0].submit(); });
     
     // Sélection de la Mission
@@ -700,8 +663,6 @@ function reloadComponents(obj, type) {
   for (var anchor in obj ) {
     if ($hj('#'+anchor).length==1 ) {
       switch (anchor ) {
-        case 'online-chat-content'  : $hj('#'+anchor).append(obj[anchor]); addChatMsgActions(); break;
-        case 'header-ul-chat-saisie'  : $hj('#'+anchor).html(obj[anchor]); break;
         case 'descSkill'            :
         case 'homeSectionArticles'  :
         case 'moreSurvivors'        :
@@ -1147,64 +1108,6 @@ function addPageLiveSpawnActions() {
       var keyAccess = $hj(this).data('keyaccess');
       var data = {'action': 'dealWithAjax', 'ajaxAction': 'SpawnDeck' , 'ajaxChildAction': action, 'keyAccess': keyAccess};
       doSpawnDeckActions(data, $hj(this).data('type'));
-    });
-  }
-}
-function refreshChatContent() {
-  var obj;
-  var timestamp = $hj('#online-chat-content li:last-child').data('timestamp');
-  var data = {'action': 'dealWithAjax', 'ajaxAction': 'refreshChat', 'liveId': $hj('#online-sidebar-chat li a.active').data('liveid'), 'timestamp': timestamp};
-  $hj.post(
-    ajaxurl,
-    data,
-    function(response) {
-      try {
-        obj = JSON.parse(response);
-      } catch (e) {
-        console.log("error: "+e);
-        console.log(response);
-      }
-      reloadComponents(obj, 'append');
-      $hj('#online-chat-content').stop().animate({ scrollTop: $hj('#online-chat-content')[0].scrollHeight }, 2000);
-    }
-  );
-}
-var arrHisto = [''];
-var rkHisto = 0;
-function sendMessage() {
-  var obj;
-  var timestamp = $hj('#online-chat-content li:last-child').data('timestamp');
-  var text = $hj('#online-chat-input').val();
-  var arrWords = text.split(' ');
-  var data = {'action': 'dealWithAjax', 'ajaxAction': 'postChat', 'liveId': $hj('#online-sidebar-chat li a.active').data('liveid'), 'text': text, 'timestamp': timestamp};
-  $hj.post(
-    ajaxurl,
-    data,
-    function(response) {
-      try {
-        obj = JSON.parse(response);
-        if (arrWords[0] == '/clean' ) {
-          $hj('#online-chat-content').html('');
-        }
-        $hj('#online-chat-input').val('');
-        arrHisto.push(text);
-        rkHisto = arrHisto.length-1;
-      } catch (e) {
-        console.log("error: "+e);
-        console.log(response);
-      }
-      reloadComponents(obj, 'append');
-      $hj('#online-chat-content').stop().animate({ scrollTop: $hj('#online-chat-content')[0].scrollHeight }, 2000);
-    }
-  );
-}
-function addChatMsgActions() {
-  if ($hj('#online-chat-content').length != 0 ) {
-    $hj('#online-chat-content .author').unbind().click(function(){
-      $hj('#online-chat-input').val('@'+$hj(this).data('displayname')+' ');
-    });
-    $hj('#online-chat-content .keyDeck').unbind().click(function(){
-      $hj('#online-chat-input').val('/join '+$hj(this).data('keydeck'));
     });
   }
 }

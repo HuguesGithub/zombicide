@@ -41,13 +41,6 @@ class LiveZombie extends LocalDomain
    */
   protected $quantity;
   /**
-   * @param array $attributes
-   */
-  public function __construct($attributes=array())
-  {
-    parent::__construct($attributes);
-  }
-  /**
    * @return int
    */
   public function getId()

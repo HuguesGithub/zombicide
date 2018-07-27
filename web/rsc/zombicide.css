@@ -924,6 +924,7 @@ button#genKey i { color: #f6a800; padding-top: 4px; padding-right: 0px; }
 /**/
 #page-online { margin: -35px 0 -20px; }
 #online-btn-actions { background: rgba(68,66,69,0.97); border-bottom: 3px solid rgb(250, 168, 0); border-top: 1px solid rgb(250, 168, 0); min-height: 40px; width: 100%; }
+#online-btn-actions .btn { background: rgb(0, 0, 0); border: 2px solid rgb(250, 168, 0); color: rgb(250, 168, 0); font-size: 24px; margin: 2px; padding: 2px; width: 36px; }
 #online-board { height: calc(100% - 165px); position: relative; }
 #online-sidebar-options { border-right: 3px solid rgb(250, 168, 0); height: 100%; left: 0; position: absolute; top: 0; width:250px; }
 
@@ -987,6 +988,7 @@ button#genKey i { color: #f6a800; padding-top: 4px; padding-right: 0px; }
 #online-sidebar-options .skillsLis.active,
 #online-sidebar-options .equipList.active { display: block; }
 
+.keyDeck { cursor: pointer; }
 
 
 

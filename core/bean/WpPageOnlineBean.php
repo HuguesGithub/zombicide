@@ -90,7 +90,6 @@ class WpPageOnlineBean extends WpPageBean
       unset($_SESSION[self::CST_DECKKEY]);
       return $this->getContentLoggedNotLive();
     }
-    //$ts = date(self::CST_FORMATDATE, time());
     $Live = array_shift($Lives);
     $this->Live = $Live;
     $args = array(self::CST_LIVEID=>$Live->getId());
@@ -241,7 +240,8 @@ class WpPageOnlineBean extends WpPageBean
     $LiveSurvivor = $this->LiveSurvivorServices->select(__FILE__, __LINE__, $LiveMission->getActiveLiveSurvivorId());
     if ($LiveSurvivor->getId()=='') {
       // Si on n'a pas de LiveSurvivor actif, on les récupère tous et on affiche les boutons en grisant ceux ayant déjà joué.
-      $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, array(self::CST_LIVEID=>$Live->getId()));
+      $argFilters = array(self::CST_LIVEID=>$Live->getId());
+      $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, $argFilters);
       while (!empty($LiveSurvivors)) {
         $LiveSurvivor = array_shift($LiveSurvivors);
         $returned = $LiveSurvivor->getBean()->getPortraitButton();

@@ -533,7 +533,13 @@ class Mission extends LocalDomain
         $args = array('liveSurvivorId'=>$LiveSurvivor->getId());
         $EquipmentLiveDecks = $this->EquipmentLiveDeckServices->getEquipmentLiveDecksWithFilters(__FILE__, __LINE__, $args);
         $rk = count($EquipmentLiveDecks);
-        $args = array('liveId'=>$Live->getId(), 'equipmentCardId'=>27, 'rank'=>$rk, 'status'=>'E', 'liveSurvivorId'=>$LiveSurvivor->getId());
+        $args = array(
+          self::CST_LIVEID=>$Live->getId(),
+          self::CST_EQUIPMENTCARDID=>27,
+          'rank'=>$rk,
+          self::CST_STATUS=>'E',
+          'liveSurvivorId'=>$LiveSurvivor->getId()
+        );
         $EquipmentLiveDeck = new EquipmentLiveDeck($args);
         $this->EquipmentLiveDeckServices->insert(__FILE__, __LINE__, $EquipmentLiveDeck);
         $cpt++;

@@ -152,18 +152,10 @@ class Chat extends LocalDomain
   public function isPurgeable()
   {
     $isPurgeable = false;
-    if ($this->getLiveId()==0) {
-      if ($this->getSenderId()==0 && $this->getTimestamp()<date(self::CST_FORMATDATE, time()-30)) {
-        $isPurgeable = true;
-      } elseif ($this->getSenderId()!=0 && $this->getTimestamp()<date(self::CST_FORMATDATE, time()-60*60*24)) {
-        $isPurgeable = true;
-      }
-    } elseif ($this->getLiveId()!=0) {
-      if ($this->getSenderId()==0 && $this->getTimestamp()<date(self::CST_FORMATDATE, time()-30)) {
-        $isPurgeable = true;
-      } elseif ($this->getSenderId()!=0) {
-        $isPurgeable = true;
-      }
+    if ($this->getSenderId()==0 && $this->getTimestamp()<date(self::CST_FORMATDATE, time()-30)) {
+      $isPurgeable = true;
+    } elseif ($this->getSenderId()!=0 && ($this->getLiveId()!=0 || $this->getTimestamp()<date(self::CST_FORMATDATE, time()-60*60*24))) {
+      $isPurgeable = true;
     }
     return $isPurgeable;
   }

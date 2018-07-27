@@ -114,54 +114,54 @@ class EquipmentExpansion extends LocalDomain
     // Dans le cas où un Survivant commence avec un équipement de départ
     switch ($Skill->getCode()) {
       case 'STARTS_WITH_ARBALETE' :
-        $args = array('equipmentCardId'=>60);
+        $args = array(self::CST_EQUIPMENTCARDID=>60);
       break;
       case 'STARTS_WITH_BASEBALL_BAT' :
-        $args = array('equipmentCardId'=>3);
+        $args = array(self::CST_EQUIPMENTCARDID=>3);
       break;
       case 'STARTS_WITH_CHAINSAW' :
-        $args = array('equipmentCardId'=>29);
+        $args = array(self::CST_EQUIPMENTCARDID=>29);
       break;
       case 'STARTS_WITH_FLAMETHROWER' :
-        $args = array('equipmentCardId'=>38);
+        $args = array(self::CST_EQUIPMENTCARDID=>38);
       break;
       case 'STARTS_WITH_FLASHLIGHT' :
-        $args = array('equipmentCardId'=>15);
+        $args = array(self::CST_EQUIPMENTCARDID=>15);
       break;
       case 'STARTS_WITH_2_KATANAS' :
         $nb = 2;
       case 'STARTS_WITH_KATANA' :
-        $args = array('equipmentCardId'=>14);
+        $args = array(self::CST_EQUIPMENTCARDID=>14);
       break;
       case 'STARTS_WITH_2_KUKRIS' :
-        $args = array('equipmentCardId'=>52);
+        $args = array(self::CST_EQUIPMENTCARDID=>52);
         $nb = 2;
       break;
       case 'STARTS_WITH_2_MACHETES' :
-        $args = array('equipmentCardId'=>17);
+        $args = array(self::CST_EQUIPMENTCARDID=>17);
         $nb = 2;
       break;
       case 'STARTS_WITH_MAGNUM' :
-        $args = array('equipmentCardId'=>40);
+        $args = array(self::CST_EQUIPMENTCARDID=>40);
       break;
       case 'STARTS_WITH_2_MOLOTOV' :
-        $args = array('equipmentCardId'=>19);
+        $args = array(self::CST_EQUIPMENTCARDID=>19);
         $nb = 2;
       break;
       case 'STARTS_WITH_PISTOL' :
-        $args = array('equipmentCardId'=>24);
+        $args = array(self::CST_EQUIPMENTCARDID=>24);
       break;
       case 'STARTS_WITH_SAWED_OFF' :
-        $args = array('equipmentCardId'=>10);
+        $args = array(self::CST_EQUIPMENTCARDID=>10);
       break;
       case 'STARTS_WITH_RIFLE' :
-        $args = array('equipmentCardId'=>5);
+        $args = array(self::CST_EQUIPMENTCARDID=>5);
       break;
       case 'STARTS_WITH_SHOTGUN' :
-        $args = array('equipmentCardId'=>11);
+        $args = array(self::CST_EQUIPMENTCARDID=>11);
       break;
       case 'STARTS_WITH_SUBMG' :
-        $args = array('equipmentCardId'=>26);
+        $args = array(self::CST_EQUIPMENTCARDID=>26);
       break;
       default :
         // Un cas qui n'aurait pas encore été prévu...

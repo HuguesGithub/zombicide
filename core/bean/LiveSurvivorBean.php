@@ -79,14 +79,12 @@ class LiveSurvivorBean extends LocalBean
   {
     $LiveSurvivor = $this->LiveSurvivor;
     $returned  = '';
-    $returned .= '<div class="btn" data-ajaxaction="toolbarAction" data-ajaxchildaction="openDoor" data-livesurvivor="'.$LiveSurvivor->getId().'"><i class="fas fa-first-aid"></i></div>';
-    $returned .= '<div class="btn" data-ajaxaction="toolbarAction" data-ajaxchildaction="openDoor" data-livesurvivor="'.$LiveSurvivor->getId().'"><i class="fas fa-times"></i></div>';
-    $returned .= '<div class="btn" data-ajaxaction="toolbarAction" data-ajaxchildaction="openDoor" data-livesurvivor="'.$LiveSurvivor->getId().'"><i class="fas fa-bullhorn"></i></div>';
-    $returned .= '<div class="btn" data-ajaxaction="toolbarAction" data-ajaxchildaction="openDoor" data-livesurvivor="'.$LiveSurvivor->getId().'"><i class="fas fa-shoe-prints"></i></div>';
-    $returned .= '<div class="btn" data-ajaxaction="toolbarAction" data-ajaxchildaction="openDoor" data-livesurvivor="'.$LiveSurvivor->getId().'"><i class="fas fa-door-search"></i></div>';
-    $returned .= '<div class="btn" data-ajaxaction="toolbarAction" data-ajaxchildaction="openDoor" data-livesurvivor="'.$LiveSurvivor->getId().'"><i class="fas fa-door-closed"></i></div>';
-    $returned .= '<div class="btn" data-ajaxaction="toolbarAction" data-ajaxchildaction="openDoor" data-livesurvivor="'.$LiveSurvivor->getId().'"><i class="fas fa-gift"></i></div>';
-      //vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-door-open'));
-    return $returned;
+    $returned .= vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-first-aid'));
+    $returned .= vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-times'));
+    $returned .= vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-bullhorn'));
+    $returned .= vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-shoe-prints'));
+    $returned .= vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-search'));
+    $returned .= vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-door-closed'));
+    return $returned.vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-gift'));
   }
 }

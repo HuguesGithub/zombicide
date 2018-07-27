@@ -213,10 +213,10 @@ class WpPageOnlineBean extends WpPageBean
       $strDivs .= '<input type="checkbox" name="survivorId[]" class="hidden" value="'.$Survivor->getId().'"/>';
       $strDivs .= '<i class="far fa-square"></i></span> '.$Survivor->getName().'</div>';
     }
-  	$args = array(
-  	  $strDivs,
+    $args = array(
+      $strDivs,
       $this->debugMsg,
-  	);
+    );
     $strSelection = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/online-survivor-selection.php');
     $strMsg = vsprintf($strSelection, $args);
 
@@ -244,12 +244,12 @@ class WpPageOnlineBean extends WpPageBean
       $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, array(self::CST_LIVEID=>$Live->getId()));
       while (!empty($LiveSurvivors)) {
         $LiveSurvivor = array_shift($LiveSurvivors);
-        $returned .= $LiveSurvivor->getBean()->getPortraitButton();
+        $returned = $LiveSurvivor->getBean()->getPortraitButton();
       }
     } else {
       // On affiche les Boutons associés aux Actions disponibles pour le Survivant.
       // TODO : On doit aussi trouver une façon de stocker les Actions disponibles...
-      $returned .= $LiveSurvivor->getBean()->getActionsButton();
+      $returned = $LiveSurvivor->getBean()->getActionsButton();
     }
     return $returned;
   }
@@ -287,9 +287,9 @@ class WpPageOnlineBean extends WpPageBean
       $strDivs .= '<input type="radio" name="missionId" class="hidden" value="'.$Mission->getId().'"/>';
       $strDivs .= '<i class="far fa-square"></i></span> '.$Mission->getTitle().'</div>';
     }
-  	$args = array(
-  	  $strDivs,
-  	);
+    $args = array(
+      $strDivs,
+    );
     $strSelection = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/online-mission-selection.php');
     $strMsg = vsprintf($strSelection, $args);
     $args = array(

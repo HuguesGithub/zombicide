@@ -163,21 +163,21 @@ class AdminPageMissionsBean extends AdminPageBean
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/missions-edit-board.php');
     return vsprintf($str, $args);
   }
-  private function getSubs($queryArg, $post_status, $numbers)
+  private function getSubs($queryArg, $numbers)
   {
     $links = array('all'=>'Toutes', self::CST_PENDING=>'Non publiées', self::CST_PUBLISH=>'Publiées', self::CST_FUTURE=>'Planifiées');
     $strSubs = '';
     foreach ($links as $key => $value) {
       $queryArg[self::CST_POSTSTATUS] = $key;
       $strSubs .= '<li class="'.$key.'"><a href="'.$this->getQueryArg($queryArg).'" ';
-      $strSubs .= 'class="'.($post_status==$key?self::CST_CURRENT:'').'">'.$value.' ';
+      $strSubs .= 'class="'.($this->post_status==$key?self::CST_CURRENT:'').'">'.$value.' ';
       $strSubs .= '<span class="count">('.$numbers[$key].')</span></a>'.($key!='all'?' |':'').'</li>';
     }
     return $strSubs;
   }
 
 
-  private function initArrFilters($post_status)
+  private function initArrFilters()
   {
     $arrFilters = array();
     $fby_levelId = $this->initVar('filter-by-levelId', '');
@@ -196,7 +196,7 @@ class AdminPageMissionsBean extends AdminPageBean
     if ($fby_origineId!='') {
       $arrFilters[self::CST_ORIGINEID] = $fby_origineId;
     }
-    if ($post_status==self::CST_PENDING) {
+    if ($this->post_status==self::CST_PENDING) {
       $arrFilters[self::CST_PUBLISHED] = '0';
     }
     return $arrFilters;
@@ -234,24 +234,27 @@ class AdminPageMissionsBean extends AdminPageBean
     return $filters.$this->OrigineServices->getOriginesSelect(__FILE__, __LINE__, $origineId, $pf, $cl, false, $label);
   }
 
+  private function initAllVars() {
+  	$this->post_status = $this->initVar(self::CST_POSTSTATUS, 'all');
+  	$this->orderby = $this->initVar(self::CST_ORDERBY, self::CST_TITLE);
+  	$this->order = $this->initVar(self::CST_ORDER, 'asc');
+  	$this->curPage = $this->initVar(self::CST_CURPAGE, 1);
+  }
   /**
    * @return string
    */
   public function getListingPage()
   {
-    $post_status = $this->initVar(self::CST_POSTSTATUS, 'all');
-    $arrFilters = $this->initArrFilters($post_status);
-    $orderby = $this->initVar(self::CST_ORDERBY, self::CST_TITLE);
-    $order = $this->initVar(self::CST_ORDER, 'asc');
-    $curPage = $this->initVar(self::CST_CURPAGE, 1);
-    $Missions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, array(), $orderby, $order);
+  	$this->initAllVars();
+  	$arrFilters = $this->initArrFilters();
+  	$Missions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, array(), $this->orderby, $this->order);
     $NotPublishedMissions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, array(self::CST_PUBLISHED=>0));
-    $FilteredMissions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, $arrFilters, $orderby, $order);
-    $argsPublished = array(self::CST_POSTSTATUS=>self::CST_PUBLISH, self::CST_ORDERBY=>$orderby, self::CST_ORDER=>$order);
+    $FilteredMissions = $this->MissionServices->getMissionsWithFilters(__FILE__, __LINE__, $arrFilters, $this->orderby, $this->order);
+    $argsPublished = array(self::CST_POSTSTATUS=>self::CST_PUBLISH, self::CST_ORDERBY=>$this->orderby, self::CST_ORDER=>$this->order);
     $WpPostsPublished = $this->WpPostServices->getArticles(__FILE__, __LINE__, $argsPublished);
-    $argsFuture = array(self::CST_POSTSTATUS=>self::CST_FUTURE, self::CST_ORDERBY=>$orderby, self::CST_ORDER=>$order);
+    $argsFuture = array(self::CST_POSTSTATUS=>self::CST_FUTURE, self::CST_ORDERBY=>$this->orderby, self::CST_ORDER=>$this->order);
     $WpPostsFuture = $this->WpPostServices->getArticles(__FILE__, __LINE__, $argsFuture);
-    switch ($post_status) {
+    switch ($this->post_status) {
       case self::CST_PUBLISH :
         $ToDisplayMissions = $WpPostsPublished;
       break;
@@ -266,11 +269,11 @@ class AdminPageMissionsBean extends AdminPageBean
     }
     $strRows = '';
     $nbPerPage = 15;
-    if ($post_status == 'all' || $post_status == self::CST_PENDING) {
+    if ($this->post_status == 'all' || $this->post_status == self::CST_PENDING) {
       $nbElements = count($ToDisplayMissions);
       $nbPages = ceil($nbElements/$nbPerPage);
-      $curPage = max(1, min($curPage, $nbPages));
-      $DisplayedMissions = array_slice($ToDisplayMissions, ($curPage-1)*$nbPerPage, $nbPerPage);
+      $this->curPage = max(1, min($this->curPage, $nbPages));
+      $DisplayedMissions = array_slice($ToDisplayMissions, ($this->curPage-1)*$nbPerPage, $nbPerPage);
       if (!empty($DisplayedMissions)) {
         foreach ($DisplayedMissions as $Mission) {
           $MissionBean = new MissionBean($Mission);
@@ -283,17 +286,8 @@ class AdminPageMissionsBean extends AdminPageBean
         foreach ($ToDisplayMissions as $WpPost) {
           $WpPostMissionBean = $WpPost->getBean();
           $Mission = $WpPostMissionBean->getMission();
-          if (!empty($arrFilters[self::CST_LEVELID]) && $Mission->getLevelId()!=$arrFilters[self::CST_LEVELID]) {
-            continue;
-          }
-          if (!empty($arrFilters[self::CST_DURATIONID]) && $Mission->getDurationId()!=$arrFilters[self::CST_DURATIONID]) {
-            continue;
-          }
-          if (!empty($arrFilters[self::CST_PLAYERID]) && $Mission->getPlayerId()!=$arrFilters[self::CST_PLAYERID]) {
-            continue;
-          }
-          if (!empty($arrFilters[self::CST_ORIGINEID]) && $Mission->getOrigineId()!=$arrFilters[self::CST_ORIGINEID]) {
-            continue;
+          if ($this->notFilteredMission()) {
+          	continue;
           }
           $MissionBean = new MissionBean($Mission);
           array_push($ToDisplayFiltered, $MissionBean);
@@ -301,8 +295,8 @@ class AdminPageMissionsBean extends AdminPageBean
       }
       $nbElements = count($ToDisplayFiltered);
       $nbPages = ceil($nbElements/$nbPerPage);
-      $curPage = min(max(1, $curPage), $nbPages);
-      $DisplayedMissions = array_slice($ToDisplayFiltered, ($curPage-1)*$nbPerPage, $nbPerPage);
+      $this->curPage = min(max(1, $this->curPage), $nbPages);
+      $DisplayedMissions = array_slice($ToDisplayFiltered, ($this->curPage-1)*$nbPerPage, $nbPerPage);
       if (!empty($DisplayedMissions)) {
         foreach ($DisplayedMissions as $MissionBean) {
           $strRows .= $MissionBean->getRowForAdminPage();
@@ -310,8 +304,8 @@ class AdminPageMissionsBean extends AdminPageBean
       }
     }
     $queryArg = array(self::CST_ONGLET=>self::CST_MISSION,
-      self::CST_ORDERBY=>$orderby,
-      self::CST_ORDER=>$order
+      self::CST_ORDERBY=>$this->orderby,
+      self::CST_ORDER=>$this->order
     );
     // Subs
     $numbers = array('all'=>count($Missions),
@@ -319,29 +313,20 @@ class AdminPageMissionsBean extends AdminPageBean
       self::CST_PUBLISH=>count($WpPostsPublished),
       self::CST_FUTURE=>count($WpPostsFuture)
     );
-    $subs = $this->getSubs($queryArg, $post_status, $numbers);
+    $subs = $this->getSubs($queryArg, $numbers);
     // Pagination
     $this->setQueryArgWithFilters($queryArg, $arrFilters);
-    $strPagination = $this->getPagination($queryArg, $post_status, $curPage, $nbPages, $nbElements);
+    $strPagination = $this->getPagination($queryArg, $this->post_status, $this->curPage, $nbPages, $nbElements);
     // Filtre de la Difficulté
     $filters = $this->buildFilters($arrFilters);
     // Sorts
-    $queryArg[self::CST_POSTSTATUS] = $post_status;
-    $queryArg[self::CST_ORDERBY] = 'code';
-    $queryArg[self::CST_ORDER] = 'asc';
-    if ($orderby=='code') {
-      $queryArg[self::CST_ORDER] = ($order=='asc'?'desc':'asc');
-    }
-    $urlSortCode = $this->getQueryArg($queryArg);
-    $queryArg[self::CST_ORDERBY] = self::CST_TITLE;
-    $queryArg[self::CST_ORDER] = 'asc';
-    if ($orderby==self::CST_TITLE) {
-      $queryArg[self::CST_ORDER] = ($order=='asc'?'desc':'asc');
-    }
-    $urlSortTitle = $this->getQueryArg($queryArg);
+    $urlSortCode = $this->getUrlSort($queryArg, 'code');
+    $urlSortTitle = $this->getUrlSort($queryArg, self::CST_TITLE);
+    // Construction du tableau de données.
     $args = array(
+      // L'ensemble des lignes - 1
       $strRows,
-        // Filtres - 2
+      // Filtres - 2
       $filters,
       // Url pour créer une nouvelle Mission - 3
       $this->getQueryArg(array(self::CST_ONGLET=>self::CST_MISSION, self::CST_POSTACTION=>'add')),
@@ -360,5 +345,30 @@ class AdminPageMissionsBean extends AdminPageBean
     );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/missions-admin-board.php');
     return vsprintf($str, $args);
+  }
+  private function notFilteredMission($arrFilters, $Mission) {
+  	$filtered = false;
+  	if (!empty($arrFilters[self::CST_LEVELID]) && $Mission->getLevelId()!=$arrFilters[self::CST_LEVELID]) {
+  		$filtered = true;
+  	}
+  	if (!empty($arrFilters[self::CST_DURATIONID]) && $Mission->getDurationId()!=$arrFilters[self::CST_DURATIONID]) {
+  		$filtered = true;
+  	}
+  	if (!empty($arrFilters[self::CST_PLAYERID]) && $Mission->getPlayerId()!=$arrFilters[self::CST_PLAYERID]) {
+  		$filtered = true;
+  	}
+  	if (!empty($arrFilters[self::CST_ORIGINEID]) && $Mission->getOrigineId()!=$arrFilters[self::CST_ORIGINEID]) {
+  		$filtered = true;
+  	}
+  	return $filtered;
+  }
+  private function getUrlSort($queryArg, $orderBy) {
+  	$queryArg[self::CST_POSTSTATUS] = $this->post_status;
+  	$queryArg[self::CST_ORDERBY] = $orderBy;
+  	$queryArg[self::CST_ORDER] = 'asc';
+  	if ($this->orderby==$orderBy) {
+  		$queryArg[self::CST_ORDER] = ($this->order=='asc'?'desc':'asc');
+  	}
+  	return $this->getQueryArg($queryArg);
   }
 }

@@ -345,7 +345,7 @@ class AdminPageMissionsBean extends AdminPageBean
       $strRows .= $MissionBean->getRowForAdminPage();
     }
     return $strRows;
-  }  
+  }
   
   private function getOrderSort($orderBy)
   { return ($this->orderby==$orderBy?$this->order=='asc':'desc'); }

@@ -79,12 +79,12 @@ class LiveSurvivorBean extends LocalBean
   {
     $LiveSurvivor = $this->LiveSurvivor;
     $returned  = '';
-    $returned .= vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-first-aid'));
-    $returned .= vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-times'));
-    $returned .= vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-bullhorn'));
-    $returned .= vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-shoe-prints'));
-    $returned .= vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-search'));
+    $returned .= vsprintf($this->btnAction, array('', 'medic', $LiveSurvivor->getId(), 'far fa-first-aid'));
+    $returned .= vsprintf($this->btnAction, array('', 'endTurn', $LiveSurvivor->getId(), 'far fa-times'));
+    $returned .= vsprintf($this->btnAction, array('', 'makeNoise', $LiveSurvivor->getId(), 'far fa-bullhorn'));
+    $returned .= vsprintf($this->btnAction, array('', 'move', $LiveSurvivor->getId(), 'far fa-shoe-prints'));
+    $returned .= vsprintf($this->btnAction, array('', 'search', $LiveSurvivor->getId(), 'far fa-search'));
     $returned .= vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-door-closed'));
-    return $returned.vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-gift'));
+    return $returned.vsprintf($this->btnAction, array('', 'trade', $LiveSurvivor->getId(), 'far fa-gift'));
   }
 }

@@ -216,14 +216,14 @@ class ChatActions extends LocalActions
     $arr = array(
       self::CST_SENDTOID=>$WpUser->getID(),
       'senderId'=>$this->userId,
-      self::CST_TEXTE=>'Rejoins moi sur l\'espace <span class="keyDeck" data-keydeck="'.$deckKey.'">'.$deckKey.'</span>',
+      self::CST_TEXTE=>'Rejoins moi sur l\'espace '.$this->getSpecialSpan('keyDeck', $deckKey),
       self::CST_TIMESTAMP=>date(self::CST_FORMATDATE),
     );
     $this->postChat($arr);
     // Et on affiche un message pour confirmer l'envoi.
     $arr = array(
       self::CST_SENDTOID=>$this->userId,
-      self::CST_TEXTE=>'Invitation envoyée à <span class="author" data-displayName="'.$displayName.'">'.$displayName.'</span>',
+      self::CST_TEXTE=>'Invitation envoyée à '.$this->getSpecialSpan('author', $displayName),
       self::CST_TIMESTAMP=>date(self::CST_FORMATDATE),
     );
     $this->postChat($arr);
@@ -264,7 +264,7 @@ class ChatActions extends LocalActions
     while (!empty($LiveMissions)) {
       $LiveMission = array_shift($LiveMissions);
       $deckKey = $LiveMission->getLive()->getDeckKey();
-      $text .= '<br><span class="keyDeck" data-keydeck="'.$deckKey.'" title="Rejoindre cette Mission">'.$deckKey.'</span>';
+      $text .= '<br>'.$this->getSpecialSpan('keyDeck', $deckKey, 'Rejoindre cette Mission');
     }
     $arr = array(
       self::CST_SENDTOID=>$this->userId,
@@ -277,7 +277,7 @@ class ChatActions extends LocalActions
   /**
    * @return string
    */
-  public function listUsers()
+  private function listUsers()
   {
     $text  = '';
     $text .= '<b>Liste des Utilisateurs connectés</b>';
@@ -286,7 +286,7 @@ class ChatActions extends LocalActions
       $Chat = array_shift($Chats);
       $WpUser = get_user_by('ID', $Chat->getSenderId());
       $displayName = $WpUser->display_name;
-      $text .= '<br><span class="userInvite" data-keydeck="'.$displayName.'" title="Ecrit à cet utilisateur">'.$displayName.'</span>';
+      $text .= '<br>'.$this->getSpecialSpan('userInvite', $displayName, 'Ecrit à cet utilisateur');
     }
     $arr = array(
       self::CST_SENDTOID=>$this->userId,
@@ -296,6 +296,8 @@ class ChatActions extends LocalActions
     $this->postChat($arr);
     return $this->getChatContent();
   }
+  private function getSpecialSpan($classe, $deckKey, $title='')
+  { return '<span class="'.$classe.'" data-keydeck="'.$deckKey.'" title="'.$title.'">'.$deckKey.'</span>'; }
   /**
    * @param array $arr
    */

@@ -79,7 +79,7 @@ class LiveMissionToken extends LocalDomain
      * @param array $row
      * @param string $a
      * @param string $b
-     * @return LiveToken
+     * @return LiveMissionToken
      */
     public static function convertElement($row, $a='', $b='')
     { return parent::convertElement(new LiveMissionToken(), self::getClassVars(), $row); }

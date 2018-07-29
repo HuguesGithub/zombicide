@@ -38,8 +38,32 @@ class WpPageOnlineBean extends WpPageBean
     $Bean = new WpPageOnlineBean($WpPage);
     return $Bean->getContentPage();
   }
-  public function getHeaderChatSaisie($label='Général', $liveId=0)
-  { return '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$liveId.'">'.$label.'</a></li>'; }
+  /**
+   * {@inheritDoc}
+   * @see PagePageBean::getContentPage()
+   */
+  public function getContentPage()
+  {
+    if (isset($_POST[self::CST_KEYACCESS])) {
+      $args = array(self::CST_DECKKEY=>$_POST[self::CST_KEYACCESS]);
+      $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, $args);
+      $Live = array_shift($Lives);
+      if (empty($Live)) {
+        $args['dateUpdate'] = date(self::CST_FORMATDATE);
+        $Live = new Live($args);
+        $this->LiveServices->insert(__FILE__, __LINE__, $Live);
+        $Live->setId(MySQL::getLastInsertId());
+      }
+      $_SESSION[self::CST_DECKKEY] = $_POST[self::CST_KEYACCESS];
+    }
+    if (isset($_SESSION[self::CST_DECKKEY])) {
+      return $this->getContentLoggedAndLive();
+    } elseif (is_user_logged_in()) {
+      return $this->getContentLoggedNotLive();
+    } else {
+      return $this->getContentNotLogged();
+    }
+  }
   /**
    * @return string
    */
@@ -48,15 +72,7 @@ class WpPageOnlineBean extends WpPageBean
     $ts = date(self::CST_FORMATDATE, time());
     $strMsg  = '<li class="msg-technique" data-timestamp="'.$ts.'"><div><span class="timestamp">'.$ts;
     $strMsg .= '</span></div>Bienvenue sur cette interface. Inscrivez-vous et identifiez-vous pour rejoindre la discussion.</li>';
-    $args = array(
-      'Buttons',
-      'Options',
-      $strMsg,
-      '',
-      'hidden',
-      $this->getHeaderChatSaisie(),
-    );
-    return $this->getPublicPageOnline($args);
+    return $this->getPublicPageOnline('', '', $strMsg, '', 'hidden', $this->getHeaderChatSaisie());
   }
   /**
    * @return string
@@ -69,15 +85,7 @@ class WpPageOnlineBean extends WpPageBean
     $strCanvas = vsprintf($str, $args);
     $strMsg  = '<li class="msg-technique" data-timestamp="'.$ts.'"><div><span class="timestamp">'.$ts;
     $strMsg .= '</span></div>Bienvenue sur cette interface.</li>';
-    $args = array(
-      'Buttons',
-      'Options',
-      $strMsg,
-      $strCanvas,
-      '',
-      $this->getHeaderChatSaisie(),
-    );
-    return $this->getPublicPageOnline($args);
+    return $this->getPublicPageOnline('', '', $strMsg, $strCanvas, '', $this->getHeaderChatSaisie());
   }
   /**
    * @return string
@@ -112,6 +120,20 @@ class WpPageOnlineBean extends WpPageBean
       $returned = $this->getContentSurvivors();
     }
     return $returned;
+  }
+  private function getHeaderChatSaisie($label='Général', $liveId=0)
+  { return '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$liveId.'">'.$label.'</a></li>'; }
+  private function getPublicPageOnline($toolBar, $sideBar, $strMsg, $c, $d, $headerChatSaisie)
+  {
+    $args = array(
+      $toolBar,
+      $sideBar,
+      $strMsg,
+      $c,
+      $d,
+      $headerChatSaisie,
+    );
+    return vsprintf(file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php'), $args);
   }
   private function buildLiveMission()
   {
@@ -218,18 +240,9 @@ class WpPageOnlineBean extends WpPageBean
     );
     $strSelection = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/online-survivor-selection.php');
     $strMsg = vsprintf($strSelection, $args);
-
-    $args = array(
-      'Buttons',
-      'Options',
-      '',
-      $strMsg,
-      '',
-      $this->getHeaderChatSaisie($Live->getDeckKey(), $Live->getId()),
-    );
-    return $this->getPublicPageOnline($args);
+    return $this->getPublicPageOnline('', '', '', $strMsg, '', $this->getHeaderChatSaisie($Live->getDeckKey(), $Live->getId()));
   }
-  public function getActionButtons($Live='')
+  private function getActionButtons($Live='')
   {
     // On part du Live poru récupérer la LiveMission puis le LiveSurvivor actif.
     if ($Live=='') {
@@ -263,15 +276,8 @@ class WpPageOnlineBean extends WpPageBean
       $Bean = $LiveSurvivor->getBean();
       $sideBar .= $Bean->getSideBarContent();
     }
-    $args = array(
-      $this->getActionButtons(),
-      $sideBar,
-      '',
-      'TOTO',
-      '',
-      $this->getHeaderChatSaisie($Live->getDeckKey(), $Live->getId()),
-    );
-    return $this->getPublicPageOnline($args);
+    $headerChatSaisie = $this->getHeaderChatSaisie($Live->getDeckKey(), $Live->getId());
+    return $this->getPublicPageOnline($this->getActionButtons(), $sideBar, '', '', '', $headerChatSaisie);
   }
   private function getMenuMissionSelection()
   {
@@ -292,43 +298,8 @@ class WpPageOnlineBean extends WpPageBean
     );
     $strSelection = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/online-mission-selection.php');
     $strMsg = vsprintf($strSelection, $args);
-    $args = array(
-      'Buttons',
-      'Options',
-      '',
-      $strMsg,
-      '',
-      $this->getHeaderChatSaisie($Live->getDeckKey(), $Live->getId()),
-    );
-    return $this->getPublicPageOnline($args);
-  }
-  public function getPublicPageOnline($args)
-  { return vsprintf(file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php'), $args); }
-  /**
-   * {@inheritDoc}
-   * @see PagePageBean::getContentPage()
-   */
-  public function getContentPage()
-  {
-    if (isset($_POST[self::CST_KEYACCESS])) {
-      $args = array(self::CST_DECKKEY=>$_POST[self::CST_KEYACCESS]);
-      $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, $args);
-      $Live = array_shift($Lives);
-      if (empty($Live)) {
-        $args['dateUpdate'] = date(self::CST_FORMATDATE);
-        $Live = new Live($args);
-        $this->LiveServices->insert(__FILE__, __LINE__, $Live);
-        $Live->setId(MySQL::getLastInsertId());
-      }
-      $_SESSION[self::CST_DECKKEY] = $_POST[self::CST_KEYACCESS];
-    }
-    if (isset($_SESSION[self::CST_DECKKEY])) {
-      return $this->getContentLoggedAndLive();
-    } elseif (is_user_logged_in()) {
-      return $this->getContentLoggedNotLive();
-    } else {
-      return $this->getContentNotLogged();
-    }
+    $headerChatSaisie = $this->getHeaderChatSaisie($Live->getDeckKey(), $Live->getId());
+    return $this->getPublicPageOnline('', '', '', $strMsg, '', $headerChatSaisie);
   }
   
   

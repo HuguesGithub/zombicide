@@ -62,25 +62,28 @@ class OnlineActions extends LocalActions
       // Ou alors, on ne le fait que si on a un flag qui dit de le faire... ?
       return $returned;
     } else {
-      return $this->errorMsg;
+      return $Act->getErrorMsg();
     }
   }
-  
+  public function getErrorMsg()
+  { return $this->errorMsg; }
+  public function getErrorPanel($msg)
+  { return '"error-panel":'.json_encode($msg); }
   public function isLiveSurvivorValidAction()
   {
     // On récupère le LiveSurvivor à partir des données du Post.
     $post = $this->post;
-    $LiveSurvivor = $this->LiveSurvivorServices->select(__FILE__, __LINE__, $post['liveSurvivorId']);
+    $LiveSurvivor = $this->LiveSurvivorServices->select(__FILE__, __LINE__, $post[self::CST_LIVESURVIVORID]);
     // S'il a déjà joué ce tour, on ne peut pas être là !
     // Enfin, sauf dans le cas d'un Lien Zombie j'imagine, mais on verra ça le moment venu...
     if ($LiveSurvivor->hasPlayedThisTurn()) {
-      $this->errorMsg = '{"error-panel":'.json_encode('Ce Survivant a déjà agit ce tour. Il ne peut pas le faire de nouveau.').'}';
+      $this->errorMsg = '{'.getErrorPanel('Ce Survivant a déjà agit ce tour. Il ne peut pas le faire de nouveau.').'}';
       return false;
     }
     // Faudrait vérifier si c'est bien le Survivor actif...
     $LiveMission = $LiveSurvivor->getLiveMission();
     if ($LiveMission->getActiveLiveSurvivorId()!=$LiveSurvivor->getId()) {
-      $this->errorMsg = '{"error-panel":'.json_encode('Ce Survivant ne peut pas effectuer cette Action, il n\'est pas le Survivant actif.').'}';
+      $this->errorMsg = '{'.getErrorPanel('Ce Survivant ne peut pas effectuer cette Action, il n\'est pas le Survivant actif.').'}';
       return false;
     }
     // On peut sauvegarder ce LiveSurvivor, il va servir !
@@ -90,10 +93,10 @@ class OnlineActions extends LocalActions
   }
   private function actionAvailable($actionId)
   {
-    $args = array('liveSurvivorId'=>$this->LiveSurvivor->getId(), 'actionId'=>$actionId);
+    $args = array(self::CST_LIVESURVIVORID=>$this->LiveSurvivor->getId(), self::CST_ACTIONID=>$actionId);
     $LiveSurvivorActions = $this->LiveSurvivorActionServices->getLiveSurvivorActionsWithFilters(__FILE__, __LINE__, $args);
     if (empty($LiveSurvivorActions)) {
-      $this->errorMsg = '{"error-panel":'.json_encode('Ce Survivant ne peut pas effectuer cette Action.').'}';
+      $this->errorMsg = '{'.getErrorPanel('Ce Survivant ne peut pas effectuer cette Action.').'}';
       return false;
     }
     $this->LiveSurvivorAction = array_shift($LiveSurvivorActions);
@@ -104,7 +107,7 @@ class OnlineActions extends LocalActions
     $this->LiveSurvivorActionServices->delete(__FILE__, __LINE__, $this->LiveSurvivorAction);
     // Et on retourne la toolbar mise à jour.
     $WpPageOnlineBean = new WpPageOnlineBean();
-    return '{"online-btn-actions": '.json_encode($WpPageOnlineBean->getActionButtons($this->Live)).'}';
+    return '{'.$this->getOnlineBtnActions($WpPageOnlineBean->getActionButtons($this->Live)).'}';
   }
   public function medicPopup()
   {
@@ -121,7 +124,7 @@ class OnlineActions extends LocalActions
   
   public function endTurn()
   {
-    $args = array('liveSurvivorId'=>$this->LiveSurvivor->getId(), 'actionId'=>$actionId);
+    $args = array(self::CST_LIVESURVIVORID=>$this->LiveSurvivor->getId());
     $LiveSurvivorActions = $this->LiveSurvivorActionServices->getLiveSurvivorActionsWithFilters(__FILE__, __LINE__, $args);
     while (!empty($LiveSurvivorActions)) {
       $LiveSurvivorAction = array_shift($LiveSurvivorActions);
@@ -129,7 +132,7 @@ class OnlineActions extends LocalActions
     }
     // Et on retourne la toolbar mise à jour.
     $WpPageOnlineBean = new WpPageOnlineBean();
-    return '{"online-btn-actions": '.json_encode($WpPageOnlineBean->getActionButtons($this->Live)).'}';
+    return '{'.$this->getOnlineBtnActions($WpPageOnlineBean->getActionButtons($this->Live)).'}';
   }
   
   public function makeNoise()
@@ -196,7 +199,7 @@ class OnlineActions extends LocalActions
       $ActiveLiveSurvivor->setPlayedThisTurn(1);
       $this->LiveSurvivorServices->update(__FILE__, __LINE__, $ActiveLiveSurvivor);
       // On récupère les actions restantes en base et on les supprime.
-      $args = array('liveSurvivorId'=>$LiveSurvivor->getId());
+      $args = array(self::CST_LIVESURVIVORID=>$LiveSurvivor->getId());
       $LiveSurvivorActions = $this->LiveSurvivorActionServices->getLiveSurvivorActionsWithFilters(__FILE__, __LINE__, $args);
       while (!empty($LiveSurvivorActions)) {
         $LiveSurvivorAction = array_shift($LiveSurvivorActions);
@@ -213,6 +216,8 @@ class OnlineActions extends LocalActions
     }
     $WpPageOnlineBean = new WpPageOnlineBean();
     $Live = $LiveSurvivor->getLive();
-    return '{"online-btn-actions": '.json_encode($WpPageOnlineBean->getActionButtons($Live)).'}';
+    return '{'.$this->getOnlineBtnActions($WpPageOnlineBean->getActionButtons($Live)).'}';
   }
+  public function getOnlineBtnActions($content)
+  { return '"online-btn-actions": '.json_encode($content); }
 }

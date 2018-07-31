@@ -1,6 +1,12 @@
 <?php
+/**
+ * @version 1.0.01
+ * @since 1.0.00
+ * @author Hugues
+ */
 interface ConstantsInterface
 {
+  const CST_ACTIONID        = 'actionId';
   const CST_BACKGROUND      = 'background';
   const CST_CHANGEPROFILE   = 'changeProfile';
   const CST_COORDX          = 'coordX';
@@ -27,6 +33,7 @@ interface ConstantsInterface
   const CST_LIVEABLE        = 'liveAble';
   const CST_LIVEDECKID      = 'liveDeckId';
   const CST_LIVEID          = 'liveId';
+  const CST_LIVESURVIVORID  = 'liveSurvivorId';
   const CST_MINDURATION     = 'minDuration';
   const CST_MISSION         = 'mission';
   const CST_MISSIONID       = 'missionId';

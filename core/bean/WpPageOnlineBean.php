@@ -193,7 +193,7 @@ class WpPageOnlineBean extends WpPageBean
         $survivorId = array_shift($survivorIds);
         $Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $survivorId);
         // On conserve ceux sélectionnables.
-        $this->addSurvivorIfAvailable($LiveSurvivors, $Survivor, $args);
+        $this->addSurvivorIfAvailable($LiveSurvivors, $Survivor, $args, $hasSurvivorSelection);
       }
       $Mission->addStandardStartingEquipment($Live, $LiveSurvivors);
       // Si on en a au moins un de sélectionnable, la phase de préparation de la partie est finie, on affiche la Map.
@@ -219,7 +219,7 @@ class WpPageOnlineBean extends WpPageBean
     $strMsg = vsprintf($strSelection, $args);
     return $this->getPublicPageOnline('', '', '', $strMsg, '', $this->getHeaderChatSaisie($Live->getDeckKey(), $Live->getId()));
   }
-  private function addSurvivorIfAvailable(&$LiveSurvivors, $Survivor, $args)
+  private function addSurvivorIfAvailable(&$LiveSurvivors, $Survivor, $args, &$hasSurvivorSelection)
   {
     if ($Survivor->isLiveAble()) {
       $hasSurvivorSelection = true;

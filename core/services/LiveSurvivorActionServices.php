@@ -27,8 +27,8 @@ class LiveSurvivorActionServices extends LocalServices
   private function buildFilters($arrFilters)
   {
     $arrParams = array();
-    $arrParams[] = (isset($arrFilters['liveSurvivorId']) ? $arrFilters['liveSurvivorId'] : '%');
-    $arrParams[] = (isset($arrFilters['actionId']) ? $arrFilters['actionId'] : '%');
+    $arrParams[] = (isset($arrFilters[self::CST_LIVESURVIVORID]) ? $arrFilters[self::CST_LIVESURVIVORID] : '%');
+    $arrParams[] = (isset($arrFilters[self::CST_ACTIONID]) ? $arrFilters[self::CST_ACTIONID] : '%');
     return $arrParams;
   }
   /**
@@ -49,12 +49,12 @@ class LiveSurvivorActionServices extends LocalServices
   public function initLiveSurvivorActions($LiveSurvivor)
   {
     $LiveSurvivorActions = array();
-    $args = array('liveSurvivorId'=>$LiveSurvivor->getId());
+    $args = array(self::CST_LIVESURVIVORID=>$LiveSurvivor->getId());
     $Survivor = $LiveSurvivor->getSurvivor();
     $SurvivorSkills = $Survivor->getSurvivorSkills();
     while (!empty($SurvivorSkills)) {
       $SurvivorSkill = array_shift($SurvivorSkills);
-      $args['actionId'] = $SurvivorSkill->getSkillId();
+      $args[self::CST_ACTIONID] = $SurvivorSkill->getSkillId();
       array_push($LiveSurvivorActions, new LiveSurvivorAction($args));
     }
     return $LiveSurvivorActions;

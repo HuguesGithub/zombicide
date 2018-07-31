@@ -81,7 +81,7 @@ class LiveSurvivorBean extends LocalBean
   {
     $LiveSurvivor = $this->LiveSurvivor;
     $id = $LiveSurvivor->getId();
-    // On récupère les livesurvivor_actions 
+    // On récupère les livesurvivor_actions
     $LiveSurvivorActions = $LiveSurvivor->getLiveSurvivorActions();
     $cpt = 0;
     $specActions = '';

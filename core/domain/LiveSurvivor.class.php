@@ -5,8 +5,8 @@ if (!defined('ABSPATH')) {
 /**
  * Classe LiveSurvivor
  * @author Hugues.
- * @version 1.0.00
- * @since 1.0.00
+ * @version 1.0.01
+ * @since 1.0.01
  */
 class LiveSurvivor extends LocalDomain
 {
@@ -56,10 +56,11 @@ class LiveSurvivor extends LocalDomain
   public function __construct($attributes=array())
   {
     parent::__construct($attributes);
-    $this->EquipmentLiveDeckServices = new EquipmentLiveDeckServices();
-    $this->LiveServices              = new LiveServices();
-    $this->LiveMissionServices       = new LiveMissionServices();
-    $this->SurvivorServices          = new SurvivorServices();
+    $this->EquipmentLiveDeckServices  = new EquipmentLiveDeckServices();
+    $this->LiveServices               = new LiveServices();
+    $this->LiveMissionServices        = new LiveMissionServices();
+    $this->LiveSurvivorActionServices = new LiveSurvivorActionServices();
+    $this->SurvivorServices           = new SurvivorServices();
   }
   /**
    * @return int
@@ -203,5 +204,15 @@ class LiveSurvivor extends LocalDomain
     }
     return $this->Survivor;
   }
+  
+  public function getLiveSurvivorActions()
+  {
+    if ($this->LiveSurvivorActions==null) {
+      $args = array('liveSurvivorId'=>$this->id);
+      $this->LiveSurvivorActions = $this->LiveSurvivorActionServices->getLiveSurvivorActionsWithFilters(__FILE__, __LINE__, $args);
+    }
+    return $this->LiveSurvivorActions;
+  }
+  
 
 }

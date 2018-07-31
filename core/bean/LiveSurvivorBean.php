@@ -5,12 +5,12 @@ if (!defined('ABSPATH')) {
 /**
  * Classe LiveSurvivorBean
  * @author Hugues.
- * @version 1.0.00
+ * @version 1.0.01
  * @since 1.0.00
  */
 class LiveSurvivorBean extends LocalBean
 {
-  private $btnAction = '<div class="btn%1$s" data-ajaxaction="toolbarAction" data-ajaxchildaction="%2$s" data-livesurvivor="%3$s"><i class="%4$s"></i></div>';
+  private $btnAction;
   /**
    * Class Constructor
    * @param LiveSurvivor $LiveSurvivor
@@ -19,6 +19,8 @@ class LiveSurvivorBean extends LocalBean
   {
     parent::__construct();
     $this->LiveSurvivor = ($LiveSurvivor=='' ? new LiveSurvivor() : $LiveSurvivor);
+    $this->btnAction  = '<div class="btn%1$s" data-ajaxaction="toolbarAction" data-ajaxchildaction="%2$s"';
+    $this->btnAction .= ' data-livesurvivor="%3$s"><i class="%4$s"></i></div>';
   }
   
   public function getSideBarContent()
@@ -71,20 +73,68 @@ class LiveSurvivorBean extends LocalBean
     $Survivor = $LiveSurvivor->getSurvivor();
     $returned  = '';
     $returned .= '<div class="btn'.($LiveSurvivor->hasPlayedThisTurn()?' disabled':'').'" data-ajaxaction="toolbarAction"';
-    $returned .= 'data-ajaxchildaction="startSurvivorTurn" data-livesurvivor="'.$LiveSurvivor->getId().'">';
+    $returned .= ' data-ajaxchildaction="startSurvivorTurn" data-livesurvivor="'.$LiveSurvivor->getId().'">';
     return $returned.'<img src="'.$Survivor->getPortraitUrl().'"/></div>';
   }
   
   public function getActionsButton()
   {
     $LiveSurvivor = $this->LiveSurvivor;
-    $returned  = '';
-    $returned .= vsprintf($this->btnAction, array('', 'medic', $LiveSurvivor->getId(), 'far fa-first-aid'));
-    $returned .= vsprintf($this->btnAction, array('', 'endTurn', $LiveSurvivor->getId(), 'far fa-times'));
-    $returned .= vsprintf($this->btnAction, array('', 'makeNoise', $LiveSurvivor->getId(), 'far fa-bullhorn'));
-    $returned .= vsprintf($this->btnAction, array('', 'move', $LiveSurvivor->getId(), 'far fa-shoe-prints'));
-    $returned .= vsprintf($this->btnAction, array('', 'search', $LiveSurvivor->getId(), 'far fa-search'));
-    $returned .= vsprintf($this->btnAction, array('', 'openDoor', $LiveSurvivor->getId(), 'far fa-door-closed'));
-    return $returned.vsprintf($this->btnAction, array('', 'trade', $LiveSurvivor->getId(), 'far fa-gift'));
+    $id = $LiveSurvivor->getId();
+    // On récupère les livesurvivor_actions 
+    $LiveSurvivorActions = $LiveSurvivor->getLiveSurvivorActions();
+    $cpt = 0;
+    $specActions = '';
+    // On compte le nombre de livesurvivor_action où actionId == 1
+    while (!empty($LiveSurvivorActions)) {
+      $LiveSurvivorAction = array_shift($LiveSurvivorActions);
+      if ($LiveSurvivorAction->getActionId()==1) {
+        $cpt++;
+      } else {
+        // Et le cas échéant, on créé un bouton spécial.
+        $specActions .= $LiveSurvivorAction->getBean()->getToolbarButton($id);
+      }
+    }
+    // On affiche en conséquence le nombre d'actions polyvalentes
+    $returned = $this->getBatteryFromCpt($cpt);
+    // Si on n'a plus d'actions polyvalentes, on disable celles-ci, mais on les affiche quand même.
+    $returned .= '<div class="btn-group" role="group">';
+    $returned .= vsprintf($this->btnAction, array('', 'endTurn', $id, 'fas fa-times'));
+    $extraClass = ($cpt==0?' disabled':'');
+    $returned .= vsprintf($this->btnAction, array($extraClass, 'makeNoise', $id, 'fas fa-bullhorn'));
+    $returned .= vsprintf($this->btnAction, array($extraClass, 'move', $id, 'fas fa-shoe-prints'));
+    $returned .= vsprintf($this->btnAction, array($extraClass, 'search', $id, 'fas fa-search'));
+    $returned .= vsprintf($this->btnAction, array($extraClass, 'openDoor', $id, 'fas fa-door-closed'));
+    $returned .= vsprintf($this->btnAction, array($extraClass, 'trade', $id, 'fas fa-gift'));
+    $returned .= '</div>';
+    // Si on a au moins une Action spéciale, il faut les afficher
+    if ($specActions!='') {
+      $returned .= '&nbsp;<div class="btn-group" role="group">'.$specActions.'</div>';
+    }
+    return $returned;
+  }
+  private function getBatteryFromCpt($cpt)
+  {
+    $returned  = '<div class="btn-group" role="group">';
+    switch ($cpt) {
+      case 0 :
+        $returned .= vsprintf($this->btnAction, array('', 'none', '', 'fas fa-battery-empty'));
+      break;
+      case 1 :
+        $returned .= vsprintf($this->btnAction, array('', 'none', '', 'fas fa-battery-quarter'));
+      break;
+      case 2 :
+        $returned .= vsprintf($this->btnAction, array('', 'none', '', 'fas fa-battery-half'));
+      break;
+      case 3 :
+        $returned .= vsprintf($this->btnAction, array('', 'none', '', 'fas fa-battery-three-quarters'));
+      break;
+      case 4 :
+      default :
+        $returned .= vsprintf($this->btnAction, array('', 'none', '', 'fas fa-battery-full'));
+      break;
+    }
+    // On affiche en conséquence le nombre d'actions polyvalentes
+    return $returned.'</div>&nbsp;';
   }
 }

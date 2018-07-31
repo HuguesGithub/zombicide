@@ -86,6 +86,12 @@ from="FROM wp_11_zombicide_live_survivor "
 where="WHERE liveId LIKE '%s' AND survivorId LIKE '%s' AND missionZoneId LIKE '%s' AND playedThisTurn LIKE '%s' "
 insert="INSERT INTO wp_11_zombicide_live_survivor (liveId, survivorId, missionZoneId, survivorTypeId, experiencePoints, hitPoints, playedThisTurn) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');"
 update="UPDATE wp_11_zombicide_live_survivor SET liveId='%s', survivorId='%s', missionZoneId='%s', survivorTypeId='%s', experiencePoints='%s', hitPoints='%s', playedThisTurn='%s' "
+[LiveSurvivorAction]
+select="SELECT id, liveSurvivorId, actionId "
+from="FROM wp_11_zombicide_livesurvivor_action "
+where="WHERE liveSurvivorId LIKE '%s' AND actionId LIKE '%s' "
+insert="INSERT INTO wp_11_zombicide_livesurvivor_action (liveSurvivorId, actionId) VALUES ('%s', '%s');"
+update="UPDATE wp_11_zombicide_livesurvivor_action SET liveSurvivorId='%s', actionId='%s' "
 [LiveSurvivorSkill]
 select="SELECT id, liveSurvivorId, skillId, tagLevelId, locked "
 from="FROM wp_11_zombicide_live_survivorskill "

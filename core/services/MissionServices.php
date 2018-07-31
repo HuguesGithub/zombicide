@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 /**
  * Classe MissionServices
  * @author Hugues.
- * @version 1.0.00
+ * @version 1.0.01
  * @since 1.0.00
  */
 class MissionServices extends LocalServices
@@ -187,17 +187,32 @@ class MissionServices extends LocalServices
     }
     return $heightSelect.'</select>';
   }
-
+  private function addLiveZombie(&$LiveZombies, $Live, $missionZoneId, $zombieTypeId, $zombieCategoryId, $quantity)
+  {
+    $args = array(
+      'liveId'=>$Live->getId(),
+      'missionZoneId'=>$missionZoneId,
+      'zombieTypeId'=>$zombieTypeId,
+      'zombieCategoryId'=>$zombieCategoryId,
+      'quantity'=>$quantity,
+    );
+    array_push($LiveZombies, new LiveZombie($args));
+  }
   public function getStartingZombies($Live, $Mission)
   {
     $LiveZombies = array();
     if ($Mission->hasRule(11)) {
       switch ($Mission->getId()) {
         case 1 :
-          $args = array('liveId'=>$Live->getId(), 'missionZoneId'=>4, 'zombieTypeId'=>1, 'zombieCategoryId'=>1, 'quantity'=>1);
-          array_push($LiveZombies, new LiveZombie($args));
-          $args = array('liveId'=>$Live->getId(), 'missionZoneId'=>4, 'zombieTypeId'=>1, 'zombieCategoryId'=>1, 'quantity'=>1);
-          array_push($LiveZombies, new LiveZombie($args));
+          $this->addLiveZombie($LiveZombies, $Live, 4, 1, 1, 1);
+          $this->addLiveZombie($LiveZombies, $Live, 12, 1, 1, 1);
+        break;
+        case 8 :
+          $arrIds = array(1, 2, 3, 4, 6, 7, 8, 16, 17, 18, 19, 21, 22, 23, 24);
+          while (!empty($arrIds)) {
+            $id = array_shift($arrIds);
+            $this->addLiveZombie($LiveZombies, $Live, $id, 1, 1, 1);
+          }
         break;
         default :
           // Une Mission a des Zombies à mettre en place...

@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 /**
  * Classe WpPageOnlineBean
  * @author Hugues.
- * @version 1.0.00
+ * @version 1.0.01
  * @since 1.0.00
  */
 class WpPageOnlineBean extends WpPageBean
@@ -193,30 +193,7 @@ class WpPageOnlineBean extends WpPageBean
         $survivorId = array_shift($survivorIds);
         $Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $survivorId);
         // On conserve ceux sélectionnables.
-        if ($Survivor->isLiveAble()) {
-          $hasSurvivorSelection = true;
-          $args['survivorId'] = $Survivor->getId();
-          $LiveSurvivor = new LiveSurvivor($args);
-          $this->LiveSurvivorServices->insert(__FILE__, __LINE__, $LiveSurvivor);
-          // Une fois le LiveSurvivor créé, on doit créer les LiveSurvivorSkills.
-          $argsLSS = array('liveSurvivorId'=>$LiveSurvivor->getId());
-          $SurvivorSkills = $Survivor->getSurvivorSkills(1);
-          while (!empty($SurvivorSkills)) {
-            $SurvivorSkill = array_shift($SurvivorSkills);
-            $argsLSS['skillId'] = $SurvivorSkill->getSkillId();
-            $argsLSS['tagLevelId'] = $SurvivorSkill->getTagLevelId();
-            $argsLSS['locked'] = ($SurvivorSkill->getTagLevelId()>=20?1:0);
-            $LiveSurvivorSkill = new LiveSurvivorSkill($argsLSS);
-            $this->LiveSurvivorSkillServices->insert(__FILE__, __LINE__, $LiveSurvivorSkill);
-            if ($LiveSurvivorSkill->isStartsWith()) {
-              // Si cette compétence est une compétence qui permet au Survivant de commencer avec un équipement, on le gère.
-              $Skill = $LiveSurvivorSkill->getSkill();
-              $EquipmentExpansions = EquipmentExpansion::getFromStartingSkill($Skill);
-              $LiveSurvivor->removeStartingEquipmentFromDeckAndEquip($Live, $EquipmentExpansions);
-            }
-          }
-          array_push($LiveSurvivors, $LiveSurvivor);
-        }
+        $this->addSurvivorIfAvailable($LiveSurvivors, $Survivor, $args);
       }
       $Mission->addStandardStartingEquipment($Live, $LiveSurvivors);
       // Si on en a au moins un de sélectionnable, la phase de préparation de la partie est finie, on affiche la Map.
@@ -242,6 +219,33 @@ class WpPageOnlineBean extends WpPageBean
     $strMsg = vsprintf($strSelection, $args);
     return $this->getPublicPageOnline('', '', '', $strMsg, '', $this->getHeaderChatSaisie($Live->getDeckKey(), $Live->getId()));
   }
+  private function addSurvivorIfAvailable(&$LiveSurvivors, $Survivor, $args)
+  {
+    if ($Survivor->isLiveAble()) {
+      $hasSurvivorSelection = true;
+      $args['survivorId'] = $Survivor->getId();
+      $LiveSurvivor = new LiveSurvivor($args);
+      $this->LiveSurvivorServices->insert(__FILE__, __LINE__, $LiveSurvivor);
+      // Une fois le LiveSurvivor créé, on doit créer les LiveSurvivorSkills.
+      $argsLSS = array('liveSurvivorId'=>$LiveSurvivor->getId());
+      $SurvivorSkills = $Survivor->getSurvivorSkills(1);
+      while (!empty($SurvivorSkills)) {
+        $SurvivorSkill = array_shift($SurvivorSkills);
+        $argsLSS['skillId'] = $SurvivorSkill->getSkillId();
+        $argsLSS['tagLevelId'] = $SurvivorSkill->getTagLevelId();
+        $argsLSS['locked'] = ($SurvivorSkill->getTagLevelId()>=20?1:0);
+        $LiveSurvivorSkill = new LiveSurvivorSkill($argsLSS);
+        $this->LiveSurvivorSkillServices->insert(__FILE__, __LINE__, $LiveSurvivorSkill);
+        if ($LiveSurvivorSkill->isStartsWith()) {
+          // Si cette compétence est une compétence qui permet au Survivant de commencer avec un équipement, on le gère.
+          $Skill = $LiveSurvivorSkill->getSkill();
+          $EquipmentExpansions = EquipmentExpansion::getFromStartingSkill($Skill);
+          $LiveSurvivor->removeStartingEquipmentFromDeckAndEquip($Live, $EquipmentExpansions);
+        }
+      }
+      array_push($LiveSurvivors, $LiveSurvivor);
+    }
+  }
   private function getActionButtons($Live='')
   {
     // On part du Live poru récupérer la LiveMission puis le LiveSurvivor actif.
@@ -260,9 +264,8 @@ class WpPageOnlineBean extends WpPageBean
         $returned = $LiveSurvivor->getBean()->getPortraitButton();
       }
     } else {
-      // On affiche les Boutons associés aux Actions disponibles pour le Survivant.
-      // TODO : On doit aussi trouver une façon de stocker les Actions disponibles...
-      $returned = $LiveSurvivor->getBean()->getActionsButton();
+      $returned  = '<div class="btn-group">'.$LiveSurvivor->getBean()->getPortraitButton().'</div>&nbsp;';
+      $returned .= $LiveSurvivor->getBean()->getActionsButton();
     }
     return $returned;
   }

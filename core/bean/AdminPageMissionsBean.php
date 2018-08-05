@@ -38,7 +38,7 @@ class AdminPageMissionsBean extends AdminPageBean
     return $Bean->returnPostActionPage($urlParams);
   }
   /**
-   * @param Mission $Mission
+   * @param int $id
    * @return string
    */
   public function getAddPage($id='')
@@ -56,7 +56,7 @@ class AdminPageMissionsBean extends AdminPageBean
     return $this->getAddEditPage($Mission, 'Ajouter une Mission', 'add');
   }
     /**
-     * @param Mission $Mission
+     * @param int $id
      * @return string
      */
   public function getEditPage($id)

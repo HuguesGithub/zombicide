@@ -32,11 +32,6 @@ class WpPageSpawnsBean extends WpPageBean
   }
   /**
    * Retourne une liste partielle des cartes Invasions
-   * @param string $sort_col Selon quelle colonne on trie ? Par défaut : 'name'.
-   * @param string $sort_order Dans quel sens on trie ? Par défaut : 'asc'.
-   * @param int $nbPerPage Combien de survivants affichés par page ? Par défaut : 10.
-   * @param int $curPage Quelle page est affichée ? Par défaut : 1.
-   * @param array $arrFilters
    * @return string
    */
   public function getListingPage()

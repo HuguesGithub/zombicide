@@ -321,6 +321,7 @@ class ChatActions extends LocalActions
     $this->ChatServices->insert(__FILE__, __LINE__, $Chat);
   }
   /**
+   * Supprime les anciens messages dans les Chats
    */
   public function purgeOldChat()
   {

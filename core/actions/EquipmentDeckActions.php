@@ -161,6 +161,7 @@ class EquipmentDeckActions extends LocalActions
     }
   }
   /**
+   * @return string
    */
   public function drawEquipmentCard()
   {

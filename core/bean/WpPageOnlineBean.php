@@ -246,6 +246,9 @@ class WpPageOnlineBean extends WpPageBean
       array_push($LiveSurvivors, $LiveSurvivor);
     }
   }
+  /**
+   * @param string $Live
+   */
   public function getActionButtons($Live='')
   {
     // On part du Live pour récupérer la LiveMission puis le LiveSurvivor actif.

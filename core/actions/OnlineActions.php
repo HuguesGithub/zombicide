@@ -67,7 +67,7 @@ class OnlineActions extends LocalActions
     }
   }
   /**
-   * 
+   * @return string
    */
   public function getErrorMsg()
   { return $this->errorMsg; }
@@ -103,7 +103,7 @@ class OnlineActions extends LocalActions
     if ($post['ajaxChildAction']!='startSurvivorTurn') {
       $LiveMission = $LiveSurvivor->getLiveMission();
       if ($LiveMission->getActiveLiveSurvivorId()!=$LiveSurvivor->getId()) {
-      	$msgError = 'Ce Survivant ne peut pas effectuer cette Action, il n\'est pas le Survivant actif.';
+        $msgError = 'Ce Survivant ne peut pas effectuer cette Action, il n\'est pas le Survivant actif.';
         $this->errorMsg = '{'.$this->getErrorPanel($msgError).'}';
         return false;
       }
@@ -122,6 +122,9 @@ class OnlineActions extends LocalActions
     $this->LiveSurvivorAction = array_shift($LiveSurvivorActions);
     return true;
   }
+  /**
+   * @return string
+   */
   private function deleteAndMajToolbar()
   {
     $this->LiveSurvivorActionServices->delete(__FILE__, __LINE__, $this->LiveSurvivorAction);
@@ -130,7 +133,7 @@ class OnlineActions extends LocalActions
     return '{'.$this->getOnlineBtnActions($WpPageOnlineBean->getActionButtons($this->Live)).'}';
   }
   /**
-   * 
+   * @return string
    */
   public function medicPopup()
   {
@@ -181,7 +184,7 @@ class OnlineActions extends LocalActions
     return '{'.$this->getOnlinePopupModal($str).'}';
   }
   /**
-   * 
+   * @return string
    */
   public function endTurn()
   {
@@ -271,7 +274,7 @@ class OnlineActions extends LocalActions
     $this->postChat($LiveSurvivor->getSurvivor()->getName().' débute son tour.');
   }
   /**
-   * 
+   * @return string
    */
   public function makeNoise()
   {
@@ -284,7 +287,7 @@ class OnlineActions extends LocalActions
     }
   }
   /**
-   * 
+   * @return string
    */
   public function moveTo()
   {
@@ -297,7 +300,7 @@ class OnlineActions extends LocalActions
     }
   }
   /**
-   * 
+   * @return string
    */
   public function search()
   {
@@ -315,7 +318,7 @@ class OnlineActions extends LocalActions
     return $this->deleteAndMajToolbar();
   }
   /**
-   * 
+   * @return string
    */
   public function openDoor()
   {
@@ -329,7 +332,7 @@ class OnlineActions extends LocalActions
     }
   }
   /**
-   * 
+   * @return string
    */
   public function trade()
   {
@@ -342,7 +345,7 @@ class OnlineActions extends LocalActions
     }
   }
   /**
-   * 
+   * @return string
    */
   public function startSurvivorTurn()
   {

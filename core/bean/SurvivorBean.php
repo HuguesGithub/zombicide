@@ -12,7 +12,9 @@ class SurvivorBean extends LocalBean
 {
   private $strPortraitSurvivant = 'portrait-survivant';
   private $strPortraitZombivant = 'portrait-zombivant';
-  
+  /**
+   * @param string $Survivor
+   */
   public function __construct($Survivor='')
   {
     parent::__construct();
@@ -103,6 +105,9 @@ class SurvivorBean extends LocalBean
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/survivor-row-public.php');
     return vsprintf($str, $args);
   }
+  /**
+   * @return string
+   */
   public function getAllSkills()
   {
     $Survivor = $this->Survivor;
@@ -117,8 +122,16 @@ class SurvivorBean extends LocalBean
     }
     return $str.'</ul>';
   }
+  /**
+   * @param string $addClass
+   * @param string $content
+   * @return string
+   */
   public function getSkillsBySurvivorType($addClass, $content)
   { return '<li class="'.$addClass.'">'.$content.'</li>'; }
+  /**
+   * @return string
+   */
   public function getAllPortraits()
   {
     $Survivor = $this->Survivor;
@@ -136,6 +149,12 @@ class SurvivorBean extends LocalBean
     }
     return $str;
   }
+  /**
+   * @param string $src
+   * @param string $alt
+   * @param string $addClass
+   * @return string
+   */
   public function getStrImgPortrait($src, $alt, $addClass)
   { return '<img src="'.$src.'" alt="'.$alt.'" class="thumb '.$addClass.'"/>'; }
   /**

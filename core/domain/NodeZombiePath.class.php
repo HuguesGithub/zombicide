@@ -11,18 +11,22 @@ if (!defined('ABSPATH')) {
 class NodeZombiePath extends LocalDomain
 {
   /**
+   * Une MissionZone de la Map
    * @var $MissionZone
    */
   protected $MissionZone;
   /**
+   * Profondeur du chemin
    * @var $depth
    */
   protected $depth;
   /**
+   * Lien directionnel entre le noeud et son parent
    * @var $orientation
    */
   protected $orientation;
   /**
+   * La liste des enfants du noeud
    * @var $arrChildren
    */
   protected $arrChildren = array();
@@ -66,7 +70,7 @@ class NodeZombiePath extends LocalDomain
   { array_push($this->arrChildren, $NodeZombiePath); }
   /**
    * @return int
-   */  
+   */
   public function getDepth()
   { return $this->depth; }
   /**

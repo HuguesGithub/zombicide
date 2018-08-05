@@ -91,6 +91,9 @@ class EquipmentExpansion extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new EquipmentExpansion(), self::getClassVars(), $row); }
+  /**
+   * @param Equipment $Equipment
+   */
   public function setEquipment($Equipment)
   { $this->Equipment = $Equipment; }
   

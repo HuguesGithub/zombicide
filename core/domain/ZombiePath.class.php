@@ -11,10 +11,12 @@ if (!defined('ABSPATH')) {
 class ZombiePath extends LocalDomain
 {
   /**
+   * Toutes les MissionsZones de la Map
    * @var $MissionZones
    */
   protected $MissionZones;
   /**
+   * La MissionZone de départ du chemin.
    * @var $LouderNodeZombiePath
    */
   protected $LouderNodeZombiePath;
@@ -34,7 +36,7 @@ class ZombiePath extends LocalDomain
     $this->MissionZones = $Mission->getMissionZones();
   }
   /**
-   * 
+   * Construit le chemin depuis la zone la plus bruyante.
    */
   public function buildZombiePathToLouderZone()
   {

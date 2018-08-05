@@ -177,6 +177,9 @@ class LiveMission extends LocalDomain
     $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, $args);
     return array_shift($LiveSurvivors);
   }
+  /**
+   * @return LiveSurvivor
+   */
   public function getNextLiveSurvivor()
   {
     $turnRank = $this->getActiveLiveSurvivor()->getTurnRank();

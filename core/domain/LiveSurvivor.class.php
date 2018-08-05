@@ -171,7 +171,10 @@ class LiveSurvivor extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new LiveSurvivor(), self::getClassVars(), $row); }
-
+  /**
+   * @param Live $Live
+   * @param EquipmentExpansion $EquipmentExpansions
+   */
   public function removeStartingEquipmentFromDeckAndEquip($Live, $EquipmentExpansions)
   {
     $cpt = 0;
@@ -192,7 +195,9 @@ class LiveSurvivor extends LocalDomain
       }
     }
   }
-  
+  /**
+   * @return LiveSurvivorBean
+   */
   public function getBean()
   { return new LiveSurvivorBean($this); }
   /**

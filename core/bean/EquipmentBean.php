@@ -21,6 +21,7 @@ class EquipmentBean extends LocalBean
   }
   /**
    * @param int $expansionId
+   * @param int $equipmentLiveDeckId
    * @return string
    */
   public function displayCard($expansionId='', $equipmentLiveDeckId=-1)

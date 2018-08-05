@@ -106,7 +106,9 @@ class LiveSurvivorSkill extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new LiveSurvivorSkill(), self::getClassVars(), $row); }
-  
+  /**
+   * @return Skill
+   */
   public function getSkill()
   {
     if ($this->Skill==null) {
@@ -115,11 +117,13 @@ class LiveSurvivorSkill extends LocalDomain
     return $this->Skill;
   }
   /**
-   **/
+   * @return boolean
+   */
   public function isStartsWith()
   { return (strpos($this->getSkill()->getCode(), 'STARTS_WITH')!==false); }
   /**
-   **/
+   * @return string
+   */
   public function getSkillName()
   { return $this->getSkill()->getName(); }
 }

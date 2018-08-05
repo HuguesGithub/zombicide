@@ -11,6 +11,7 @@ if (!defined('ABSPATH')) {
 class MissionBean extends LocalBean
 {
   /**
+   * une constante de classe.
    * @var $classe
    */
   public $classe = 'custom-select custom-select-sm filters';

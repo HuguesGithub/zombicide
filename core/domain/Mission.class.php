@@ -515,7 +515,10 @@ class Mission extends LocalDomain
     }
     return $doInsert;
   }
-
+  /**
+   * @param int $ruleId
+   * @return boolean
+   */
   public function hasRule($ruleId)
   {
     $hasRule = false;
@@ -528,9 +531,12 @@ class Mission extends LocalDomain
     }
     return $hasRule;
   }
-  
+  /**
+   * @return int
+   */
   public function getStartingMissionZoneId()
   {
+  	// TODO : Récupérer la MissionZone qui va bien.
     return 14;
   }
   /**

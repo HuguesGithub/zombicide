@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveSurvivorSkill
- * @author Hugues.
- * @version 1.0.00
  * @since 1.0.00
+ * @version 1.0.01
+ * @author Hugues
  */
 class LiveSurvivorSkill extends LocalDomain
 {
@@ -114,9 +114,12 @@ class LiveSurvivorSkill extends LocalDomain
     }
     return $this->Skill;
   }
+  /**
+   **/
   public function isStartsWith()
-  {
-    $Skill = $this->getSkill();
-    return (strpos($Skill->getCode(), 'STARTS_WITH')!==false);
-  }
+  { return (strpos($this->getSkill()->getCode(), 'STARTS_WITH')!==false); }
+  /**
+   **/
+  public function getSkillName()
+  { return $this->getSkill()->getName(); }
 }

@@ -5,6 +5,7 @@ if (!defined('ABSPATH')) {
 /**
  * ChatActions
  * @since 1.0.00
+ * @version 1.0.01
  * @author Hugues
  */
 class ChatActions extends LocalActions
@@ -84,6 +85,14 @@ class ChatActions extends LocalActions
         break;
         case '/users'  :
           $returned = $this->listUsers();
+        break;
+        case '/activateZombies' :
+          // TODO : à ne pas garder en PROD, ou à protéger par droits d'admin.
+          $OnlineActions = new OnlineActions();
+          $args = array(self::CST_DECKKEY=>$_SESSION[self::CST_DECKKEY]);
+          $Lives = $this->LiveServices->getLivesWithFilters(__FILE__, __LINE__, $args);
+          $Live = array_shift($Lives);
+          $returned = $OnlineActions->activateZombies((isset($arrCmds[1])?$arrCmds[1]:''), $Live);
         break;
         default :
           $arr = array(
@@ -301,7 +310,7 @@ class ChatActions extends LocalActions
   /**
    * @param array $arr
    */
-  private function postChat($arr)
+  public function postChat($arr)
   {
     $Chat = new Chat($arr);
     $this->ChatServices->insert(__FILE__, __LINE__, $Chat);
@@ -320,5 +329,10 @@ class ChatActions extends LocalActions
       }
     }
   }
-
+  public static function staticPostChat($args)
+  {
+    $ChatServices = new ChatServices();
+    $Chat = new Chat($args);
+    $ChatServices->insert(__FILE__, __LINE__, $Chat);
+  }
 }

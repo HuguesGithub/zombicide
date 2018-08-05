@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveZombie
- * @author Hugues.
- * @version 1.0.00
  * @since 1.0.00
+ * @version 1.0.01
+ * @author Hugues
  */
 class LiveZombie extends LocalDomain
 {
@@ -40,6 +40,11 @@ class LiveZombie extends LocalDomain
    * @var int $quantity
    */
   protected $quantity;
+  public function __construct($attributes=array())
+  {
+    parent::__construct($attributes);
+    $this->MissionZoneServices = new MissionZoneServices();
+  }
   /**
    * @return int
    */
@@ -113,4 +118,12 @@ class LiveZombie extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new LiveZombie(), self::getClassVars(), $row); }
+  
+  public function getMissionZone()
+  {
+    if ($this->MissionZone==null) {
+      $this->MissionZone = $this->MissionZoneServices->select(__FILE__, __LINE__, $this->missionZoneId);
+    }
+    return $this->MissionZone;
+  }
 }

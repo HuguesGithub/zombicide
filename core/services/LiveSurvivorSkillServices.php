@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveSurvivorSkillServices
- * @author Hugues.
- * @version 1.0.00
  * @since 1.0.00
+ * @version 1.0.01
+ * @author Hugues
  */
 class LiveSurvivorSkillServices extends LocalServices
 {
@@ -27,7 +27,7 @@ class LiveSurvivorSkillServices extends LocalServices
   private function buildFilters($arrFilters)
   {
     $arrParams = array();
-    $arrParams[] = (isset($arrFilters['survivorId']) ? $arrFilters['survivorId'] : '%');
+    $arrParams[] = (isset($arrFilters[self::CST_LIVESURVIVORID]) ? $arrFilters[self::CST_LIVESURVIVORID] : '%');
     return $arrParams;
   }
   

@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveMission
- * @author Hugues.
- * @version 1.0.00
  * @since 1.0.00
+ * @version 1.0.01
+ * @author Hugues
  */
 class LiveMission extends LocalDomain
 {
@@ -30,6 +30,16 @@ class LiveMission extends LocalDomain
    * @var int $activeLiveSurvivorId
    */
   protected $activeLiveSurvivorId;
+  /**
+   * Nombre de Survivants dans la Mission.
+   * @var int $nbSurvivors
+   */
+  protected $nbSurvivors;
+  /**
+   * Tour actuel.
+   * @var int $turn
+   */
+  protected $turn;
   /**
    * @param array $attributes
    */
@@ -61,6 +71,16 @@ class LiveMission extends LocalDomain
   public function getActiveLiveSurvivorId()
   { return $this->activeLiveSurvivorId; }
   /**
+   * @return int
+   */
+  public function getNbSurvivors()
+  { return $this->nbSurvivors; }
+  /**
+   * @return int
+   */
+  public function getTurn()
+  { return $this->turn; }
+  /**
    * @param int $id
    */
   public function setId($id)
@@ -80,6 +100,16 @@ class LiveMission extends LocalDomain
    */
   public function setActiveLiveSurvivorId($activeLiveSurvivorId)
   { $this->activeLiveSurvivorId = $activeLiveSurvivorId; }
+  /**
+   * @param int $nbSurvivors
+   */
+  public function setNbSurvivors($nbSurvivors)
+  { $this->nbSurvivors = $nbSurvivors; }
+  /**
+   * @param int $turn
+   */
+  public function setTurn($turn)
+  { $this->turn = $turn; }
   /**
    * @return array
    */
@@ -110,11 +140,53 @@ class LiveMission extends LocalDomain
     return $this->Mission;
   }
   
+  public function getLiveSurvivors()
+  {
+    if ($this->LiveSurvivors==null) {
+      $args = array(self::CST_LIVEID=>$this->liveId);
+      $this->LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, $args);
+    }
+    return $this->LiveSurvivors;
+  }
+  
   public function getActiveLiveSurvivor()
   {
     if ($this->ActiveLiveSurvivor==null) {
       $this->ActiveLiveSurvivor = $this->LiveSurvivorServices->select(__FILE__, __LINE__, $this->activeLiveSurvivorId);
     }
     return $this->ActiveLiveSurvivor;
+  }
+  public function getFirstLiveSurvivor()
+  {
+    $rk = ($this->turn%$this->nbSurvivors);
+    if ($rk==0) {
+      $rk = $this->nbSurvivors;
+    }
+    $args = array('liveId'=>$this->liveId, 'turnRank'=>$rk);
+    $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, $args);
+    return array_shift($LiveSurvivors);
+  }
+  public function getNextLiveSurvivor()
+  {
+    $turnRank = $this->getActiveLiveSurvivor()->getTurnRank();
+    $args = array('liveId'=>$this->liveId, 'playedThisTurn'=>0);
+    $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, $args);
+    // Si on n'en a qu'un, c'est l'actif, c'est la fin du tour,
+    if (count($LiveSurvivors)==1) {
+      return false;
+    }
+    // Sinon, on prend celui qui suit
+    $nextTurnRank = ($turnRank+1)%$this->nbSurvivors;
+    if ($nextTurnRank==0) {
+      $nextTurnRank = $this->nbSurvivors;
+    }
+    $args = array('liveId'=>$this->liveId, 'turnRank'=>$nextTurnRank);
+    $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, $args);
+    // En gardant à l'esprit que durant le tour 1, faut le faire à la main...
+    if (empty($LiveSurvivors)) {
+      return new LiveSurvivor();
+    } else {
+      return array_shift($LiveSurvivors);
+    }
   }
 }

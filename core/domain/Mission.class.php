@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe Mission
- * @author Hugues.
- * @version 1.0.00
  * @since 1.0.00
+ * @version 1.0.01
+ * @author Hugues
  */
 class Mission extends LocalDomain
 {
@@ -79,6 +79,7 @@ class Mission extends LocalDomain
     $this->MissionObjectiveServices  = new MissionObjectiveServices();
     $this->MissionRuleServices       = new MissionRuleServices();
     $this->MissionTileServices       = new MissionTileServices();
+    $this->MissionZoneServices       = new MissionZoneServices();
     $this->OrigineServices           = new OrigineServices();
     $this->PlayerServices            = new PlayerServices();
     $this->WpPostServices            = new WpPostServices();
@@ -223,6 +224,17 @@ class Mission extends LocalDomain
       $this->MissionTiles = $this->MissionTileServices->getMissionTilesWithFilters(__FILE__, __LINE__, $arrFilters, $orderBy, $order);
     }
     return $this->MissionTiles;
+  }
+  /**
+   * @return array MissionZone
+   */
+  public function getMissionZones()
+  {
+    if ($this->MissionZones == null) {
+      $arrFilters = array(self::CST_MISSIONID=>$this->id);
+      $this->MissionZones = $this->MissionZoneServices->getMissionZonesWithFilters(__FILE__, __LINE__, $arrFilters);
+    }
+    return $this->MissionZones;
   }
   /**
    * @return array MissionRule

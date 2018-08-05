@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe MissionServices
- * @author Hugues.
- * @version 1.0.01
  * @since 1.0.00
+ * @version 1.0.01
+ * @author Hugues
  */
 class MissionServices extends LocalServices
 {

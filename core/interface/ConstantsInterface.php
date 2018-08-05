@@ -1,7 +1,11 @@
 <?php
+if (!defined('ABSPATH')) {
+  die('Forbidden');
+}
 /**
- * @version 1.0.01
+ * Classe ConstantsInterface
  * @since 1.0.00
+ * @version 1.0.01
  * @author Hugues
  */
 interface ConstantsInterface

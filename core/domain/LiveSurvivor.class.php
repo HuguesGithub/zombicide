@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveSurvivor
- * @author Hugues.
- * @version 1.0.01
  * @since 1.0.01
+ * @version 1.0.01
+ * @author Hugues
  */
 class LiveSurvivor extends LocalDomain
 {
@@ -51,6 +51,11 @@ class LiveSurvivor extends LocalDomain
    */
   protected $playedThisTurn;
   /**
+   * Quelle position dans le premier Tour
+   * @var int $turnRank
+   */
+  protected $turnRank;
+  /**
    * @param array $attributes
    */
   public function __construct($attributes=array())
@@ -60,6 +65,7 @@ class LiveSurvivor extends LocalDomain
     $this->LiveServices               = new LiveServices();
     $this->LiveMissionServices        = new LiveMissionServices();
     $this->LiveSurvivorActionServices = new LiveSurvivorActionServices();
+    $this->LiveSurvivorSkillServices  = new LiveSurvivorSkillServices();
     $this->SurvivorServices           = new SurvivorServices();
   }
   /**
@@ -103,6 +109,11 @@ class LiveSurvivor extends LocalDomain
   public function hasPlayedThisTurn()
   { return ($this->playedThisTurn==1); }
   /**
+   * @return int
+   */
+  public function getTurnRank()
+  { return $this->turnRank; }
+  /**
    * @param int $id
    */
   public function setId($id)
@@ -142,6 +153,11 @@ class LiveSurvivor extends LocalDomain
    */
   public function setPlayedThisTurn($playedThisTurn)
   { $this->playedThisTurn = $playedThisTurn; }
+  /**
+   * @param int $turnRank
+   */
+  public function setTurnRank($turnRank)
+  { $this->turnRank = $turnRank; }
   /**
    * @return array
    */
@@ -213,6 +229,92 @@ class LiveSurvivor extends LocalDomain
     }
     return $this->LiveSurvivorActions;
   }
-  
+  /**
+   * @return string
+   */
+  public function getPortraitUrl()
+  {
+    switch ($this->survivorTypeId) {
+      case 2 :
+        $type = 'z';
+      break;
+      case 3 :
+        $type = 'u';
+      break;
+      case 4 :
+        $type = 'uz';
+      break;
+      case 1 :
+      default :
+        $type = '';
+      break;
+    }
+    return $this->getSurvivor()->getPortraitUrl($type);
+  }
+  /**
+   * @param string $type
+   * @param boolean $withLink
+   * @return string
+   */
+  public function getUlSkills($type='')
+  {
+    $LiveSurvivorSkills = $this->getLiveSurvivorSkills();
+    $str = '';
+    $strTmp = '';
+    while (!empty($LiveSurvivorSkills)) {
+      $LiveSurvivorSkill = array_shift($LiveSurvivorSkills);
+      switch ($LiveSurvivorSkill->getTagLevelId()) {
+        case 20 :
+        case 30 :
+        case 40 :
+          $str .= '<ul class="">'.$strTmp.'</ul>';
+          $strTmp = '';
+        break;
+        default :
+        break;
+      }
+      $strTmp .= $this->getSkillLi($LiveSurvivorSkill);
+    }
+    return $str.'<ul class="">'.$strTmp.'</ul>';
+  }
+  /**
+   * @return array SurvivorSkill
+   */
+  public function getLiveSurvivorSkills()
+  {
+    if ($this->LiveSurvivorSkills == null) {
+      $arrFilters = array(self::CST_LIVESURVIVORID=>$this->id);
+      $this->LiveSurvivorSkills = $this->LiveSurvivorSkillServices->getLiveSurvivorSkillsWithFilters(__FILE__, __LINE__, $arrFilters);
+    }
+    return $this->LiveSurvivorSkills;
+  }
+  /**
+   **/
+  private function getSkillLi($LiveSurvivorSkill)
+  {
+    switch ($LiveSurvivorSkill->getTagLevelId()) {
+      case 10 :
+      case 11 :
+        $strColor = 'blue';
+      break;
+      case 20 :
+        $strColor = 'yellow';
+      break;
+      case 30 :
+      case 31 :
+        $strColor = 'orange';
+      break;
+      case 40 :
+      case 41 :
+      case 42 :
+        $strColor = 'red';
+      break;
+      default :
+        $strColor = '';
+      break;
+    }
+    $str = '<li><span class="badge badge-'.$strColor.'-skill'.($LiveSurvivorSkill->isLocked()?' disabled':'').'">';
+    return $str.$LiveSurvivorSkill->getSkillName().'</span></li>';
+  }
 
 }

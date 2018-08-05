@@ -53,6 +53,9 @@ $hj(document).ready(function(){
 
 function initToolbarButtonActions() {
   $hj('#online-btn-actions .btn').unbind().click(function(){
+    if ($hj(this).hasClass('disabled')) {
+      return false;
+    }
     var obj;
     var ajaxAction = $hj(this).data('ajaxaction');
     var ajaxChildAction = $hj(this).data('ajaxchildaction');
@@ -136,6 +139,27 @@ function dealWithAjaxResponse(obj) {
         case 'online-btn-actions' :
           $hj('#'+anchor).html(obj[anchor]);
           initToolbarButtonActions();
+        break;
+        case 'online-popup-modal' :
+          $hj('#'+anchor).html(obj[anchor]);
+          $hj('.btn.btn-choose-survivor').unbind().click(function(){
+            var liveSurvivorId = $hj(this).data('livesurvivor-id');
+            var data = {'action': 'dealWithAjax', 'ajaxAction': 'toolbarAction', 'ajaxChildAction': 'startSurvivorTurn', 'liveSurvivorId': liveSurvivorId};
+            $hj.post(
+              ajaxurl,
+              data,
+              function(response) {
+                try {
+                  obj = JSON.parse(response);
+                  dealWithAjaxResponse(obj);
+                  initToolbarButtonActions();
+                } catch (e) {
+                  console.log("error: "+e);
+                  console.log(response);
+                }
+              }
+            );
+          });
         break;
       }
     }

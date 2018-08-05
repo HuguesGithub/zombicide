@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe WpPostMissionBean
- * @author Hugues.
- * @version 1.0.00
  * @since 1.0.00
+ * @version 1.0.01
+ * @author Hugues
  */
 class WpPostMissionBean extends WpPostBean
 {
@@ -150,7 +150,7 @@ class WpPostMissionBean extends WpPostBean
       // - 4
       '', // $Mission->getOrigineName()
       // - 5
-      $WpPost->getGuid(), // '#', // TODO à modifier à terme
+      $WpPost->getGuid(),
       // Code et Nom de la Mission - 6
       $Mission->getCode().' - '.$Mission->getTitle(),
       // - 7

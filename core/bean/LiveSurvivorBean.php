@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveSurvivorBean
- * @author Hugues.
- * @version 1.0.01
  * @since 1.0.00
+ * @version 1.0.01
+ * @author Hugues
  */
 class LiveSurvivorBean extends LocalBean
 {
@@ -45,8 +45,7 @@ class LiveSurvivorBean extends LocalBean
     }
     $args = array (
       // Url du portrait - 1
-      // TODO : De manière dynamique, passer en paramètre le type du Survivant.
-      $Survivor->getPortraitUrl(),
+      $LiveSurvivor->getPortraitUrl(),
       // Nom du Survivant - 2
       $Survivor->getName(),
       // Points de vie - 3
@@ -58,8 +57,7 @@ class LiveSurvivorBean extends LocalBean
       // Nombre d'xps actuels et prochain seuil - 6
       $xps.'/'.$maxXp,
       // Liste des compétences - 7
-      // TODO : Afficher de façon dynamique selon le type de survivant ET griser celles qui n'ont pas encore été débloquées.
-      $Survivor->getUlSkills(),
+      $LiveSurvivor->getUlSkills(),
       // Liste de l'équipement - 8
       '', // <div class="hand">Eq1 En Main</div><div class="inventory">Eq2 Inventaire</div>
     );
@@ -81,7 +79,7 @@ class LiveSurvivorBean extends LocalBean
   {
     $LiveSurvivor = $this->LiveSurvivor;
     $id = $LiveSurvivor->getId();
-    // On récupère les livesurvivor_actions
+    // On récupère les livesurvivor_actions 
     $LiveSurvivorActions = $LiveSurvivor->getLiveSurvivorActions();
     $cpt = 0;
     $specActions = '';
@@ -96,7 +94,7 @@ class LiveSurvivorBean extends LocalBean
       }
     }
     // On affiche en conséquence le nombre d'actions polyvalentes
-    $returned = $this->getBatteryFromCpt($cpt);
+    $returned = $this->getBatteryFromCpt($id, $cpt);
     // Si on n'a plus d'actions polyvalentes, on disable celles-ci, mais on les affiche quand même.
     $returned .= '<div class="btn-group" role="group">';
     $returned .= vsprintf($this->btnAction, array('', 'endTurn', $id, 'fas fa-times'));
@@ -113,25 +111,25 @@ class LiveSurvivorBean extends LocalBean
     }
     return $returned;
   }
-  private function getBatteryFromCpt($cpt)
+  private function getBatteryFromCpt($id, $cpt)
   {
     $returned  = '<div class="btn-group" role="group">';
     switch ($cpt) {
       case 0 :
-        $returned .= vsprintf($this->btnAction, array('', 'none', '', 'fas fa-battery-empty'));
+        $returned .= vsprintf($this->btnAction, array('', 'none', $id, 'fas fa-battery-empty'));
       break;
       case 1 :
-        $returned .= vsprintf($this->btnAction, array('', 'none', '', 'fas fa-battery-quarter'));
+        $returned .= vsprintf($this->btnAction, array('', 'none', $id, 'fas fa-battery-quarter'));
       break;
       case 2 :
-        $returned .= vsprintf($this->btnAction, array('', 'none', '', 'fas fa-battery-half'));
+        $returned .= vsprintf($this->btnAction, array('', 'none', $id, 'fas fa-battery-half'));
       break;
       case 3 :
-        $returned .= vsprintf($this->btnAction, array('', 'none', '', 'fas fa-battery-three-quarters'));
+        $returned .= vsprintf($this->btnAction, array('', 'none', $id, 'fas fa-battery-three-quarters'));
       break;
       case 4 :
       default :
-        $returned .= vsprintf($this->btnAction, array('', 'none', '', 'fas fa-battery-full'));
+        $returned .= vsprintf($this->btnAction, array('', 'none', $id, 'fas fa-battery-full'));
       break;
     }
     // On affiche en conséquence le nombre d'actions polyvalentes

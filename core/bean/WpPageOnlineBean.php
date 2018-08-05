@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe WpPageOnlineBean
- * @author Hugues.
- * @version 1.0.01
  * @since 1.0.00
+ * @version 1.0.01
+ * @author Hugues
  */
 class WpPageOnlineBean extends WpPageBean
 {
@@ -193,7 +193,7 @@ class WpPageOnlineBean extends WpPageBean
         $survivorId = array_shift($survivorIds);
         $Survivor = $this->SurvivorServices->select(__FILE__, __LINE__, $survivorId);
         // On conserve ceux sélectionnables.
-        $this->addSurvivorIfAvailable($LiveSurvivors, $Survivor, $args, $hasSurvivorSelection);
+        $this->addSurvivorIfAvailable($LiveSurvivors, $Survivor, $args);
       }
       $Mission->addStandardStartingEquipment($Live, $LiveSurvivors);
       // Si on en a au moins un de sélectionnable, la phase de préparation de la partie est finie, on affiche la Map.
@@ -219,7 +219,7 @@ class WpPageOnlineBean extends WpPageBean
     $strMsg = vsprintf($strSelection, $args);
     return $this->getPublicPageOnline('', '', '', $strMsg, '', $this->getHeaderChatSaisie($Live->getDeckKey(), $Live->getId()));
   }
-  private function addSurvivorIfAvailable(&$LiveSurvivors, $Survivor, $args, &$hasSurvivorSelection)
+  private function addSurvivorIfAvailable(&$LiveSurvivors, $Survivor, $args)
   {
     if ($Survivor->isLiveAble()) {
       $hasSurvivorSelection = true;
@@ -246,9 +246,9 @@ class WpPageOnlineBean extends WpPageBean
       array_push($LiveSurvivors, $LiveSurvivor);
     }
   }
-  private function getActionButtons($Live='')
+  public function getActionButtons($Live='')
   {
-    // On part du Live poru récupérer la LiveMission puis le LiveSurvivor actif.
+    // On part du Live pour récupérer la LiveMission puis le LiveSurvivor actif.
     if ($Live=='') {
       $Live = $this->Live;
     }

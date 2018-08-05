@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveSurvivorActionServices
- * @author Hugues.
- * @version 1.0.01
  * @since 1.0.01
+ * @version 1.0.01
+ * @author Hugues
  */
 class LiveSurvivorActionServices extends LocalServices
 {
@@ -27,8 +27,8 @@ class LiveSurvivorActionServices extends LocalServices
   private function buildFilters($arrFilters)
   {
     $arrParams = array();
-    $arrParams[] = (isset($arrFilters[self::CST_LIVESURVIVORID]) ? $arrFilters[self::CST_LIVESURVIVORID] : '%');
-    $arrParams[] = (isset($arrFilters[self::CST_ACTIONID]) ? $arrFilters[self::CST_ACTIONID] : '%');
+    $arrParams[] = (isset($arrFilters['liveSurvivorId']) ? $arrFilters['liveSurvivorId'] : '%');
+    $arrParams[] = (isset($arrFilters['actionId']) ? $arrFilters['actionId'] : '%');
     return $arrParams;
   }
   /**
@@ -48,15 +48,23 @@ class LiveSurvivorActionServices extends LocalServices
   
   public function initLiveSurvivorActions($LiveSurvivor)
   {
+    // On va retourner la liste des Actions disponibles.
     $LiveSurvivorActions = array();
-    $args = array(self::CST_LIVESURVIVORID=>$LiveSurvivor->getId());
-    $Survivor = $LiveSurvivor->getSurvivor();
-    $SurvivorSkills = $Survivor->getSurvivorSkills();
-    while (!empty($SurvivorSkills)) {
-      $SurvivorSkill = array_shift($SurvivorSkills);
-      $args[self::CST_ACTIONID] = $SurvivorSkill->getSkillId();
+    $args = array('liveSurvivorId'=>$LiveSurvivor->getId());
+    $LiveSurvivorSkills = $LiveSurvivor->getLiveSurvivorSkills();
+    while (!empty($LiveSurvivorSkills)) {
+      $LiveSurvivorSkill = array_shift($LiveSurvivorSkills);
+      if ($LiveSurvivorSkill->isLocked()) {
+        continue;
+      }
+      $args['actionId'] = $LiveSurvivorSkill->getSkillId();
       array_push($LiveSurvivorActions, new LiveSurvivorAction($args));
     }
+    // Et on rajoute les 3 Actions de base...
+    $args['actionId'] = 1;
+    array_push($LiveSurvivorActions, new LiveSurvivorAction($args));
+    array_push($LiveSurvivorActions, new LiveSurvivorAction($args));
+    array_push($LiveSurvivorActions, new LiveSurvivorAction($args));
     return $LiveSurvivorActions;
   }
 }

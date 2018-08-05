@@ -3,16 +3,16 @@ if (!defined('ABSPATH')) {
   die('Forbidden');
 }
 /**
- * Classe LiveZombieServices
- * @since 1.0.00
+ * Classe MissionZoneServices
+ * @since 1.0.01
  * @version 1.0.01
  * @author Hugues
  */
-class LiveZombieServices extends LocalServices
+class MissionZoneServices extends LocalServices
 {
   /**
    * L'objet Dao pour faire les requêtes
-   * @var LiveZombieDaoImpl $Dao
+   * @var MissionZoneDaoImpl $Dao
    */
   protected $Dao;
   /**
@@ -21,17 +21,15 @@ class LiveZombieServices extends LocalServices
   public function __construct()
   {
     parent::__construct();
-    $this->Dao = new LiveZombieDaoImpl();
+    $this->Dao = new MissionZoneDaoImpl();
   }
 
   private function buildFilters($arrFilters)
   {
     $arrParams = array();
-    $arrParams[] = (isset($arrFilters[self::CST_LIVEID]) ? $arrFilters[self::CST_LIVEID] : '%');
-    $arrParams[] = (isset($arrFilters['missionZoneId']) ? $arrFilters['missionZoneId'] : '%');
+    $arrParams[] = (isset($arrFilters[self::CST_MISSIONID]) ? $arrFilters[self::CST_MISSIONID] : '%');
     return $arrParams;
   }
-  
   /**
    * @param string $file
    * @param string $line
@@ -40,13 +38,10 @@ class LiveZombieServices extends LocalServices
    * @param string $order
    * @return array
    */
-  public function getLiveZombiesWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc')
+  public function getMissionZonesWithFilters($file, $line, $arrFilters=array(), $orderby='id', $order='asc')
   {
     $arrParams = $this->buildOrderAndLimit($orderby, $order);
     $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
-  
 }
-
-

@@ -962,7 +962,7 @@ button#genKey i { color: #f6a800; padding-top: 4px; padding-right: 0px; }
 #online-canvas { height: 100%; margin: 0 0 0 250px; position: relative; z-index: 1001; }
 .closed-chat #online-canvas { margin: 0 0 0 250px; }
 
-.popup-like { background: rgba(68,66,69,0.97); border: 3px solid rgb(250, 168, 0); border-radius: 10px; left: 50%; padding: 10px; position: absolute; top: 50%; }
+.popup-like { background: rgba(68,66,69,0.97); border: 3px solid rgb(250, 168, 0); border-radius: 10px; left: 50%; padding: 10px; position: absolute; top: 50%; z-index: 1002; }
 .online-identification { height: 66px; margin: -33px 0 0 -200px; width: 400px; }
 
 .popup-like.online-mission-selection,

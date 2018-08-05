@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe Live
- * @author Hugues.
- * @version 1.0.00
  * @since 1.0.00
+ * @version 1.0.01
+ * @author Hugues
  */
 class Live extends LocalDomain
 {
@@ -34,6 +34,7 @@ class Live extends LocalDomain
     parent::__construct($attributes);
     $this->ExpansionServices         = new ExpansionServices();
     $this->EquipmentLiveDeckServices = new EquipmentLiveDeckServices();
+    $this->LiveMissionServices       = new LiveMissionServices();
     $this->SkillServices             = new SkillServices();
     $this->SpawnLiveDeckServices     = new SpawnLiveDeckServices();
     $this->SurvivorSkillServices     = new SurvivorSkillServices();
@@ -107,5 +108,14 @@ class Live extends LocalDomain
       $Objs = $this->EquipmentLiveDeckServices->getEquipmentLiveDecksWithFilters(__FILE__, __LINE__, $args);
     }
     return count($Objs);
+  }
+  public function getLiveMission()
+  {
+    if ($this->LiveMission==null) {
+      $args = array(self::CST_LIVEID=>$this->id);
+      $LiveMissions = $this->LiveMissionServices->getLiveMissionsWithFilters(__FILE__, __LINE__, $args);
+      $this->LiveMission = array_shift($LiveMissions);
+    }
+    return $this->LiveMission;
   }
 }

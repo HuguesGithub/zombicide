@@ -27,8 +27,8 @@ class LiveSurvivorActionServices extends LocalServices
   private function buildFilters($arrFilters)
   {
     $arrParams = array();
-    $arrParams[] = (isset($arrFilters['liveSurvivorId']) ? $arrFilters['liveSurvivorId'] : '%');
-    $arrParams[] = (isset($arrFilters['actionId']) ? $arrFilters['actionId'] : '%');
+    $arrParams[] = (isset($arrFilters[self::CST_LIVESURVIVORID]) ? $arrFilters[self::CST_LIVESURVIVORID] : '%');
+    $arrParams[] = (isset($arrFilters[self::CST_ACTIONID]) ? $arrFilters[self::CST_ACTIONID] : '%');
     return $arrParams;
   }
   /**
@@ -50,18 +50,18 @@ class LiveSurvivorActionServices extends LocalServices
   {
     // On va retourner la liste des Actions disponibles.
     $LiveSurvivorActions = array();
-    $args = array('liveSurvivorId'=>$LiveSurvivor->getId());
+    $args = array(self::CST_LIVESURVIVORID=>$LiveSurvivor->getId());
     $LiveSurvivorSkills = $LiveSurvivor->getLiveSurvivorSkills();
     while (!empty($LiveSurvivorSkills)) {
       $LiveSurvivorSkill = array_shift($LiveSurvivorSkills);
       if ($LiveSurvivorSkill->isLocked()) {
         continue;
       }
-      $args['actionId'] = $LiveSurvivorSkill->getSkillId();
+      $args[self::CST_ACTIONID] = $LiveSurvivorSkill->getSkillId();
       array_push($LiveSurvivorActions, new LiveSurvivorAction($args));
     }
     // Et on rajoute les 3 Actions de base...
-    $args['actionId'] = 1;
+    $args[self::CST_ACTIONID] = 1;
     array_push($LiveSurvivorActions, new LiveSurvivorAction($args));
     array_push($LiveSurvivorActions, new LiveSurvivorAction($args));
     array_push($LiveSurvivorActions, new LiveSurvivorAction($args));

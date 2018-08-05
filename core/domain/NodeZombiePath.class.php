@@ -43,5 +43,10 @@ class NodeZombiePath extends LocalDomain
   { return $this->depth; }
   
   public function displayNodeZombiePath()
-  { return ($this->MissionZone==null ? '[]' : str_pad('', $this->depth, '-').'['.$this->MissionZone->getZoneNum().'-'.$this->depth.'-'.$this->orientation."]<br>"); }
+  {
+    if ($this->MissionZone==null) {
+      return '[]';
+    }
+    return str_pad('', $this->depth, '-').'['.$this->MissionZone->getZoneNum().'-'.$this->depth.'-'.$this->orientation."]<br>";
+  }
 }

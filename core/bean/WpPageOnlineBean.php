@@ -171,7 +171,8 @@ class WpPageOnlineBean extends WpPageBean
   }
   private function getContentSurvivors()
   {
-    $Live = $this->Live;
+    $hasSurvivorSelection = true;
+  	$Live = $this->Live;
     $args = array(self::CST_LIVEID=>$Live->getId());
     // Si on a au moins un LiveSurvivor, on affiche la Map.
     $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, $args);
@@ -222,7 +223,6 @@ class WpPageOnlineBean extends WpPageBean
   private function addSurvivorIfAvailable(&$LiveSurvivors, $Survivor, $args)
   {
     if ($Survivor->isLiveAble()) {
-      $hasSurvivorSelection = true;
       $args['survivorId'] = $Survivor->getId();
       $LiveSurvivor = new LiveSurvivor($args);
       $this->LiveSurvivorServices->insert(__FILE__, __LINE__, $LiveSurvivor);

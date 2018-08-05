@@ -70,6 +70,8 @@ class OnlineActions extends LocalActions
   { return $this->errorMsg; }
   public function getErrorPanel($msg)
   { return '"error-panel":'.json_encode($msg); }
+  public function getOnlinePopupModal($msg)
+  { return '"online-popup-modal":'.json_encode($msg); }
   public function isLiveSurvivorValidAction()
   {
     // On récupère le LiveSurvivor à partir des données du Post.
@@ -148,7 +150,7 @@ class OnlineActions extends LocalActions
       // TODO : Faudrait gérer les cas à plusieurs Zones les plus bruyantes.
       // Sans visuel, et avec une seule Zone la plus bruyante, an récupère la missionZoneId de destination
       // On construit l'Arbre des déplacements.
-			$ZombiePath->buildZombiePathToLouderZone();
+      $ZombiePath->buildZombiePathToLouderZone();
       $targetMissionZoneId = $ZombiePath->searchTreeForFather($MissionZone->getZoneNum());
       $str .= "[[$targetMissionZoneId]]";
       // TODO : Faudrait envisager de gérer la gestion des portes fermées / ouvertes...
@@ -156,7 +158,7 @@ class OnlineActions extends LocalActions
       $LiveZombie->setMissionZoneId($targetMissionZoneId);
       $this->LiveZombieServices->update(__FILE__, __LINE__, $LiveZombie);
     }
-    return '{"online-popup-modal": '.json_encode($str).'}';
+    return '{'.$this->getOnlinePopupModal($str).'}';
   }
   public function endTurn()
   {
@@ -204,8 +206,8 @@ class OnlineActions extends LocalActions
         $strDivs .= '<div type="button" class="btn btn-dark btn-choose-survivor" data-livesurvivor-id="'.$LiveSurvivor->getId().'">';
         $strDivs .= $LiveSurvivor->getSurvivor()->getName().'</div>';
       }
-      $msg = '<div id="canvas-content" class="popup-like">'.$strDivs.'</div>';      
-      return '{"online-popup-modal": '.json_encode($msg).'}';
+      $msg = '<div id="canvas-content" class="popup-like">'.$strDivs.'</div>';
+      return '{'.$this->getOnlinePopupModal($msg).'}';
     } else {
       // On a récupéré le prochain Survivant à jouer.
       // On met fin au tour du précédent Survivant
@@ -322,7 +324,7 @@ class OnlineActions extends LocalActions
     $this->startNextActiveLiveSurvivorTurn($NextActiveLiveSurvivor);
     // Retourner une toolbar agrémentée des boutons qui vont bien selon le LiveSurvivor actif.
     $WpPageOnlineBean = new WpPageOnlineBean();
-    return '{"online-popup-modal": '.json_encode('').', '.$this->getOnlineBtnActions($WpPageOnlineBean->getActionButtons($this->Live)).'}';
+    return '{'.$this->getOnlinePopupModal('').', '.$this->getOnlineBtnActions($WpPageOnlineBean->getActionButtons($this->Live)).'}';
   }
   public function getOnlineBtnActions($content)
   { return '"online-btn-actions": '.json_encode($content); }

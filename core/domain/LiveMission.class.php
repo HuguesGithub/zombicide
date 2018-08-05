@@ -162,14 +162,14 @@ class LiveMission extends LocalDomain
     if ($rk==0) {
       $rk = $this->nbSurvivors;
     }
-    $args = array('liveId'=>$this->liveId, 'turnRank'=>$rk);
+    $args = array(self::CST_LIVEID=>$this->liveId, 'turnRank'=>$rk);
     $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, $args);
     return array_shift($LiveSurvivors);
   }
   public function getNextLiveSurvivor()
   {
     $turnRank = $this->getActiveLiveSurvivor()->getTurnRank();
-    $args = array('liveId'=>$this->liveId, 'playedThisTurn'=>0);
+    $args = array(self::CST_LIVEID=>$this->liveId, 'playedThisTurn'=>0);
     $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, $args);
     // Si on n'en a qu'un, c'est l'actif, c'est la fin du tour,
     if (count($LiveSurvivors)==1) {
@@ -180,7 +180,7 @@ class LiveMission extends LocalDomain
     if ($nextTurnRank==0) {
       $nextTurnRank = $this->nbSurvivors;
     }
-    $args = array('liveId'=>$this->liveId, 'turnRank'=>$nextTurnRank);
+    $args = array(self::CST_LIVEID=>$this->liveId, 'turnRank'=>$nextTurnRank);
     $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, $args);
     // En gardant à l'esprit que durant le tour 1, faut le faire à la main...
     if (empty($LiveSurvivors)) {

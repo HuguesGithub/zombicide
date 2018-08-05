@@ -58,7 +58,7 @@ class ZombiePath extends LocalDomain
         $str .= $tmp;
       }
     }
-    return $str; 
+    return $str;
   }
   
   public function buildZombiePath($NodeZombiePath, $depth=0)
@@ -79,7 +79,7 @@ class ZombiePath extends LocalDomain
       // Pour chaque numéro rencontré
       foreach ($arrZones as $num) {
         // S'il n'est pas présent dans l'arbre
-        if($this->isNumInTree($num)===false) {
+        if ($this->isNumInTree($num)===false) {
           $MissionZone = $this->getMissionZoneByNum($num);
           // On l'y ajoute
           $NodeZombiePath->addChild(new NodeZombiePath($MissionZone, $depth+1, $arrOrientation[$cpt]));

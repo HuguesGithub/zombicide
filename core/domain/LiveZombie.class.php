@@ -40,6 +40,9 @@ class LiveZombie extends LocalDomain
    * @var int $quantity
    */
   protected $quantity;
+  /**
+   * @param array $attributes
+   */
   public function __construct($attributes=array())
   {
     parent::__construct($attributes);
@@ -118,7 +121,9 @@ class LiveZombie extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new LiveZombie(), self::getClassVars(), $row); }
-  
+  /**
+   * @return MissionZone
+   */
   public function getMissionZone()
   {
     if ($this->MissionZone==null) {

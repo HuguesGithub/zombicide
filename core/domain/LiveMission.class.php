@@ -123,7 +123,9 @@ class LiveMission extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new LiveMission(), self::getClassVars(), $row); }
-  
+  /**
+   * @return Live
+   */
   public function getLive()
   {
     if ($this->Live==null) {
@@ -131,7 +133,9 @@ class LiveMission extends LocalDomain
     }
     return $this->Live;
   }
-  
+  /**
+   * @return Mission
+   */
   public function getMission()
   {
     if ($this->Mission==null) {
@@ -139,7 +143,9 @@ class LiveMission extends LocalDomain
     }
     return $this->Mission;
   }
-  
+  /**
+   * @return array
+   */
   public function getLiveSurvivors()
   {
     if ($this->LiveSurvivors==null) {
@@ -148,7 +154,9 @@ class LiveMission extends LocalDomain
     }
     return $this->LiveSurvivors;
   }
-  
+  /**
+   * @return LiveSurvivor
+   */
   public function getActiveLiveSurvivor()
   {
     if ($this->ActiveLiveSurvivor==null) {
@@ -156,6 +164,9 @@ class LiveMission extends LocalDomain
     }
     return $this->ActiveLiveSurvivor;
   }
+  /**
+   * @return LiveSurvivor
+   */
   public function getFirstLiveSurvivor()
   {
     $rk = ($this->turn%$this->nbSurvivors);

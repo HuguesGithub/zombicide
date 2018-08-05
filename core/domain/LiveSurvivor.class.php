@@ -195,7 +195,9 @@ class LiveSurvivor extends LocalDomain
   
   public function getBean()
   { return new LiveSurvivorBean($this); }
-  
+  /**
+   * @return Live
+   */
   public function getLive()
   {
     if ($this->Live==null) {
@@ -203,7 +205,9 @@ class LiveSurvivor extends LocalDomain
     }
     return $this->Live;
   }
-  
+  /**
+   * @return LiveMission
+   */
   public function getLiveMission()
   {
     if ($this->LiveMission==null) {
@@ -212,7 +216,9 @@ class LiveSurvivor extends LocalDomain
     }
     return $this->LiveMission;
   }
-  
+  /**
+   * @return Survivor
+   */
   public function getSurvivor()
   {
     if ($this->Survivor==null) {
@@ -220,7 +226,9 @@ class LiveSurvivor extends LocalDomain
     }
     return $this->Survivor;
   }
-  
+  /**
+   * @return array
+   */
   public function getLiveSurvivorActions()
   {
     if ($this->LiveSurvivorActions==null) {
@@ -253,7 +261,6 @@ class LiveSurvivor extends LocalDomain
   }
   /**
    * @param string $type
-   * @param boolean $withLink
    * @return string
    */
   public function getUlSkills($type='')

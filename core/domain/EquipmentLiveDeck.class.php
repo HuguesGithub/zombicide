@@ -94,7 +94,7 @@ class EquipmentLiveDeck extends LocalDomain
   public function setLiveId($liveId)
   { $this->liveId = $liveId; }
   /**
-   * @param int $spawnCardId
+   * @param int $equipmentCardId
    */
   public function setEquipmentCardId($equipmentCardId)
   { $this->equipmentCardId = $equipmentCardId; }

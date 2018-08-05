@@ -10,12 +10,23 @@ if (!defined('ABSPATH')) {
  */
 class LocalServices extends GlobalServices implements ConstantsInterface
 {
+  /**
+   * Local variable to store labelDefault
+   * @var string $labelDefault
+   */
   protected $labelDefault = '';
+  /**
+   * Local variable to store style class
+   * @var string $classe
+   */
   protected $classe = 'form-control';
+  /**
+   * Local variable to store if select are multiple or not
+   * @var boolean $multiple
+   */
   protected $multiple = false;
 
   /**
-   * @param array $services
    */
   public function __construct()
   {
@@ -27,9 +38,6 @@ class LocalServices extends GlobalServices implements ConstantsInterface
    * @param array $arrSetLabels
    * @param string $name
    * @param string $value
-   * @param string $labelDefault
-   * @param string $classe
-   * @param bool $multiple
    */
   protected function getSetSelect($file, $line, $arrSetLabels, $name, $value)
   {

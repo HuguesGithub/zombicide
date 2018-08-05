@@ -53,6 +53,9 @@ class Origine extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new Origine(), self::getClassVars(), $row); }
+  /**
+   * @return OrigineBean
+   */
   public function getBean()
   { return new OrigineBean($this); }
 }

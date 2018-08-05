@@ -66,12 +66,24 @@ class OnlineActions extends LocalActions
       return $Act->getErrorMsg();
     }
   }
+  /**
+   * 
+   */
   public function getErrorMsg()
   { return $this->errorMsg; }
+  /**
+   * @param string $msg
+   */
   public function getErrorPanel($msg)
   { return '"error-panel":'.json_encode($msg); }
+  /**
+   * @param string $msg
+   */
   public function getOnlinePopupModal($msg)
   { return '"online-popup-modal":'.json_encode($msg); }
+  /**
+   * @return boolean
+   */
   public function isLiveSurvivorValidAction()
   {
     // On récupère le LiveSurvivor à partir des données du Post.
@@ -91,7 +103,8 @@ class OnlineActions extends LocalActions
     if ($post['ajaxChildAction']!='startSurvivorTurn') {
       $LiveMission = $LiveSurvivor->getLiveMission();
       if ($LiveMission->getActiveLiveSurvivorId()!=$LiveSurvivor->getId()) {
-        $this->errorMsg = '{'.$this->getErrorPanel('Ce Survivant ne peut pas effectuer cette Action, il n\'est pas le Survivant actif.').'}';
+      	$msgError = 'Ce Survivant ne peut pas effectuer cette Action, il n\'est pas le Survivant actif.';
+        $this->errorMsg = '{'.$this->getErrorPanel($msgError).'}';
         return false;
       }
       $this->LiveMission = $LiveMission;
@@ -116,6 +129,9 @@ class OnlineActions extends LocalActions
     $WpPageOnlineBean = new WpPageOnlineBean();
     return '{'.$this->getOnlineBtnActions($WpPageOnlineBean->getActionButtons($this->Live)).'}';
   }
+  /**
+   * 
+   */
   public function medicPopup()
   {
     // On vérifie que le LiveSurvivor a bien accès à Médic.
@@ -128,6 +144,10 @@ class OnlineActions extends LocalActions
       return $this->deleteAndMajToolbar();
     }
   }
+  /**
+   * @param string $missionZoneId
+   * @param string $Live
+   */
   public function activateZombies($missionZoneId='', $Live='')
   {
     if ($this->Live=='') {
@@ -160,6 +180,9 @@ class OnlineActions extends LocalActions
     }
     return '{'.$this->getOnlinePopupModal($str).'}';
   }
+  /**
+   * 
+   */
   public function endTurn()
   {
     // On voudrait récupérer le LiveSurvivor qui doit jouer après.
@@ -247,6 +270,9 @@ class OnlineActions extends LocalActions
     }
     $this->postChat($LiveSurvivor->getSurvivor()->getName().' débute son tour.');
   }
+  /**
+   * 
+   */
   public function makeNoise()
   {
     // On vérifie que le LiveSurvivor a bien accès à au moins une compétence diverse.
@@ -257,7 +283,9 @@ class OnlineActions extends LocalActions
       return $this->deleteAndMajToolbar();
     }
   }
-  
+  /**
+   * 
+   */
   public function moveTo()
   {
     // On vérifie que le LiveSurvivor a bien accès à au moins une compétence grauite de déplacement ou une compétence diverse.
@@ -268,7 +296,9 @@ class OnlineActions extends LocalActions
       return $this->deleteAndMajToolbar();
     }
   }
-  
+  /**
+   * 
+   */
   public function search()
   {
     // On vérifie que le LiveSurvivor a bien accès à au moins une compétence grauite de fouille ou une compétence diverse.
@@ -284,7 +314,9 @@ class OnlineActions extends LocalActions
     // Pour le moment, on va juste supprimer l'action liée,
     return $this->deleteAndMajToolbar();
   }
-  
+  /**
+   * 
+   */
   public function openDoor()
   {
     // On vérifie que le LiveSurvivor a bien accès à au moins une compétence grauite de fouille ou une compétence diverse.
@@ -296,7 +328,9 @@ class OnlineActions extends LocalActions
       return $this->deleteAndMajToolbar();
     }
   }
-  
+  /**
+   * 
+   */
   public function trade()
   {
     // On vérifie que le LiveSurvivor a bien accès à au moins une compétence grauite de fouille ou une compétence diverse.
@@ -307,7 +341,9 @@ class OnlineActions extends LocalActions
       return $this->deleteAndMajToolbar();
     }
   }
-  
+  /**
+   * 
+   */
   public function startSurvivorTurn()
   {
     $NextActiveLiveSurvivor = $this->LiveSurvivor;
@@ -326,9 +362,15 @@ class OnlineActions extends LocalActions
     $WpPageOnlineBean = new WpPageOnlineBean();
     return '{'.$this->getOnlinePopupModal('').', '.$this->getOnlineBtnActions($WpPageOnlineBean->getActionButtons($this->Live)).'}';
   }
+  /**
+   * @param string $content
+   * @return string
+   */
   public function getOnlineBtnActions($content)
   { return '"online-btn-actions": '.json_encode($content); }
-  
+  /**
+   * @param string $msg
+   */
   public function postChat($msg)
   {
     $args = array(

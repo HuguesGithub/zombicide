@@ -45,7 +45,10 @@ class LiveSurvivorActionServices extends LocalServices
     $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
-  
+  /**
+   * @param LiveSurvivor $LiveSurvivor
+   * @return array
+   */
   public function initLiveSurvivorActions($LiveSurvivor)
   {
     // On va retourner la liste des Actions disponibles.

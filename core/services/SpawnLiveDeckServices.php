@@ -47,7 +47,10 @@ class SpawnLiveDeckServices extends LocalServices
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
 
-  
+  /**
+   * @param SpawnLiveDeck $SpawnLiveDeck
+   * @param array $arrNumbers
+   */
   public function createDeck($SpawnLiveDeck, $arrNumbers)
   {
     $cpt = 1;

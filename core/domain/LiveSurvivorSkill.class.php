@@ -74,7 +74,7 @@ class LiveSurvivorSkill extends LocalDomain
   public function setId($id)
   { $this->id = $id; }
   /**
-   * @param int $survivorId
+   * @param int $liveSurvivorId
    */
   public function setLiveSurvivorId($liveSurvivorId)
   { $this->liveSurvivorId = $liveSurvivorId; }

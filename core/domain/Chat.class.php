@@ -121,7 +121,10 @@ class Chat extends LocalDomain
     $WpUser = get_user_by('ID', $this->senderId);
     return $WpUser->display_name;
   }
-  
+  /**
+   * @param int $userId
+   * @return string
+   */
   public function getChatLine($userId)
   {
     $strChats  = '<li class="msg-';

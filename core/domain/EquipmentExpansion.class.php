@@ -104,7 +104,10 @@ class EquipmentExpansion extends LocalDomain
     }
     return $this->Equipment;
   }
-  
+  /**
+   * @param Skill $Skill
+   * @return array
+   */
   public static function getFromStartingSkill($Skill)
   {
     $EquipmentExpansions = array();

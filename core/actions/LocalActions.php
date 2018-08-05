@@ -10,7 +10,6 @@ if (!defined('ABSPATH')) {
 class LocalActions extends GlobalActions implements ConstantsInterface
 {
   /**
-   * @param array $services
    */
   public function __construct()
   {

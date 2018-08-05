@@ -109,6 +109,9 @@ class Live extends LocalDomain
     }
     return count($Objs);
   }
+  /**
+   * @return LiveMission
+   */
   public function getLiveMission()
   {
     if ($this->LiveMission==null) {

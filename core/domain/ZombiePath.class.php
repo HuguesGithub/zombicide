@@ -10,7 +10,13 @@ if (!defined('ABSPATH')) {
  */
 class ZombiePath extends LocalDomain
 {
+  /**
+   * @var $MissionZones
+   */
   protected $MissionZones;
+  /**
+   * @var $LouderNodeZombiePath
+   */
   protected $LouderNodeZombiePath;
 
   /**
@@ -27,7 +33,9 @@ class ZombiePath extends LocalDomain
     $Mission = $LiveMission->getMission();
     $this->MissionZones = $Mission->getMissionZones();
   }
-  
+  /**
+   * 
+   */
   public function buildZombiePathToLouderZone()
   {
     // Faudrait définir la Zone la plus bruyante pour initialiser le Path.
@@ -36,7 +44,10 @@ class ZombiePath extends LocalDomain
     $this->LouderNodeZombiePath = new NodeZombiePath($MissionZone);
     $this->buildZombiePath($this->LouderNodeZombiePath, 0);
   }
-  
+  /**
+   * @param int $num
+   * @return MissionZone
+   */
   public function getMissionZoneByNum($num)
   {
     foreach ($this->MissionZones as $MissionZone) {
@@ -45,7 +56,10 @@ class ZombiePath extends LocalDomain
       }
     }
   }
-  
+  /**
+   * @param string $NodeZombiePath
+   * @return string
+   */
   public function displayZombiePath($NodeZombiePath='')
   {
     if ($NodeZombiePath=='') {
@@ -60,7 +74,10 @@ class ZombiePath extends LocalDomain
     }
     return $str;
   }
-  
+  /**
+   * @param NodeZombiePath $NodeZombiePath
+   * @param int $depth
+   */
   public function buildZombiePath($NodeZombiePath, $depth=0)
   {
     $arrOrientation = array(1=>'N', 'E', 'S', 'W');

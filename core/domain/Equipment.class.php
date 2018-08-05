@@ -110,6 +110,9 @@ class Equipment extends LocalDomain
     }
     return $this->Keyword;
   }
+  /**
+   * @return int
+   */
   public function getExpansionId()
   { return $this->expansionId; }
   /**

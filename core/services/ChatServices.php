@@ -46,9 +46,18 @@ class ChatServices extends LocalServices
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
   
+  /**
+   * @param string $file
+   * @param string $line
+   * @return array
+   */
   public function getPurgeableChats($file, $line)
   { return $this->Dao->selectPurgeableChats($file, $line); }
-  
+  /**
+   * @param string $file
+   * @param string $line
+   * @return array
+   */
   public function getDistinctUsersOnline($file, $line)
   { return $this->Dao->selectDistinctUsersOnline($file, $line); }
   

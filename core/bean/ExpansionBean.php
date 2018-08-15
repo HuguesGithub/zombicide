@@ -48,21 +48,12 @@ class ExpansionBean extends LocalBean
     $tBody .= self::CST_TD_SEP.$Expansion->getDisplayRank().'</td>';
     return $tBody.vsprintf($tBodyButtons, $args).'</tr>';
   }
-  /**
-   * @param int $id
-   * @return string
-   */
   public function getMenuButtonLive($id)
   {
     $Expansion = $this->Expansion;
     $str  = '<div type="button" class="btn btn-dark btn-expansion" data-expansion-id="'.$id.'"><span class="';
     return $str.'"><i class="far fa-square"></i></span> '.$Expansion->getName().'</div>';
   }
-  /**
-   * @param int $id
-   * @param string $spawnSpan
-   * @return string
-   */
   public function getSpawnMenuButtonLive($id, $spawnSpan)
   {
     $Expansion = $this->Expansion;

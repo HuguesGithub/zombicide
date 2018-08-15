@@ -110,9 +110,6 @@ class Equipment extends LocalDomain
     }
     return $this->Keyword;
   }
-  /**
-   * @return int
-   */
   public function getExpansionId()
   { return $this->expansionId; }
   /**
@@ -135,9 +132,6 @@ class Equipment extends LocalDomain
     }
     return $urlThumb;
   }
-  /**
-   * @return string
-   */
   public function getNiceName()
   {
     $cleanDigits = array(' ', '#', '-', '!', 'à', 'é', "'", '(', ')', 'ê', 'ç', '&', '.', 'è');
@@ -242,9 +236,6 @@ class Equipment extends LocalDomain
       $this->Keywords = empty($ownKeyWords) ? array(new Equipment()) : $ownKeyWords;
     }
   }
-  /**
-   * @param int $expansionId
-   */
   public function setExpansionId($expansionId)
   { $this->expansionId = $expansionId; }
 }

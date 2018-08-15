@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe MissionServices
+ * @author Hugues.
+ * @version 1.0.00
  * @since 1.0.00
- * @version 1.0.01
- * @author Hugues
  */
 class MissionServices extends LocalServices
 {
@@ -198,11 +198,6 @@ class MissionServices extends LocalServices
     );
     array_push($LiveZombies, new LiveZombie($args));
   }
-  /**
-   * @param Live $Live
-   * @param Mission $Mission
-   * @return array
-   */
   public function getStartingZombies($Live, $Mission)
   {
     $LiveZombies = array();
@@ -226,10 +221,7 @@ class MissionServices extends LocalServices
     }
     return $LiveZombies;
   }
-  /**
-   * @param Mission $Mission
-   * @return array
-   */
+  
   public function getStartingEquipmentDeck($Mission)
   {
     $arrEE = array();
@@ -263,10 +255,7 @@ class MissionServices extends LocalServices
     }
     return $arrEE;
   }
-  /**
-   * @param Mission $Mission
-   * @return array
-   */
+  
   public function getSpawnDeck($Mission)
   {
     // Certaines règles peuvent demander un traitement spécifique pour certaines cartes.

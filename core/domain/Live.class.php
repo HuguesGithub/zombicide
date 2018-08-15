@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe Live
+ * @author Hugues.
+ * @version 1.0.00
  * @since 1.0.00
- * @version 1.0.01
- * @author Hugues
  */
 class Live extends LocalDomain
 {
@@ -98,9 +98,6 @@ class Live extends LocalDomain
   public function getNbCardsEquipped()
   { return $this->getNbCardsByStatus(self::CST_EQUIPMENT, 'E'); }
   /**
-   * @param string $type
-   * @param string $status
-   * @return int
    */
   public function getNbCardsByStatus($type, $status)
   {
@@ -112,9 +109,6 @@ class Live extends LocalDomain
     }
     return count($Objs);
   }
-  /**
-   * @return LiveMission
-   */
   public function getLiveMission()
   {
     if ($this->LiveMission==null) {

@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveSurvivorServices
+ * @author Hugues.
+ * @version 1.0.00
  * @since 1.0.00
- * @version 1.0.01
- * @author Hugues
  */
 class LiveSurvivorServices extends LocalServices
 {

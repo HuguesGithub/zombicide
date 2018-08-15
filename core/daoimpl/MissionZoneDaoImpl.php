@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe MissionZoneDaoImpl
- * @since 1.0.01
+ * @author Hugues.
  * @version 1.0.01
- * @author Hugues
+ * @since 1.0.01
  */
 class MissionZoneDaoImpl extends LocalDaoImpl
 {

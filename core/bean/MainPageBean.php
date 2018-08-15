@@ -32,6 +32,7 @@ class MainPageBean implements ConstantsInterface
   protected $shellClass;
 
   /**
+   * @param array $services
    */
   public function __construct()
   {

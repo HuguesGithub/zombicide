@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveZombieServices
+ * @author Hugues.
+ * @version 1.0.00
  * @since 1.0.00
- * @version 1.0.01
- * @author Hugues
  */
 class LiveZombieServices extends LocalServices
 {

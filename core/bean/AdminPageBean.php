@@ -16,6 +16,7 @@ class AdminPageBean extends MainPageBean
   const WP_DB_BACKUP_CRON = 'wp_db_backup_cron';
   /**
    * @param string $tag
+   * @param array $services
    */
   public function __construct($tag='')
   {
@@ -119,13 +120,6 @@ class AdminPageBean extends MainPageBean
     return vsprintf($str, $args);
   }
 
-  /**
-   * @param array $queryArg
-   * @param string $post_status
-   * @param int $curPage
-   * @param int $nbPages
-   * @param int $nbElements
-   */
   protected function getPagination($queryArg, $post_status, $curPage, $nbPages, $nbElements)
   {
     $queryArg[self::CST_POSTSTATUS] = $post_status;
@@ -160,10 +154,7 @@ class AdminPageBean extends MainPageBean
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-pagination.php');
     return vsprintf($str, $args);
   }
-  /**
-   * @param array $urlParams
-   * @return string
-   */
+  
   public function returnPostActionPage($urlParams)
   {
     switch ($urlParams[self::CST_POSTACTION]) {

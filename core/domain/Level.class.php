@@ -53,9 +53,6 @@ class Level extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new Level(), self::getClassVars(), $row); }
-  /**
-   * @return LevelBean
-   */
   public function getBean()
   { return new LevelBean($this); }
 }

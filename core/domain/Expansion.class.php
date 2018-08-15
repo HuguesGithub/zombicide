@@ -107,9 +107,6 @@ class Expansion extends LocalDomain
     }
     return $Obj;
   }
-  /**
-   * @return ExpansionBean
-   */
   public function getBean()
   { return new ExpansionBean($this); }
   

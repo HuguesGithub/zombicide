@@ -1,22 +1,7 @@
 <?php
-if (!defined('ABSPATH')) {
-  die('Forbidden');
-}
-/**
- * Classe ConstantsInterface
- * @since 1.0.00
- * @version 1.0.01
- * @author Hugues
- */
 interface ConstantsInterface
 {
-  /**
-   * @var CST_ACTIONID
-   */
   const CST_ACTIONID        = 'actionId';
-  /**
-   * @var CST_BACKGROUND
-   */
   const CST_BACKGROUND      = 'background';
   const CST_CHANGEPROFILE   = 'changeProfile';
   const CST_COORDX          = 'coordX';

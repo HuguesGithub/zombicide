@@ -69,10 +69,6 @@ class EquipmentDeckActions extends LocalActions
     }
     return $returned;
   }
-  /**
-   * @param array $post
-   * @return string
-   */
   public function getPreGen($post)
   {
     $strReturned = '';
@@ -161,7 +157,7 @@ class EquipmentDeckActions extends LocalActions
     }
   }
   /**
-   * @return string
+   * @param array $post
    */
   public function drawEquipmentCard()
   {

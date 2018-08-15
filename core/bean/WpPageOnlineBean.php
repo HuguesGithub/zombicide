@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe WpPageOnlineBean
+ * @author Hugues.
+ * @version 1.0.00
  * @since 1.0.00
- * @version 1.0.01
- * @author Hugues
  */
 class WpPageOnlineBean extends WpPageBean
 {
@@ -171,7 +171,6 @@ class WpPageOnlineBean extends WpPageBean
   }
   private function getContentSurvivors()
   {
-    $hasSurvivorSelection = true;
     $Live = $this->Live;
     $args = array(self::CST_LIVEID=>$Live->getId());
     // Si on a au moins un LiveSurvivor, on affiche la Map.
@@ -223,6 +222,7 @@ class WpPageOnlineBean extends WpPageBean
   private function addSurvivorIfAvailable(&$LiveSurvivors, $Survivor, $args)
   {
     if ($Survivor->isLiveAble()) {
+      $hasSurvivorSelection = true;
       $args['survivorId'] = $Survivor->getId();
       $LiveSurvivor = new LiveSurvivor($args);
       $this->LiveSurvivorServices->insert(__FILE__, __LINE__, $LiveSurvivor);
@@ -246,9 +246,6 @@ class WpPageOnlineBean extends WpPageBean
       array_push($LiveSurvivors, $LiveSurvivor);
     }
   }
-  /**
-   * @param string $Live
-   */
   public function getActionButtons($Live='')
   {
     // On part du Live pour récupérer la LiveMission puis le LiveSurvivor actif.

@@ -68,6 +68,9 @@ class ExpansionServices extends LocalServices
    * @param array $Expansions
    * @param string $value
    * @param string $prefix
+   * @param string $classe
+   * @param string $multiple
+   * @param string $defaultLabel
    * @return string
    */
   public function getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value, $prefix)

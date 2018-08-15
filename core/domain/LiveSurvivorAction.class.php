@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveSurvivorAction
- * @since 1.0.01
+ * @author Hugues.
  * @version 1.0.01
- * @author Hugues
+ * @since 1.0.01
  */
 class LiveSurvivorAction extends LocalDomain
 {
@@ -17,7 +17,7 @@ class LiveSurvivorAction extends LocalDomain
   protected $id;
   /**
    * Id technique du LiveSurvivor
-   * @var int $liveSurvivorId
+   * @var int $liveSurvivor
    */
   protected $liveSurvivorId;
   /**
@@ -25,6 +25,13 @@ class LiveSurvivorAction extends LocalDomain
    * @var int $actionId
    */
   protected $actionId;
+  /**
+   * @param array $attributes
+   */
+  public function __construct($attributes=array())
+  {
+    parent::__construct($attributes);
+  }
   /**
    * @return int
    */
@@ -68,9 +75,7 @@ class LiveSurvivorAction extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new LiveSurvivorAction(), self::getClassVars(), $row); }
-  /**
-   * @return LiveSurvivorActionBean
-   */
+  
   public function getBean()
   { return new LiveSurvivorActionBean($this); }
 }

@@ -5,7 +5,6 @@ if (!defined('ABSPATH')) {
 /**
  * OnlineActions
  * @since 1.0.00
- * @version 1.0.01
  * @author Hugues
  */
 class OnlineActions extends LocalActions
@@ -66,24 +65,10 @@ class OnlineActions extends LocalActions
       return $Act->getErrorMsg();
     }
   }
-  /**
-   * @return string
-   */
   public function getErrorMsg()
   { return $this->errorMsg; }
-  /**
-   * @param string $msg
-   */
   public function getErrorPanel($msg)
   { return '"error-panel":'.json_encode($msg); }
-  /**
-   * @param string $msg
-   */
-  public function getOnlinePopupModal($msg)
-  { return '"online-popup-modal":'.json_encode($msg); }
-  /**
-   * @return boolean
-   */
   public function isLiveSurvivorValidAction()
   {
     // On récupère le LiveSurvivor à partir des données du Post.
@@ -103,8 +88,7 @@ class OnlineActions extends LocalActions
     if ($post['ajaxChildAction']!='startSurvivorTurn') {
       $LiveMission = $LiveSurvivor->getLiveMission();
       if ($LiveMission->getActiveLiveSurvivorId()!=$LiveSurvivor->getId()) {
-        $msgError = 'Ce Survivant ne peut pas effectuer cette Action, il n\'est pas le Survivant actif.';
-        $this->errorMsg = '{'.$this->getErrorPanel($msgError).'}';
+        $this->errorMsg = '{'.$this->getErrorPanel('Ce Survivant ne peut pas effectuer cette Action, il n\'est pas le Survivant actif.').'}';
         return false;
       }
       $this->LiveMission = $LiveMission;
@@ -122,9 +106,6 @@ class OnlineActions extends LocalActions
     $this->LiveSurvivorAction = array_shift($LiveSurvivorActions);
     return true;
   }
-  /**
-   * @return string
-   */
   private function deleteAndMajToolbar()
   {
     $this->LiveSurvivorActionServices->delete(__FILE__, __LINE__, $this->LiveSurvivorAction);
@@ -132,9 +113,6 @@ class OnlineActions extends LocalActions
     $WpPageOnlineBean = new WpPageOnlineBean();
     return '{'.$this->getOnlineBtnActions($WpPageOnlineBean->getActionButtons($this->Live)).'}';
   }
-  /**
-   * @return string
-   */
   public function medicPopup()
   {
     // On vérifie que le LiveSurvivor a bien accès à Médic.
@@ -147,10 +125,6 @@ class OnlineActions extends LocalActions
       return $this->deleteAndMajToolbar();
     }
   }
-  /**
-   * @param string $missionZoneId
-   * @param string $Live
-   */
   public function activateZombies($missionZoneId='', $Live='')
   {
     if ($this->Live=='') {
@@ -173,7 +147,7 @@ class OnlineActions extends LocalActions
       // TODO : Faudrait gérer les cas à plusieurs Zones les plus bruyantes.
       // Sans visuel, et avec une seule Zone la plus bruyante, an récupère la missionZoneId de destination
       // On construit l'Arbre des déplacements.
-      $ZombiePath->buildZombiePathToLouderZone();
+			$ZombiePath->buildZombiePathToLouderZone();
       $targetMissionZoneId = $ZombiePath->searchTreeForFather($MissionZone->getZoneNum());
       $str .= "[[$targetMissionZoneId]]";
       // TODO : Faudrait envisager de gérer la gestion des portes fermées / ouvertes...
@@ -181,11 +155,8 @@ class OnlineActions extends LocalActions
       $LiveZombie->setMissionZoneId($targetMissionZoneId);
       $this->LiveZombieServices->update(__FILE__, __LINE__, $LiveZombie);
     }
-    return '{'.$this->getOnlinePopupModal($str).'}';
+    return '{"online-popup-modal": '.json_encode($str).'}';
   }
-  /**
-   * @return string
-   */
   public function endTurn()
   {
     // On voudrait récupérer le LiveSurvivor qui doit jouer après.
@@ -232,8 +203,8 @@ class OnlineActions extends LocalActions
         $strDivs .= '<div type="button" class="btn btn-dark btn-choose-survivor" data-livesurvivor-id="'.$LiveSurvivor->getId().'">';
         $strDivs .= $LiveSurvivor->getSurvivor()->getName().'</div>';
       }
-      $msg = '<div id="canvas-content" class="popup-like">'.$strDivs.'</div>';
-      return '{'.$this->getOnlinePopupModal($msg).'}';
+      $msg = '<div id="canvas-content" class="popup-like">'.$strDivs.'</div>';      
+      return '{"online-popup-modal": '.json_encode($msg).'}';
     } else {
       // On a récupéré le prochain Survivant à jouer.
       // On met fin au tour du précédent Survivant
@@ -273,9 +244,6 @@ class OnlineActions extends LocalActions
     }
     $this->postChat($LiveSurvivor->getSurvivor()->getName().' débute son tour.');
   }
-  /**
-   * @return string
-   */
   public function makeNoise()
   {
     // On vérifie que le LiveSurvivor a bien accès à au moins une compétence diverse.
@@ -286,9 +254,7 @@ class OnlineActions extends LocalActions
       return $this->deleteAndMajToolbar();
     }
   }
-  /**
-   * @return string
-   */
+  
   public function moveTo()
   {
     // On vérifie que le LiveSurvivor a bien accès à au moins une compétence grauite de déplacement ou une compétence diverse.
@@ -299,9 +265,7 @@ class OnlineActions extends LocalActions
       return $this->deleteAndMajToolbar();
     }
   }
-  /**
-   * @return string
-   */
+  
   public function search()
   {
     // On vérifie que le LiveSurvivor a bien accès à au moins une compétence grauite de fouille ou une compétence diverse.
@@ -317,9 +281,7 @@ class OnlineActions extends LocalActions
     // Pour le moment, on va juste supprimer l'action liée,
     return $this->deleteAndMajToolbar();
   }
-  /**
-   * @return string
-   */
+  
   public function openDoor()
   {
     // On vérifie que le LiveSurvivor a bien accès à au moins une compétence grauite de fouille ou une compétence diverse.
@@ -331,9 +293,7 @@ class OnlineActions extends LocalActions
       return $this->deleteAndMajToolbar();
     }
   }
-  /**
-   * @return string
-   */
+  
   public function trade()
   {
     // On vérifie que le LiveSurvivor a bien accès à au moins une compétence grauite de fouille ou une compétence diverse.
@@ -344,9 +304,7 @@ class OnlineActions extends LocalActions
       return $this->deleteAndMajToolbar();
     }
   }
-  /**
-   * @return string
-   */
+  
   public function startSurvivorTurn()
   {
     $NextActiveLiveSurvivor = $this->LiveSurvivor;
@@ -363,17 +321,11 @@ class OnlineActions extends LocalActions
     $this->startNextActiveLiveSurvivorTurn($NextActiveLiveSurvivor);
     // Retourner une toolbar agrémentée des boutons qui vont bien selon le LiveSurvivor actif.
     $WpPageOnlineBean = new WpPageOnlineBean();
-    return '{'.$this->getOnlinePopupModal('').', '.$this->getOnlineBtnActions($WpPageOnlineBean->getActionButtons($this->Live)).'}';
+    return '{"online-popup-modal": '.json_encode('').', '.$this->getOnlineBtnActions($WpPageOnlineBean->getActionButtons($this->Live)).'}';
   }
-  /**
-   * @param string $content
-   * @return string
-   */
   public function getOnlineBtnActions($content)
   { return '"online-btn-actions": '.json_encode($content); }
-  /**
-   * @param string $msg
-   */
+  
   public function postChat($msg)
   {
     $args = array(

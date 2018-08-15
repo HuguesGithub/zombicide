@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveSurvivorActionServices
- * @since 1.0.01
+ * @author Hugues.
  * @version 1.0.01
- * @author Hugues
+ * @since 1.0.01
  */
 class LiveSurvivorActionServices extends LocalServices
 {
@@ -27,8 +27,8 @@ class LiveSurvivorActionServices extends LocalServices
   private function buildFilters($arrFilters)
   {
     $arrParams = array();
-    $arrParams[] = (isset($arrFilters[self::CST_LIVESURVIVORID]) ? $arrFilters[self::CST_LIVESURVIVORID] : '%');
-    $arrParams[] = (isset($arrFilters[self::CST_ACTIONID]) ? $arrFilters[self::CST_ACTIONID] : '%');
+    $arrParams[] = (isset($arrFilters['liveSurvivorId']) ? $arrFilters['liveSurvivorId'] : '%');
+    $arrParams[] = (isset($arrFilters['actionId']) ? $arrFilters['actionId'] : '%');
     return $arrParams;
   }
   /**
@@ -45,26 +45,23 @@ class LiveSurvivorActionServices extends LocalServices
     $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
-  /**
-   * @param LiveSurvivor $LiveSurvivor
-   * @return array
-   */
+  
   public function initLiveSurvivorActions($LiveSurvivor)
   {
     // On va retourner la liste des Actions disponibles.
     $LiveSurvivorActions = array();
-    $args = array(self::CST_LIVESURVIVORID=>$LiveSurvivor->getId());
+    $args = array('liveSurvivorId'=>$LiveSurvivor->getId());
     $LiveSurvivorSkills = $LiveSurvivor->getLiveSurvivorSkills();
     while (!empty($LiveSurvivorSkills)) {
       $LiveSurvivorSkill = array_shift($LiveSurvivorSkills);
       if ($LiveSurvivorSkill->isLocked()) {
         continue;
       }
-      $args[self::CST_ACTIONID] = $LiveSurvivorSkill->getSkillId();
+      $args['actionId'] = $LiveSurvivorSkill->getSkillId();
       array_push($LiveSurvivorActions, new LiveSurvivorAction($args));
     }
     // Et on rajoute les 3 Actions de base...
-    $args[self::CST_ACTIONID] = 1;
+    $args['actionId'] = 1;
     array_push($LiveSurvivorActions, new LiveSurvivorAction($args));
     array_push($LiveSurvivorActions, new LiveSurvivorAction($args));
     array_push($LiveSurvivorActions, new LiveSurvivorAction($args));

@@ -48,10 +48,6 @@ class EquipmentLiveDeckServices extends LocalServices
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
   
-  /**
-   * @param EquipmentLiveDeck $EquipmentLiveDeck
-   * @param array $arrEE
-   */
   public function createDeck($EquipmentLiveDeck, $arrEE)
   {
     $cpt = 1;

@@ -192,7 +192,6 @@ class WpPageLiveEquipmentBean extends WpPageBean
   }
   /**
    * @param array $EquipmentLiveDecks
-   * @param boolean $showDiscardButton
    * @return string
    */
   public static function getStaticEquipmentCardActives($EquipmentLiveDecks, $showDiscardButton)
@@ -202,7 +201,6 @@ class WpPageLiveEquipmentBean extends WpPageBean
   }
   /**
    * @param array $EquipmentLiveDecks
-   * @param boolean $showDiscardButton
    * @return string
    */
   public function getEquipmentCardActives($EquipmentLiveDecks, $showDiscardButton=false)

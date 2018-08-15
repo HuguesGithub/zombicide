@@ -10,19 +10,13 @@ if (!defined('ABSPATH')) {
  */
 class MissionBean extends LocalBean
 {
-  /**
-   * une constante de classe.
-   * @var $classe
-   */
   public $classe = 'custom-select custom-select-sm filters';
   /**
    * Template pour afficher une Mission
    * @var $tplMissionExtract
    */
   public static $tplMissionExtract  = 'web/pages/public/fragments/article-mission-extract.php';
-  /**
-   * @param string $Mission
-   */
+
   public function __construct($Mission='')
   {
     parent::__construct();
@@ -35,9 +29,6 @@ class MissionBean extends LocalBean
     $this->tplRow = 'web/pages/admin/mission/row.php';
     $this->tplEdit = 'web/pages/admin/mission/edit.php';
   }
-  /**
-   * @return Mission
-   */
   public function getMission()
   { return $this->Mission; }
   /**
@@ -103,10 +94,6 @@ class MissionBean extends LocalBean
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-row-mission.php');
     return vsprintf($str, $args);
   }
-  /**
-   * @param Mission $Mission
-   * @param int $rkRow
-   */
   public static function removeRow($Mission, $rkRow)
   {
     $MissionTiles = $Mission->getMissionTiles();
@@ -123,10 +110,6 @@ class MissionBean extends LocalBean
     }
     $Mission->setHeight($Mission->getHeight()-1);
   }
-  /**
-   * @param Mission $Mission
-   * @param int $rkCol
-   */
   public static function removeCol($Mission, $rkCol)
   {
     $MissionTiles = $Mission->getMissionTiles();

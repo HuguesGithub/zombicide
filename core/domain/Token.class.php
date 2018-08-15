@@ -83,9 +83,6 @@ class Token extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new Token(), self::getClassVars(), $row); }
-  /**
-   * @return TokenBean
-   */
   public function getBean()
   { return new TokenBean($this); }
 }

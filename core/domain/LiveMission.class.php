@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveMission
+ * @author Hugues.
+ * @version 1.0.00
  * @since 1.0.00
- * @version 1.0.01
- * @author Hugues
  */
 class LiveMission extends LocalDomain
 {
@@ -123,9 +123,7 @@ class LiveMission extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new LiveMission(), self::getClassVars(), $row); }
-  /**
-   * @return Live
-   */
+  
   public function getLive()
   {
     if ($this->Live==null) {
@@ -133,9 +131,7 @@ class LiveMission extends LocalDomain
     }
     return $this->Live;
   }
-  /**
-   * @return Mission
-   */
+  
   public function getMission()
   {
     if ($this->Mission==null) {
@@ -143,9 +139,7 @@ class LiveMission extends LocalDomain
     }
     return $this->Mission;
   }
-  /**
-   * @return array
-   */
+  
   public function getLiveSurvivors()
   {
     if ($this->LiveSurvivors==null) {
@@ -154,9 +148,7 @@ class LiveMission extends LocalDomain
     }
     return $this->LiveSurvivors;
   }
-  /**
-   * @return LiveSurvivor
-   */
+  
   public function getActiveLiveSurvivor()
   {
     if ($this->ActiveLiveSurvivor==null) {
@@ -164,26 +156,20 @@ class LiveMission extends LocalDomain
     }
     return $this->ActiveLiveSurvivor;
   }
-  /**
-   * @return LiveSurvivor
-   */
   public function getFirstLiveSurvivor()
   {
     $rk = ($this->turn%$this->nbSurvivors);
     if ($rk==0) {
       $rk = $this->nbSurvivors;
     }
-    $args = array(self::CST_LIVEID=>$this->liveId, 'turnRank'=>$rk);
+    $args = array('liveId'=>$this->liveId, 'turnRank'=>$rk);
     $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, $args);
     return array_shift($LiveSurvivors);
   }
-  /**
-   * @return LiveSurvivor
-   */
   public function getNextLiveSurvivor()
   {
     $turnRank = $this->getActiveLiveSurvivor()->getTurnRank();
-    $args = array(self::CST_LIVEID=>$this->liveId, 'playedThisTurn'=>0);
+    $args = array('liveId'=>$this->liveId, 'playedThisTurn'=>0);
     $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, $args);
     // Si on n'en a qu'un, c'est l'actif, c'est la fin du tour,
     if (count($LiveSurvivors)==1) {
@@ -194,7 +180,7 @@ class LiveMission extends LocalDomain
     if ($nextTurnRank==0) {
       $nextTurnRank = $this->nbSurvivors;
     }
-    $args = array(self::CST_LIVEID=>$this->liveId, 'turnRank'=>$nextTurnRank);
+    $args = array('liveId'=>$this->liveId, 'turnRank'=>$nextTurnRank);
     $LiveSurvivors = $this->LiveSurvivorServices->getLiveSurvivorsWithFilters(__FILE__, __LINE__, $args);
     // En gardant à l'esprit que durant le tour 1, faut le faire à la main...
     if (empty($LiveSurvivors)) {

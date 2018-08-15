@@ -4,21 +4,13 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe ZombiePath
- * @since 1.0.01
+ * @author Hugues.
  * @version 1.0.01
- * @author Hugues
+ * @since 1.0.01
  */
 class ZombiePath extends LocalDomain
 {
-  /**
-   * Toutes les MissionsZones de la Map
-   * @var $MissionZones
-   */
   protected $MissionZones;
-  /**
-   * La MissionZone de départ du chemin.
-   * @var $LouderNodeZombiePath
-   */
   protected $LouderNodeZombiePath;
 
   /**
@@ -35,9 +27,7 @@ class ZombiePath extends LocalDomain
     $Mission = $LiveMission->getMission();
     $this->MissionZones = $Mission->getMissionZones();
   }
-  /**
-   * Construit le chemin depuis la zone la plus bruyante.
-   */
+  
   public function buildZombiePathToLouderZone()
   {
     // Faudrait définir la Zone la plus bruyante pour initialiser le Path.
@@ -46,10 +36,7 @@ class ZombiePath extends LocalDomain
     $this->LouderNodeZombiePath = new NodeZombiePath($MissionZone);
     $this->buildZombiePath($this->LouderNodeZombiePath, 0);
   }
-  /**
-   * @param int $num
-   * @return MissionZone
-   */
+  
   public function getMissionZoneByNum($num)
   {
     foreach ($this->MissionZones as $MissionZone) {
@@ -58,10 +45,7 @@ class ZombiePath extends LocalDomain
       }
     }
   }
-  /**
-   * @param string $NodeZombiePath
-   * @return string
-   */
+  
   public function displayZombiePath($NodeZombiePath='')
   {
     if ($NodeZombiePath=='') {
@@ -74,12 +58,9 @@ class ZombiePath extends LocalDomain
         $str .= $tmp;
       }
     }
-    return $str;
+    return $str; 
   }
-  /**
-   * @param NodeZombiePath $NodeZombiePath
-   * @param int $depth
-   */
+  
   public function buildZombiePath($NodeZombiePath, $depth=0)
   {
     $arrOrientation = array(1=>'N', 'E', 'S', 'W');
@@ -98,7 +79,7 @@ class ZombiePath extends LocalDomain
       // Pour chaque numéro rencontré
       foreach ($arrZones as $num) {
         // S'il n'est pas présent dans l'arbre
-        if ($this->isNumInTree($num)===false) {
+        if($this->isNumInTree($num)===false) {
           $MissionZone = $this->getMissionZoneByNum($num);
           // On l'y ajoute
           $NodeZombiePath->addChild(new NodeZombiePath($MissionZone, $depth+1, $arrOrientation[$cpt]));

@@ -154,10 +154,9 @@ class AdminPageParametresBean extends AdminPageBean
   }
   /**
    * Retourne les différents éléments de l'interface Paramètre
-   * @param mixed $Services
-   * @param array $Objs
-   * @param array $urlParams
-   * @param string $tBodyButtons Contenu du body du tableau
+   * @param array $classVars Liste des noms de colonnes
+   * @param string $table Tag de l'interface
+   * @param string $tBody Contenu du body du tableau
    * @return string
    */
   public function getMutualizedContent($Services=null, $Objs=array(), $urlParams=array(), $tBodyButtons='')

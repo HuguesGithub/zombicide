@@ -15,7 +15,6 @@ class WpPageBean extends MainPageBean
   protected $WpPage;
   /**
    * @param string $post
-   * @param array $services
    */
   public function __construct($post='')
   {

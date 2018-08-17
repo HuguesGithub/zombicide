@@ -98,6 +98,9 @@ class Live extends LocalDomain
   public function getNbCardsEquipped()
   { return $this->getNbCardsByStatus(self::CST_EQUIPMENT, 'E'); }
   /**
+   * @param string $type
+   * @param int $status
+   * @return int
    */
   public function getNbCardsByStatus($type, $status)
   {
@@ -109,6 +112,9 @@ class Live extends LocalDomain
     }
     return count($Objs);
   }
+  /**
+   * @return LiveMission
+   */
   public function getLiveMission()
   {
     if ($this->LiveMission==null) {

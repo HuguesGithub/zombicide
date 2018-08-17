@@ -11,12 +11,11 @@ if (!defined('ABSPATH')) {
 class AdminPageBean extends MainPageBean
 {
   /**
-   * @var string WP_DB_BACKUP_CRON
+   * Backup Cron Table
    */
   const WP_DB_BACKUP_CRON = 'wp_db_backup_cron';
   /**
    * @param string $tag
-   * @param array $services
    */
   public function __construct($tag='')
   {
@@ -119,7 +118,14 @@ class AdminPageBean extends MainPageBean
     $str = file_get_contents(PLUGIN_PATH.'web/pages/admin/home-admin-board.php');
     return vsprintf($str, $args);
   }
-
+  /**
+   * @param unknown $queryArg
+   * @param unknown $post_status
+   * @param unknown $curPage
+   * @param unknown $nbPages
+   * @param unknown $nbElements
+   * @return string
+   */
   protected function getPagination($queryArg, $post_status, $curPage, $nbPages, $nbElements)
   {
     $queryArg[self::CST_POSTSTATUS] = $post_status;
@@ -154,7 +160,9 @@ class AdminPageBean extends MainPageBean
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/fragment-pagination.php');
     return vsprintf($str, $args);
   }
-  
+  /**
+   * @param unknown $urlParams
+   */
   public function returnPostActionPage($urlParams)
   {
     switch ($urlParams[self::CST_POSTACTION]) {

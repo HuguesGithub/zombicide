@@ -91,29 +91,6 @@ class LocalDomain extends GlobalDomain implements ConstantsInterface
     return $GlobalObjective;
   }
   /**
-   * @param int $weaponProfileId
-   * @return WeaponProfile
-   *
-  protected function getWeaponProfileFromGlobal($weaponProfileId)
-  {
-    global $globalWeaponProfiles;
-    $GlobalWeaponProfile = null;
-    if (!empty($globalWeaponProfiles)) {
-      foreach ($globalWeaponProfiles as $WeaponProfile) {
-        if ($WeaponProfile->getId()==$weaponProfileId) {
-          $GlobalWeaponProfile = $WeaponProfile;
-        }
-      }
-    }
-    if ($GlobalWeaponProfile == null) {
-      $GlobalWeaponProfile = $this->WeaponProfileServices->select(__FILE__, __LINE__, $weaponProfileId);
-      if ($GlobalWeaponProfile != null) {
-        $globalWeaponProfiles[] = $GlobalWeaponProfile;
-      }
-    }
-    return $GlobalWeaponProfile;
-  }
-  /**
    * @return string
    */
   public function toJson()

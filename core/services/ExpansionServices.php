@@ -15,7 +15,9 @@ class ExpansionServices extends LocalServices
    * @var ExpansionDaoImpl $Dao
    */
   protected $Dao;
-  
+  /**
+   * Class constructor
+   */
   public function __construct()
   {
     parent::__construct();
@@ -68,9 +70,6 @@ class ExpansionServices extends LocalServices
    * @param array $Expansions
    * @param string $value
    * @param string $prefix
-   * @param string $classe
-   * @param string $multiple
-   * @param string $defaultLabel
    * @return string
    */
   public function getExpansionsSelectAlreadyRequested($file, $line, $Expansions, $value, $prefix)

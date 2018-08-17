@@ -95,7 +95,7 @@ class WpPostSkillBean extends WpPostBean
   }
   /**
    * Retourne la liste des Survivants ayant une compétence à ce niveau, dans des cartouches de couleur.
-   * @param array $SurvivorSkills Une liste des Survivants ayant cette compétence
+   * @param array $Survivors Une liste des Survivants ayant cette compétence
    * @param string $color Permet de colorer le cartouche
    * @return string
    */

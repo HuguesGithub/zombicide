@@ -61,9 +61,6 @@ class LevelServices extends LocalServices
    * @param array $Levels
    * @param string $value
    * @param string $prefix
-   * @param string $classe
-   * @param string $multiple
-   * @param string $defaultLabel
    * @return string
    */
   public function getLevelsSelectAlreadyRequested($file, $line, $Levels, $value, $prefix)

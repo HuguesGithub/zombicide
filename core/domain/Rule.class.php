@@ -83,6 +83,9 @@ class Rule extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new Rule(), self::getClassVars(), $row); }
+  /**
+   * @return RuleBean
+   */
   public function getBean()
   { return new RuleBean($this); }
 

@@ -175,6 +175,12 @@ class ChatActions extends LocalActions
     }
     return ($directReturn ? '{"online-chat-content":'.json_encode($strChats).'}' : '"online-chat-content":'.json_encode($strChats));
   }
+  /**
+   * @param string $label
+   * @param string $liveId
+   * @param string $directReturn
+   * @return string
+   */
   public function getHeaderChatSaisie($label, $liveId, $directReturn=true)
   {
     $strChats = '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$liveId.'">'.$label.'</a></li>';
@@ -315,6 +321,7 @@ class ChatActions extends LocalActions
     $this->ChatServices->insert(__FILE__, __LINE__, $Chat);
   }
   /**
+   * On supprime les trop anciennes entrées du Chat
    */
   public function purgeOldChat()
   {
@@ -328,6 +335,9 @@ class ChatActions extends LocalActions
       }
     }
   }
+  /**
+   * @param array $args
+   */
   public static function staticPostChat($args)
   {
     $ChatServices = new ChatServices();

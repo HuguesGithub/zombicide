@@ -22,7 +22,9 @@ class LiveSurvivorBean extends LocalBean
     $this->btnAction  = '<div class="btn%1$s" data-ajaxaction="toolbarAction" data-ajaxchildaction="%2$s"';
     $this->btnAction .= ' data-livesurvivor="%3$s"><i class="%4$s"></i></div>';
   }
-  
+  /**
+   * @return string
+   */
   public function getSideBarContent()
   {
     $LiveSurvivor = $this->LiveSurvivor;
@@ -64,7 +66,9 @@ class LiveSurvivorBean extends LocalBean
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/online-survivor-cardvisit.php');
     return vsprintf($str, $args);
   }
-  
+  /**
+   * @return string
+   */
   public function getPortraitButton()
   {
     $LiveSurvivor = $this->LiveSurvivor;
@@ -74,7 +78,9 @@ class LiveSurvivorBean extends LocalBean
     $returned .= ' data-ajaxchildaction="startSurvivorTurn" data-livesurvivor="'.$LiveSurvivor->getId().'">';
     return $returned.'<img src="'.$Survivor->getPortraitUrl().'"/></div>';
   }
-  
+  /**
+   * @return string
+   */
   public function getActionsButton()
   {
     $LiveSurvivor = $this->LiveSurvivor;

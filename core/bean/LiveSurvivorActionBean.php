@@ -22,7 +22,10 @@ class LiveSurvivorActionBean extends LocalBean
     $this->btnAction  = '<div class="btn%1$s" data-ajaxaction="toolbarAction" data-ajaxchildaction="%2$s"';
     $this->btnAction .= ' data-livesurvivor="%3$s"><i class="%4$s"></i></div>';
   }
-  
+  /**
+   * @param int $id
+   * @return string 
+   */
   public function getToolbarButton($id)
   {
     $toolbarButton = '';

@@ -5,7 +5,6 @@
  * @version 1.0.00
  * @author Hugues
  */
-declare(strict_types=1);
 define('PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('PLUGIN_PACKAGE', 'zombicide');
 date_default_timezone_set('Europe/Paris');

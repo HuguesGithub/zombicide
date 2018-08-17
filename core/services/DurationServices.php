@@ -15,7 +15,9 @@ class DurationServices extends LocalServices
    * @var DurationDaoImpl $Dao
    */
   protected $Dao;
-  
+  /**
+   * Class Constructor
+   */
   public function __construct()
   {
     parent::__construct();

@@ -79,7 +79,7 @@ class SpawnLiveDeck extends LocalDomain
   public function setId($id)
   { $this->id = $id; }
   /**
-   * @param int $liveDeckId
+   * @param int $liveId
    */
   public function setLiveId($liveId)
   { $this->liveId = $liveId; }

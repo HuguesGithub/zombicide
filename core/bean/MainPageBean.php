@@ -30,14 +30,11 @@ class MainPageBean implements ConstantsInterface
    * @var $shellClass
    */
   protected $shellClass;
-
   /**
-   * @param array $services
+   * Class Constructor
    */
   public function __construct()
-  {
-    $this->WpPostServices = GlobalFactoryServices::getWpPostServices();
-  }
+  { $this->WpPostServices = GlobalFactoryServices::getWpPostServices(); }
   /**
    * @return string
    */

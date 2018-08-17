@@ -74,8 +74,6 @@ class RuleServices extends LocalServices
    * @param string $value
    * @param string $prefix
    * @param string $classe
-   * @param string $multiple
-   * @param string $defaultLabel
    * @return string
    */
   public function getRuleNoSettingSelect($file, $line, $value, $prefix='id', $classe=self::CST_FORMCONTROL)
@@ -95,8 +93,6 @@ class RuleServices extends LocalServices
    * @param string $value
    * @param string $prefix
    * @param string $classe
-   * @param string $multiple
-   * @param string $defaultLabel
    * @return string
    */
   public function getRuleSettingSelect($file, $line, $value, $prefix='id', $classe=self::CST_FORMCONTROL)

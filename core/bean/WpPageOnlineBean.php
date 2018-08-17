@@ -246,10 +246,14 @@ class WpPageOnlineBean extends WpPageBean
       array_push($LiveSurvivors, $LiveSurvivor);
     }
   }
-  public function getActionButtons($Live='')
+  /**
+   * @param Live $Live
+   * @return string
+   */
+  public function getActionButtons($Live=null)
   {
     // On part du Live pour récupérer la LiveMission puis le LiveSurvivor actif.
-    if ($Live=='') {
+    if ($Live==null) {
       $Live = $this->Live;
     }
     $LiveMissions = $this->LiveMissionServices->getLiveMissionsWithFilters(__FILE__, __LINE__, array(self::CST_LIVEID=>$Live->getId()));

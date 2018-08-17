@@ -121,7 +121,10 @@ class Chat extends LocalDomain
     $WpUser = get_user_by('ID', $this->senderId);
     return $WpUser->display_name;
   }
-  
+  /**
+   * @param int $userId
+   * @return string
+   */
   public function getChatLine($userId)
   {
     $strChats  = '<li class="msg-';
@@ -148,7 +151,9 @@ class Chat extends LocalDomain
     $strTimestamp .= $H.':'.$i;
     return $strChats.'<span class="timestamp">'.$strTimestamp.'</span></div>'.$this->getTexte().'</li>';
   }
-  
+  /**
+   * @return boolean
+   */
   public function isPurgeable()
   {
     return ($this->getSenderId()==0 && $this->getTimestamp()<date(self::CST_FORMATDATE, time()-30) ||

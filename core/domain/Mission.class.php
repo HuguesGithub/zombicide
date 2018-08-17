@@ -209,12 +209,13 @@ class Mission extends LocalDomain
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new Mission(), self::getClassVars(), $row); }
   /**
+   * @return MissionBean
    */
   public function getBean()
   { return new MissionBean($this); }
   /**
-   * @param string $aF
-   * @param string $aO
+   * @param string $orderBy
+   * @param string $order
    * @return array MissionTile
    */
   public function getMissionTiles($orderBy='id', $order='asc')
@@ -514,7 +515,10 @@ class Mission extends LocalDomain
     }
     return $doInsert;
   }
-
+  /**
+   * @param int $ruleId
+   * @return boolean
+   */
   public function hasRule($ruleId)
   {
     $hasRule = false;
@@ -527,12 +531,17 @@ class Mission extends LocalDomain
     }
     return $hasRule;
   }
-  
+  /**
+   * @return int
+   */
   public function getStartingMissionZoneId()
   {
     return 14;
   }
-  
+  /**
+   * @param Live $Live
+   * @param array $LiveSurvivors
+   */
   public function addStandardStartingEquipment($Live, $LiveSurvivors)
   {
     shuffle($LiveSurvivors);
@@ -542,7 +551,7 @@ class Mission extends LocalDomain
       $cpt=0;
       while (!empty($LiveSurvivors) && $cpt<3) {
         $LiveSurvivor = array_shift($LiveSurvivors);
-        $args = array('liveSurvivorId'=>$LiveSurvivor->getId());
+        $args = array(self::CST_LIVESURVIVORID=>$LiveSurvivor->getId());
         $EquipmentLiveDecks = $this->EquipmentLiveDeckServices->getEquipmentLiveDecksWithFilters(__FILE__, __LINE__, $args);
         $rk = count($EquipmentLiveDecks);
         $args = array(
@@ -550,7 +559,7 @@ class Mission extends LocalDomain
           self::CST_EQUIPMENTCARDID=>27,
           'rank'=>$rk,
           self::CST_STATUS=>'E',
-          'liveSurvivorId'=>$LiveSurvivor->getId()
+          self::CST_LIVESURVIVORID=>$LiveSurvivor->getId()
         );
         $EquipmentLiveDeck = new EquipmentLiveDeck($args);
         $this->EquipmentLiveDeckServices->insert(__FILE__, __LINE__, $EquipmentLiveDeck);

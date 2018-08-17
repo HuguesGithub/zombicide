@@ -113,6 +113,9 @@ class WeaponProfile extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new WeaponProfile(), self::getClassVars(), $row); }
+  /**
+   * @return WeaponProfileBean
+   */
   public function getBean()
   { return new WeaponProfileBean($this); }
 }

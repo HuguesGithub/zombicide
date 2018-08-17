@@ -17,7 +17,7 @@ class LiveSurvivorAction extends LocalDomain
   protected $id;
   /**
    * Id technique du LiveSurvivor
-   * @var int $liveSurvivor
+   * @var int $liveSurvivorId
    */
   protected $liveSurvivorId;
   /**
@@ -75,7 +75,9 @@ class LiveSurvivorAction extends LocalDomain
    */
   public static function convertElement($row, $a='', $b='')
   { return parent::convertElement(new LiveSurvivorAction(), self::getClassVars(), $row); }
-  
+  /**
+   * @return LiveSurvivorActionBean
+   */
   public function getBean()
   { return new LiveSurvivorActionBean($this); }
 }

@@ -191,7 +191,6 @@ class AdminPageSkillsBean extends AdminPageBean
   }
   /**
    * Affiche l'interface de confirmation de suppression. Supprime la Compétence si suppression confirmée.
-   * @param int|null $skillId Identifiant de la Compétence à supprimer.
    * @return string
    */
   public function getBulkTrashPage()

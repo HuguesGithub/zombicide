@@ -15,7 +15,9 @@ class ChatServices extends LocalServices
    * @var ChatDaoImpl $Dao
    */
   protected $Dao;
-  
+  /**
+   * Class Constructor
+   */
   public function __construct()
   {
     parent::__construct();
@@ -45,10 +47,18 @@ class ChatServices extends LocalServices
     $arrParams[SQL_PARAMS_WHERE] = $this->buildFilters($arrFilters);
     return $this->Dao->selectEntriesWithFilters($file, $line, $arrParams);
   }
-  
+  /**
+   * @param string $file
+   * @param string $line
+   * @return array
+   */
   public function getPurgeableChats($file, $line)
   { return $this->Dao->selectPurgeableChats($file, $line); }
-  
+  /**
+   * @param string $file
+   * @param string $line
+   * @return array
+   */
   public function getDistinctUsersOnline($file, $line)
   { return $this->Dao->selectDistinctUsersOnline($file, $line); }
   

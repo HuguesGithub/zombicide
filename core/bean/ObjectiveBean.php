@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe ObjectiveBean
- * @author Hugues.
- * @version 1.0.00
+ * @author Hugues
  * @since 1.0.00
+ * @version 1.0.00
  */
 class ObjectiveBean extends LocalBean
 {

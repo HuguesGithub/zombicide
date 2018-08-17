@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe WpPostSkillBean
- * @author Hugues.
- * @version 1.0.00
+ * @author Hugues
  * @since 1.0.00
+ * @version 1.0.00
  */
 class WpPostSkillBean extends WpPostBean
 {

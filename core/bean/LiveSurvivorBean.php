@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveSurvivorBean
- * @author Hugues.
- * @version 1.0.00
+ * @author Hugues
  * @since 1.0.00
+ * @version 1.0.00
  */
 class LiveSurvivorBean extends LocalBean
 {
@@ -85,7 +85,7 @@ class LiveSurvivorBean extends LocalBean
   {
     $LiveSurvivor = $this->LiveSurvivor;
     $id = $LiveSurvivor->getId();
-    // On récupère les livesurvivor_actions 
+    // On récupère les livesurvivor_actions
     $LiveSurvivorActions = $LiveSurvivor->getLiveSurvivorActions();
     $cpt = 0;
     $specActions = '';

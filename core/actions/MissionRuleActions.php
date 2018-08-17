@@ -22,7 +22,7 @@ class MissionRuleActions extends LocalActions
   {
     if ($post['selId']=='') {
       $args = array(
-        'description'=>stripslashes($post['description']),
+        self::CST_DESCRIPTION=>stripslashes($post[self::CST_DESCRIPTION]),
         self::CST_MISSIONID=>($post['type']==self::CST_MISSIONID),
         'code'=>'CODE_TODO'
       );
@@ -33,7 +33,11 @@ class MissionRuleActions extends LocalActions
     } else {
       $ruleId = $post['selId'];
     }
-    $args = array(self::CST_MISSIONID=>$post[self::CST_MISSIONID], 'ruleId'=>$ruleId, 'title'=>stripslashes($post['title']));
+    $args = array(
+      self::CST_MISSIONID=>$post[self::CST_MISSIONID],
+      'ruleId'=>$ruleId,
+      self::CST_TITLE=>stripslashes($post[self::CST_TITLE])
+    );
     $MissionRule = new MissionRule($args);
     $MissionRuleServices = new MissionRuleServices();
     $MissionRuleServices->insert(__FILE__, __LINE__, $MissionRule);

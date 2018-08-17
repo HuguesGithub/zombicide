@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe MarketBean
- * @author Hugues.
- * @version 1.0.00
+ * @author Hugues
  * @since 1.0.00
+ * @version 1.0.00
  */
 class MarketBean extends LocalBean
 {

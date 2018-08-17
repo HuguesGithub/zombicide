@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe NodeZombiePath
- * @author Hugues.
- * @version 1.0.01
+ * @author Hugues
  * @since 1.0.01
+ * @version 1.0.01
  */
 class NodeZombiePath extends LocalDomain
 {
@@ -77,7 +77,8 @@ class NodeZombiePath extends LocalDomain
    * @return string
    */
   public function displayNodeZombiePath()
-  { 
-  	$str = str_pad('', $this->depth, '-').'['.$this->MissionZone->getZoneNum().'-'.$this->depth.'-'.$this->orientation."]<br>";
-  	return ($this->MissionZone==null ? '[]' : $str); }
+  {
+    $str = str_pad('', $this->depth, '-').'['.$this->MissionZone->getZoneNum().'-'.$this->depth.'-'.$this->orientation."]<br>";
+    return ($this->MissionZone==null ? '[]' : $str);
+  }
 }

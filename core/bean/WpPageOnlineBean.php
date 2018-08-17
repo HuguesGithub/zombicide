@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe WpPageOnlineBean
- * @author Hugues.
- * @version 1.0.00
+ * @author Hugues
  * @since 1.0.00
+ * @version 1.0.00
  */
 class WpPageOnlineBean extends WpPageBean
 {
@@ -181,7 +181,6 @@ class WpPageOnlineBean extends WpPageBean
     // A-t-on saisi une sélection de Survivants à ajouter à la partie Live ?
     if (isset($_POST['createSurvivor'])) {
       $Mission = $this->Mission;
-      $hasSurvivorSelection = false;
       $LiveSurvivors = array();
       $args['missionZoneId'] = $Mission->getStartingMissionZoneId();
       $args['survivorTypeId'] = 1;
@@ -197,7 +196,7 @@ class WpPageOnlineBean extends WpPageBean
       }
       $Mission->addStandardStartingEquipment($Live, $LiveSurvivors);
       // Si on en a au moins un de sélectionnable, la phase de préparation de la partie est finie, on affiche la Map.
-      if ($hasSurvivorSelection) {
+      if (!empty($LiveSurvivors)) {
         return $this->getContentOnline();
       }
     }
@@ -222,7 +221,6 @@ class WpPageOnlineBean extends WpPageBean
   private function addSurvivorIfAvailable(&$LiveSurvivors, $Survivor, $args)
   {
     if ($Survivor->isLiveAble()) {
-      $hasSurvivorSelection = true;
       $args['survivorId'] = $Survivor->getId();
       $LiveSurvivor = new LiveSurvivor($args);
       $this->LiveSurvivorServices->insert(__FILE__, __LINE__, $LiveSurvivor);

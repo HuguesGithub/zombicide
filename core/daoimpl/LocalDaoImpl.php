@@ -58,7 +58,7 @@ class LocalDaoImpl extends GlobalDaoImpl implements ConstantsInterface
    */
   public function __construct($strDao='')
   {
-    $urlIni = '/wp-content/plugins/zombicide/core/daoimpl/requests.php';
+    $urlIni = '/wp-content/plugins/zombicide/core/config/requests.php';
     $strGetCwd = getcwd();
     if (strpos($strGetCwd, 'wp-admin')!==false) {
       $strGetCwd = substr($strGetCwd, 0, -9);

@@ -170,7 +170,7 @@ class OnlineActions extends LocalActions
       // TODO : Faudrait gérer les cas à plusieurs Zones les plus bruyantes.
       // Sans visuel, et avec une seule Zone la plus bruyante, an récupère la missionZoneId de destination
       // On construit l'Arbre des déplacements.
-			$ZombiePath->buildZombiePathToLouderZone();
+      $ZombiePath->buildZombiePathToLouderZone();
       $targetMissionZoneId = $ZombiePath->searchTreeForFather($MissionZone->getZoneNum());
       $str .= "[[$targetMissionZoneId]]";
       // TODO : Faudrait envisager de gérer la gestion des portes fermées / ouvertes...
@@ -229,7 +229,7 @@ class OnlineActions extends LocalActions
         $strDivs .= '<div type="button" class="btn btn-dark btn-choose-survivor" data-livesurvivor-id="'.$LiveSurvivor->getId().'">';
         $strDivs .= $LiveSurvivor->getSurvivor()->getName().'</div>';
       }
-      $msg = '<div id="canvas-content" class="popup-like">'.$strDivs.'</div>';      
+      $str = '<div id="canvas-content" class="popup-like">'.$strDivs.'</div>';
       return '{'.$this->getOnlinePopupModal($str).'}';
     } else {
       // On a récupéré le prochain Survivant à jouer.

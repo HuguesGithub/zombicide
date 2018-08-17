@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveSurvivorActionDaoImpl
- * @author Hugues.
- * @version 1.0.01
+ * @author Hugues
  * @since 1.0.01
+ * @version 1.0.01
  */
 class LiveSurvivorActionDaoImpl extends LocalDaoImpl
 {

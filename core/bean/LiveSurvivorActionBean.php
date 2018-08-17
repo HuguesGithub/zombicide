@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveSurvivorActionBean
- * @author Hugues.
- * @version 1.0.01
+ * @author Hugues
  * @since 1.0.01
+ * @version 1.0.01
  */
 class LiveSurvivorActionBean extends LocalBean
 {

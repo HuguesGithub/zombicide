@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe LiveSurvivorAction
- * @author Hugues.
- * @version 1.0.01
+ * @author Hugues
  * @since 1.0.01
+ * @version 1.0.01
  */
 class LiveSurvivorAction extends LocalDomain
 {
@@ -25,13 +25,6 @@ class LiveSurvivorAction extends LocalDomain
    * @var int $actionId
    */
   protected $actionId;
-  /**
-   * @param array $attributes
-   */
-  public function __construct($attributes=array())
-  {
-    parent::__construct($attributes);
-  }
   /**
    * @return int
    */

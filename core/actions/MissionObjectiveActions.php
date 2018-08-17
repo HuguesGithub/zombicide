@@ -21,7 +21,10 @@ class MissionObjectiveActions extends LocalActions
   public static function staticInsert($post)
   {
     if ($post['selId']=='') {
-      $args = array('description'=>stripslashes($post['description']), 'code'=>'CODE_TODO');
+      $args = array(
+        self::CST_DESCRIPTION=>stripslashes($post[self::CST_DESCRIPTION]),
+        'code'=>'CODE_TODO'
+      );
       $Objective = new Objective($args);
       $ObjectiveServices = new ObjectiveServices();
       $ObjectiveServices->insert(__FILE__, __LINE__, $Objective);
@@ -29,7 +32,11 @@ class MissionObjectiveActions extends LocalActions
     } else {
       $objectiveId = $post['selId'];
     }
-    $args = array(self::CST_MISSIONID=>$post[self::CST_MISSIONID], 'objectiveId'=>$objectiveId, 'title'=>stripslashes($post['title']));
+    $args = array(
+      self::CST_MISSIONID=>$post[self::CST_MISSIONID],
+      'objectiveId'=>$objectiveId,
+      self::CST_TITLE=>stripslashes($post[self::CST_TITLE])
+    );
     $MissionObjective = new MissionObjective($args);
     $MissionObjectiveServices = new MissionObjectiveServices();
     $MissionObjectiveServices->insert(__FILE__, __LINE__, $MissionObjective);

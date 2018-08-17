@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe ZombiePath
- * @author Hugues.
- * @version 1.0.01
+ * @author Hugues
  * @since 1.0.01
+ * @version 1.0.01
  */
 class ZombiePath extends LocalDomain
 {
@@ -74,7 +74,7 @@ class ZombiePath extends LocalDomain
         $str .= $tmp;
       }
     }
-    return $str; 
+    return $str;
   }
   /**
    * @param NodeZombiePath $NodeZombiePath
@@ -98,7 +98,7 @@ class ZombiePath extends LocalDomain
       // Pour chaque numéro rencontré
       foreach ($arrZones as $num) {
         // S'il n'est pas présent dans l'arbre
-        if($this->isNumInTree($num)===false) {
+        if ($this->isNumInTree($num)===false) {
           $MissionZone = $this->getMissionZoneByNum($num);
           // On l'y ajoute
           $NodeZombiePath->addChild(new NodeZombiePath($MissionZone, $depth+1, $arrOrientation[$cpt]));

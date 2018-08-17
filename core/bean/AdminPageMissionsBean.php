@@ -5,9 +5,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * AdminPageMissionsBean
- * @version 1.0.00
- * @since 1.0.00
  * @author Hugues
+ * @since 1.0.00
+ * @version 1.0.00
  */
 class AdminPageMissionsBean extends AdminPageBean
 {

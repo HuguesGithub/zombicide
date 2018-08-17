@@ -91,18 +91,18 @@ class AjaxActions extends LocalActions
    */
   public function dealWithJoinLive($post)
   {
-    $deckKey = $post['keyAccess'];
+    $deckKey = $post[self::CST_KEYACCESS];
     $LiveServices = new LiveServices();
     $arr = array(self::CST_DECKKEY=>$deckKey);
     $Lives = $LiveServices->getLivesWithFilters(__FILE__, __LINE__, $arr);
     if (empty($Lives)) {
-      $arr['dateUpdate'] = date('Y-m-d H:i:s');
+      $arr['dateUpdate'] = date(self::CST_FORMATDATE);
       $Live = new Live($arr);
       $LiveServices->insert(__FILE__, __LINE__, $Live);
       $_SESSION[self::CST_DECKKEY] = $deckKey;
     } else {
       $Live = array_shift($Lives);
-      $Live->setDateUpdate(date('Y-m-d H:i:s'));
+      $Live->setDateUpdate(date(self::CST_FORMATDATE));
       $LiveServices->update(__FILE__, __LINE__, $Live);
       $_SESSION[self::CST_DECKKEY] = $deckKey;
     }
@@ -191,7 +191,7 @@ class AjaxActions extends LocalActions
   {
     switch ($post['type']) {
       case 'rule' :
-      case 'setting' :
+      case self::CST_SETTING :
         $insert = MissionRuleActions::staticInsert($post);
       break;
       case self::CST_OBJECTIVE :
@@ -211,7 +211,7 @@ class AjaxActions extends LocalActions
   {
     switch ($post['type']) {
       case 'rule' :
-      case 'setting' :
+      case self::CST_SETTING :
         $delete = MissionRuleActions::staticDelete($post);
       break;
       case self::CST_OBJECTIVE :

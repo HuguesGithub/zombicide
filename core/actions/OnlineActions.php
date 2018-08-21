@@ -4,8 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * OnlineActions
- * @since 1.0.00
  * @author Hugues
+ * @since 1.0.00
+ * @version 1.0.02
  */
 class OnlineActions extends LocalActions
 {
@@ -46,7 +47,8 @@ class OnlineActions extends LocalActions
           $returned = $Act->moveTo();
         break;
         case 'search' :
-          $returned = $Act->search();
+        case 'searchConfirm' :
+          $returned = OnlineSearchActions::staticSearch($post);
         break;
         case 'openDoor' :
           $returned = $Act->openDoor();
@@ -81,7 +83,7 @@ class OnlineActions extends LocalActions
    * @return string
    */
   public function getOnlinePopupModal($msg)
-  { return '"online-popup-modal": '.json_encode($str); }
+  { return '"online-popup-modal": '.json_encode($msg); }
   /**
    * @return boolean
    */
@@ -111,7 +113,11 @@ class OnlineActions extends LocalActions
     }
     return true;
   }
-  private function actionAvailable($actionId)
+  /**
+   * @param int $actionId
+   * @return boolean
+   */
+  protected function actionAvailable($actionId)
   {
     $args = array(self::CST_LIVESURVIVORID=>$this->LiveSurvivor->getId(), self::CST_ACTIONID=>$actionId);
     $LiveSurvivorActions = $this->LiveSurvivorActionServices->getLiveSurvivorActionsWithFilters(__FILE__, __LINE__, $args);
@@ -122,6 +128,9 @@ class OnlineActions extends LocalActions
     $this->LiveSurvivorAction = array_shift($LiveSurvivorActions);
     return true;
   }
+  /**
+   * @return string
+   */
   private function deleteAndMajToolbar()
   {
     $this->LiveSurvivorActionServices->delete(__FILE__, __LINE__, $this->LiveSurvivorAction);
@@ -295,22 +304,6 @@ class OnlineActions extends LocalActions
       // Pour le moment, on va juste supprimer l'action liée,
       return $this->deleteAndMajToolbar();
     }
-  }
-  /**
-   * @return string
-   */
-  public function search()
-  {
-    // On vérifie que le LiveSurvivor a bien accès à au moins une compétence grauite de fouille ou une compétence diverse.
-    if (!$this->actionAvailable(13) && !$this->actionAvailable(1)) {
-      return $this->getErrorMsg();
-    }
-    // Faudrait aussi vérifier qu'il n'a pas déjà fouillé ce tour-ci...
-    // Faudrait aussi vérifier qu'il peut fouiller à cet endroit...
-    $this->postChat($this->LiveSurvivor->getSurvivor()->getName().' effectue une Fouille.');
-     
-    // Pour le moment, on va juste supprimer l'action liée,
-    return $this->deleteAndMajToolbar();
   }
   /**
    * @return string

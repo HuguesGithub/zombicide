@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe MissionZone
- * @author Hugues.
- * @version 1.0.00
+ * @author Hugues
  * @since 1.0.00
+ * @version 1.0.02
  */
 class MissionZone extends LocalDomain
 {
@@ -128,4 +128,10 @@ class MissionZone extends LocalDomain
      */
     public static function convertElement($row, $a='', $b='')
     { return parent::convertElement(new MissionZone(), self::getClassVars(), $row); }
+    
+    public function isSearchable()
+    {
+      // Une Zone peut être Fouillée si elle est de type 'building'...
+      return ($this->type=='building');
+    }
 }

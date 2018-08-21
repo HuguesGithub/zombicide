@@ -33,13 +33,13 @@ class DeckActions extends LocalActions
    * @param Service $Services
    * @return int
    */
-  protected function drawCardDeck($Services)
+  public function drawCardDeck($Services)
   {
-    $CardDecks = $this->getLiveDecksByStatus('P');
-    // Si $SpawnLiveDecks est vide, il faut remélanger la Pioche.
+    $CardDecks = $this->getLiveDecksByStatus($Services, 'P');
+    // Si $CardDecks est vide, il faut remélanger la Pioche.
     if (empty($CardDecks)) {
       $this->shuffleDeckCards($CardDecks, $Services);
-      $CardDecks = $this->getLiveDecksByStatus('P');
+      $CardDecks = $this->getLiveDecksByStatus($Services, 'P');
     }
     // On prend la première carte retournée par la requête, elle devient active, on met à jour son statut
     $CardDeck = array_shift($CardDecks);
@@ -61,7 +61,7 @@ class DeckActions extends LocalActions
     if ($status!='') {
       $arrFilters[self::CST_STATUS]=$status;
     }
-    return $Services->getLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters, 'rank', 'DESC');
+    return $Services->getLiveDecksWithFilters(__FILE__, __LINE__, $arrFilters, 'rank', 'ASC');
   }
   /**
    * @return string

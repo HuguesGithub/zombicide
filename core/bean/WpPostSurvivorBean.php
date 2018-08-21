@@ -4,6 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * WpPostSurvivorBean
+ * @author Hugues
+ * @since 1.0.00
+ * @version 1.0.02
  */
 class WpPostSurvivorBean extends WpPostBean
 {
@@ -80,6 +83,10 @@ class WpPostSurvivorBean extends WpPostBean
       $Survivor->getStrClassFilters($isHome),
       // Le Survivant a-t-il une version Ultimate ?  - 14
       $Survivor->isUltimate() ? 'Oui' : 'Non',
+      // Le Code de l'extension - 15
+      $Survivor->getExpansion()->getCode(),
+      // Le Nom de l'extension - 16
+      $Survivor->getExpansionName(),
     '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''
    );
     $str = file_get_contents(PLUGIN_PATH.'web/pages/public/fragments/article-survivor-extract.php');

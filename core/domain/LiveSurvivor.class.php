@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
  * Classe LiveSurvivor
  * @author Hugues
  * @since 1.0.01
- * @version 1.0.01
+ * @version 1.0.02
  */
 class LiveSurvivor extends LocalDomain
 {
@@ -56,6 +56,11 @@ class LiveSurvivor extends LocalDomain
    */
   protected $turnRank;
   /**
+   * A-t-il fouillé ce tour ?
+   * @var int $searchedThisTurn
+   */
+  protected $searchedThisTurn;
+  /**
    * @param array $attributes
    */
   public function __construct($attributes=array())
@@ -66,6 +71,7 @@ class LiveSurvivor extends LocalDomain
     $this->LiveMissionServices        = new LiveMissionServices();
     $this->LiveSurvivorActionServices = new LiveSurvivorActionServices();
     $this->LiveSurvivorSkillServices  = new LiveSurvivorSkillServices();
+    $this->MissionZoneServices        = new MissionZoneServices();
     $this->SurvivorServices           = new SurvivorServices();
   }
   /**
@@ -114,6 +120,11 @@ class LiveSurvivor extends LocalDomain
   public function getTurnRank()
   { return $this->turnRank; }
   /**
+   * @return boolean
+   */
+  public function hasSearchedThisTurn()
+  { return ($this->searchedThisTurn==1); }
+  /**
    * @param int $id
    */
   public function setId($id)
@@ -159,6 +170,11 @@ class LiveSurvivor extends LocalDomain
   public function setTurnRank($turnRank)
   { $this->turnRank = $turnRank; }
   /**
+   * @param int $searchedThisTurn
+   */
+  public function setSearchedThisTurn($searchedThisTurn)
+  { $this->searchedThisTurn = $searchedThisTurn; }
+  /**
    * @return array
    */
   public function getClassVars()
@@ -180,7 +196,11 @@ class LiveSurvivor extends LocalDomain
     $cpt = 0;
     while (!empty($EquipmentExpansions)) {
       $EquipmentExpansion = array_shift($EquipmentExpansions);
-      $args = array('liveId'=>$Live->getId(), 'equipmentCardId'=>$EquipmentExpansion->getId(), 'status'=>'P');
+      $args = array(
+        self::CST_LIVEID=>$Live->getId(),
+        self::CST_EQUIPMENTCARDID=>$EquipmentExpansion->getId(),
+        self::CST_STATUS=>'P'
+      );
       $EquipmentLiveDecks = $this->EquipmentLiveDeckServices->getEquipmentLiveDecksWithFilters(__FILE__, __LINE__, $args);
       if (!empty($EquipmentLiveDecks)) {
         shuffle($EquipmentLiveDecks);
@@ -222,6 +242,16 @@ class LiveSurvivor extends LocalDomain
     return $this->LiveMission;
   }
   /**
+   * @return MissionZone
+   */
+  public function getMissionZone()
+  {
+    if ($this->MissionZone==null) {
+      $this->MissionZone = $this->MissionZoneServices->select(__FILE__, __LINE__, $this->missionZoneId);
+    }
+    return $this->MissionZone;
+  }
+  /**
    * @return Survivor
    */
   public function getSurvivor()
@@ -237,7 +267,7 @@ class LiveSurvivor extends LocalDomain
   public function getLiveSurvivorActions()
   {
     if ($this->LiveSurvivorActions==null) {
-      $args = array('liveSurvivorId'=>$this->id);
+      $args = array(self::CST_LIVESURVIVORID=>$this->id);
       $this->LiveSurvivorActions = $this->LiveSurvivorActionServices->getLiveSurvivorActionsWithFilters(__FILE__, __LINE__, $args);
     }
     return $this->LiveSurvivorActions;
@@ -310,11 +340,11 @@ class LiveSurvivor extends LocalDomain
         $strColor = 'blue';
       break;
       case 20 :
-        $strColor = 'yellow';
+        $strColor = self::CST_YELLOW;
       break;
       case 30 :
       case 31 :
-        $strColor = 'orange';
+        $strColor = self::CST_ORANGE;
       break;
       case 40 :
       case 41 :

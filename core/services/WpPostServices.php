@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Classe WpPostServices
- * @author Hugues.
- * @version 1.0.00
+ * @author Hugues
  * @since 1.0.00
+ * @version 1.0.02
  */
 class WpPostServices extends GlobalServices
 {
@@ -33,7 +33,7 @@ class WpPostServices extends GlobalServices
         array(
           'taxonomy' => 'post_tag',
           'field' => 'slug',
-          'terms' => 'mission'
+          'terms' => array('mission', 'survivant', 'news'),
         )
       )
     );

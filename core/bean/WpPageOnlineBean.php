@@ -123,7 +123,7 @@ class WpPageOnlineBean extends WpPageBean
   }
   private function getHeaderChatSaisie($label='Général', $liveId=0)
   { return '<li class="nav-item"><a class="nav-link active" href="#" data-liveid="'.$liveId.'">'.$label.'</a></li>'; }
-  private function getPublicPageOnline($toolBar, $sideBar, $strMsg, $c, $d, $headerChatSaisie)
+  private function getPublicPageOnline($toolBar, $sideBar, $strMsg, $c, $d, $headerChatSaisie, $modal='')
   {
     $args = array(
       $toolBar,
@@ -132,6 +132,7 @@ class WpPageOnlineBean extends WpPageBean
       $c,
       $d,
       $headerChatSaisie,
+      $modal,
     );
     return vsprintf(file_get_contents(PLUGIN_PATH.'web/pages/public/public-page-online.php'), $args);
   }
@@ -282,7 +283,7 @@ class WpPageOnlineBean extends WpPageBean
       $sideBar .= $Bean->getSideBarContent();
     }
     $headerChatSaisie = $this->getHeaderChatSaisie($Live->getDeckKey(), $Live->getId());
-    return $this->getPublicPageOnline($this->getActionButtons(), $sideBar, '', '', '', $headerChatSaisie);
+    return $this->getPublicPageOnline($this->getActionButtons(), $sideBar, '', '', '', $headerChatSaisie, 'modal');
   }
   private function getMenuMissionSelection()
   {

@@ -1,4 +1,4 @@
-<article class="survivor %13$s">
+<article class="survivor %13$s %15$s">
   <div class="panel">
     <div class="panel-body">
       <div class="col-5">
@@ -23,6 +23,7 @@
         <hr>
         <div itemprop="text" class="slide-entry-excerpt entry-content">%12$s</div>
       </div>
+      <div class="topCornerBandeau">%16$s</div>
     </div>
   </div>
 </article>

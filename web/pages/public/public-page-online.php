@@ -2,7 +2,7 @@
   <nav id="online-btn-actions">%1$s</nav>
   <div id="online-board" class="closed-chat">
     <div id="online-canvas">%4$s</div>
-    <div id="online-popup-modal"></div>
+    <div id="online-popup-modal">%7$s</div>
     <div id="online-sidebar-options" class="float-left">%2$s</div>
     <div id="online-sidebar-chat" class="float-right">
       <ul id="online-chat-content">%3$s</ul>
